@@ -269,10 +269,10 @@
     .headshot .bracket-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
 
     /* === Section Dividers === */
-    #experience, #projects, #skills, #education, #extracurricular {
+    #experience, #projects, #research, #skills, #education, #extracurricular {
       position: relative;
     }
-    #experience::before, #projects::before, #skills::before, #education::before, #extracurricular::before {
+    #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before {
       content: '';
       position: absolute;
       top: 0;
@@ -561,7 +561,7 @@
       .btn-primary { background: none; color: var(--text); }
       .project-card, .project-featured, .edu-card { break-inside: avoid; box-shadow: none; }
       .project-card::before, .nav-links a::after { display: none; }
-      #experience::before, #projects::before, #skills::before, #education::before, #extracurricular::before { display: none; }
+      #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before { display: none; }
       .status-dot { animation: none; background: #111; }
       .cursor { display: none; }
     }
@@ -575,9 +575,10 @@
     <div class="nav-links">
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
+      <a href="#research">Research</a>
+      <a href="#extracurricular">Extracurricular</a>
       <a href="#skills">Skills</a>
       <a href="#education">Education</a>
-      <a href="#extracurricular">Extracurricular</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
@@ -750,18 +751,6 @@
 
         <!-- Project grid -->
         <div class="project-grid">
-          <a href="https://github.com/wrbell/W26-Cobot-Axis" class="project-card" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit;">
-            <h3>W26-Cobot-Axis</h3>
-            <div class="project-meta">Python / UR30 7th Axis Control</div>
-            <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040). ME 472 Mechatronics, Winter 2026.</p>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">RTDE</span>
-              <span class="tag">Klipper</span>
-              <span class="tag">RP2040</span>
-              <span class="tag">Raspberry Pi</span>
-            </div>
-          </a>
           <a href="https://github.com/wrbell/fast-fem" class="project-card" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit;">
             <h3>fast-fem</h3>
             <div class="project-meta">ANSYS / Python / FEA Self-Study</div>
@@ -773,6 +762,98 @@
               <span class="tag">FEA</span>
             </div>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section id="research" class="fade-in">
+      <div class="container">
+        <div class="section-header">
+          <h2>Research</h2>
+          <div class="line" aria-hidden="true"></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">Jul 2021 — May 2023</div>
+            <div class="timeline-content">
+              <h3>Pannier Research Lab</h3>
+              <div class="role">Undergraduate Researcher</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+              <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+              <div class="tags">
+                <span class="tag">MATLAB</span>
+                <span class="tag">G-Code</span>
+                <span class="tag">Toolchanger</span>
+                <span class="tag">Automation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Extracurricular -->
+    <section id="extracurricular" class="fade-in">
+      <div class="container">
+        <div class="section-header">
+          <h2>Extracurricular</h2>
+          <div class="line" aria-hidden="true"></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">Nov 2022 — Jun 2023</div>
+            <div class="timeline-content">
+              <h3>UMD Racing</h3>
+              <div class="role">Frame Lead</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">Sep 2021 — Aug 2022</div>
+            <div class="timeline-content">
+              <h3>Dearborn Electric Racing</h3>
+              <div class="role">Data Acquisition Lead</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">[DATES]</div>
+            <div class="timeline-content">
+              <h3>Land O'Lakes / Kozy Shack</h3>
+              <div class="role">Supply Chain Case Competition</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
+              <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">PuLP</span>
+                <span class="tag">Forecasting</span>
+                <span class="tag">Supply Chain</span>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">[DATES]</div>
+            <div class="timeline-content">
+              <h3>3M Fulfillment Network</h3>
+              <div class="role">Supply Chain Case Competition</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
+              <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">Network Optimization</span>
+                <span class="tag">PuLP</span>
+                <span class="tag">Supply Chain</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -840,48 +921,18 @@
           <div class="edu-date">December 2026</div>
           <p style="color: var(--muted); font-size: 0.875rem; margin-top: var(--space-sm);">Relevant coursework: ME 472 Mechatronics, ME 3601 Machine Elements, ME 440 Vibrations, ME 379 Thermal-Fluid, [...]</p>
         </div>
-      </div>
-    </section>
-
-    <!-- Extracurricular -->
-    <section id="extracurricular" class="fade-in">
-      <div class="container">
-        <div class="section-header">
-          <h2>Extracurricular</h2>
-          <div class="line" aria-hidden="true"></div>
-        </div>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-date">Nov 2022 — Jun 2023</div>
-            <div class="timeline-content">
-              <h3>UMD Racing</h3>
-              <div class="role">Frame Lead</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
-            </div>
+        <a href="https://github.com/wrbell/W26-Cobot-Axis" class="project-card" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block; margin-top:var(--space-lg); max-width:500px;">
+          <h3>W26-Cobot-Axis</h3>
+          <div class="project-meta">ME 472 Mechatronics — Winter 2026</div>
+          <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040).</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">RTDE</span>
+            <span class="tag">Klipper</span>
+            <span class="tag">RP2040</span>
+            <span class="tag">Raspberry Pi</span>
           </div>
-          <div class="timeline-item">
-            <div class="timeline-date">Sep 2021 — Aug 2022</div>
-            <div class="timeline-content">
-              <h3>Dearborn Electric Racing</h3>
-              <div class="role">Data Acquisition Lead</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-date">Jul 2021 — May 2023</div>
-            <div class="timeline-content">
-              <h3>Pannier Research Lab</h3>
-              <div class="role">Undergraduate Researcher</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-              <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-            </div>
-          </div>
-        </div>
+        </a>
       </div>
     </section>
   </main>
