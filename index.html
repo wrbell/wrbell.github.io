@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Willem Bell — Mechanical & Software Engineer</title>
+  <meta name="description" content="Willem Bell — Mechanical engineering student at UM-Dearborn. SpaceX and Tesla intern. B.S. ME Expected 2026.">
+  <meta property="og:title" content="Willem Bell — Mechanical & Software Engineer">
+  <meta property="og:description" content="Portfolio of Willem Bell. Mechanical engineering student at UM-Dearborn. SpaceX and Tesla intern.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wrbell.github.io/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* === Reset === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    img, picture, video, canvas, svg { display: block; max-width: 100%; }
+    input, button, textarea, select { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    ul, ol { list-style: none; }
+
+    /* === Custom Properties === */
+    :root {
+      --bg: #0a0a12;
+      --surface: #14141f;
+      --border: #1e1e2e;
+      --text: #e0e0e8;
+      --muted: #7878a0;
+      --accent: #00e5a0;
+      --accent-dim: rgba(0, 229, 160, 0.1);
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 2rem;
+      --space-xl: 4rem;
+      --space-2xl: 8rem;
+      --max-width: 1100px;
+      --nav-height: 60px;
+      --radius: 6px;
+    }
+
+    /* === Typography === */
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      color: var(--text);
+      background: var(--bg);
+    }
+    h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
+    h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+    h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-family: var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; }
+    .mono { font-family: var(--font-mono); }
+
+    /* === Layout === */
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg); }
+    section { padding: var(--space-xl) 0; }
+    .section-header { margin-bottom: var(--space-xl); }
+    .section-header h2 { font-size: 0.875rem; margin-bottom: var(--space-sm); }
+    .section-header .line { width: 60px; height: 1px; background: var(--accent); }
+
+    /* === Skip Link === */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--space-md);
+      background: var(--accent);
+      color: var(--bg);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 700;
+      z-index: 1000;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: var(--space-md); }
+
+    /* === Nav === */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-lg);
+      background: rgba(10, 10, 18, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo .accent { color: var(--accent); }
+    .nav-links { display: none; gap: var(--space-lg); align-items: center; }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a:focus { color: var(--accent); }
+
+    /* === Hero === */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-height);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+      width: 100%;
+    }
+    .hero-name { font-weight: 700; margin-bottom: var(--space-md); }
+    .hero-name .accent { color: var(--accent); }
+    .hero-tagline {
+      font-family: var(--font-mono);
+      font-size: clamp(0.875rem, 2vw, 1.125rem);
+      color: var(--muted);
+      margin-bottom: var(--space-lg);
+    }
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--accent);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .hero-links { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-lg); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 0.625rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn:hover, .btn:focus { border-color: var(--accent); background: var(--accent-dim); }
+    .btn-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+    .btn-primary:hover, .btn-primary:focus { background: #00cc8e; border-color: #00cc8e; }
+
+    .status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .status-item { display: flex; align-items: center; gap: var(--space-xs); }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0, 229, 160, 0.4); }
+      50% { box-shadow: 0 0 0 4px rgba(0, 229, 160, 0); }
+    }
+
+    /* Headshot placeholder */
+    .headshot-container {
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    .headshot {
+      position: relative;
+      width: 280px;
+      height: 340px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .headshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .headshot-placeholder {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    /* Viewfinder brackets */
+    .headshot::before, .headshot::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-color: var(--accent);
+      border-style: solid;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .headshot::before {
+      top: 12px; left: 12px;
+      border-width: 2px 0 0 2px;
+    }
+    .headshot::after {
+      bottom: 12px; right: 12px;
+      border-width: 0 2px 2px 0;
+    }
+    .headshot .bracket-tr, .headshot .bracket-bl {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-color: var(--accent);
+      border-style: solid;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .headshot .bracket-tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
+    .headshot .bracket-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
+
+    /* === Experience === */
+    .timeline { display: flex; flex-direction: column; gap: var(--space-xl); }
+    .timeline-item { display: grid; grid-template-columns: 1fr; gap: var(--space-md); }
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--muted);
+      padding-top: 2px;
+    }
+    .timeline-content h3 { font-size: 1.125rem; margin-bottom: var(--space-xs); }
+    .timeline-content .role {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--accent);
+      margin-bottom: var(--space-sm);
+    }
+    .timeline-content p {
+      color: var(--muted);
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-md);
+      max-width: 60ch;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      padding: 0.25rem 0.625rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* === Projects === */
+    .project-featured {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+    .project-featured h3 { font-size: 1.25rem; margin-bottom: var(--space-xs); }
+    .project-featured .project-meta {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--accent);
+      margin-bottom: var(--space-md);
+    }
+    .project-featured p {
+      color: var(--muted);
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-md);
+      max-width: 65ch;
+    }
+    .ascii-diagram {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      overflow-x: auto;
+      margin-bottom: var(--space-md);
+      white-space: pre;
+    }
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      transition: border-color 0.2s;
+    }
+    .project-card:hover { border-color: var(--accent); }
+    .project-card h3 { font-size: 1.0625rem; margin-bottom: var(--space-xs); }
+    .project-card .project-meta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-bottom: var(--space-sm);
+    }
+    .project-card p {
+      color: var(--muted);
+      font-size: 0.875rem;
+      margin-bottom: var(--space-md);
+    }
+
+    /* === Skills === */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    .skills-column h3 {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--border);
+    }
+    .skills-column li {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      padding: var(--space-xs) 0;
+    }
+    .skills-column li::before {
+      content: '› ';
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+
+    /* === Education === */
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      max-width: 500px;
+    }
+    .edu-card h3 { font-size: 1.125rem; margin-bottom: var(--space-xs); }
+    .edu-card .degree {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--accent);
+      margin-bottom: var(--space-xs);
+    }
+    .edu-card .edu-date {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--muted);
+    }
+
+    /* === Footer === */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: var(--space-xl) 0 var(--space-lg);
+    }
+    .footer-cta {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: var(--space-lg);
+    }
+    .footer-cta .accent { color: var(--accent); }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+    .footer-links a {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover, .footer-links a:focus { color: var(--accent); }
+    .copyright {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* === Scroll Animations === */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === Focus Styles === */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* === Responsive: Tablet (768px+) === */
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+      .hero-grid { grid-template-columns: 1fr 1fr; }
+      .headshot-container { display: flex; }
+      .timeline-item { grid-template-columns: 140px 1fr; }
+      .project-grid { grid-template-columns: 1fr 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    /* === Responsive: Desktop (1200px+) === */
+    @media (min-width: 1200px) {
+      .container { padding: 0 var(--space-xl); }
+      section { padding: var(--space-2xl) 0; }
+      .headshot { width: 320px; height: 400px; }
+    }
+
+    /* === Reduced Motion === */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+      .fade-in { opacity: 1; transform: none; }
+    }
+
+    /* === Print Styles === */
+    @media print {
+      :root {
+        --bg: #fff;
+        --surface: #f5f5f5;
+        --border: #ddd;
+        --text: #111;
+        --muted: #555;
+        --accent: #111;
+      }
+      body { font-size: 12pt; }
+      nav, .headshot-container, .skip-link { display: none !important; }
+      .hero { min-height: auto; padding-top: 0; }
+      section { padding: 1rem 0; }
+      .fade-in { opacity: 1; transform: none; }
+      .container { max-width: 100%; padding: 0; }
+      a[href^="http"]::after { content: ' (' attr(href) ')'; font-size: 0.75em; color: #555; }
+      .btn { border: 1px solid #999; padding: 0.25rem 0.5rem; }
+      .btn-primary { background: none; color: var(--text); }
+      .project-card, .project-featured, .edu-card { break-inside: avoid; }
+      .status-dot { animation: none; background: #111; }
+      .cursor { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <nav>
+    <a href="#" class="nav-logo">wrbell<span class="accent">.eng</span></a>
+    <div class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#extracurricular">Extracurricular</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <h1 class="hero-name">Willem <span class="accent">Bell</span></h1>
+            <p class="hero-tagline">mechanical engineering · software · robotics<span class="cursor" aria-hidden="true"></span></p>
+            <div class="hero-links">
+              <a href="https://github.com/wrbell" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a href="https://linkedin.com/in/willembell/" class="btn" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="assets/willem-bell-resume.pdf" class="btn btn-primary">Resume</a>
+            </div>
+            <div class="status-bar">
+              <span class="status-item"><span class="status-dot" aria-hidden="true"></span> Open to opportunities</span>
+              <span class="status-item">Dearborn, MI</span>
+              <span class="status-item">UM-Dearborn</span>
+            </div>
+          </div>
+          <div class="headshot-container">
+            <div class="headshot">
+              <span class="bracket-tr" aria-hidden="true"></span>
+              <span class="bracket-bl" aria-hidden="true"></span>
+              <span class="headshot-placeholder">Your Photo</span>
+              <!-- Replace the placeholder span above with: -->
+              <!-- <img src="assets/headshot.jpg" alt="Willem Bell" /> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="fade-in">
+      <div class="container">
+        <div class="section-header">
+          <h2>Experience</h2>
+          <div class="line" aria-hidden="true"></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">[START] — [END]</div>
+            <div class="timeline-content">
+              <h3>SpaceX</h3>
+              <div class="role">[Role Title]</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+              <div class="tags">
+                <span class="tag">[TAGS]</span>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">[START] — [END]</div>
+            <div class="timeline-content">
+              <h3>SpaceX</h3>
+              <div class="role">[Role Title]</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+              <div class="tags">
+                <span class="tag">[TAGS]</span>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">[START] — [END]</div>
+            <div class="timeline-content">
+              <h3>SpaceX</h3>
+              <div class="role">[Role Title]</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <div class="tags">
+                <span class="tag">[TAGS]</span>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">[START] — [END]</div>
+            <div class="timeline-content">
+              <h3>SpaceX</h3>
+              <div class="role">[Role Title]</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+              <div class="tags">
+                <span class="tag">[TAGS]</span>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">[START] — [END]</div>
+            <div class="timeline-content">
+              <h3>Tesla</h3>
+              <div class="role">[Role Title]</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+              <div class="tags">
+                <span class="tag">[TAGS]</span>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">[START] — [END]</div>
+            <div class="timeline-content">
+              <h3>Tesla</h3>
+              <div class="role">[Role Title]</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+              <div class="tags">
+                <span class="tag">[TAGS]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="fade-in">
+      <div class="container">
+        <div class="section-header">
+          <h2>Projects</h2>
+          <div class="line" aria-hidden="true"></div>
+        </div>
+
+        <!-- Featured project -->
+        <a href="https://github.com/wrbell/stark-translate" class="project-featured" target="_blank" rel="noopener noreferrer" style="display:block; text-decoration:none; color:inherit;">
+          <h3>stark-translate</h3>
+          <div class="project-meta">Python / Live Bilingual Speech-to-Text</div>
+          <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
+          <div class="ascii-diagram" aria-label="Pipeline architecture diagram">
+ ┌─────────────┐    ┌────────────────┐    ┌─────────────────────┐    ┌────────────┐
+ │  Mic Input  │───▶│  Whisper ASR   │───▶│  MarianMT /         │───▶│  WebSocket │
+ │  (Audio)    │    │  (EN text)     │    │  TranslateGemma     │    │  Display   │
+ └─────────────┘    └────────────────┘    │  (EN → ES)          │    └────────────┘
+                                          └─────────────────────┘</div>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Whisper</span>
+            <span class="tag">MarianMT</span>
+            <span class="tag">TranslateGemma</span>
+            <span class="tag">WebSocket</span>
+            <span class="tag">MLX</span>
+          </div>
+        </a>
+
+        <!-- Project grid -->
+        <div class="project-grid">
+          <a href="https://github.com/wrbell/W26-Cobot-Axis" class="project-card" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit;">
+            <h3>W26-Cobot-Axis</h3>
+            <div class="project-meta">Python / UR30 7th Axis Control</div>
+            <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040). ME 472 Mechatronics, Winter 2026.</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">RTDE</span>
+              <span class="tag">Klipper</span>
+              <span class="tag">RP2040</span>
+              <span class="tag">Raspberry Pi</span>
+            </div>
+          </a>
+          <a href="https://github.com/wrbell/fast-fem" class="project-card" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit;">
+            <h3>fast-fem</h3>
+            <div class="project-meta">ANSYS / Python / FEA Self-Study</div>
+            <p>Accelerated FEA self-study for 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calculations. Mesh convergence studies, post-mortems, and reproducible methodology.</p>
+            <div class="tags">
+              <span class="tag">ANSYS</span>
+              <span class="tag">Python</span>
+              <span class="tag">Jupyter</span>
+              <span class="tag">FEA</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="fade-in">
+      <div class="container">
+        <div class="section-header">
+          <h2>Skills</h2>
+          <div class="line" aria-hidden="true"></div>
+        </div>
+        <div class="skills-grid">
+          <div class="skills-column">
+            <h3>Languages & Tools</h3>
+            <ul>
+              <li>Python</li>
+              <li>C / C++</li>
+              <li>JavaScript</li>
+              <li>Git</li>
+              <li>Linux</li>
+              <li>Docker</li>
+              <li>Jupyter</li>
+            </ul>
+          </div>
+          <div class="skills-column">
+            <h3>Engineering</h3>
+            <ul>
+              <li>ANSYS / FEA</li>
+              <li>CAN Bus (FlexCAN)</li>
+              <li>RTDE / UR Robots</li>
+              <li>Klipper / Stepper Control</li>
+              <li>Embedded (RP2040 / Teensy)</li>
+              <li>Mesh Convergence & Validation</li>
+            </ul>
+          </div>
+          <div class="skills-column">
+            <h3>Software & ML</h3>
+            <ul>
+              <li>Whisper / Speech-to-Text</li>
+              <li>MarianMT / TranslateGemma</li>
+              <li>PyTorch</li>
+              <li>WebSockets</li>
+              <li>Raspberry Pi</li>
+              <li>MLX / CUDA</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="fade-in">
+      <div class="container">
+        <div class="section-header">
+          <h2>Education</h2>
+          <div class="line" aria-hidden="true"></div>
+        </div>
+        <div class="edu-card">
+          <h3>University of Michigan — Dearborn</h3>
+          <div class="degree">B.S. Mechanical Engineering</div>
+          <div class="edu-date">Expected 2026</div>
+          <p style="color: var(--muted); font-size: 0.875rem; margin-top: var(--space-sm);">Relevant coursework: ME 472 Mechatronics, ME 3601 Machine Elements, ME 440 Vibrations, ME 379 Thermal-Fluid, [...]</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Extracurricular -->
+    <section id="extracurricular" class="fade-in">
+      <div class="container">
+        <div class="section-header">
+          <h2>Extracurricular</h2>
+          <div class="line" aria-hidden="true"></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">[DATES]</div>
+            <div class="timeline-content">
+              <h3>[Organization Name]</h3>
+              <div class="role">[Role]</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">[DATES]</div>
+            <div class="timeline-content">
+              <h3>[Organization Name]</h3>
+              <div class="role">[Role]</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">[DATES]</div>
+            <div class="timeline-content">
+              <h3>[Organization Name]</h3>
+              <div class="role">[Role]</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="container">
+      <p class="footer-cta">Let's build something<span class="accent">.</span></p>
+      <div class="footer-links">
+        <a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a>
+        <a href="https://github.com/wrbell" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://linkedin.com/in/willembell/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+      <p class="copyright">&copy; 2026 Willem Bell</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-triggered fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+    // Smooth scroll for nav links (fallback for browsers without CSS smooth scroll)
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
