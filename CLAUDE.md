@@ -16,10 +16,11 @@ The site is a single-page portfolio built as a single `index.html` file with inl
 - `assets/willem-bell-resume.pdf` — resume PDF (placeholder, to be provided)
 
 ### CI checks (branch protection)
-Three required status checks run on every PR:
+Four required status checks run on every PR:
 - **HTML Validation** — validates `index.html` markup
 - **Lighthouse CI** — performance/accessibility audit
 - **Link Check** — verifies all links resolve
+- **Playwright** — smoke tests for interactive JS features (`npx playwright test`)
 
 Auto-merge is enabled. When creating PRs, always enable auto-merge with `gh pr merge --auto --squash` so they merge automatically once checks pass.
 
