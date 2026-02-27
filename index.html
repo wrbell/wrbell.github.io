@@ -2264,7 +2264,7 @@
         <button class="resume-modal-close" aria-label="Close resume preview">&times;</button>
       </div>
       <div class="resume-modal-body">
-        <object data="assets/willem-bell-resume.pdf" type="application/pdf" aria-label="Resume PDF">
+        <object type="application/pdf" aria-label="Resume PDF" data-src="assets/willem-bell-resume.pdf">
           <p>Unable to display PDF. <a href="assets/willem-bell-resume.pdf" target="_blank" rel="noopener noreferrer">Open in new tab</a></p>
         </object>
       </div>
@@ -2434,6 +2434,8 @@
 
     function openResumeModal() {
       trackEvent('resume_view', 'resume', 'modal_open');
+      var pdfObj = resumeModal.querySelector('object[data-src]');
+      if (pdfObj && !pdfObj.data) pdfObj.data = pdfObj.getAttribute('data-src');
       previouslyFocused = document.activeElement;
       resumeModal.classList.add('open');
       resumeModal.setAttribute('aria-hidden', 'false');
@@ -2464,6 +2466,8 @@
       resumeModal.classList.remove('open');
       resumeModal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      var pdfObj = resumeModal.querySelector('object[data-src]');
+      if (pdfObj) pdfObj.removeAttribute('data');
       if (focusTrapHandler) {
         resumeModal.removeEventListener('keydown', focusTrapHandler);
         focusTrapHandler = null;
