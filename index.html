@@ -282,9 +282,7 @@
         align-items: center;
         justify-content: center;
         gap: var(--space-xl);
-        background: rgba(10, 10, 18, 0.95);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: var(--bg);
         transform: translateY(-100%);
         opacity: 0;
         pointer-events: none;
@@ -2618,7 +2616,9 @@
             setChronoView(false);
             localStorage.setItem('view', 'sections');
           }
-          target.scrollIntoView({ behavior: 'smooth' });
+          requestAnimationFrame(() => {
+            target.scrollIntoView({ behavior: 'smooth' });
+          });
         }
       });
     });
