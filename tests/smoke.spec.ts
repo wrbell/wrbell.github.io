@@ -171,3 +171,28 @@ test.describe("Timeline filter buttons", () => {
     await expect(page.locator(".chrono-year.chrono-hidden")).toHaveCount(0);
   });
 });
+
+test.describe("Chrono details link navigation", () => {
+  test("navigates from chrono card to section card", async ({ page }) => {
+    await page.goto("/");
+
+    // Switch to chrono view
+    await page.locator(".view-toggle").click();
+    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
+
+    // Click the first visible chrono-details-link (skip edition-gated cards)
+    const link = page.locator(".chrono-card:not([data-edition]) .chrono-details-link").first();
+    const href = await link.getAttribute("href");
+    expect(href).toBeTruthy();
+
+    await link.click();
+
+    // Should switch to section view
+    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
+
+    // Target element should exist and eventually be visible
+    const targetId = href!.slice(1);
+    const target = page.locator(`#${targetId}`);
+    await expect(target).toBeAttached();
+  });
+});
