@@ -135,7 +135,7 @@ test.describe("Timeline filter buttons", () => {
 
     // Should have 6 filter buttons
     const filters = page.locator(".chrono-filter");
-    await expect(filters).toHaveCount(5);
+    await expect(filters).toHaveCount(6);
 
     // "Experience" should be active by default
     await expect(
@@ -394,5 +394,62 @@ test.describe("Supply Chain Cases filter", () => {
     for (let i = 0; i < count; i++) {
       await expect(badges.nth(i)).toHaveText("Supply Chain Cases");
     }
+  });
+});
+
+test.describe("Tag clear button", () => {
+  test("appears on tag activation, clears filter on click", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const clearBtn = page.locator(".tag-clear-btn");
+
+    // Should start hidden
+    await expect(clearBtn).toBeHidden();
+
+    // Click a tag to activate filtering
+    const tag = page
+      .locator(".project-card .tag, .project-featured .tag")
+      .first();
+    await tag.click();
+    await expect(tag).toHaveClass(/\bactive\b/);
+
+    // Clear button should be visible
+    await expect(clearBtn).toBeVisible();
+
+    // Click the clear button
+    await clearBtn.click();
+
+    // All active and dimmed classes should be removed
+    await expect(page.locator(".tag.active")).toHaveCount(0);
+    await expect(page.locator(".dimmed")).toHaveCount(0);
+
+    // Clear button should be hidden again
+    await expect(clearBtn).toBeHidden();
+  });
+});
+
+test.describe("Project details expand", () => {
+  test("toggles detail content on click", async ({ page }) => {
+    await page.goto("/");
+
+    // Wait for the section to be visible
+    await page.evaluate(() => window.scrollTo(0, 600));
+
+    const details = page.locator(".project-details").first();
+    const toggle = details.locator(".project-details-toggle");
+    const body = details.locator(".project-details-body");
+
+    // Details should start closed
+    await expect(body).toBeHidden();
+
+    // Click to open
+    await toggle.click();
+    await expect(body).toBeVisible();
+
+    // Click to close
+    await toggle.click();
+    await expect(body).toBeHidden();
   });
 });
