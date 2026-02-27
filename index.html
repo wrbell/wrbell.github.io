@@ -14,11 +14,50 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Willem Bell — Mechanical & Software Engineer">
   <meta name="twitter:description" content="Portfolio of Willem Bell. Mechanical engineering & computer science student at UM-Dearborn. SpaceX and Tesla intern.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Willem Bell",
+    "url": "https://wrbell.github.io/",
+    "jobTitle": "Mechanical & Software Engineer",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Michigan — Dearborn"
+    },
+    "knowsAbout": ["Mechanical Engineering", "Computer Science", "Robotics", "Automation", "Controls Engineering", "FEA", "Python", "Machine Learning"],
+    "sameAs": [
+      "https://github.com/wrbell",
+      "https://linkedin.com/in/willembell/"
+    ]
+  }
+  </script>
   <link rel="canonical" href="https://wrbell.github.io/">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url('assets/fonts/inter-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url('assets/fonts/jetbrains-mono-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+  </style>
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme');
+      if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    })();
+  </script>
   <style>
     /* === Reset === */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,9 +89,58 @@
       --nav-height: 60px;
       --radius: 6px;
       --accent-glow: rgba(0, 229, 160, 0.06);
+      --accent-gold: #f0b429;
+      --accent-gold-dim: rgba(240, 180, 41, 0.1);
       --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.3);
       --shadow-card-hover: 0 4px 30px rgba(0, 0, 0, 0.4);
       --radius-lg: 10px;
+    }
+
+    /* === Light Mode === */
+    [data-theme="light"] {
+      --bg: #f5f5f8;
+      --surface: #ffffff;
+      --border: #d8d8e0;
+      --text: #1a1a2e;
+      --muted: #5a5a78;
+      --accent: #00b880;
+      --accent-dim: rgba(0, 184, 128, 0.1);
+      --accent-glow: rgba(0, 184, 128, 0.06);
+      --accent-gold: #c89520;
+      --accent-gold-dim: rgba(200, 149, 32, 0.1);
+      --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+      --shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.12);
+    }
+    [data-theme="light"] body {
+      background: radial-gradient(ellipse at 50% 0%, rgba(0, 184, 128, 0.04) 0%, var(--bg) 60%);
+      background-color: var(--bg);
+    }
+    [data-theme="light"] nav {
+      background: rgba(245, 245, 248, 0.85);
+    }
+    [data-theme="light"] .btn-primary {
+      box-shadow: 0 0 20px rgba(0, 184, 128, 0.12);
+    }
+    [data-theme="light"] .btn-primary:hover,
+    [data-theme="light"] .btn-primary:focus {
+      background: #009e6e;
+      border-color: #009e6e;
+      box-shadow: 0 0 30px rgba(0, 184, 128, 0.2);
+    }
+    [data-theme="light"] .hero-name {
+      text-shadow: none;
+    }
+    [data-theme="light"] .ascii-diagram {
+      background: #ececf0;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+    [data-theme="light"] .github-chart img {
+      filter: brightness(0.9) contrast(1.1);
+    }
+    @media (max-width: 767px) {
+      [data-theme="light"] .nav-links {
+        background: rgba(245, 245, 248, 0.95);
+      }
     }
 
     /* === Typography === */
@@ -343,10 +431,10 @@
     .headshot .bracket-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
 
     /* === Section Dividers === */
-    #experience, #projects, #research, #skills, #education, #extracurricular {
+    #about, #experience, #projects, #research, #skills, #education, #extracurricular, #github {
       position: relative;
     }
-    #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before {
+    #about::before, #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before, #github::before {
       content: '';
       position: absolute;
       top: 0;
@@ -367,6 +455,8 @@
       color: var(--muted);
       padding-top: 2px;
     }
+    .timeline-content { transition: transform 0.2s ease; }
+    .timeline-item:hover .timeline-content { transform: translateX(4px); }
     .timeline-content h3 { font-size: 1.125rem; margin-bottom: var(--space-xs); font-weight: 700; }
     .timeline-content .role {
       font-family: var(--font-mono);
@@ -390,9 +480,9 @@
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      transition: border-color 0.2s, color 0.2s;
+      transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
     }
-    .tag:hover { border-color: var(--accent); color: var(--text); }
+    .tag:hover { border-color: var(--accent); color: var(--text); background: var(--accent-dim); transform: translateY(-1px); }
 
     /* === Projects === */
     .project-featured {
@@ -458,7 +548,7 @@
       opacity: 0;
       transition: opacity 0.2s;
     }
-    .project-card:hover { border-color: var(--accent); box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
+    .project-card:hover { border-color: var(--accent); box-shadow: var(--shadow-card-hover), 0 0 20px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,0.03); transform: translateY(-3px) scale(1.005); }
     .project-card:hover::before { opacity: 1; }
     .project-card h3, .project-card h4 { font-size: 1.0625rem; margin-bottom: var(--space-xs); }
     .project-card .project-meta {
@@ -500,6 +590,54 @@
       flex-shrink: 0;
     }
 
+    /* === Competition Lane === */
+    .project-lane--competitions .lane-label::before {
+      background: var(--accent-gold);
+    }
+    .project-lane--competitions .project-card:hover {
+      border-color: var(--accent-gold);
+    }
+    .project-lane--competitions .project-card::before {
+      background: var(--accent-gold);
+    }
+    .project-lane--competitions .project-card .project-meta {
+      color: var(--accent-gold);
+    }
+    .project-lane--competitions .tag {
+      border-color: rgba(240, 180, 41, 0.2);
+      color: var(--accent-gold);
+    }
+    .competition-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-gold);
+      background: var(--accent-gold-dim);
+      border: 1px solid rgba(240, 180, 41, 0.25);
+      border-radius: var(--radius);
+      padding: 2px 8px;
+      margin-bottom: var(--space-sm);
+    }
+    .competition-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm) var(--space-md);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--muted);
+      margin-bottom: var(--space-sm);
+    }
+    .competition-meta span::before {
+      content: '›';
+      margin-right: var(--space-xs);
+      color: var(--accent-gold);
+    }
+
     /* === Skills === */
     .skills-grid {
       display: grid;
@@ -538,6 +676,226 @@
       content: '› ';
       color: var(--accent);
       font-family: var(--font-mono);
+    }
+
+    /* === Theme Toggle === */
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: border-color 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* === About === */
+    .about-content {
+      max-width: 65ch;
+      margin: 0 auto;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.9375rem;
+    }
+    .about-content p { margin-bottom: var(--space-md); }
+    .about-content p:last-child { margin-bottom: 0; }
+
+    /* === GitHub Activity === */
+    .github-chart {
+      margin-bottom: var(--space-xl);
+      overflow-x: auto;
+    }
+    .github-chart img {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: var(--radius);
+    }
+    .github-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+    .github-repo-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-card);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .github-repo-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-card-hover);
+      transform: translateY(-2px);
+    }
+    .github-repo-card h4 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+      font-family: var(--font-mono);
+    }
+    .github-repo-card h4 a {
+      color: var(--accent);
+      transition: opacity 0.2s;
+    }
+    .github-repo-card h4 a:hover { opacity: 0.8; }
+    .github-repo-card p {
+      color: var(--muted);
+      font-size: 0.875rem;
+      margin-bottom: var(--space-sm);
+    }
+    .github-repo-meta {
+      display: flex;
+      gap: var(--space-md);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .github-repo-meta span { display: flex; align-items: center; gap: var(--space-xs); }
+    .github-fallback {
+      text-align: center;
+      padding: var(--space-lg);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+    }
+    .github-fallback a { color: var(--accent); }
+
+    /* === CTA Buttons on Cards === */
+    .project-ctas {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--border);
+    }
+    .btn-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 0.375rem 0.875rem;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .btn-sm:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+    /* === Tag Filtering === */
+    .tag { cursor: pointer; }
+    .tag.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .project-lane--competitions .tag.active {
+      background: var(--accent-gold-dim);
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+    .dimmed {
+      opacity: 0.15;
+      transform: scale(0.98);
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    /* === Stagger Animations === */
+    .stagger-item {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .stagger-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === Resume Modal === */
+    .resume-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .resume-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .resume-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+    }
+    .resume-modal-content {
+      position: relative;
+      width: 90vw;
+      max-width: 900px;
+      height: 85vh;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+    .resume-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--border);
+    }
+    .resume-modal-header span {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+    .resume-modal-close {
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.125rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .resume-modal-close:hover { border-color: var(--accent); color: var(--accent); }
+    .resume-modal-body {
+      flex: 1;
+      overflow: hidden;
+    }
+    .resume-modal-body object {
+      width: 100%;
+      height: 100%;
+    }
+    .resume-modal-footer {
+      display: flex;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-lg);
+      border-top: 1px solid var(--border);
     }
 
     /* === Footer === */
@@ -620,6 +978,7 @@
       .timeline-item { grid-template-columns: 140px 1fr; }
       .project-grid { grid-template-columns: 1fr 1fr; }
       .skills-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .github-grid { grid-template-columns: 1fr 1fr 1fr; }
     }
 
     /* === Responsive: Desktop (1200px+) === */
@@ -638,9 +997,12 @@
       }
       html { scroll-behavior: auto; }
       .fade-in { opacity: 1; transform: none; }
+      .stagger-item { opacity: 1; transform: none; transition: none; }
       .hero-tagline { width: 100%; overflow: visible; white-space: normal; }
       .cursor { opacity: 1; }
-      .project-card:hover { transform: none; }
+      .project-card:hover, .github-repo-card:hover { transform: none; }
+      .tag:hover { transform: none; }
+      .timeline-content { transition: none; }
       .nav-links a::after { transition: none; }
     }
 
@@ -653,9 +1015,12 @@
         --text: #111;
         --muted: #555;
         --accent: #111;
+        --accent-gold: #111;
+        --accent-gold-dim: transparent;
       }
       body { font-size: 12pt; }
-      nav, .headshot-container, .skip-link, .back-to-top { display: none !important; }
+      .competition-badge { border-color: #999; }
+      nav, .headshot-container, .skip-link, .back-to-top, .theme-toggle, .resume-modal { display: none !important; }
       .hero { min-height: auto; padding-top: 0; }
       section { padding: 1rem 0; }
       .fade-in { opacity: 1; transform: none; }
@@ -666,7 +1031,7 @@
       .project-card, .project-featured, .edu-card { break-inside: avoid; box-shadow: none; }
       .lane-label { break-after: avoid; }
       .project-card::before, .nav-links a::after { display: none; }
-      #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before { display: none; }
+      #about::before, #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before, #github::before { display: none; }
       .status-dot { animation: none; background: #111; }
       .cursor { display: none; }
     }
@@ -675,12 +1040,14 @@
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
 
-  <nav>
+  <nav aria-label="Main navigation">
     <a href="#" class="nav-logo">wrbell<span class="accent">.eng</span></a>
+    <button class="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle theme">&#9790;</button>
     <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links">
+      <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#research">Research</a>
@@ -702,7 +1069,7 @@
             <div class="hero-links">
               <a href="https://github.com/wrbell" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
               <a href="https://linkedin.com/in/willembell/" class="btn" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <a href="assets/willem-bell-resume.pdf" class="btn btn-primary">Resume</a>
+              <a href="assets/willem-bell-resume.pdf" class="btn btn-primary" id="resume-btn" target="_blank" rel="noopener noreferrer">Resume</a>
             </div>
             <div class="status-bar">
               <span class="status-item"><span class="status-dot" aria-hidden="true"></span> Open to opportunities</span>
@@ -723,15 +1090,31 @@
       </div>
     </section>
 
-    <!-- Experience -->
-    <section id="experience" class="fade-in">
+    <!-- About -->
+    <section id="about" class="fade-in" aria-labelledby="about-heading">
       <div class="container">
         <div class="section-header">
-          <h2>Experience</h2>
+          <h2 id="about-heading">About</h2>
+          <div class="line" aria-hidden="true"></div>
+        </div>
+        <div class="about-content">
+          <!-- PERSONALIZE: Update these paragraphs with your own voice -->
+          <p>I'm a mechanical engineering and computer science student at the University of Michigan — Dearborn, graduating December 2026. My work sits at the intersection of physical systems and software — building tools that bridge hardware and code.</p>
+          <p>I've spent four internships at SpaceX across Starship launch, space lasers, and Starfactory automation, plus a controls stint at Tesla's 4680 battery line. These experiences shaped how I think about manufacturing systems: robust, automated, and instrumented.</p>
+          <p>Outside of industry, I lead research in additive manufacturing at UM-Dearborn's Pannier Lab, race electric vehicles with Dearborn Electric Racing, and build open-source tools for problems I encounter — from real-time translation to FEA workflows.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="fade-in" aria-labelledby="experience-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="experience-heading">Experience</h2>
           <div class="line" aria-hidden="true"></div>
         </div>
         <div class="timeline">
-          <div class="timeline-item">
+          <div class="timeline-item stagger-item">
             <div class="timeline-date">Jan 2025 — Jul 2025</div>
             <div class="timeline-content">
               <h3>SpaceX</h3>
@@ -748,7 +1131,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item stagger-item">
             <div class="timeline-date">May 2024 — Aug 2024</div>
             <div class="timeline-content">
               <h3>SpaceX</h3>
@@ -763,7 +1146,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item stagger-item">
             <div class="timeline-date">Sep 2023 — Apr 2024</div>
             <div class="timeline-content">
               <h3>Tesla 4680</h3>
@@ -779,7 +1162,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item stagger-item">
             <div class="timeline-date">May 2023 — Aug 2023</div>
             <div class="timeline-content">
               <h3>SpaceX</h3>
@@ -794,7 +1177,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item stagger-item">
             <div class="timeline-date">May 2022 — Aug 2022</div>
             <div class="timeline-content">
               <h3>SpaceX</h3>
@@ -809,7 +1192,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item stagger-item">
             <div class="timeline-date">May 2021 — Feb 2022</div>
             <div class="timeline-content">
               <h3>DTE Energy — Fermi Nuclear Power Plant</h3>
@@ -829,17 +1212,17 @@
     </section>
 
     <!-- Projects -->
-    <section id="projects" class="fade-in">
+    <section id="projects" class="fade-in" aria-labelledby="projects-heading">
       <div class="container">
         <div class="section-header">
-          <h2>Projects</h2>
+          <h2 id="projects-heading">Projects</h2>
           <div class="line" aria-hidden="true"></div>
         </div>
 
         <!-- Personal lane -->
         <div class="project-lane">
           <h3 class="lane-label">Personal</h3>
-          <a href="https://github.com/wrbell/stark-translate" class="project-featured" target="_blank" rel="noopener noreferrer" style="display:block; text-decoration:none; color:inherit;">
+          <div class="project-featured stagger-item">
             <h4>stark-translate</h4>
             <div class="project-meta">Python / Live Bilingual Speech-to-Text</div>
             <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
@@ -857,9 +1240,12 @@
               <span class="tag">WebSocket</span>
               <span class="tag">MLX</span>
             </div>
-          </a>
+            <div class="project-ctas">
+              <a href="https://github.com/wrbell/stark-translate" class="btn-sm" target="_blank" rel="noopener noreferrer">View Code &rarr;</a>
+            </div>
+          </div>
           <div class="project-grid">
-            <a href="https://github.com/wrbell/fast-fem" class="project-card" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit;">
+            <div class="project-card stagger-item">
               <h4>fast-fem</h4>
               <div class="project-meta">ANSYS / Python / FEA Self-Study</div>
               <p>Accelerated FEA self-study for 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calculations. Mesh convergence studies, post-mortems, and reproducible methodology.</p>
@@ -869,7 +1255,10 @@
                 <span class="tag">Jupyter</span>
                 <span class="tag">FEA</span>
               </div>
-            </a>
+              <div class="project-ctas">
+                <a href="https://github.com/wrbell/fast-fem" class="btn-sm" target="_blank" rel="noopener noreferrer">View Code &rarr;</a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -877,7 +1266,7 @@
         <div class="project-lane">
           <h3 class="lane-label">Research</h3>
           <div class="project-grid">
-            <a href="https://github.com/wrbell/W26-Cobot-Axis" class="project-card" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit;">
+            <div class="project-card stagger-item">
               <h4>W26-Cobot-Axis</h4>
               <div class="project-meta">ME 472 Mechatronics — Winter 2026</div>
               <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040).</p>
@@ -888,7 +1277,10 @@
                 <span class="tag">RP2040</span>
                 <span class="tag">Raspberry Pi</span>
               </div>
-            </a>
+              <div class="project-ctas">
+                <a href="https://github.com/wrbell/W26-Cobot-Axis" class="btn-sm" target="_blank" rel="noopener noreferrer">View Code &rarr;</a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -896,7 +1288,7 @@
         <div class="project-lane">
           <h3 class="lane-label">Education</h3>
           <div class="project-grid">
-            <a href="#" class="project-card" style="text-decoration:none; color:inherit;">
+            <div class="project-card stagger-item">
               <h4>ME 440 — Vibrations</h4>
               <div class="project-meta">Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -904,8 +1296,8 @@
                 <span class="tag">MATLAB</span>
                 <span class="tag">Vibration Analysis</span>
               </div>
-            </a>
-            <a href="#" class="project-card" style="text-decoration:none; color:inherit;">
+            </div>
+            <div class="project-card stagger-item">
               <h4>ME 379 — Fluids Lab</h4>
               <div class="project-meta">Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -913,8 +1305,8 @@
                 <span class="tag">Fluid Mechanics</span>
                 <span class="tag">Lab Instrumentation</span>
               </div>
-            </a>
-            <a href="#" class="project-card" style="text-decoration:none; color:inherit;">
+            </div>
+            <div class="project-card stagger-item">
               <h4>ME 3601 — Machine Design</h4>
               <div class="project-meta">Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -922,21 +1314,21 @@
                 <span class="tag">Machine Design</span>
                 <span class="tag">FEA</span>
               </div>
-            </a>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Research -->
-    <section id="research" class="fade-in">
+    <section id="research" class="fade-in" aria-labelledby="research-heading">
       <div class="container">
         <div class="section-header">
-          <h2>Research</h2>
+          <h2 id="research-heading">Research</h2>
           <div class="line" aria-hidden="true"></div>
         </div>
         <div class="timeline">
-          <div class="timeline-item">
+          <div class="timeline-item stagger-item">
             <div class="timeline-date">Aug 2025 — Present</div>
             <div class="timeline-content">
               <h3>Pannier Research Lab</h3>
@@ -952,7 +1344,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item stagger-item">
             <div class="timeline-date">Sep 2024 — Jan 2025</div>
             <div class="timeline-content">
               <h3>Pannier Research Lab</h3>
@@ -968,7 +1360,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item stagger-item">
             <div class="timeline-date">Jul 2021 — May 2023</div>
             <div class="timeline-content">
               <h3>Pannier Research Lab</h3>
@@ -985,55 +1377,20 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Extracurricular -->
-    <section id="extracurricular" class="fade-in">
-      <div class="container">
-        <div class="section-header">
-          <h2>Extracurricular</h2>
-          <div class="line" aria-hidden="true"></div>
-        </div>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-date">Sep 2024 — Jan 2025</div>
-            <div class="timeline-content">
-              <h3>Dearborn Electric Racing</h3>
-              <div class="role">Project Manager/Chief Engineer</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-              <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-date">Nov 2022 — Jun 2023</div>
-            <div class="timeline-content">
-              <h3>UMD Racing</h3>
-              <div class="role">Frame Lead</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-date">Sep 2021 — Aug 2022</div>
-            <div class="timeline-content">
-              <h3>Dearborn Electric Racing</h3>
-              <div class="role">Data Acquisition Lead</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-date">[DATES]</div>
-            <div class="timeline-content">
-              <h3>Land O'Lakes / Kozy Shack</h3>
-              <div class="role">Supply Chain Case Competition</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
+        <!-- Competitions lane -->
+        <div class="project-lane project-lane--competitions">
+          <h3 class="lane-label">Competitions</h3>
+          <div class="project-grid">
+            <div class="project-card stagger-item">
+              <span class="competition-badge">&#9733; [PLACEMENT]</span>
+              <h4>Land O'Lakes / Kozy Shack</h4>
+              <div class="project-meta">Supply Chain Case Competition · [DATE]</div>
+              <div class="competition-meta">
+                <span>[X]-hour sprint</span>
+                <span>[X]-person team</span>
+                <span>[X] teams competing</span>
+              </div>
+              <p><strong>[RESULT sentence]</strong> — Built a demand-forecasting and distribution model for Kozy Shack pudding SKUs under Land O'Lakes' portfolio. Formulated the problem as a mixed-integer linear program in PuLP, optimizing warehouse allocation against seasonal demand curves.</p>
               <div class="tags">
                 <span class="tag">Python</span>
                 <span class="tag">PuLP</span>
@@ -1041,15 +1398,16 @@
                 <span class="tag">Supply Chain</span>
               </div>
             </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-date">[DATES]</div>
-            <div class="timeline-content">
-              <h3>3M Fulfillment Network</h3>
-              <div class="role">Supply Chain Case Competition</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
+            <div class="project-card stagger-item">
+              <span class="competition-badge">&#9733; [PLACEMENT]</span>
+              <h4>3M Fulfillment Network</h4>
+              <div class="project-meta">Supply Chain Case Competition · [DATE]</div>
+              <div class="competition-meta">
+                <span>[X]-hour sprint</span>
+                <span>[X]-person team</span>
+                <span>[X] teams competing</span>
+              </div>
+              <p><strong>[RESULT sentence]</strong> — Redesigned 3M's multi-echelon fulfillment network to minimize total logistics cost. Modeled facility-to-customer assignments as a capacitated network optimization problem in PuLP, balancing service-level constraints against transportation spend.</p>
               <div class="tags">
                 <span class="tag">Python</span>
                 <span class="tag">Network Optimization</span>
@@ -1059,14 +1417,57 @@
             </div>
           </div>
         </div>
+
+      </div>
+    </section>
+
+    <!-- Extracurricular -->
+    <section id="extracurricular" class="fade-in" aria-labelledby="extracurricular-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="extracurricular-heading">Extracurricular</h2>
+          <div class="line" aria-hidden="true"></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item stagger-item">
+            <div class="timeline-date">Sep 2024 — Jan 2025</div>
+            <div class="timeline-content">
+              <h3>Dearborn Electric Racing</h3>
+              <div class="role">Project Manager/Chief Engineer</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+              <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+            </div>
+          </div>
+          <div class="timeline-item stagger-item">
+            <div class="timeline-date">Nov 2022 — Jun 2023</div>
+            <div class="timeline-content">
+              <h3>UMD Racing</h3>
+              <div class="role">Frame Lead</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
+            </div>
+          </div>
+          <div class="timeline-item stagger-item">
+            <div class="timeline-date">Sep 2021 — Aug 2022</div>
+            <div class="timeline-content">
+              <h3>Dearborn Electric Racing</h3>
+              <div class="role">Data Acquisition Lead</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Ut enim ad minim veniam quis nostrud exercitation ullamco.</p>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Skills -->
-    <section id="skills" class="fade-in">
+    <section id="skills" class="fade-in" aria-labelledby="skills-heading">
       <div class="container">
         <div class="section-header">
-          <h2>Skills</h2>
+          <h2 id="skills-heading">Skills</h2>
           <div class="line" aria-hidden="true"></div>
         </div>
         <div class="skills-grid">
@@ -1112,15 +1513,34 @@
       </div>
     </section>
 
-    <!-- Education -->
-    <section id="education" class="fade-in">
+    <!-- GitHub Activity -->
+    <section id="github" class="fade-in" aria-labelledby="github-heading">
       <div class="container">
         <div class="section-header">
-          <h2>Education</h2>
+          <h2 id="github-heading">GitHub</h2>
+          <div class="line" aria-hidden="true"></div>
+        </div>
+        <div class="github-chart">
+          <img src="https://ghchart.rshah.org/00e5a0/wrbell" alt="Willem Bell's GitHub contribution graph" loading="lazy">
+        </div>
+        <div id="github-repos" class="github-grid">
+          <!-- Populated by JS -->
+        </div>
+        <div class="github-fallback" id="github-fallback" style="display:none;">
+          <p>View my repositories on <a href="https://github.com/wrbell" target="_blank" rel="noopener noreferrer">GitHub &rarr;</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="fade-in" aria-labelledby="education-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="education-heading">Education</h2>
           <div class="line" aria-hidden="true"></div>
         </div>
         <div class="timeline">
-          <div class="timeline-item">
+          <div class="timeline-item stagger-item">
             <div class="timeline-date">Dec 2026</div>
             <div class="timeline-content">
               <h3>University of Michigan — Dearborn</h3>
@@ -1134,7 +1554,7 @@
   </main>
 
   <!-- Footer -->
-  <footer id="contact">
+  <footer id="contact" role="contentinfo">
     <div class="container">
       <p class="footer-cta">Let's build something<span class="accent">.</span></p>
       <a href="mailto:wrbell@umich.edu" class="btn btn-primary" style="margin-bottom: var(--space-lg);">Contact Me</a>
@@ -1149,12 +1569,64 @@
 
   <button class="back-to-top" aria-label="Back to top">&uarr;</button>
 
+  <!-- Resume Modal -->
+  <div class="resume-modal" id="resume-modal" aria-hidden="true">
+    <div class="resume-modal-backdrop"></div>
+    <div class="resume-modal-content" role="dialog" aria-label="Resume preview">
+      <div class="resume-modal-header">
+        <span>resume.pdf</span>
+        <button class="resume-modal-close" aria-label="Close resume preview">&times;</button>
+      </div>
+      <div class="resume-modal-body">
+        <object data="assets/willem-bell-resume.pdf" type="application/pdf" aria-label="Resume PDF">
+          <p>Unable to display PDF. <a href="assets/willem-bell-resume.pdf" target="_blank" rel="noopener noreferrer">Open in new tab</a></p>
+        </object>
+      </div>
+      <div class="resume-modal-footer">
+        <a href="assets/willem-bell-resume.pdf" class="btn-sm" target="_blank" rel="noopener noreferrer">Open in New Tab &rarr;</a>
+        <a href="assets/willem-bell-resume.pdf" class="btn-sm" download>Download PDF &darr;</a>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Scroll-triggered fade-in
+    // === Theme Toggle ===
+    const themeToggle = document.querySelector('.theme-toggle');
+    function setTheme(theme) {
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeToggle.innerHTML = '&#9788;';
+        themeToggle.title = 'Switch to dark mode';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        themeToggle.innerHTML = '&#9790;';
+        themeToggle.title = 'Switch to light mode';
+      }
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', next);
+      setTheme(next);
+    });
+
+    // === Scroll-triggered fade-in with stagger support ===
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          // Stagger child items
+          const items = entry.target.querySelectorAll('.stagger-item');
+          if (items.length) {
+            items.forEach((item, i) => {
+              item.style.transitionDelay = (i * 100) + 'ms';
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  item.classList.add('visible');
+                });
+              });
+            });
+          }
           observer.unobserve(entry.target);
         }
       });
@@ -1162,7 +1634,7 @@
 
     document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
 
-    // Back-to-top button
+    // === Back-to-top button ===
     const backToTop = document.querySelector('.back-to-top');
     window.addEventListener('scroll', () => {
       backToTop.classList.toggle('visible', window.scrollY > 500);
@@ -1171,24 +1643,31 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Mobile nav toggle
+    // === Mobile nav toggle ===
     const navToggle = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
     navToggle.addEventListener('click', () => {
       const open = navLinks.classList.toggle('open');
       navToggle.setAttribute('aria-expanded', open);
     });
+
+    // === Escape key handler (nav + modal) ===
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && navLinks.classList.contains('open')) {
-        navLinks.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
+      if (e.key === 'Escape') {
+        if (navLinks.classList.contains('open')) {
+          navLinks.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+        closeResumeModal();
       }
     });
 
-    // Smooth scroll for nav links (fallback for browsers without CSS smooth scroll)
+    // === Smooth scroll for nav links ===
     document.querySelectorAll('a[href^="#"]').forEach((link) => {
       link.addEventListener('click', (e) => {
-        const target = document.querySelector(link.getAttribute('href'));
+        const href = link.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
         if (target) {
           e.preventDefault();
           navLinks.classList.remove('open');
@@ -1197,6 +1676,84 @@
         }
       });
     });
+
+    // === GitHub Repos ===
+    (function loadGitHubRepos() {
+      var container = document.getElementById('github-repos');
+      var fallback = document.getElementById('github-fallback');
+      fetch('https://api.github.com/users/wrbell/repos?sort=updated&per_page=6')
+        .then(function(res) { if (!res.ok) throw new Error(res.status); return res.json(); })
+        .then(function(repos) {
+          var publicRepos = repos.filter(function(r) { return !r.fork; }).slice(0, 6);
+          if (!publicRepos.length) { fallback.style.display = 'block'; return; }
+          container.innerHTML = publicRepos.map(function(repo) {
+            return '<div class="github-repo-card stagger-item visible">' +
+              '<h4><a href="' + repo.html_url + '" target="_blank" rel="noopener noreferrer">' + repo.name + '</a></h4>' +
+              '<p>' + (repo.description || 'No description') + '</p>' +
+              '<div class="github-repo-meta">' +
+                (repo.language ? '<span>' + repo.language + '</span>' : '') +
+                '<span>&#9733; ' + repo.stargazers_count + '</span>' +
+              '</div>' +
+            '</div>';
+          }).join('');
+        })
+        .catch(function() { fallback.style.display = 'block'; });
+    })();
+
+    // === Tag Filtering ===
+    var activeTag = null;
+    document.addEventListener('click', function(e) {
+      var tag = e.target.closest('.tag');
+      if (!tag) {
+        // Click outside a tag — reset
+        if (activeTag) resetTagFilter();
+        return;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+      var tagText = tag.textContent.trim();
+      if (activeTag === tagText) {
+        resetTagFilter();
+        return;
+      }
+      activeTag = tagText;
+      document.querySelectorAll('.tag').forEach(function(t) {
+        t.classList.toggle('active', t.textContent.trim() === tagText);
+      });
+      // Dim non-matching cards
+      document.querySelectorAll('.project-card, .project-featured').forEach(function(card) {
+        var tags = Array.from(card.querySelectorAll('.tag')).map(function(t) { return t.textContent.trim(); });
+        card.classList.toggle('dimmed', tags.indexOf(tagText) === -1);
+      });
+    });
+    function resetTagFilter() {
+      activeTag = null;
+      document.querySelectorAll('.tag.active').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.dimmed').forEach(function(c) { c.classList.remove('dimmed'); });
+    }
+
+    // === Resume Modal ===
+    var resumeModal = document.getElementById('resume-modal');
+    var resumeBtn = document.getElementById('resume-btn');
+    function openResumeModal() {
+      resumeModal.classList.add('open');
+      resumeModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeResumeModal() {
+      resumeModal.classList.remove('open');
+      resumeModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    // Desktop only: intercept resume button to show modal
+    if (window.innerWidth >= 768) {
+      resumeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openResumeModal();
+      });
+    }
+    resumeModal.querySelector('.resume-modal-backdrop').addEventListener('click', closeResumeModal);
+    resumeModal.querySelector('.resume-modal-close').addEventListener('click', closeResumeModal);
   </script>
 </body>
 </html>
