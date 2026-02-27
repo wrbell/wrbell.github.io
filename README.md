@@ -65,6 +65,7 @@ Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.gi
 - [x] "UM-Dearborn" badge — replaced with graduation date ("BSE Dec 2026")
 - [x] Footer CTA — "Looking for a new grad role."
 
+
 ### Technical
 - [ ] Custom 404 page (`404.html`)
 - [ ] `robots.txt` + `sitemap.xml`
