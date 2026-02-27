@@ -222,6 +222,11 @@
       font-size: clamp(0.875rem, 2vw, 1.125rem);
       color: var(--muted);
       margin-bottom: var(--space-lg);
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 0;
+      animation: typing 2s steps(50, end) 0.5s forwards;
     }
     .cursor {
       display: inline-block;
@@ -230,8 +235,11 @@
       background: var(--accent);
       margin-left: 2px;
       vertical-align: text-bottom;
-      animation: blink 1s step-end infinite;
+      opacity: 0;
+      animation: blink 1s step-end 2.5s infinite;
+      animation-fill-mode: forwards;
     }
+    @keyframes typing { to { width: 100%; } }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
     .hero-links { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-lg); }
@@ -351,7 +359,7 @@
     }
 
     /* === Experience === */
-    .timeline { display: flex; flex-direction: column; gap: var(--space-xl); }
+    .timeline { display: flex; flex-direction: column; gap: var(--space-xl); max-width: 800px; margin: 0 auto; }
     .timeline-item { display: grid; grid-template-columns: 1fr; gap: var(--space-md); }
     .timeline-date {
       font-family: var(--font-mono);
@@ -397,7 +405,7 @@
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .project-featured:hover { border-color: rgba(0, 229, 160, 0.3); box-shadow: var(--shadow-card-hover), 0 0 30px rgba(0, 229, 160, 0.04); }
-    .project-featured h3 { font-size: 1.25rem; margin-bottom: var(--space-xs); }
+    .project-featured h3, .project-featured h4 { font-size: 1.25rem; margin-bottom: var(--space-xs); }
     .project-featured .project-meta {
       font-family: var(--font-mono);
       font-size: 0.8125rem;
@@ -452,7 +460,7 @@
     }
     .project-card:hover { border-color: var(--accent); box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
     .project-card:hover::before { opacity: 1; }
-    .project-card h3 { font-size: 1.0625rem; margin-bottom: var(--space-xs); }
+    .project-card h3, .project-card h4 { font-size: 1.0625rem; margin-bottom: var(--space-xs); }
     .project-card .project-meta {
       font-family: var(--font-mono);
       font-size: 0.75rem;
@@ -463,6 +471,33 @@
       color: var(--muted);
       font-size: 0.875rem;
       margin-bottom: var(--space-md);
+    }
+    .project-lane {
+      margin-bottom: var(--space-xl);
+    }
+    .project-lane:last-child {
+      margin-bottom: 0;
+    }
+    .lane-label {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .lane-label::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
     }
 
     /* === Skills === */
@@ -503,29 +538,6 @@
       content: '› ';
       color: var(--accent);
       font-family: var(--font-mono);
-    }
-
-    /* === Education === */
-    .edu-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 2px solid var(--accent);
-      border-radius: var(--radius);
-      padding: var(--space-lg);
-      max-width: 500px;
-      box-shadow: var(--shadow-card);
-    }
-    .edu-card h3 { font-size: 1.125rem; margin-bottom: var(--space-xs); }
-    .edu-card .degree {
-      font-family: var(--font-mono);
-      font-size: 0.875rem;
-      color: var(--accent);
-      margin-bottom: var(--space-xs);
-    }
-    .edu-card .edu-date {
-      font-family: var(--font-mono);
-      font-size: 0.8125rem;
-      color: var(--muted);
     }
 
     /* === Footer === */
@@ -626,6 +638,8 @@
       }
       html { scroll-behavior: auto; }
       .fade-in { opacity: 1; transform: none; }
+      .hero-tagline { width: 100%; overflow: visible; white-space: normal; }
+      .cursor { opacity: 1; }
       .project-card:hover { transform: none; }
       .nav-links a::after { transition: none; }
     }
@@ -650,6 +664,7 @@
       .btn { border: 1px solid #999; padding: 0.25rem 0.5rem; }
       .btn-primary { background: none; color: var(--text); }
       .project-card, .project-featured, .edu-card { break-inside: avoid; box-shadow: none; }
+      .lane-label { break-after: avoid; }
       .project-card::before, .nav-links a::after { display: none; }
       #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before { display: none; }
       .status-dot { animation: none; background: #111; }
@@ -821,40 +836,94 @@
           <div class="line" aria-hidden="true"></div>
         </div>
 
-        <!-- Featured project -->
-        <a href="https://github.com/wrbell/stark-translate" class="project-featured" target="_blank" rel="noopener noreferrer" style="display:block; text-decoration:none; color:inherit;">
-          <h3>stark-translate</h3>
-          <div class="project-meta">Python / Live Bilingual Speech-to-Text</div>
-          <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
-          <div class="ascii-diagram" aria-label="Pipeline architecture diagram">
+        <!-- Personal lane -->
+        <div class="project-lane">
+          <h3 class="lane-label">Personal</h3>
+          <a href="https://github.com/wrbell/stark-translate" class="project-featured" target="_blank" rel="noopener noreferrer" style="display:block; text-decoration:none; color:inherit;">
+            <h4>stark-translate</h4>
+            <div class="project-meta">Python / Live Bilingual Speech-to-Text</div>
+            <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
+            <div class="ascii-diagram" aria-label="Pipeline architecture diagram">
  ┌─────────────┐    ┌────────────────┐    ┌─────────────────────┐    ┌────────────┐
  │  Mic Input  │───▶│  Whisper ASR   │───▶│  MarianMT /         │───▶│  WebSocket │
  │  (Audio)    │    │  (EN text)     │    │  TranslateGemma     │    │  Display   │
  └─────────────┘    └────────────────┘    │  (EN → ES)          │    └────────────┘
                                           └─────────────────────┘</div>
-          <div class="tags">
-            <span class="tag">Python</span>
-            <span class="tag">Whisper</span>
-            <span class="tag">MarianMT</span>
-            <span class="tag">TranslateGemma</span>
-            <span class="tag">WebSocket</span>
-            <span class="tag">MLX</span>
-          </div>
-        </a>
-
-        <!-- Project grid -->
-        <div class="project-grid">
-          <a href="https://github.com/wrbell/fast-fem" class="project-card" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit;">
-            <h3>fast-fem</h3>
-            <div class="project-meta">ANSYS / Python / FEA Self-Study</div>
-            <p>Accelerated FEA self-study for 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calculations. Mesh convergence studies, post-mortems, and reproducible methodology.</p>
             <div class="tags">
-              <span class="tag">ANSYS</span>
               <span class="tag">Python</span>
-              <span class="tag">Jupyter</span>
-              <span class="tag">FEA</span>
+              <span class="tag">Whisper</span>
+              <span class="tag">MarianMT</span>
+              <span class="tag">TranslateGemma</span>
+              <span class="tag">WebSocket</span>
+              <span class="tag">MLX</span>
             </div>
           </a>
+          <div class="project-grid">
+            <a href="https://github.com/wrbell/fast-fem" class="project-card" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit;">
+              <h4>fast-fem</h4>
+              <div class="project-meta">ANSYS / Python / FEA Self-Study</div>
+              <p>Accelerated FEA self-study for 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calculations. Mesh convergence studies, post-mortems, and reproducible methodology.</p>
+              <div class="tags">
+                <span class="tag">ANSYS</span>
+                <span class="tag">Python</span>
+                <span class="tag">Jupyter</span>
+                <span class="tag">FEA</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Research lane -->
+        <div class="project-lane">
+          <h3 class="lane-label">Research</h3>
+          <div class="project-grid">
+            <a href="https://github.com/wrbell/W26-Cobot-Axis" class="project-card" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit;">
+              <h4>W26-Cobot-Axis</h4>
+              <div class="project-meta">ME 472 Mechatronics — Winter 2026</div>
+              <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040).</p>
+              <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">RTDE</span>
+                <span class="tag">Klipper</span>
+                <span class="tag">RP2040</span>
+                <span class="tag">Raspberry Pi</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Education lane -->
+        <div class="project-lane">
+          <h3 class="lane-label">Education</h3>
+          <div class="project-grid">
+            <a href="#" class="project-card" style="text-decoration:none; color:inherit;">
+              <h4>ME 440 — Vibrations</h4>
+              <div class="project-meta">Mechanical Engineering</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <div class="tags">
+                <span class="tag">MATLAB</span>
+                <span class="tag">Vibration Analysis</span>
+              </div>
+            </a>
+            <a href="#" class="project-card" style="text-decoration:none; color:inherit;">
+              <h4>ME 379 — Fluids Lab</h4>
+              <div class="project-meta">Mechanical Engineering</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <div class="tags">
+                <span class="tag">Fluid Mechanics</span>
+                <span class="tag">Lab Instrumentation</span>
+              </div>
+            </a>
+            <a href="#" class="project-card" style="text-decoration:none; color:inherit;">
+              <h4>ME 3601 — Machine Design</h4>
+              <div class="project-meta">Mechanical Engineering</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <div class="tags">
+                <span class="tag">Machine Design</span>
+                <span class="tag">FEA</span>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1050,24 +1119,16 @@
           <h2>Education</h2>
           <div class="line" aria-hidden="true"></div>
         </div>
-        <div class="edu-card">
-          <h3>University of Michigan — Dearborn</h3>
-          <div class="degree">BSE Mechanical Engineering, Computer Science</div>
-          <div class="edu-date">December 2026</div>
-          <p style="color: var(--muted); font-size: 0.875rem; margin-top: var(--space-sm);">Relevant coursework: ME 472 Mechatronics, ME 3601 Machine Elements, ME 440 Vibrations, ME 379 Thermal-Fluid, [...]</p>
-        </div>
-        <a href="https://github.com/wrbell/W26-Cobot-Axis" class="project-card" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block; margin-top:var(--space-lg); max-width:500px;">
-          <h3>W26-Cobot-Axis</h3>
-          <div class="project-meta">ME 472 Mechatronics — Winter 2026</div>
-          <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040).</p>
-          <div class="tags">
-            <span class="tag">Python</span>
-            <span class="tag">RTDE</span>
-            <span class="tag">Klipper</span>
-            <span class="tag">RP2040</span>
-            <span class="tag">Raspberry Pi</span>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">Dec 2026</div>
+            <div class="timeline-content">
+              <h3>University of Michigan — Dearborn</h3>
+              <div class="role">BSE Mechanical Engineering, Computer Science</div>
+              <p>Relevant coursework: ME 472 Mechatronics, ME 3601 Machine Elements, ME 440 Vibrations, ME 379 Thermal-Fluid, [...]</p>
+            </div>
           </div>
-        </a>
+        </div>
       </div>
     </section>
   </main>
@@ -1076,6 +1137,7 @@
   <footer id="contact">
     <div class="container">
       <p class="footer-cta">Let's build something<span class="accent">.</span></p>
+      <a href="mailto:wrbell@umich.edu" class="btn btn-primary" style="margin-bottom: var(--space-lg);">Contact Me</a>
       <div class="footer-links">
         <a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a>
         <a href="https://github.com/wrbell" target="_blank" rel="noopener noreferrer">GitHub</a>
