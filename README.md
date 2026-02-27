@@ -25,7 +25,7 @@ Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.gi
 - [ ] Upload real resume PDF (`assets/willem-bell-resume.pdf`)
 - [ ] Replace lorem ipsum bullets with real descriptions across all sections
 - [ ] Fill in `[DATES]` for supply chain competition entries
-- [ ] Complete coursework list in Education section
+- [x] Complete coursework list in Education section (6 courses with catalog links)
 - [ ] Add favicon
 - [ ] Add `og:image` meta tag
 
