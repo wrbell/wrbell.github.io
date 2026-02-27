@@ -623,3 +623,11 @@ test.describe("Project details expand", () => {
     await expect(body).toBeHidden();
   });
 });
+
+test.describe("404 page", () => {
+  test("renders with correct heading and home link", async ({ page }) => {
+    await page.goto("/404.html");
+    await expect(page.locator("h1")).toContainText("404");
+    await expect(page.locator('a.btn-primary[href="/"]')).toBeVisible();
+  });
+});
