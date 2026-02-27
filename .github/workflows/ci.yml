@@ -23,7 +23,6 @@ jobs:
           root: .
           css: false
           log_level: INFO
-          extra: --ignore-re "CSS:.*env\(safe-area-inset"
 
       - name: Upload validation log
         if: failure()

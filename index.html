@@ -64,6 +64,9 @@
         document.documentElement.setAttribute('data-theme', 'light');
       }
     })();
+    if (CSS.supports && CSS.supports('padding', 'env(safe-area-inset-bottom)')) {
+      document.documentElement.style.setProperty('--safe-bottom', 'env(safe-area-inset-bottom, 0px)');
+    }
   </script>
   <style>
     /* === Reset === */
@@ -100,6 +103,7 @@
       --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.3);
       --shadow-card-hover: 0 4px 30px rgba(0, 0, 0, 0.4);
       --radius-lg: 10px;
+      --safe-bottom: 0px;
     }
 
     body, nav, .project-card, .chrono-card, .back-to-top, .tag, footer {
@@ -295,11 +299,7 @@
         pointer-events: auto;
       }
       .nav-links a { font-size: 1rem; }
-    }
-    @supports (padding: env(safe-area-inset-bottom)) {
-      @media (max-width: 767px) {
-        .nav-links { padding-bottom: env(safe-area-inset-bottom, 0px); }
-      }
+      .nav-links { padding-bottom: var(--safe-bottom, 0px); }
     }
 
     @media (min-width: 768px) {
@@ -816,7 +816,7 @@
     /* === Tag Clear Button === */
     .tag-clear-btn {
       position: fixed;
-      bottom: calc(var(--space-lg) + 56px);
+      bottom: calc(var(--space-lg) + 56px + var(--safe-bottom, 0px));
       right: var(--space-lg);
       padding: 0.5rem 1rem;
       font-family: var(--font-mono);
@@ -1008,7 +1008,7 @@
     /* === Back to Top === */
     .back-to-top {
       position: fixed;
-      bottom: var(--space-lg);
+      bottom: calc(var(--space-lg) + var(--safe-bottom, 0px));
       right: var(--space-lg);
       width: 44px;
       height: 44px;
@@ -1028,10 +1028,6 @@
     }
     .back-to-top.visible { opacity: 1; pointer-events: auto; }
     .back-to-top:hover { border-color: var(--accent); box-shadow: 0 0 15px rgba(0, 229, 160, 0.06); }
-    @supports (padding: env(safe-area-inset-bottom)) {
-      .back-to-top { bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 0px)); }
-      .tag-clear-btn { bottom: calc(var(--space-lg) + 56px + env(safe-area-inset-bottom, 0px)); }
-    }
 
     /* === Scroll Animations === */
     .fade-in {
