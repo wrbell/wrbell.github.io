@@ -205,6 +205,7 @@
       letter-spacing: -0.02em;
     }
     .nav-logo .accent { color: var(--accent); }
+    .nav-brand { display: flex; align-items: center; gap: var(--space-sm); }
     .nav-links { display: none; gap: var(--space-lg); align-items: center; }
     .nav-links a {
       position: relative;
@@ -1059,8 +1060,10 @@
   <a href="#main" class="skip-link">Skip to content</a>
 
   <nav aria-label="Main navigation">
-    <a href="#" class="nav-logo">wrbell<span class="accent">.eng</span></a>
-    <button class="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle theme">&#9790;</button>
+    <div class="nav-brand">
+      <a href="#" class="nav-logo">wrbell<span class="accent">.eng</span></a>
+      <button class="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle theme">&#9790;</button>
+    </div>
     <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">
       <span></span><span></span><span></span>
     </button>
