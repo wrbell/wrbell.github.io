@@ -953,11 +953,44 @@
       .skills-grid { grid-template-columns: 1fr 1fr 1fr; }
     }
 
+    /* === Side Index === */
+    .side-index {
+      position: fixed;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: none;
+      flex-direction: column;
+      gap: 0.75rem;
+      z-index: 90;
+    }
+    .side-index-link {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      transition: color 0.2s, transform 0.2s, font-weight 0.2s;
+      text-align: right;
+    }
+    .side-index-link:hover { color: var(--text); }
+    .side-index-link.active {
+      color: var(--accent);
+      font-weight: 700;
+      transform: scale(1.05);
+    }
+
+    /* === Responsive: Side Index (1024px+) === */
+    @media (min-width: 1024px) {
+      .side-index { display: flex; right: 0.5rem; }
+    }
+
     /* === Responsive: Desktop (1200px+) === */
     @media (min-width: 1200px) {
       .container { padding: 0 var(--space-xl); }
       section { padding: var(--space-2xl) 0; }
       .headshot { width: 320px; height: 400px; }
+      .side-index { right: 1.5rem; }
     }
 
     /* === Reduced Motion === */
@@ -976,7 +1009,141 @@
       .tag:hover { transform: none; }
       .timeline-content { transition: none; }
       .nav-links a::after { transition: none; }
+      .chrono-card:hover { transform: none; }
+      .side-index-link { transition: none; }
     }
+
+    /* === View Toggle Button === */
+    .view-toggle {
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+    .view-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .view-toggle svg { width: 16px; height: 16px; }
+
+    /* === Chronological Timeline === */
+    .chrono-view-section { display: none; }
+    .chrono-track {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-left: 2rem;
+    }
+    .chrono-track::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--border) 90%, transparent);
+    }
+    .chrono-year {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: var(--space-xl) 0 var(--space-lg);
+      position: relative;
+    }
+    .chrono-year:first-child { margin-top: 0; }
+    .chrono-year::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .chrono-card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+      box-shadow: var(--shadow-card);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .chrono-card::before {
+      content: '';
+      position: absolute;
+      left: calc(-2rem + 3px);
+      top: 1.5rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .chrono-card:hover { border-color: var(--accent); box-shadow: var(--shadow-card-hover), 0 0 20px var(--accent-glow); transform: translateY(-2px); }
+    .chrono-card h4 { font-size: 1.0625rem; margin-bottom: var(--space-xs); }
+    .chrono-card .chrono-meta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-bottom: var(--space-xs);
+    }
+    .chrono-card .chrono-date {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--muted);
+      margin-bottom: var(--space-sm);
+    }
+    .chrono-card p {
+      color: var(--muted);
+      font-size: 0.875rem;
+      margin-bottom: var(--space-sm);
+    }
+    .chrono-card p:last-of-type { margin-bottom: var(--space-md); }
+    .chrono-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      margin-bottom: var(--space-sm);
+      font-weight: 600;
+    }
+    .chrono-badge--experience { background: rgba(56, 139, 253, 0.15); color: #58a6ff; border: 1px solid rgba(56, 139, 253, 0.3); }
+    .chrono-badge--research { background: rgba(163, 113, 247, 0.15); color: #a371f7; border: 1px solid rgba(163, 113, 247, 0.3); }
+    .chrono-badge--competition { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(0, 229, 160, 0.3); }
+    .chrono-badge--project { background: rgba(224, 224, 232, 0.1); color: var(--text); border: 1px solid var(--border); }
+    .chrono-undated {
+      margin-top: var(--space-xl);
+      position: relative;
+    }
+    .chrono-undated h3 {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Chrono view toggle: hide/show sections */
+    body.chrono-view .section-default { display: none; }
+    body.chrono-view .side-index { display: none !important; }
+    body.chrono-view .chrono-view-section { display: block; }
 
     /* === Print Styles === */
     @media print {
@@ -989,7 +1156,7 @@
         --accent: #111;
       }
       body { font-size: 12pt; }
-      nav, .headshot-container, .skip-link, .back-to-top, .theme-toggle, .resume-modal { display: none !important; }
+      nav, .headshot-container, .skip-link, .back-to-top, .theme-toggle, .resume-modal, .side-index, .view-toggle, .chrono-view-section { display: none !important; }
       .hero { min-height: auto; padding-top: 0; }
       section { padding: 1rem 0; }
       .fade-in { opacity: 1; transform: none; }
@@ -1012,6 +1179,9 @@
   <nav aria-label="Main navigation">
     <div class="nav-brand">
       <a href="#" class="nav-logo">wrbell<span class="accent">.eng</span></a>
+      <button type="button" class="view-toggle" aria-label="Switch to timeline view" title="Timeline view">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="3" x2="3" y2="13"/><circle cx="3" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="3" cy="11" r="1.5" fill="currentColor" stroke="none"/><line x1="6" y1="5" x2="14" y2="5"/><line x1="6" y1="11" x2="14" y2="11"/><line x1="6" y1="8" x2="11" y2="8"/><circle cx="3" cy="8" r="1.5" fill="currentColor" stroke="none"/></svg>
+      </button>
       <button class="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle theme">&#9790;</button>
     </div>
     <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -1028,6 +1198,17 @@
       <a href="#contact">Contact</a>
     </div>
   </nav>
+
+  <aside class="side-index" aria-label="Page sections">
+    <a href="#about" class="side-index-link">About</a>
+    <a href="#experience" class="side-index-link">Experience</a>
+    <a href="#projects" class="side-index-link">Projects</a>
+    <a href="#research" class="side-index-link">Research</a>
+    <a href="#extracurricular" class="side-index-link">Activities</a>
+    <a href="#skills" class="side-index-link">Skills</a>
+    <a href="#education" class="side-index-link">Education</a>
+    <a href="#contact" class="side-index-link">Contact</a>
+  </aside>
 
   <main id="main">
     <!-- Hero -->
@@ -1077,8 +1258,311 @@
       </div>
     </section>
 
+    <!-- Chronological Timeline (hidden by default, shown via toggle) -->
+    <section id="timeline" class="chrono-view-section" aria-labelledby="timeline-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="timeline-heading">Timeline</h2>
+          <div class="line" aria-hidden="true"></div>
+        </div>
+        <div class="chrono-track">
+
+          <div class="chrono-year">2026</div>
+
+          <div class="chrono-card stagger-item" data-date="2026-02">
+            <span class="chrono-badge chrono-badge--competition">Competition</span>
+            <h4>Colorado State Rams</h4>
+            <div class="chrono-meta">Supply Chain Case Competition</div>
+            <div class="chrono-date">Feb 2026</div>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</p>
+            <div class="tags">
+              <span class="tag">[TAG]</span>
+              <span class="tag">[TAG]</span>
+              <span class="tag">[TAG]</span>
+              <span class="tag">[TAG]</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2026-01">
+            <span class="chrono-badge chrono-badge--competition">Competition</span>
+            <h4>Land O'Lakes / Kozy Shack</h4>
+            <div class="chrono-meta">Supply Chain Case Competition</div>
+            <div class="chrono-date">Jan 2026</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">PuLP</span>
+              <span class="tag">Forecasting</span>
+              <span class="tag">Supply Chain</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2026-01">
+            <span class="chrono-badge chrono-badge--competition">Competition</span>
+            <h4>3M Fulfillment Network</h4>
+            <div class="chrono-meta">Supply Chain Case Competition</div>
+            <div class="chrono-date">Jan 2026</div>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Network Optimization</span>
+              <span class="tag">PuLP</span>
+              <span class="tag">Supply Chain</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2026-01">
+            <span class="chrono-badge chrono-badge--project">Project</span>
+            <h4>W26-Cobot-Axis</h4>
+            <div class="chrono-meta">ME 472 Mechatronics — Winter 2026</div>
+            <div class="chrono-date">Winter 2026</div>
+            <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040).</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">RTDE</span>
+              <span class="tag">Klipper</span>
+              <span class="tag">RP2040</span>
+              <span class="tag">Raspberry Pi</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2026-01">
+            <span class="chrono-badge chrono-badge--project">Project</span>
+            <h4>stark-translate</h4>
+            <div class="chrono-meta">Python / Live Bilingual Speech-to-Text</div>
+            <div class="chrono-date">2026</div>
+            <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Whisper</span>
+              <span class="tag">MarianMT</span>
+              <span class="tag">TranslateGemma</span>
+              <span class="tag">WebSocket</span>
+              <span class="tag">MLX</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2026-01">
+            <span class="chrono-badge chrono-badge--project">Project</span>
+            <h4>fast-fem</h4>
+            <div class="chrono-meta">ANSYS / Python / FEA Self-Study</div>
+            <div class="chrono-date">2026</div>
+            <p>Accelerated FEA self-study for 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calculations. Mesh convergence studies, post-mortems, and reproducible methodology.</p>
+            <div class="tags">
+              <span class="tag">ANSYS</span>
+              <span class="tag">Python</span>
+              <span class="tag">Jupyter</span>
+              <span class="tag">FEA</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2026-01">
+            <span class="chrono-badge chrono-badge--project">Coursework</span>
+            <h4>Vibrations — Final Project</h4>
+            <div class="chrono-meta">ME 440 · Mechanical Engineering</div>
+            <div class="chrono-date">2026</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <div class="tags">
+              <span class="tag">MATLAB</span>
+              <span class="tag">Vibration Analysis</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2026-01">
+            <span class="chrono-badge chrono-badge--project">Coursework</span>
+            <h4>Fluids Lab — Final Project</h4>
+            <div class="chrono-meta">ME 379 · Mechanical Engineering</div>
+            <div class="chrono-date">2026</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <div class="tags">
+              <span class="tag">Fluid Mechanics</span>
+              <span class="tag">Lab Instrumentation</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2026-01">
+            <span class="chrono-badge chrono-badge--project">Coursework</span>
+            <h4>Machine Design — Final Project</h4>
+            <div class="chrono-meta">ME 3601 · Mechanical Engineering</div>
+            <div class="chrono-date">2026</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <div class="tags">
+              <span class="tag">Machine Design</span>
+              <span class="tag">FEA</span>
+            </div>
+          </div>
+
+          <div class="chrono-year">2025</div>
+
+          <div class="chrono-card stagger-item" data-date="2025-11">
+            <span class="chrono-badge chrono-badge--competition">Competition</span>
+            <h4>Quantum Frontiers</h4>
+            <div class="chrono-meta">Supply Chain Case Competition</div>
+            <div class="chrono-date">Nov 2025</div>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
+            <div class="tags">
+              <span class="tag">[TAG]</span>
+              <span class="tag">[TAG]</span>
+              <span class="tag">[TAG]</span>
+              <span class="tag">[TAG]</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2025-08">
+            <span class="chrono-badge chrono-badge--research">Research</span>
+            <h4>Pannier Research Lab</h4>
+            <div class="chrono-meta">Research Assistant</div>
+            <div class="chrono-date">Aug 2025 — Present</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+            <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+            <div class="tags">
+              <span class="tag">MATLAB</span>
+              <span class="tag">G-Code</span>
+              <span class="tag">Toolchanger</span>
+              <span class="tag">Automation</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2025-01">
+            <span class="chrono-badge chrono-badge--experience">Experience</span>
+            <h4>SpaceX</h4>
+            <div class="chrono-meta">Starfactory Automation &amp; Controls Intern</div>
+            <div class="chrono-date">Jan 2025 — Jul 2025</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            <div class="tags">
+              <span class="tag">EPLAN</span>
+              <span class="tag">Siemens PLCs</span>
+              <span class="tag">S120 Drives</span>
+              <span class="tag">KUKA Robots</span>
+              <span class="tag">NX</span>
+            </div>
+          </div>
+
+          <div class="chrono-year">2024</div>
+
+          <div class="chrono-card stagger-item" data-date="2024-09">
+            <span class="chrono-badge chrono-badge--research">Research</span>
+            <h4>Pannier Research Lab</h4>
+            <div class="chrono-meta">Research Assistant</div>
+            <div class="chrono-date">Sep 2024 — Jan 2025</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+            <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+            <div class="tags">
+              <span class="tag">MATLAB</span>
+              <span class="tag">G-Code</span>
+              <span class="tag">Toolchanger</span>
+              <span class="tag">Automation</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2024-05">
+            <span class="chrono-badge chrono-badge--experience">Experience</span>
+            <h4>SpaceX</h4>
+            <div class="chrono-meta">Space Lasers Integration &amp; Test Intern</div>
+            <div class="chrono-date">May 2024 — Aug 2024</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+            <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+            <div class="tags">
+              <span class="tag">NX</span>
+              <span class="tag">ANSYS</span>
+              <span class="tag">Vibration Testing</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2024-01">
+            <span class="chrono-badge chrono-badge--experience">Experience</span>
+            <h4>Tesla 4680</h4>
+            <div class="chrono-meta">Controls Development Intern</div>
+            <div class="chrono-date">Sep 2023 — Apr 2024</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+            <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+            <div class="tags">
+              <span class="tag">DeltaV</span>
+              <span class="tag">TwinCAT</span>
+              <span class="tag">Controls FAT</span>
+              <span class="tag">VFD</span>
+            </div>
+          </div>
+
+          <div class="chrono-year">2023</div>
+
+          <div class="chrono-card stagger-item" data-date="2023-05">
+            <span class="chrono-badge chrono-badge--experience">Experience</span>
+            <h4>SpaceX</h4>
+            <div class="chrono-meta">Starship Launch Intern</div>
+            <div class="chrono-date">May 2023 — Aug 2023</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur.</p>
+            <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit.</p>
+            <div class="tags">
+              <span class="tag">Controls Hardware</span>
+              <span class="tag">Commissioning</span>
+              <span class="tag">System Integration</span>
+            </div>
+          </div>
+
+          <div class="chrono-year">2022</div>
+
+          <div class="chrono-card stagger-item" data-date="2022-05">
+            <span class="chrono-badge chrono-badge--experience">Experience</span>
+            <h4>SpaceX</h4>
+            <div class="chrono-meta">Starship Automation &amp; Controls Intern</div>
+            <div class="chrono-date">May 2022 — Aug 2022</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Quis autem vel eum iure reprehenderit qui in ea voluptate.</p>
+            <p>At vero eos et accusamus et iusto odio dignissimos ducimus.</p>
+            <div class="tags">
+              <span class="tag">Cryogenic Systems</span>
+              <span class="tag">Instrumentation</span>
+              <span class="tag">VFD</span>
+            </div>
+          </div>
+
+          <div class="chrono-year">2021</div>
+
+          <div class="chrono-card stagger-item" data-date="2021-07">
+            <span class="chrono-badge chrono-badge--research">Research</span>
+            <h4>Pannier Research Lab</h4>
+            <div class="chrono-meta">Undergraduate Researcher</div>
+            <div class="chrono-date">Jul 2021 — May 2023</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+            <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+            <div class="tags">
+              <span class="tag">MATLAB</span>
+              <span class="tag">G-Code</span>
+              <span class="tag">Toolchanger</span>
+              <span class="tag">Automation</span>
+            </div>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2021-05">
+            <span class="chrono-badge chrono-badge--experience">Experience</span>
+            <h4>DTE Energy — Fermi Nuclear Power Plant</h4>
+            <div class="chrono-meta">Student Co-Op</div>
+            <div class="chrono-date">May 2021 — Feb 2022</div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+            <p>Ut enim ad minima veniam quis nostrum exercitationem ullam.</p>
+            <div class="tags">
+              <span class="tag">Nuclear</span>
+              <span class="tag">Design Documentation</span>
+              <span class="tag">Regulatory Compliance</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- Experience -->
-    <section id="experience" class="fade-in" aria-labelledby="experience-heading">
+    <section id="experience" class="fade-in section-default" aria-labelledby="experience-heading">
       <div class="container">
         <div class="section-header">
           <h2 id="experience-heading">Experience</h2>
@@ -1183,7 +1667,7 @@
     </section>
 
     <!-- Projects -->
-    <section id="projects" class="fade-in" aria-labelledby="projects-heading">
+    <section id="projects" class="fade-in section-default" aria-labelledby="projects-heading">
       <div class="container">
         <div class="section-header">
           <h2 id="projects-heading">Projects</h2>
@@ -1292,7 +1776,7 @@
     </section>
 
     <!-- Research -->
-    <section id="research" class="fade-in" aria-labelledby="research-heading">
+    <section id="research" class="fade-in section-default" aria-labelledby="research-heading">
       <div class="container">
         <div class="section-header">
           <h2 id="research-heading">Research</h2>
@@ -1423,7 +1907,7 @@
     </section>
 
     <!-- Extracurricular -->
-    <section id="extracurricular" class="fade-in" aria-labelledby="extracurricular-heading">
+    <section id="extracurricular" class="fade-in section-default" aria-labelledby="extracurricular-heading">
       <div class="container">
         <div class="section-header">
           <h2 id="extracurricular-heading">Extracurricular</h2>
@@ -1473,7 +1957,7 @@
     </section>
 
     <!-- Skills -->
-    <section id="skills" class="fade-in" aria-labelledby="skills-heading">
+    <section id="skills" class="fade-in section-default" aria-labelledby="skills-heading">
       <div class="container">
         <div class="section-header">
           <h2 id="skills-heading">Skills</h2>
@@ -1523,7 +2007,7 @@
     </section>
 
     <!-- Education -->
-    <section id="education" class="fade-in" aria-labelledby="education-heading">
+    <section id="education" class="fade-in section-default" aria-labelledby="education-heading">
       <div class="container">
         <div class="section-header">
           <h2 id="education-heading">Education</h2>
@@ -1736,6 +2220,78 @@
     }
     resumeModal.querySelector('.resume-modal-backdrop').addEventListener('click', closeResumeModal);
     resumeModal.querySelector('.resume-modal-close').addEventListener('click', closeResumeModal);
+
+    // === Side Index Active Tracking ===
+    const sideIndex = document.querySelector('.side-index');
+    const sideLinks = document.querySelectorAll('.side-index-link');
+    const sectionIds = Array.from(sideLinks).map(function(link) { return link.getAttribute('href').slice(1); });
+
+    var activeSideLink = null;
+    var sectionObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          if (activeSideLink) activeSideLink.classList.remove('active');
+          var match = sideIndex.querySelector('a[href="#' + id + '"]');
+          if (match) {
+            match.classList.add('active');
+            activeSideLink = match;
+          }
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+
+    sectionIds.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) sectionObserver.observe(el);
+    });
+
+    // === Chronological View Toggle ===
+    var viewToggle = document.querySelector('.view-toggle');
+    var timelineSection = document.getElementById('timeline');
+    var timelineIcon = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="3" x2="3" y2="13"/><circle cx="3" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="3" cy="11" r="1.5" fill="currentColor" stroke="none"/><line x1="6" y1="5" x2="14" y2="5"/><line x1="6" y1="11" x2="14" y2="11"/><line x1="6" y1="8" x2="11" y2="8"/><circle cx="3" cy="8" r="1.5" fill="currentColor" stroke="none"/></svg>';
+    var gridIcon = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>';
+    var chronoAnimated = false;
+
+    function setChronoView(active) {
+      if (active) {
+        document.body.classList.add('chrono-view');
+        timelineSection.style.display = 'block';
+        viewToggle.innerHTML = gridIcon;
+        viewToggle.setAttribute('aria-label', 'Switch to section view');
+        viewToggle.title = 'Section view';
+        // Stagger animate timeline cards on first reveal
+        if (!chronoAnimated) {
+          chronoAnimated = true;
+          var cards = timelineSection.querySelectorAll('.stagger-item');
+          cards.forEach(function(card, i) {
+            card.style.transitionDelay = (i * 60) + 'ms';
+            requestAnimationFrame(function() {
+              requestAnimationFrame(function() {
+                card.classList.add('visible');
+              });
+            });
+          });
+        }
+      } else {
+        document.body.classList.remove('chrono-view');
+        timelineSection.style.display = '';
+        viewToggle.innerHTML = timelineIcon;
+        viewToggle.setAttribute('aria-label', 'Switch to timeline view');
+        viewToggle.title = 'Timeline view';
+      }
+    }
+
+    // Restore saved preference
+    var savedView = localStorage.getItem('view');
+    if (savedView === 'chrono') setChronoView(true);
+
+    viewToggle.addEventListener('click', function() {
+      var isChrono = document.body.classList.contains('chrono-view');
+      localStorage.setItem('view', isChrono ? 'sections' : 'chrono');
+      setChronoView(!isChrono);
+      if (!isChrono) window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   </script>
 </body>
 </html>
