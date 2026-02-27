@@ -6,15 +6,21 @@ Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.gi
 
 - Zero-dependency single-page portfolio (one `index.html`, inline CSS/JS, no build tools)
 - "Mission Control" dark theme (`#00e5a0` accent, `#0a0a12` background)
-- JetBrains Mono + Inter via Google Fonts
-- 6 content sections: Experience, Projects, Research, Extracurricular, Skills, Education
-- 6 professional experience entries (SpaceX ×4, Tesla 4680, DTE Energy)
+- Self-hosted JetBrains Mono + Inter (`assets/fonts/`)
+- Light/dark theme toggle with `localStorage` persistence
+- Chrono/section view toggle with `localStorage` persistence
+- 6 content sections: Experience, Projects, Supply Chain Cases, Extracurricular, Skills, Education
+- Chrono timeline view with filter buttons (Experience, Project, Research, Supply Chain Cases, Coursework)
+- Experience section with lane labels: Industry (6 entries), Research (3 entries), Campus (2 entries)
+- Supply Chain Cases section with 4 competition cards (nav label: "Case Work")
 - Featured project with ASCII architecture diagram (stark-translate)
+- Edition-gated preview banner (Fall 2026)
+- Resume modal with PDF preview
 - Responsive: mobile-first, tablet (768px+), desktop (1200px+)
 - Accessibility: skip-to-content link, focus-visible outlines, `prefers-reduced-motion`, semantic HTML
 - Print stylesheet with light-theme override
 - Scroll-triggered fade-in animations (IntersectionObserver)
-- Frosted-glass fixed nav with smooth-scroll anchors
+- Frosted-glass fixed nav with smooth-scroll anchors and side-index
 - Card hover effects (glow, lift, accent border reveal)
 - Open Graph meta tags
 - Auto-deploy via GitHub Pages on push to `main`
@@ -45,8 +51,8 @@ Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.gi
 ### Architectural decisions (need user input)
 - [x] Content duplication — Timeline condensed to compact overview with "View details" links to section cards
 - [x] Timeline entry density — grouped coursework into one expandable card
-- [ ] Consolidate Supply Chain Cases — appear in both Timeline and Research
-- [ ] 8 nav items — borderline too many. Could fold Research into Experience, Extracurricular into About
+- [x] Consolidate Supply Chain Cases — now in own section, no duplication
+- [x] 8 nav items — resolved (Research folded into Experience, replaced with Case Work)
 - [ ] Timeline semantic structure (`div` → `ol`) — screen readers would benefit, but high-risk refactor
 - [ ] Section ordering (Skills/Education higher?)
 - [ ] Skills section redesign (tag pills vs bullets)
@@ -100,7 +106,7 @@ Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.gi
 
 ## Tech Stack
 
-HTML · CSS · JavaScript · Google Fonts · GitHub Pages
+HTML · CSS · JavaScript · GitHub Pages
 
 ## Local Development
 

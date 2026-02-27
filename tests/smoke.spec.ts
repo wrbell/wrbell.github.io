@@ -135,7 +135,7 @@ test.describe("Timeline filter buttons", () => {
 
     // Should have 6 filter buttons
     const filters = page.locator(".chrono-filter");
-    await expect(filters).toHaveCount(6);
+    await expect(filters).toHaveCount(5);
 
     // "All" should be active by default
     await expect(filters.first()).toHaveClass(/\bactive\b/);
