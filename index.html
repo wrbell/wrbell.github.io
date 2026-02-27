@@ -1050,8 +1050,10 @@
 
     /* === View Toggle Button === */
     .view-toggle {
-      width: 44px;
+      width: auto;
       height: 44px;
+      padding: 0 12px;
+      gap: 6px;
       background: none;
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -1065,6 +1067,7 @@
     }
     .view-toggle:hover { border-color: var(--accent); color: var(--accent); }
     .view-toggle svg { width: 16px; height: 16px; }
+    .view-toggle-label { font-size: 0.75rem; font-family: var(--font-mono); letter-spacing: 0.02em; }
 
     /* === Chronological Timeline === */
     .chrono-view-section { display: none; }
@@ -1204,7 +1207,6 @@
     }
     .chrono-badge--experience { background: rgba(56, 139, 253, 0.15); color: #58a6ff; border: 1px solid rgba(56, 139, 253, 0.3); }
     .chrono-badge--research { background: rgba(163, 113, 247, 0.15); color: #a371f7; border: 1px solid rgba(163, 113, 247, 0.3); }
-    .chrono-badge--competition { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(0, 229, 160, 0.3); }
     .chrono-badge--project { background: rgba(224, 224, 232, 0.1); color: var(--text); border: 1px solid var(--border); }
 
     /* === Chrono Group Card === */
@@ -1350,6 +1352,7 @@
       <a href="#" class="nav-logo">wrbell<span class="accent">.eng</span></a>
       <button type="button" class="view-toggle" aria-label="Switch to timeline view" title="Timeline view">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="3" x2="3" y2="13"/><circle cx="3" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="3" cy="11" r="1.5" fill="currentColor" stroke="none"/><line x1="6" y1="5" x2="14" y2="5"/><line x1="6" y1="11" x2="14" y2="11"/><line x1="6" y1="8" x2="11" y2="8"/><circle cx="3" cy="8" r="1.5" fill="currentColor" stroke="none"/></svg>
+        <span class="view-toggle-label">Timeline</span>
       </button>
       <button class="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle theme">&#9790;</button>
     </div>
@@ -1442,7 +1445,6 @@
           <button type="button" class="chrono-filter" data-filter="experience">Experience</button>
           <button type="button" class="chrono-filter" data-filter="project">Project</button>
           <button type="button" class="chrono-filter" data-filter="research">Research</button>
-          <button type="button" class="chrono-filter" data-filter="supply chain cases">Supply Chain Cases</button>
           <button type="button" class="chrono-filter" data-filter="coursework">Coursework</button>
         </div>
         <div class="chrono-track">
@@ -1522,39 +1524,7 @@
             <a href="#res-cobot-axis" class="chrono-details-link">View details &rarr;</a>
           </div>
 
-          <div class="chrono-card stagger-item" data-date="2026-02">
-            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
-            <h3>Colorado State Rams</h3>
-            <div class="chrono-meta">Supply Chain Case Competition</div>
-            <div class="chrono-date">Feb 2026</div>
-            <a href="#comp-colorado-state" class="chrono-details-link">View details &rarr;</a>
-          </div>
-
-          <div class="chrono-card stagger-item" data-date="2026-01">
-            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
-            <h3>Land O'Lakes / Kozy Shack</h3>
-            <div class="chrono-meta">Supply Chain Case Competition</div>
-            <div class="chrono-date">Jan 2026</div>
-            <a href="#comp-kozy-shack" class="chrono-details-link">View details &rarr;</a>
-          </div>
-
           <div class="chrono-year">2025</div>
-
-          <div class="chrono-card stagger-item" data-date="2025-12">
-            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
-            <h3>3M Fulfillment Network</h3>
-            <div class="chrono-meta">Supply Chain Case Competition</div>
-            <div class="chrono-date">Dec 2025</div>
-            <a href="#comp-3m" class="chrono-details-link">View details &rarr;</a>
-          </div>
-
-          <div class="chrono-card stagger-item" data-date="2025-11">
-            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
-            <h3>Quantum Frontiers</h3>
-            <div class="chrono-meta">Supply Chain Case Competition</div>
-            <div class="chrono-date">Nov 2025</div>
-            <a href="#comp-quantum-frontiers" class="chrono-details-link">View details &rarr;</a>
-          </div>
 
           <div class="chrono-card stagger-item" data-date="2025-08">
             <span class="chrono-badge chrono-badge--research">Research</span>
@@ -2357,6 +2327,10 @@
           e.preventDefault();
           navLinks.classList.remove('open');
           navToggle.setAttribute('aria-expanded', 'false');
+          if (document.body.classList.contains('chrono-view')) {
+            setChronoView(false);
+            localStorage.setItem('view', 'sections');
+          }
           target.scrollIntoView({ behavior: 'smooth' });
         }
       });
@@ -2495,7 +2469,7 @@
       if (active) {
         document.body.classList.add('chrono-view');
         timelineSection.style.display = 'block';
-        viewToggle.innerHTML = gridIcon;
+        viewToggle.innerHTML = gridIcon + '<span class="view-toggle-label">Sections</span>';
         viewToggle.setAttribute('aria-label', 'Switch to section view');
         viewToggle.title = 'Section view';
         // Stagger animate timeline cards on first reveal
@@ -2514,7 +2488,7 @@
       } else {
         document.body.classList.remove('chrono-view');
         timelineSection.style.display = '';
-        viewToggle.innerHTML = timelineIcon;
+        viewToggle.innerHTML = timelineIcon + '<span class="view-toggle-label">Timeline</span>';
         viewToggle.setAttribute('aria-label', 'Switch to timeline view');
         viewToggle.title = 'Timeline view';
       }
