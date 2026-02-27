@@ -37,11 +37,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run Lighthouse CI
+      - name: Lighthouse CI (mobile)
         uses: treosh/lighthouse-ci-action@v12
         with:
           configPath: ./lighthouserc.json
           uploadArtifacts: true
+          artifactName: lighthouse-mobile
+
+      - name: Lighthouse CI (desktop)
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc-desktop.json
+          uploadArtifacts: true
+          artifactName: lighthouse-desktop
 
   link-check:
     name: Link Check
@@ -73,7 +81,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium webkit
 
       - name: Run Playwright tests
         run: npx playwright test

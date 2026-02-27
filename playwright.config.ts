@@ -1,4 +1,4 @@
-import { defineConfig } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
@@ -8,8 +8,20 @@ export default defineConfig({
   },
   projects: [
     {
-      name: "chromium",
-      use: { browserName: "chromium" },
+      name: "chromium-desktop",
+      use: { browserName: "chromium", viewport: { width: 1280, height: 800 } },
+    },
+    {
+      name: "webkit-desktop",
+      use: { browserName: "webkit", viewport: { width: 1280, height: 800 } },
+    },
+    {
+      name: "iphone-safari",
+      use: { ...devices["iPhone 14"] },
+    },
+    {
+      name: "android-chrome",
+      use: { ...devices["Pixel 7"] },
     },
   ],
   webServer: {
