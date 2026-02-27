@@ -4,6 +4,10 @@ test.describe("Tag filtering", () => {
   test("toggles active/dimmed classes on click", async ({ page }) => {
     await page.goto("/");
 
+    // Switch to section view (chrono is default)
+    await page.locator(".view-toggle").click();
+    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
+
     // Pick the first tag inside a project card
     const tag = page.locator(".project-card .tag, .project-featured .tag").first();
     const tagText = (await tag.textContent())!.trim();
@@ -95,7 +99,7 @@ test.describe("Resume modal lifecycle", () => {
 });
 
 test.describe("localStorage persistence", () => {
-  test("theme and chrono view survive page reload", async ({ page }) => {
+  test("theme and view preference survive page reload", async ({ page }) => {
     await page.emulateMedia({ colorScheme: 'dark' });
     await page.goto("/");
 
@@ -103,13 +107,16 @@ test.describe("localStorage persistence", () => {
     const htmlEl = page.locator("html");
     await expect(htmlEl).not.toHaveAttribute("data-theme", "light");
 
+    // Default should be chrono view
+    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
+
     // Switch to light mode
     await page.locator(".theme-toggle").click();
     await expect(htmlEl).toHaveAttribute("data-theme", "light");
 
-    // Enable chrono view
+    // Switch to section view
     await page.locator(".view-toggle").click();
-    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
+    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
 
     // Reload the page
     await page.reload();
@@ -117,11 +124,8 @@ test.describe("localStorage persistence", () => {
     // Theme should persist
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 
-    // Chrono view should persist
-    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
-
-    // Timeline section should be visible
-    await expect(page.locator("#timeline")).toBeVisible();
+    // Section view should persist
+    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
   });
 });
 
@@ -129,8 +133,7 @@ test.describe("Timeline filter buttons", () => {
   test("filters cards by type and resets with All", async ({ page }) => {
     await page.goto("/");
 
-    // Switch to chrono view
-    await page.locator(".view-toggle").click();
+    // Chrono view is the default
     await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
 
     // Should have 6 filter buttons
@@ -182,8 +185,7 @@ test.describe("Chrono details link navigation", () => {
   test("navigates from chrono card to section card", async ({ page }) => {
     await page.goto("/");
 
-    // Switch to chrono view
-    await page.locator(".view-toggle").click();
+    // Chrono view is the default
     await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
 
     // Show all cards first (Experience filter is active by default)
@@ -209,7 +211,6 @@ test.describe("Chrono details link navigation", () => {
 test.describe("Chrono group card", () => {
   test("expands and collapses coursework list", async ({ page }) => {
     await page.goto("/");
-    await page.locator(".view-toggle").click();
     await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
 
     // Show coursework (Experience filter is active by default)
@@ -318,11 +319,8 @@ test.describe("Chrono view re-entry defaults to Experience", () => {
     );
     const allFilter = page.locator('.chrono-filter[data-filter="all"]');
 
-    // Enter chrono view
-    await viewToggle.click();
+    // Chrono view is the default, Experience should be active
     await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
-
-    // Experience should be active
     await expect(expFilter).toHaveClass(/\bactive\b/);
 
     // Click "All"
@@ -330,7 +328,7 @@ test.describe("Chrono view re-entry defaults to Experience", () => {
     await expect(allFilter).toHaveClass(/\bactive\b/);
     await expect(expFilter).not.toHaveClass(/\bactive\b/);
 
-    // Toggle back to sections
+    // Toggle to sections
     await viewToggle.click();
     await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
 
@@ -372,8 +370,7 @@ test.describe("Supply Chain Cases filter", () => {
   test("shows exactly 4 Supply Chain Cases cards", async ({ page }) => {
     await page.goto("/");
 
-    // Enter chrono view
-    await page.locator(".view-toggle").click();
+    // Chrono view is the default
     await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
 
     // Click Supply Chain Cases filter
@@ -402,6 +399,10 @@ test.describe("Tag clear button", () => {
     page,
   }) => {
     await page.goto("/");
+
+    // Switch to section view (chrono is default)
+    await page.locator(".view-toggle").click();
+    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
 
     const clearBtn = page.locator(".tag-clear-btn");
 
@@ -433,6 +434,10 @@ test.describe("Tag clear button", () => {
 test.describe("Project details expand", () => {
   test("toggles detail content on click", async ({ page }) => {
     await page.goto("/");
+
+    // Switch to section view (chrono is default)
+    await page.locator(".view-toggle").click();
+    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
 
     // Wait for the section to be visible
     await page.evaluate(() => window.scrollTo(0, 600));

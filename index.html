@@ -1569,7 +1569,7 @@
 
           <div class="chrono-year">2026</div>
 
-          <div class="chrono-semester" data-edition="fall">Fall 2026</div>
+          <div class="chrono-semester">Fall 2026</div>
 
           <div class="chrono-card stagger-item" data-date="2026-09" data-edition="fall">
             <span class="chrono-badge chrono-badge--research">Research</span>
@@ -2752,9 +2752,9 @@
       }
     }
 
-    // Restore saved preference
+    // Restore saved preference (default to chrono/timeline view)
     var savedView = localStorage.getItem('view');
-    if (savedView === 'chrono') setChronoView(true);
+    if (savedView !== 'sections') setChronoView(true);
 
     viewToggle.addEventListener('click', function() {
       var isChrono = document.body.classList.contains('chrono-view');
@@ -2764,6 +2764,46 @@
     });
 
     // === Timeline Filter Buttons ===
+    function isCardVisible(card) {
+      return !card.classList.contains('chrono-hidden')
+          && getComputedStyle(card).display !== 'none';
+    }
+
+    function hideEmptyChronoGroups() {
+      var semesters = document.querySelectorAll('.chrono-semester');
+      var years = document.querySelectorAll('.chrono-year');
+
+      // Hide semester labels when all their cards are invisible
+      semesters.forEach(function(sem) {
+        var hasVisible = false;
+        var sibling = sem.nextElementSibling;
+        while (sibling
+            && !sibling.classList.contains('chrono-year')
+            && !sibling.classList.contains('chrono-semester')) {
+          if (sibling.classList.contains('chrono-card') && isCardVisible(sibling)) {
+            hasVisible = true;
+            break;
+          }
+          sibling = sibling.nextElementSibling;
+        }
+        sem.classList.toggle('chrono-hidden', !hasVisible);
+      });
+
+      // Hide year headers when no visible cards remain
+      years.forEach(function(year) {
+        var hasVisible = false;
+        var sibling = year.nextElementSibling;
+        while (sibling && !sibling.classList.contains('chrono-year')) {
+          if (sibling.classList.contains('chrono-card') && isCardVisible(sibling)) {
+            hasVisible = true;
+            break;
+          }
+          sibling = sibling.nextElementSibling;
+        }
+        year.classList.toggle('chrono-hidden', !hasVisible);
+      });
+    }
+
     function applyChronoFilter(filter) {
       var cards = document.querySelectorAll('.chrono-card');
       var years = document.querySelectorAll('.chrono-year');
@@ -2773,47 +2813,18 @@
         cards.forEach(function(c) { c.classList.remove('chrono-hidden'); });
         years.forEach(function(y) { y.classList.remove('chrono-hidden'); });
         semesters.forEach(function(s) { s.classList.remove('chrono-hidden'); });
+        hideEmptyChronoGroups();
         return;
       }
 
-      // Pass 1: show/hide cards by badge text
+      // Show/hide cards by badge text
       cards.forEach(function(c) {
         var badge = c.querySelector('.chrono-badge');
         var badgeText = badge ? badge.textContent.trim().toLowerCase() : '';
         c.classList.toggle('chrono-hidden', badgeText !== filter);
       });
 
-      // Pass 2: hide semester labels when all their cards are hidden
-      semesters.forEach(function(sem) {
-        var hasVisible = false;
-        var sibling = sem.nextElementSibling;
-        while (sibling
-            && !sibling.classList.contains('chrono-year')
-            && !sibling.classList.contains('chrono-semester')) {
-          if (sibling.classList.contains('chrono-card')
-              && !sibling.classList.contains('chrono-hidden')) {
-            hasVisible = true;
-            break;
-          }
-          sibling = sibling.nextElementSibling;
-        }
-        sem.classList.toggle('chrono-hidden', !hasVisible);
-      });
-
-      // Pass 3: hide year headers when no visible cards remain
-      years.forEach(function(year) {
-        var hasVisible = false;
-        var sibling = year.nextElementSibling;
-        while (sibling && !sibling.classList.contains('chrono-year')) {
-          if (sibling.classList.contains('chrono-card')
-              && !sibling.classList.contains('chrono-hidden')) {
-            hasVisible = true;
-            break;
-          }
-          sibling = sibling.nextElementSibling;
-        }
-        year.classList.toggle('chrono-hidden', !hasVisible);
-      });
+      hideEmptyChronoGroups();
     }
 
     var filterBar = document.querySelector('.chrono-filters');
@@ -2828,6 +2839,10 @@
         applyChronoFilter(filter);
       });
     }
+
+    // Hide semester/year labels with no visible cards on page load
+    // (handles edition-gated cards hidden by CSS on the live site)
+    hideEmptyChronoGroups();
 
     // === Chrono Details Navigation ===
     var chronoTrack = document.querySelector('.chrono-track');
