@@ -37,12 +37,21 @@ Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.gi
 - [ ] Profile photo optimization — `srcset`, lazy loading, WebP (image is currently commented out)
 - [ ] Hero photo styled fallback — initials circle when photo missing
 
+### Blocked on assets
+- [ ] Verify/add PDF assets (resume, competition presentations) or remove broken links
+- [ ] Company logos for experience cards (SpaceX, Tesla, DTE)
+- [ ] Project thumbnails/screenshots
+
 ### Architectural decisions (need user input)
 - [x] Content duplication — Timeline condensed to compact overview with "View details" links to section cards
+- [x] Timeline entry density — grouped coursework into one expandable card
 - [ ] Consolidate Supply Chain Cases — appear in both Timeline and Research
 - [ ] 8 nav items — borderline too many. Could fold Research into Experience, Extracurricular into About
-- [ ] Timeline entry density — some entries (individual coursework finals) may not warrant full cards. Could group: "Winter 2026 Coursework" as one expandable card
 - [ ] Timeline semantic structure (`div` → `ol`) — screen readers would benefit, but high-risk refactor
+- [ ] Section ordering (Skills/Education higher?)
+- [ ] Skills section redesign (tag pills vs bullets)
+- [ ] Alternating section backgrounds for visual separation
+- [ ] Contact form (Formspree/Netlify) vs mailto only
 
 ### Feature requests
 - [x] Timeline filter buttons (by type: Experience/Project/Research/Competition/Coursework)
@@ -56,20 +65,23 @@ Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.gi
 - [x] "UM-Dearborn" badge — replaced with graduation date ("BSE Dec 2026")
 - [x] Footer CTA — "Looking for a new grad role."
 
-### Low-priority polish
-- [ ] Dark mode tag pill colors — verify readability in both modes
-- [ ] ASCII art in dark mode — verify box-drawing chars visible
-- [x] Coursework links mobile layout — single column on mobile (&lt;768px)
-- [ ] Landscape mode — test timeline/experience usability
-- [ ] Color blindness testing — especially for category color coding
-- [ ] Minify CSS/JS
-- [ ] GitHub Pages caching — fingerprinted filenames for long cache
-- [ ] DOM depth / paint performance — 20+ timeline cards with nested elements
-- [ ] Browser testing — Safari (iOS + macOS), Samsung Internet, Chrome Android
-- [ ] Add GPA if strong (>3.5)
-- [ ] Add honors/awards/Dean's list if applicable
-- [ ] Custom domain (`willembell.com` or `wrbell.dev`)
+
+### Technical
+- [ ] Custom 404 page (`404.html`)
+- [ ] `robots.txt` + `sitemap.xml`
+- [ ] `<time datetime>` elements for timeline dates
 - [ ] Lightweight analytics (Plausible, Umami, or Cloudflare)
+
+### Low-priority polish
+- [x] Dark mode tag pill colors — improved contrast in light mode
+- [x] ASCII art in dark mode — boosted color for box-drawing chars
+- [x] Coursework links mobile layout — single column on mobile (&lt;768px)
+- [x] Landscape mode — compact hero and sections for landscape phones
+- [x] Color blindness — text labels provide differentiation (acceptable)
+- [ ] Minify CSS/JS
+- [x] GitHub Pages caching — font versioning for cache busting
+- [x] DOM depth / paint performance — already fine
+- [x] Browser testing — backdrop-filter fallback added
 
 ### Completed
 - [x] Complete coursework list in Education section (6 courses with catalog links)

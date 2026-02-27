@@ -181,7 +181,7 @@ test.describe("Chrono details link navigation", () => {
     await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
 
     // Click the first visible chrono-details-link (skip edition-gated cards)
-    const link = page.locator(".chrono-card:not([data-edition]) .chrono-details-link").first();
+    const link = page.locator(".chrono-card:not([data-edition]) > .chrono-details-link").first();
     const href = await link.getAttribute("href");
     expect(href).toBeTruthy();
 
@@ -194,5 +194,32 @@ test.describe("Chrono details link navigation", () => {
     const targetId = href!.slice(1);
     const target = page.locator(`#${targetId}`);
     await expect(target).toBeAttached();
+  });
+});
+
+test.describe("Chrono group card", () => {
+  test("expands and collapses coursework list", async ({ page }) => {
+    await page.goto("/");
+    await page.locator(".view-toggle").click();
+    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
+
+    const toggle = page.locator(".chrono-group-toggle");
+    const list = page.locator("#cw-group-list");
+
+    // List starts hidden
+    await expect(list).toBeHidden();
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+
+    // Expand
+    await toggle.click();
+    await expect(list).toBeVisible();
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+
+    // Has 3 visible course items (CFD hidden by edition gate)
+    await expect(list.locator(".chrono-group-item:not([data-edition])")).toHaveCount(3);
+
+    // Collapse
+    await toggle.click();
+    await expect(list).toBeHidden();
   });
 });
