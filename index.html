@@ -64,7 +64,7 @@
   <style>
     /* === Reset === */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-height) + 16px); }
     body { line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
     img, picture, video, canvas, svg { display: block; max-width: 100%; }
     input, button, textarea, select { font: inherit; }
@@ -1207,6 +1207,7 @@
     }
     .chrono-badge--experience { background: rgba(56, 139, 253, 0.15); color: #58a6ff; border: 1px solid rgba(56, 139, 253, 0.3); }
     .chrono-badge--research { background: rgba(163, 113, 247, 0.15); color: #a371f7; border: 1px solid rgba(163, 113, 247, 0.3); }
+    .chrono-badge--competition { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(0, 229, 160, 0.3); }
     .chrono-badge--project { background: rgba(224, 224, 232, 0.1); color: var(--text); border: 1px solid var(--border); }
 
     /* === Chrono Group Card === */
@@ -1441,10 +1442,11 @@
           <div class="line" aria-hidden="true"></div>
         </div>
         <div class="chrono-filters" role="toolbar" aria-label="Filter timeline by type">
-          <button type="button" class="chrono-filter active" data-filter="all">All</button>
-          <button type="button" class="chrono-filter" data-filter="experience">Experience</button>
+          <button type="button" class="chrono-filter" data-filter="all">All</button>
+          <button type="button" class="chrono-filter active" data-filter="experience">Experience</button>
           <button type="button" class="chrono-filter" data-filter="project">Project</button>
           <button type="button" class="chrono-filter" data-filter="research">Research</button>
+          <button type="button" class="chrono-filter" data-filter="supply chain cases">Supply Chain Cases</button>
           <button type="button" class="chrono-filter" data-filter="coursework">Coursework</button>
         </div>
         <div class="chrono-track">
@@ -1465,6 +1467,15 @@
             <div class="chrono-meta">Python / CAD Automation</div>
             <div class="chrono-date">Sep 2026</div>
             <a href="#proj-dfm" class="chrono-details-link">View details &rarr;</a>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2026-05" data-edition="fall">
+            <span class="chrono-badge chrono-badge--experience">Experience</span>
+            <h3>TBD</h3>
+            <div class="chrono-meta">TBD</div>
+            <div class="chrono-location">Austin, TX</div>
+            <div class="chrono-date">May 2026 — Aug 2026</div>
+            <a href="#exp-summer-2026" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-05">
@@ -1524,7 +1535,39 @@
             <a href="#res-cobot-axis" class="chrono-details-link">View details &rarr;</a>
           </div>
 
+          <div class="chrono-card stagger-item" data-date="2026-02">
+            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
+            <h3>Colorado State Rams</h3>
+            <div class="chrono-meta">Supply Chain Case Competition</div>
+            <div class="chrono-date">Feb 2026</div>
+            <a href="#comp-colorado-state" class="chrono-details-link">View details &rarr;</a>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2026-01">
+            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
+            <h3>Land O'Lakes / Kozy Shack</h3>
+            <div class="chrono-meta">Supply Chain Case Competition</div>
+            <div class="chrono-date">Jan 2026</div>
+            <a href="#comp-kozy-shack" class="chrono-details-link">View details &rarr;</a>
+          </div>
+
           <div class="chrono-year">2025</div>
+
+          <div class="chrono-card stagger-item" data-date="2025-12">
+            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
+            <h3>3M Fulfillment Network</h3>
+            <div class="chrono-meta">Supply Chain Case Competition</div>
+            <div class="chrono-date">Dec 2025</div>
+            <a href="#comp-3m" class="chrono-details-link">View details &rarr;</a>
+          </div>
+
+          <div class="chrono-card stagger-item" data-date="2025-11">
+            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
+            <h3>Quantum Frontiers</h3>
+            <div class="chrono-meta">Supply Chain Case Competition</div>
+            <div class="chrono-date">Nov 2025</div>
+            <a href="#comp-quantum-frontiers" class="chrono-details-link">View details &rarr;</a>
+          </div>
 
           <div class="chrono-card stagger-item" data-date="2025-08">
             <span class="chrono-badge chrono-badge--research">Research</span>
@@ -1649,6 +1692,17 @@
         <div class="project-lane">
           <h3 class="lane-label">Industry</h3>
           <div class="timeline">
+            <div class="timeline-item stagger-item" id="exp-summer-2026" data-edition="fall">
+              <div class="timeline-date">May 2026 — Aug 2026</div>
+              <div class="timeline-content">
+                <h3>TBD</h3>
+                <div class="role">TBD</div>
+                <div class="location">Austin, TX</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <div class="tags">
+                </div>
+              </div>
+            </div>
             <div class="timeline-item stagger-item" id="exp-spacex-starfactory">
               <div class="timeline-date">Jan 2025 — Jul 2025</div>
               <div class="timeline-content">
@@ -2420,12 +2474,12 @@
       }
     }
     // Desktop only: intercept resume button to show modal
-    if (window.innerWidth >= 768) {
-      resumeBtn.addEventListener('click', function(e) {
+    resumeBtn.addEventListener('click', function(e) {
+      if (window.innerWidth >= 768) {
         e.preventDefault();
         openResumeModal();
-      });
-    }
+      }
+    });
     resumeModal.querySelector('.resume-modal-backdrop').addEventListener('click', closeResumeModal);
     resumeModal.querySelector('.resume-modal-close').addEventListener('click', closeResumeModal);
     // Resume tracking on modal footer links
@@ -2485,6 +2539,10 @@
             });
           });
         }
+        applyChronoFilter('experience');
+        document.querySelectorAll('.chrono-filter').forEach(function(b) { b.classList.remove('active'); });
+        var expBtn = document.querySelector('.chrono-filter[data-filter="experience"]');
+        if (expBtn) expBtn.classList.add('active');
       } else {
         document.body.classList.remove('chrono-view');
         timelineSection.style.display = '';
@@ -2506,6 +2564,36 @@
     });
 
     // === Timeline Filter Buttons ===
+    function applyChronoFilter(filter) {
+      var cards = document.querySelectorAll('.chrono-card');
+      var years = document.querySelectorAll('.chrono-year');
+
+      if (filter === 'all') {
+        cards.forEach(function(c) { c.classList.remove('chrono-hidden'); });
+        years.forEach(function(y) { y.classList.remove('chrono-hidden'); });
+        return;
+      }
+
+      cards.forEach(function(c) {
+        var badge = c.querySelector('.chrono-badge');
+        var badgeText = badge ? badge.textContent.trim().toLowerCase() : '';
+        c.classList.toggle('chrono-hidden', badgeText !== filter);
+      });
+
+      years.forEach(function(year) {
+        var hasVisible = false;
+        var sibling = year.nextElementSibling;
+        while (sibling && !sibling.classList.contains('chrono-year')) {
+          if (sibling.classList.contains('chrono-card') && !sibling.classList.contains('chrono-hidden')) {
+            hasVisible = true;
+            break;
+          }
+          sibling = sibling.nextElementSibling;
+        }
+        year.classList.toggle('chrono-hidden', !hasVisible);
+      });
+    }
+
     var filterBar = document.querySelector('.chrono-filters');
     if (filterBar) {
       filterBar.addEventListener('click', function(e) {
@@ -2513,39 +2601,9 @@
         if (!btn) return;
         var filter = btn.getAttribute('data-filter');
 
-        // Toggle active class on buttons
         filterBar.querySelectorAll('.chrono-filter').forEach(function(b) { b.classList.remove('active'); });
         btn.classList.add('active');
-
-        var cards = document.querySelectorAll('.chrono-card');
-        var years = document.querySelectorAll('.chrono-year');
-
-        if (filter === 'all') {
-          cards.forEach(function(c) { c.classList.remove('chrono-hidden'); });
-          years.forEach(function(y) { y.classList.remove('chrono-hidden'); });
-          return;
-        }
-
-        // Filter cards by badge text
-        cards.forEach(function(c) {
-          var badge = c.querySelector('.chrono-badge');
-          var badgeText = badge ? badge.textContent.trim().toLowerCase() : '';
-          c.classList.toggle('chrono-hidden', badgeText !== filter);
-        });
-
-        // Hide year markers that have no visible cards following them
-        years.forEach(function(year) {
-          var hasVisible = false;
-          var sibling = year.nextElementSibling;
-          while (sibling && !sibling.classList.contains('chrono-year')) {
-            if (sibling.classList.contains('chrono-card') && !sibling.classList.contains('chrono-hidden')) {
-              hasVisible = true;
-              break;
-            }
-            sibling = sibling.nextElementSibling;
-          }
-          year.classList.toggle('chrono-hidden', !hasVisible);
-        });
+        applyChronoFilter(filter);
       });
     }
 

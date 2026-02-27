@@ -135,15 +135,14 @@ test.describe("Timeline filter buttons", () => {
 
     // Should have 6 filter buttons
     const filters = page.locator(".chrono-filter");
-    await expect(filters).toHaveCount(5);
+    await expect(filters).toHaveCount(6);
 
-    // "All" should be active by default
-    await expect(filters.first()).toHaveClass(/\bactive\b/);
+    // "Experience" should be active by default
+    await expect(
+      page.locator('.chrono-filter[data-filter="experience"]')
+    ).toHaveClass(/\bactive\b/);
 
-    // Click "Experience" filter
-    await page.locator('.chrono-filter[data-filter="experience"]').click();
-
-    // Only Experience badges should be visible
+    // Only Experience badges should be visible by default
     const visibleBadges = page.locator(
       ".chrono-card:not(.chrono-hidden) .chrono-badge"
     );
@@ -157,18 +156,25 @@ test.describe("Timeline filter buttons", () => {
     const hiddenCards = page.locator(".chrono-card.chrono-hidden");
     expect(await hiddenCards.count()).toBeGreaterThan(0);
 
-    // Some year markers may be hidden
-    const hiddenYears = page.locator(".chrono-year.chrono-hidden");
-    const hiddenYearCount = await hiddenYears.count();
-    // Just verify the count is a number (may be 0 if all years have experience cards)
-    expect(hiddenYearCount).toBeGreaterThanOrEqual(0);
-
-    // Click "All" to reset
+    // Click "All" to show everything
     await page.locator('.chrono-filter[data-filter="all"]').click();
 
     // No cards or years should be hidden
     await expect(page.locator(".chrono-card.chrono-hidden")).toHaveCount(0);
     await expect(page.locator(".chrono-year.chrono-hidden")).toHaveCount(0);
+
+    // Click "Experience" to re-filter
+    await page.locator('.chrono-filter[data-filter="experience"]').click();
+
+    // Only Experience badges should be visible again
+    const reFilteredBadges = page.locator(
+      ".chrono-card:not(.chrono-hidden) .chrono-badge"
+    );
+    const reFilteredCount = await reFilteredBadges.count();
+    expect(reFilteredCount).toBeGreaterThan(0);
+    for (let i = 0; i < reFilteredCount; i++) {
+      await expect(reFilteredBadges.nth(i)).toHaveText("Experience");
+    }
   });
 });
 
@@ -179,6 +185,9 @@ test.describe("Chrono details link navigation", () => {
     // Switch to chrono view
     await page.locator(".view-toggle").click();
     await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
+
+    // Show all cards first (Experience filter is active by default)
+    await page.locator('.chrono-filter[data-filter="all"]').click();
 
     // Click the first visible chrono-details-link (skip edition-gated cards)
     const link = page.locator(".chrono-card:not([data-edition]) > .chrono-details-link").first();
@@ -203,6 +212,9 @@ test.describe("Chrono group card", () => {
     await page.locator(".view-toggle").click();
     await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
 
+    // Show coursework (Experience filter is active by default)
+    await page.locator('.chrono-filter[data-filter="coursework"]').click();
+
     const toggle = page.locator(".chrono-group-toggle");
     const list = page.locator("#cw-group-list");
 
@@ -221,5 +233,166 @@ test.describe("Chrono group card", () => {
     // Collapse
     await toggle.click();
     await expect(list).toBeHidden();
+  });
+});
+
+test.describe("Mobile navigation toggle", () => {
+  test("opens and closes nav, responds to Escape", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+
+    const navToggle = page.locator(".nav-toggle");
+    const navLinks = page.locator(".nav-links");
+
+    // Click to open
+    await navToggle.click();
+    await expect(navLinks).toHaveClass(/\bopen\b/);
+    await expect(navToggle).toHaveAttribute("aria-expanded", "true");
+
+    // Click to close
+    await navToggle.click();
+    await expect(navLinks).not.toHaveClass(/\bopen\b/);
+    await expect(navToggle).toHaveAttribute("aria-expanded", "false");
+
+    // Re-open, then press Escape to close
+    await navToggle.click();
+    await expect(navLinks).toHaveClass(/\bopen\b/);
+    await page.keyboard.press("Escape");
+    await expect(navLinks).not.toHaveClass(/\bopen\b/);
+    await expect(navToggle).toHaveAttribute("aria-expanded", "false");
+  });
+});
+
+test.describe("Back-to-top button", () => {
+  test("appears on scroll, scrolls to top on click", async ({ page }) => {
+    await page.goto("/");
+
+    const backToTop = page.locator(".back-to-top");
+
+    // Should not be visible initially
+    await expect(backToTop).not.toHaveClass(/\bvisible\b/);
+
+    // Scroll past 500px
+    await page.evaluate(() => window.scrollTo(0, 600));
+    await expect(backToTop).toHaveClass(/\bvisible\b/);
+
+    // Click to scroll to top
+    await backToTop.click();
+    await page.waitForFunction(() => window.scrollY < 10);
+
+    // visible class should be removed
+    await expect(backToTop).not.toHaveClass(/\bvisible\b/);
+  });
+});
+
+test.describe("Theme toggle interaction", () => {
+  test("switches between dark and light mode", async ({ page }) => {
+    await page.emulateMedia({ colorScheme: "dark" });
+    await page.goto("/");
+
+    const htmlEl = page.locator("html");
+    const themeToggle = page.locator(".theme-toggle");
+
+    // Default dark — no data-theme attribute
+    await expect(htmlEl).not.toHaveAttribute("data-theme", "light");
+
+    // Click to switch to light
+    await themeToggle.click();
+    await expect(htmlEl).toHaveAttribute("data-theme", "light");
+
+    // Click to switch back to dark
+    await themeToggle.click();
+    await expect(htmlEl).not.toHaveAttribute("data-theme");
+  });
+});
+
+test.describe("Chrono view re-entry defaults to Experience", () => {
+  test("resets to Experience filter when re-entering chrono", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const viewToggle = page.locator(".view-toggle");
+    const expFilter = page.locator(
+      '.chrono-filter[data-filter="experience"]'
+    );
+    const allFilter = page.locator('.chrono-filter[data-filter="all"]');
+
+    // Enter chrono view
+    await viewToggle.click();
+    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
+
+    // Experience should be active
+    await expect(expFilter).toHaveClass(/\bactive\b/);
+
+    // Click "All"
+    await allFilter.click();
+    await expect(allFilter).toHaveClass(/\bactive\b/);
+    await expect(expFilter).not.toHaveClass(/\bactive\b/);
+
+    // Toggle back to sections
+    await viewToggle.click();
+    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
+
+    // Re-enter chrono
+    await viewToggle.click();
+    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
+
+    // Experience should be active again, All should not
+    await expect(expFilter).toHaveClass(/\bactive\b/);
+    await expect(allFilter).not.toHaveClass(/\bactive\b/);
+  });
+});
+
+test.describe("Nav scroll offset", () => {
+  test("scrolled section is not hidden behind fixed nav", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const navLink = page.locator('a[href="#skills"]').first();
+    await navLink.click();
+
+    // Wait for smooth scroll to complete
+    await page.waitForTimeout(800);
+
+    const skillsTop = await page
+      .locator("#skills")
+      .evaluate((el) => el.getBoundingClientRect().top);
+    const navHeight = await page
+      .locator("nav")
+      .evaluate((el) => el.getBoundingClientRect().height);
+
+    // The section top should be at or below the nav bottom
+    expect(skillsTop).toBeGreaterThanOrEqual(navHeight - 2);
+  });
+});
+
+test.describe("Supply Chain Cases filter", () => {
+  test("shows exactly 4 Supply Chain Cases cards", async ({ page }) => {
+    await page.goto("/");
+
+    // Enter chrono view
+    await page.locator(".view-toggle").click();
+    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
+
+    // Click Supply Chain Cases filter
+    await page
+      .locator('.chrono-filter[data-filter="supply chain cases"]')
+      .click();
+
+    // Exactly 4 visible cards
+    const visibleCards = page.locator(".chrono-card:not(.chrono-hidden)");
+    await expect(visibleCards).toHaveCount(4);
+
+    // All visible cards should have "Supply Chain Cases" badge
+    const badges = page.locator(
+      ".chrono-card:not(.chrono-hidden) .chrono-badge"
+    );
+    const count = await badges.count();
+    expect(count).toBe(4);
+    for (let i = 0; i < count; i++) {
+      await expect(badges.nth(i)).toHaveText("Supply Chain Cases");
+    }
   });
 });
