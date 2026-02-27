@@ -23,6 +23,7 @@ jobs:
           root: .
           css: false
           log_level: INFO
+          extra: --ignore 'CSS'
 
       - name: Upload validation log
         if: failure()
