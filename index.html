@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Willem Bell — Mechanical & Software Engineer</title>
   <meta name="description" content="Willem Bell — Mechanical engineering & computer science student at UM-Dearborn. SpaceX and Tesla intern. BSE ME + CS, December 2026.">
   <meta property="og:title" content="Willem Bell — Mechanical & Software Engineer">
@@ -34,6 +34,7 @@
   </script>
   <link rel="canonical" href="https://wrbell.github.io/">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <style>
     @font-face {
       font-family: 'Inter';
@@ -55,7 +56,9 @@
   <script>
     (function() {
       var theme = localStorage.getItem('theme');
-      if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
     })();
   </script>
   <style>
@@ -66,6 +69,7 @@
     img, picture, video, canvas, svg { display: block; max-width: 100%; }
     input, button, textarea, select { font: inherit; }
     a { color: inherit; text-decoration: none; }
+    a, button { -webkit-tap-highlight-color: transparent; }
     ul, ol { list-style: none; }
 
     /* === Custom Properties === */
@@ -92,6 +96,10 @@
       --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.3);
       --shadow-card-hover: 0 4px 30px rgba(0, 0, 0, 0.4);
       --radius-lg: 10px;
+    }
+
+    body, nav, .project-card, .chrono-card, .back-to-top, .tag, footer {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
     /* === Light Mode === */
@@ -189,6 +197,8 @@
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       z-index: 100;
+      padding-left: max(var(--space-lg), env(safe-area-inset-left));
+      padding-right: max(var(--space-lg), env(safe-area-inset-right));
     }
     .nav-logo {
       font-family: var(--font-mono);
@@ -230,8 +240,8 @@
       flex-direction: column;
       justify-content: center;
       gap: 5px;
-      width: 32px;
-      height: 32px;
+      width: 44px;
+      height: 44px;
       background: none;
       border: none;
       cursor: pointer;
@@ -558,6 +568,9 @@
       white-space: pre;
       box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
     }
+    @media (max-width: 767px) {
+      .ascii-diagram { font-size: 0.625rem; }
+    }
     .project-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -700,8 +713,8 @@
 
     /* === Theme Toggle === */
     .theme-toggle {
-      width: 32px;
-      height: 32px;
+      width: 44px;
+      height: 44px;
       background: none;
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -739,7 +752,8 @@
       display: inline-flex;
       align-items: center;
       gap: var(--space-xs);
-      padding: 0.375rem 0.875rem;
+      padding: 0.5rem 0.875rem;
+      min-height: 44px;
       font-family: var(--font-mono);
       font-size: 0.6875rem;
       border-radius: var(--radius);
@@ -847,8 +861,8 @@
       color: var(--muted);
     }
     .resume-modal-close {
-      width: 32px;
-      height: 32px;
+      width: 44px;
+      height: 44px;
       background: none;
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -910,10 +924,10 @@
     /* === Back to Top === */
     .back-to-top {
       position: fixed;
-      bottom: var(--space-lg);
-      right: var(--space-lg);
-      width: 40px;
-      height: 40px;
+      bottom: max(var(--space-lg), env(safe-area-inset-bottom));
+      right: max(var(--space-lg), env(safe-area-inset-right));
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: var(--surface);
       border: 1px solid var(--border);
@@ -1020,8 +1034,8 @@
 
     /* === View Toggle Button === */
     .view-toggle {
-      width: 32px;
-      height: 32px;
+      width: 44px;
+      height: 44px;
       background: none;
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -1096,7 +1110,7 @@
       background: var(--border);
     }
     .chrono-card:hover { border-color: var(--accent); box-shadow: var(--shadow-card-hover), 0 0 20px var(--accent-glow); transform: translateY(-2px); }
-    .chrono-card h4 { font-size: 1.0625rem; margin-bottom: var(--space-xs); }
+    .chrono-card h3 { font-size: 1.0625rem; margin-bottom: var(--space-xs); }
     .chrono-card .chrono-meta {
       font-family: var(--font-mono);
       font-size: 0.75rem;
@@ -1155,6 +1169,42 @@
     body.chrono-view .side-index { display: none !important; }
     body.chrono-view .chrono-view-section { display: block; }
 
+    /* === Edition Gate === */
+    [data-edition] { display: none; }
+    body.future-edition [data-edition] { display: block; }
+
+    .edition-banner {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: 0.375rem var(--space-lg);
+      background: rgba(0, 229, 160, 0.08);
+      border-bottom: 1px solid rgba(0, 229, 160, 0.2);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+    body.future-edition .edition-banner { display: flex; }
+
+    .edition-banner button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.875rem;
+      line-height: 1;
+      padding: 0 0 0 var(--space-sm);
+    }
+    .edition-banner button:hover { color: var(--accent); }
+
     /* === Print Styles === */
     @media print {
       :root {
@@ -1180,10 +1230,15 @@
       #about::before, #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before { display: none; }
       .status-dot { animation: none; background: #111; }
       .cursor { display: none; }
+      .edition-banner { display: none !important; }
     }
   </style>
 </head>
 <body>
+  <div class="edition-banner" aria-live="polite">
+    <span>&#9670; Fall 2026 Preview</span>
+    <button aria-label="Dismiss preview banner">&times;</button>
+  </div>
   <a href="#main" class="skip-link">Skip to content</a>
 
   <nav aria-label="Main navigation">
@@ -1214,7 +1269,7 @@
     <a href="#experience" class="side-index-link">Experience</a>
     <a href="#projects" class="side-index-link">Projects</a>
     <a href="#research" class="side-index-link">Research</a>
-    <a href="#extracurricular" class="side-index-link">Activities</a>
+    <a href="#extracurricular" class="side-index-link">Extracurricular</a>
     <a href="#skills" class="side-index-link">Skills</a>
     <a href="#education" class="side-index-link">Education</a>
     <a href="#contact" class="side-index-link">Contact</a>
@@ -1279,9 +1334,9 @@
 
           <div class="chrono-year">2026</div>
 
-          <div class="chrono-card stagger-item" data-date="2026-09">
+          <div class="chrono-card stagger-item" data-date="2026-09" data-edition="fall">
             <span class="chrono-badge chrono-badge--project">Coursework</span>
-            <h4>CFD — Final Project</h4>
+            <h3>CFD — Final Project</h3>
             <div class="chrono-meta">ME 4301 · Mechanical Engineering</div>
             <div class="chrono-date">Sep 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1291,9 +1346,9 @@
             </div>
           </div>
 
-          <div class="chrono-card stagger-item" data-date="2026-09">
+          <div class="chrono-card stagger-item" data-date="2026-09" data-edition="fall">
             <span class="chrono-badge chrono-badge--research">Research</span>
-            <h4>Senior Design</h4>
+            <h3>Senior Design</h3>
             <div class="chrono-meta">ME 4671 · Mechanical Engineering</div>
             <div class="chrono-date">Sep 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1303,9 +1358,9 @@
             </div>
           </div>
 
-          <div class="chrono-card stagger-item" data-date="2026-09">
+          <div class="chrono-card stagger-item" data-date="2026-09" data-edition="fall">
             <span class="chrono-badge chrono-badge--project">Project</span>
-            <h4>Design for Manufacturing</h4>
+            <h3>Design for Manufacturing</h3>
             <div class="chrono-meta">Python / CAD Automation</div>
             <div class="chrono-date">Sep 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1317,7 +1372,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-05">
             <span class="chrono-badge chrono-badge--project">Project</span>
-            <h4>stark-translate</h4>
+            <h3>stark-translate</h3>
             <div class="chrono-meta">Python / Live Bilingual Speech-to-Text</div>
             <div class="chrono-date">May 2026</div>
             <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
@@ -1333,7 +1388,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-04">
             <span class="chrono-badge chrono-badge--project">Coursework</span>
-            <h4>Vibrations — Final Project</h4>
+            <h3>Vibrations — Final Project</h3>
             <div class="chrono-meta">ME 440 · Mechanical Engineering</div>
             <div class="chrono-date">Apr 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1345,7 +1400,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-04">
             <span class="chrono-badge chrono-badge--project">Coursework</span>
-            <h4>Fluids Lab — Final Project</h4>
+            <h3>Fluids Lab — Final Project</h3>
             <div class="chrono-meta">ME 379 · Mechanical Engineering</div>
             <div class="chrono-date">Apr 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1357,7 +1412,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-04">
             <span class="chrono-badge chrono-badge--project">Coursework</span>
-            <h4>Machine Design — Final Project</h4>
+            <h3>Machine Design — Final Project</h3>
             <div class="chrono-meta">ME 3601 · Mechanical Engineering</div>
             <div class="chrono-date">Apr 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1369,7 +1424,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-04">
             <span class="chrono-badge chrono-badge--project">Project</span>
-            <h4>fast-fem</h4>
+            <h3>fast-fem</h3>
             <div class="chrono-meta">ANSYS / Python / FEA Self-Study</div>
             <div class="chrono-date">Apr 2026</div>
             <p>Accelerated FEA self-study for 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calculations. Mesh convergence studies, post-mortems, and reproducible methodology.</p>
@@ -1383,7 +1438,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-03">
             <span class="chrono-badge chrono-badge--project">Project</span>
-            <h4>W26-Cobot-Axis</h4>
+            <h3>W26-Cobot-Axis</h3>
             <div class="chrono-meta">ME 472 Mechatronics — Winter 2026</div>
             <div class="chrono-date">Mar 2026</div>
             <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040).</p>
@@ -1398,7 +1453,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-02">
             <span class="chrono-badge chrono-badge--competition">Competition</span>
-            <h4>Colorado State Rams</h4>
+            <h3>Colorado State Rams</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Feb 2026</div>
             <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</p>
@@ -1412,7 +1467,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-01">
             <span class="chrono-badge chrono-badge--competition">Competition</span>
-            <h4>Land O'Lakes / Kozy Shack</h4>
+            <h3>Land O'Lakes / Kozy Shack</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Jan 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
@@ -1428,7 +1483,7 @@
 
           <div class="chrono-card stagger-item" data-date="2025-12">
             <span class="chrono-badge chrono-badge--competition">Competition</span>
-            <h4>3M Fulfillment Network</h4>
+            <h3>3M Fulfillment Network</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Dec 2025</div>
             <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
@@ -1442,7 +1497,7 @@
 
           <div class="chrono-card stagger-item" data-date="2025-11">
             <span class="chrono-badge chrono-badge--competition">Competition</span>
-            <h4>Quantum Frontiers</h4>
+            <h3>Quantum Frontiers</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Nov 2025</div>
             <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
@@ -1456,7 +1511,7 @@
 
           <div class="chrono-card stagger-item" data-date="2025-08">
             <span class="chrono-badge chrono-badge--research">Research</span>
-            <h4>Pannier Research Lab</h4>
+            <h3>Pannier Research Lab</h3>
             <div class="chrono-meta">Research Assistant</div>
             <div class="chrono-location">Dearborn, MI</div>
             <div class="chrono-date">Aug 2025 — Present</div>
@@ -1473,7 +1528,7 @@
 
           <div class="chrono-card stagger-item" data-date="2025-01">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>SpaceX</h4>
+            <h3>SpaceX</h3>
             <div class="chrono-meta">Starfactory Automation &amp; Controls Intern</div>
             <div class="chrono-location">Starbase, TX</div>
             <div class="chrono-date">Jan 2025 — Jul 2025</div>
@@ -1493,7 +1548,7 @@
 
           <div class="chrono-card stagger-item" data-date="2024-09">
             <span class="chrono-badge chrono-badge--research">Research</span>
-            <h4>Pannier Research Lab</h4>
+            <h3>Pannier Research Lab</h3>
             <div class="chrono-meta">Research Assistant</div>
             <div class="chrono-location">Dearborn, MI</div>
             <div class="chrono-date">Sep 2024 — Jan 2025</div>
@@ -1510,7 +1565,7 @@
 
           <div class="chrono-card stagger-item" data-date="2024-05">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>SpaceX</h4>
+            <h3>SpaceX</h3>
             <div class="chrono-meta">Space Lasers Integration &amp; Test Intern</div>
             <div class="chrono-location">Redmond, WA</div>
             <div class="chrono-date">May 2024 — Aug 2024</div>
@@ -1526,7 +1581,7 @@
 
           <div class="chrono-card stagger-item" data-date="2024-01">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>Tesla 4680</h4>
+            <h3>Tesla 4680</h3>
             <div class="chrono-meta">Controls Development Intern</div>
             <div class="chrono-location">Austin, TX</div>
             <div class="chrono-date">Sep 2023 — Apr 2024</div>
@@ -1545,7 +1600,7 @@
 
           <div class="chrono-card stagger-item" data-date="2023-05">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>SpaceX</h4>
+            <h3>SpaceX</h3>
             <div class="chrono-meta">Starship Launch Intern</div>
             <div class="chrono-location">Starbase, TX</div>
             <div class="chrono-date">May 2023 — Aug 2023</div>
@@ -1563,7 +1618,7 @@
 
           <div class="chrono-card stagger-item" data-date="2022-05">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>SpaceX</h4>
+            <h3>SpaceX</h3>
             <div class="chrono-meta">Starship Automation &amp; Controls Intern</div>
             <div class="chrono-location">Starbase, TX</div>
             <div class="chrono-date">May 2022 — Aug 2022</div>
@@ -1581,7 +1636,7 @@
 
           <div class="chrono-card stagger-item" data-date="2021-07">
             <span class="chrono-badge chrono-badge--research">Research</span>
-            <h4>Pannier Research Lab</h4>
+            <h3>Pannier Research Lab</h3>
             <div class="chrono-meta">Undergraduate Researcher</div>
             <div class="chrono-location">Dearborn, MI</div>
             <div class="chrono-date">Jul 2021 — May 2023</div>
@@ -1598,7 +1653,7 @@
 
           <div class="chrono-card stagger-item" data-date="2021-05">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>DTE Energy — Fermi Nuclear Power Plant</h4>
+            <h3>DTE Energy — Fermi Nuclear Power Plant</h3>
             <div class="chrono-meta">Student Co-Op</div>
             <div class="chrono-location">Newport, MI</div>
             <div class="chrono-date">May 2021 — Feb 2022</div>
@@ -1757,7 +1812,7 @@
               <span class="tag">MLX</span>
             </div>
             <div class="project-ctas">
-              <a href="https://github.com/wrbell/stark-translate" class="btn-sm" target="_blank" rel="noopener noreferrer">View Code &rarr;</a>
+              <a href="https://github.com/wrbell/stark-translate" class="btn-sm" target="_blank" rel="noopener noreferrer" aria-label="View stark-translate source code on GitHub">View Code &rarr;</a>
             </div>
           </div>
           <div class="project-grid">
@@ -1772,10 +1827,10 @@
                 <span class="tag">FEA</span>
               </div>
               <div class="project-ctas">
-                <a href="https://github.com/wrbell/fast-fem" class="btn-sm" target="_blank" rel="noopener noreferrer">View Code &rarr;</a>
+                <a href="https://github.com/wrbell/fast-fem" class="btn-sm" target="_blank" rel="noopener noreferrer" aria-label="View fast-fem source code on GitHub">View Code &rarr;</a>
               </div>
             </div>
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" data-edition="fall">
               <h4>Design for Manufacturing</h4>
               <div class="project-meta">Python / CAD Automation</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1803,10 +1858,10 @@
                 <span class="tag">Raspberry Pi</span>
               </div>
               <div class="project-ctas">
-                <a href="https://github.com/wrbell/W26-Cobot-Axis" class="btn-sm" target="_blank" rel="noopener noreferrer">View Code &rarr;</a>
+                <a href="https://github.com/wrbell/W26-Cobot-Axis" class="btn-sm" target="_blank" rel="noopener noreferrer" aria-label="View W26-Cobot-Axis source code on GitHub">View Code &rarr;</a>
               </div>
             </div>
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" data-edition="fall">
               <h4>Senior Design</h4>
               <div class="project-meta">ME 4671 · Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1849,7 +1904,7 @@
                 <span class="tag">FEA</span>
               </div>
             </div>
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" data-edition="fall">
               <h4>CFD — Final Project</h4>
               <div class="project-meta">ME 4301 · Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -2163,6 +2218,12 @@
   </div>
 
   <script>
+    // === Edition Gate ===
+    (function() {
+      var edition = new URLSearchParams(window.location.search).get('edition');
+      if (edition === 'fall') document.body.classList.add('future-edition');
+    })();
+
     // === Theme Toggle ===
     const themeToggle = document.querySelector('.theme-toggle');
     function setTheme(theme) {
@@ -2176,7 +2237,11 @@
         themeToggle.title = 'Switch to light mode';
       }
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+    var savedTheme = localStorage.getItem('theme');
+    if (!savedTheme) {
+      savedTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    setTheme(savedTheme);
     themeToggle.addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       localStorage.setItem('theme', next);
@@ -2292,15 +2357,52 @@
     // === Resume Modal ===
     var resumeModal = document.getElementById('resume-modal');
     var resumeBtn = document.getElementById('resume-btn');
+    var previouslyFocused = null;
+    var focusTrapHandler = null;
+
+    function getFocusableElements() {
+      return resumeModal.querySelectorAll('button, a[href], object, [tabindex]:not([tabindex="-1"])');
+    }
+
     function openResumeModal() {
+      previouslyFocused = document.activeElement;
       resumeModal.classList.add('open');
       resumeModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      var closeBtn = resumeModal.querySelector('.resume-modal-close');
+      if (closeBtn) closeBtn.focus();
+      focusTrapHandler = function(e) {
+        if (e.key !== 'Tab') return;
+        var focusable = getFocusableElements();
+        if (focusable.length === 0) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      };
+      resumeModal.addEventListener('keydown', focusTrapHandler);
     }
     function closeResumeModal() {
       resumeModal.classList.remove('open');
       resumeModal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      if (focusTrapHandler) {
+        resumeModal.removeEventListener('keydown', focusTrapHandler);
+        focusTrapHandler = null;
+      }
+      if (previouslyFocused) {
+        previouslyFocused.focus();
+        previouslyFocused = null;
+      }
     }
     // Desktop only: intercept resume button to show modal
     if (window.innerWidth >= 768) {
@@ -2383,6 +2485,14 @@
       setChronoView(!isChrono);
       if (!isChrono) window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // === Edition Banner Dismiss ===
+    var editionBanner = document.querySelector('.edition-banner');
+    if (editionBanner) {
+      editionBanner.querySelector('button').addEventListener('click', function() {
+        editionBanner.style.display = 'none';
+      });
+    }
   </script>
 </body>
 </html>

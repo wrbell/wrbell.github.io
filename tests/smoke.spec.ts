@@ -96,6 +96,7 @@ test.describe("Resume modal lifecycle", () => {
 
 test.describe("localStorage persistence", () => {
   test("theme and chrono view survive page reload", async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'dark' });
     await page.goto("/");
 
     // Default should be dark (no data-theme attribute)
