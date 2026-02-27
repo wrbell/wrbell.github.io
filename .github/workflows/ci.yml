@@ -54,5 +54,6 @@ jobs:
         with:
           args: >-
             --accept 200,204,301,302,403,429
+            --root-dir .
             '*.html'
           fail: true
