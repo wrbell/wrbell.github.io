@@ -38,28 +38,28 @@ Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.gi
 - [ ] Hero photo styled fallback — initials circle when photo missing
 
 ### Architectural decisions (need user input)
-- [ ] Content duplication — Timeline shows same content as Experience/Projects/Research sections. Options: make Timeline primary, or condensed overview with "see more" links
+- [x] Content duplication — Timeline condensed to compact overview with "View details" links to section cards
 - [ ] Consolidate Supply Chain Cases — appear in both Timeline and Research
 - [ ] 8 nav items — borderline too many. Could fold Research into Experience, Extracurricular into About
 - [ ] Timeline entry density — some entries (individual coursework finals) may not warrant full cards. Could group: "Winter 2026 Coursework" as one expandable card
 - [ ] Timeline semantic structure (`div` → `ol`) — screen readers would benefit, but high-risk refactor
 
 ### Feature requests
-- [ ] Timeline filter buttons (by type: Experience/Project/Research/Competition/Coursework)
-- [ ] Year markers sticky on scroll in timeline
+- [x] Timeline filter buttons (by type: Experience/Project/Research/Competition/Coursework)
+- [x] Year markers sticky on scroll in timeline
 - [ ] Skills proficiency indicators (dots, bars, or "daily driver" vs "familiar" grouping)
 - [ ] Skills section compact strip near top of page
-- [ ] Hero social links as icon buttons instead of text
-- [ ] Supply Chain Case metadata ("1-week sprint / 4-person team") on all project cards
-- [ ] Resume download tracking (analytics event)
-- [ ] "Open to opportunities" badge — add target role/area
-- [ ] "UM-Dearborn" badge — replace with graduation date ("Dec 2026")
-- [ ] Footer CTA — make more specific than "Let's build something"
+- [x] Hero social links as icon buttons instead of text
+- [x] Supply Chain Case metadata ("1-week sprint / 4-person team") on all project cards
+- [x] Resume download tracking (analytics event via CustomEvent + gtag)
+- [x] "Open to opportunities" badge — status bar with "Open to new grad roles"
+- [x] "UM-Dearborn" badge — replaced with graduation date ("BSE Dec 2026")
+- [x] Footer CTA — "Looking for a new grad role."
 
 ### Low-priority polish
 - [ ] Dark mode tag pill colors — verify readability in both modes
 - [ ] ASCII art in dark mode — verify box-drawing chars visible
-- [ ] Coursework links mobile layout — 6 items stacking; could use 2-column grid
+- [x] Coursework links mobile layout — single column on mobile (&lt;768px)
 - [ ] Landscape mode — test timeline/experience usability
 - [ ] Color blindness testing — especially for category color coding
 - [ ] Minify CSS/JS

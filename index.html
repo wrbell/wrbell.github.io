@@ -572,6 +572,7 @@
     }
     @media (max-width: 767px) {
       .ascii-diagram { font-size: 0.625rem; }
+      .coursework-list { columns: 1; }
     }
     .project-grid {
       display: grid;
@@ -1120,12 +1121,24 @@
       border: 2px solid var(--bg);
       box-shadow: 0 0 0 2px var(--accent);
     }
+    .chrono-details-link {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: var(--space-xs);
+      transition: color 0.2s;
+    }
+    .chrono-details-link:hover,
+    .chrono-details-link:focus { color: var(--accent); }
     .chrono-card {
       position: relative;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: var(--space-lg);
+      padding: var(--space-md) var(--space-lg);
       margin-bottom: var(--space-md);
       box-shadow: var(--shadow-card);
       transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
@@ -1382,11 +1395,7 @@
             <h3>CFD — Final Project</h3>
             <div class="chrono-meta">ME 4301 · Mechanical Engineering</div>
             <div class="chrono-date">Sep 2026</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <div class="tags">
-              <span class="tag">CFD</span>
-              <span class="tag">ANSYS Fluent</span>
-            </div>
+            <a href="#cw-cfd" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-09" data-edition="fall">
@@ -1394,11 +1403,7 @@
             <h3>Senior Design</h3>
             <div class="chrono-meta">ME 4671 · Mechanical Engineering</div>
             <div class="chrono-date">Sep 2026</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <div class="tags">
-              <span class="tag">[TAG]</span>
-              <span class="tag">[TAG]</span>
-            </div>
+            <a href="#res-senior-design" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-09" data-edition="fall">
@@ -1406,11 +1411,7 @@
             <h3>Design for Manufacturing</h3>
             <div class="chrono-meta">Python / CAD Automation</div>
             <div class="chrono-date">Sep 2026</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <div class="tags">
-              <span class="tag">[TAG]</span>
-              <span class="tag">[TAG]</span>
-            </div>
+            <a href="#proj-dfm" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-05">
@@ -1418,15 +1419,7 @@
             <h3>stark-translate</h3>
             <div class="chrono-meta">Python / Live Bilingual Speech-to-Text</div>
             <div class="chrono-date">May 2026</div>
-            <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">Whisper</span>
-              <span class="tag">MarianMT</span>
-              <span class="tag">TranslateGemma</span>
-              <span class="tag">WebSocket</span>
-              <span class="tag">MLX</span>
-            </div>
+            <a href="#proj-stark-translate" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-04">
@@ -1434,11 +1427,7 @@
             <h3>Vibrations — Final Project</h3>
             <div class="chrono-meta">ME 440 · Mechanical Engineering</div>
             <div class="chrono-date">Apr 2026</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <div class="tags">
-              <span class="tag">MATLAB</span>
-              <span class="tag">Vibration Analysis</span>
-            </div>
+            <a href="#cw-vibrations" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-04">
@@ -1446,11 +1435,7 @@
             <h3>Fluids Lab — Final Project</h3>
             <div class="chrono-meta">ME 379 · Mechanical Engineering</div>
             <div class="chrono-date">Apr 2026</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <div class="tags">
-              <span class="tag">Fluid Mechanics</span>
-              <span class="tag">Lab Instrumentation</span>
-            </div>
+            <a href="#cw-fluids-lab" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-04">
@@ -1458,11 +1443,7 @@
             <h3>Machine Design — Final Project</h3>
             <div class="chrono-meta">ME 3601 · Mechanical Engineering</div>
             <div class="chrono-date">Apr 2026</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <div class="tags">
-              <span class="tag">Machine Design</span>
-              <span class="tag">FEA</span>
-            </div>
+            <a href="#cw-machine-design" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-04">
@@ -1470,13 +1451,7 @@
             <h3>fast-fem</h3>
             <div class="chrono-meta">ANSYS / Python / FEA Self-Study</div>
             <div class="chrono-date">Apr 2026</div>
-            <p>Accelerated FEA self-study for 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calculations. Mesh convergence studies, post-mortems, and reproducible methodology.</p>
-            <div class="tags">
-              <span class="tag">ANSYS</span>
-              <span class="tag">Python</span>
-              <span class="tag">Jupyter</span>
-              <span class="tag">FEA</span>
-            </div>
+            <a href="#proj-fast-fem" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-03">
@@ -1484,14 +1459,7 @@
             <h3>W26-Cobot-Axis</h3>
             <div class="chrono-meta">ME 472 Mechatronics — Winter 2026</div>
             <div class="chrono-date">Mar 2026</div>
-            <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040).</p>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">RTDE</span>
-              <span class="tag">Klipper</span>
-              <span class="tag">RP2040</span>
-              <span class="tag">Raspberry Pi</span>
-            </div>
+            <a href="#res-cobot-axis" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-02">
@@ -1499,13 +1467,7 @@
             <h3>Colorado State Rams</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Feb 2026</div>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</p>
-            <div class="tags">
-              <span class="tag">[TAG]</span>
-              <span class="tag">[TAG]</span>
-              <span class="tag">[TAG]</span>
-              <span class="tag">[TAG]</span>
-            </div>
+            <a href="#comp-colorado-state" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-01">
@@ -1513,13 +1475,7 @@
             <h3>Land O'Lakes / Kozy Shack</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Jan 2026</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">PuLP</span>
-              <span class="tag">Forecasting</span>
-              <span class="tag">Supply Chain</span>
-            </div>
+            <a href="#comp-kozy-shack" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-year">2025</div>
@@ -1529,13 +1485,7 @@
             <h3>3M Fulfillment Network</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Dec 2025</div>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">Network Optimization</span>
-              <span class="tag">PuLP</span>
-              <span class="tag">Supply Chain</span>
-            </div>
+            <a href="#comp-3m" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2025-11">
@@ -1543,13 +1493,7 @@
             <h3>Quantum Frontiers</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Nov 2025</div>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
-            <div class="tags">
-              <span class="tag">[TAG]</span>
-              <span class="tag">[TAG]</span>
-              <span class="tag">[TAG]</span>
-              <span class="tag">[TAG]</span>
-            </div>
+            <a href="#comp-quantum-frontiers" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2025-08">
@@ -1558,15 +1502,7 @@
             <div class="chrono-meta">Research Assistant</div>
             <div class="chrono-location">Dearborn, MI</div>
             <div class="chrono-date">Aug 2025 — Present</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-            <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-            <div class="tags">
-              <span class="tag">MATLAB</span>
-              <span class="tag">G-Code</span>
-              <span class="tag">Toolchanger</span>
-              <span class="tag">Automation</span>
-            </div>
+            <a href="#res-pannier-2025" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2025-01">
@@ -1575,16 +1511,7 @@
             <div class="chrono-meta">Starfactory Automation &amp; Controls Intern</div>
             <div class="chrono-location">Starbase, TX</div>
             <div class="chrono-date">Jan 2025 — Jul 2025</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-            <div class="tags">
-              <span class="tag">EPLAN</span>
-              <span class="tag">Siemens PLCs</span>
-              <span class="tag">S120 Drives</span>
-              <span class="tag">KUKA Robots</span>
-              <span class="tag">NX</span>
-            </div>
+            <a href="#exp-spacex-starfactory" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-year">2024</div>
@@ -1595,15 +1522,7 @@
             <div class="chrono-meta">Research Assistant</div>
             <div class="chrono-location">Dearborn, MI</div>
             <div class="chrono-date">Sep 2024 — Jan 2025</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-            <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-            <div class="tags">
-              <span class="tag">MATLAB</span>
-              <span class="tag">G-Code</span>
-              <span class="tag">Toolchanger</span>
-              <span class="tag">Automation</span>
-            </div>
+            <a href="#res-pannier-2024" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2024-05">
@@ -1612,14 +1531,7 @@
             <div class="chrono-meta">Space Lasers Integration &amp; Test Intern</div>
             <div class="chrono-location">Redmond, WA</div>
             <div class="chrono-date">May 2024 — Aug 2024</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-            <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-            <div class="tags">
-              <span class="tag">NX</span>
-              <span class="tag">ANSYS</span>
-              <span class="tag">Vibration Testing</span>
-            </div>
+            <a href="#exp-spacex-lasers" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2024-01">
@@ -1628,15 +1540,7 @@
             <div class="chrono-meta">Controls Development Intern</div>
             <div class="chrono-location">Austin, TX</div>
             <div class="chrono-date">Sep 2023 — Apr 2024</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-            <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
-            <div class="tags">
-              <span class="tag">DeltaV</span>
-              <span class="tag">TwinCAT</span>
-              <span class="tag">Controls FAT</span>
-              <span class="tag">VFD</span>
-            </div>
+            <a href="#exp-tesla-4680" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-year">2023</div>
@@ -1647,14 +1551,7 @@
             <div class="chrono-meta">Starship Launch Intern</div>
             <div class="chrono-location">Starbase, TX</div>
             <div class="chrono-date">May 2023 — Aug 2023</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur.</p>
-            <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit.</p>
-            <div class="tags">
-              <span class="tag">Controls Hardware</span>
-              <span class="tag">Commissioning</span>
-              <span class="tag">System Integration</span>
-            </div>
+            <a href="#exp-spacex-launch" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-year">2022</div>
@@ -1665,14 +1562,7 @@
             <div class="chrono-meta">Starship Automation &amp; Controls Intern</div>
             <div class="chrono-location">Starbase, TX</div>
             <div class="chrono-date">May 2022 — Aug 2022</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Quis autem vel eum iure reprehenderit qui in ea voluptate.</p>
-            <p>At vero eos et accusamus et iusto odio dignissimos ducimus.</p>
-            <div class="tags">
-              <span class="tag">Cryogenic Systems</span>
-              <span class="tag">Instrumentation</span>
-              <span class="tag">VFD</span>
-            </div>
+            <a href="#exp-spacex-automation" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-year">2021</div>
@@ -1683,15 +1573,7 @@
             <div class="chrono-meta">Undergraduate Researcher</div>
             <div class="chrono-location">Dearborn, MI</div>
             <div class="chrono-date">Jul 2021 — May 2023</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-            <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-            <div class="tags">
-              <span class="tag">MATLAB</span>
-              <span class="tag">G-Code</span>
-              <span class="tag">Toolchanger</span>
-              <span class="tag">Automation</span>
-            </div>
+            <a href="#res-pannier-2021" class="chrono-details-link">View details &rarr;</a>
           </div>
 
           <div class="chrono-card stagger-item" data-date="2021-05">
@@ -1700,14 +1582,7 @@
             <div class="chrono-meta">Student Co-Op</div>
             <div class="chrono-location">Newport, MI</div>
             <div class="chrono-date">May 2021 — Feb 2022</div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-            <p>Ut enim ad minima veniam quis nostrum exercitationem ullam.</p>
-            <div class="tags">
-              <span class="tag">Nuclear</span>
-              <span class="tag">Design Documentation</span>
-              <span class="tag">Regulatory Compliance</span>
-            </div>
+            <a href="#exp-dte-fermi" class="chrono-details-link">View details &rarr;</a>
           </div>
 
         </div>
@@ -1722,7 +1597,7 @@
           <div class="line" aria-hidden="true"></div>
         </div>
         <div class="timeline">
-          <div class="timeline-item stagger-item">
+          <div class="timeline-item stagger-item" id="exp-spacex-starfactory">
             <div class="timeline-date">Jan 2025 — Jul 2025</div>
             <div class="timeline-content">
               <h3>SpaceX</h3>
@@ -1740,7 +1615,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item stagger-item">
+          <div class="timeline-item stagger-item" id="exp-spacex-lasers">
             <div class="timeline-date">May 2024 — Aug 2024</div>
             <div class="timeline-content">
               <h3>SpaceX</h3>
@@ -1756,7 +1631,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item stagger-item">
+          <div class="timeline-item stagger-item" id="exp-tesla-4680">
             <div class="timeline-date">Sep 2023 — Apr 2024</div>
             <div class="timeline-content">
               <h3>Tesla 4680</h3>
@@ -1773,7 +1648,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item stagger-item">
+          <div class="timeline-item stagger-item" id="exp-spacex-launch">
             <div class="timeline-date">May 2023 — Aug 2023</div>
             <div class="timeline-content">
               <h3>SpaceX</h3>
@@ -1789,7 +1664,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item stagger-item">
+          <div class="timeline-item stagger-item" id="exp-spacex-automation">
             <div class="timeline-date">May 2022 — Aug 2022</div>
             <div class="timeline-content">
               <h3>SpaceX</h3>
@@ -1805,7 +1680,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item stagger-item">
+          <div class="timeline-item stagger-item" id="exp-dte-fermi">
             <div class="timeline-date">May 2021 — Feb 2022</div>
             <div class="timeline-content">
               <h3>DTE Energy — Fermi Nuclear Power Plant</h3>
@@ -1836,7 +1711,7 @@
         <!-- Personal lane -->
         <div class="project-lane">
           <h3 class="lane-label">Personal</h3>
-          <div class="project-featured stagger-item">
+          <div class="project-featured stagger-item" id="proj-stark-translate">
             <h4>stark-translate</h4>
             <div class="project-meta">Python / Live Bilingual Speech-to-Text</div>
             <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
@@ -1859,7 +1734,7 @@
             </div>
           </div>
           <div class="project-grid">
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" id="proj-fast-fem">
               <h4>fast-fem</h4>
               <div class="project-meta">ANSYS / Python / FEA Self-Study</div>
               <p>Accelerated FEA self-study for 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calculations. Mesh convergence studies, post-mortems, and reproducible methodology.</p>
@@ -1873,7 +1748,7 @@
                 <a href="https://github.com/wrbell/fast-fem" class="btn-sm" target="_blank" rel="noopener noreferrer" aria-label="View fast-fem source code on GitHub">View Code &rarr;</a>
               </div>
             </div>
-            <div class="project-card stagger-item" data-edition="fall">
+            <div class="project-card stagger-item" id="proj-dfm" data-edition="fall">
               <h4>Design for Manufacturing</h4>
               <div class="project-meta">Python / CAD Automation</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1889,7 +1764,7 @@
         <div class="project-lane">
           <h3 class="lane-label">Research</h3>
           <div class="project-grid">
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" id="res-cobot-axis">
               <h4>W26-Cobot-Axis</h4>
               <div class="project-meta">ME 472 Mechatronics — Winter 2026</div>
               <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040).</p>
@@ -1904,7 +1779,7 @@
                 <a href="https://github.com/wrbell/W26-Cobot-Axis" class="btn-sm" target="_blank" rel="noopener noreferrer" aria-label="View W26-Cobot-Axis source code on GitHub">View Code &rarr;</a>
               </div>
             </div>
-            <div class="project-card stagger-item" data-edition="fall">
+            <div class="project-card stagger-item" id="res-senior-design" data-edition="fall">
               <h4>Senior Design</h4>
               <div class="project-meta">ME 4671 · Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1920,7 +1795,7 @@
         <div class="project-lane">
           <h3 class="lane-label">Coursework</h3>
           <div class="project-grid">
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" id="cw-vibrations">
               <h4>Vibrations — Final Project</h4>
               <div class="project-meta">ME 440 · Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1929,7 +1804,7 @@
                 <span class="tag">Vibration Analysis</span>
               </div>
             </div>
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" id="cw-fluids-lab">
               <h4>Fluids Lab — Final Project</h4>
               <div class="project-meta">ME 379 · Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1938,7 +1813,7 @@
                 <span class="tag">Lab Instrumentation</span>
               </div>
             </div>
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" id="cw-machine-design">
               <h4>Machine Design — Final Project</h4>
               <div class="project-meta">ME 3601 · Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1947,7 +1822,7 @@
                 <span class="tag">FEA</span>
               </div>
             </div>
-            <div class="project-card stagger-item" data-edition="fall">
+            <div class="project-card stagger-item" id="cw-cfd" data-edition="fall">
               <h4>CFD — Final Project</h4>
               <div class="project-meta">ME 4301 · Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1969,7 +1844,7 @@
           <div class="line" aria-hidden="true"></div>
         </div>
         <div class="timeline">
-          <div class="timeline-item stagger-item">
+          <div class="timeline-item stagger-item" id="res-pannier-2025">
             <div class="timeline-date">Aug 2025 — Present</div>
             <div class="timeline-content">
               <h3>Pannier Research Lab</h3>
@@ -1986,7 +1861,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item stagger-item">
+          <div class="timeline-item stagger-item" id="res-pannier-2024">
             <div class="timeline-date">Sep 2024 — Jan 2025</div>
             <div class="timeline-content">
               <h3>Pannier Research Lab</h3>
@@ -2003,7 +1878,7 @@
               </div>
             </div>
           </div>
-          <div class="timeline-item stagger-item">
+          <div class="timeline-item stagger-item" id="res-pannier-2021">
             <div class="timeline-date">Jul 2021 — May 2023</div>
             <div class="timeline-content">
               <h3>Pannier Research Lab</h3>
@@ -2025,7 +1900,7 @@
         <div class="project-lane project-lane--competitions">
           <h3 class="lane-label">Supply Chain Cases</h3>
           <div class="project-grid">
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" id="comp-colorado-state">
               <h4>Colorado State Rams</h4>
               <div class="project-meta">Supply Chain Case Competition · Feb 2026</div>
               <div class="competition-meta">
@@ -2041,7 +1916,7 @@
                 <span class="tag">[TAG]</span>
               </div>
             </div>
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" id="comp-kozy-shack">
               <h4>Land O'Lakes / Kozy Shack</h4>
               <div class="project-meta">Supply Chain Case Competition · Jan 2026</div>
               <div class="competition-meta">
@@ -2057,7 +1932,7 @@
                 <span class="tag">Supply Chain</span>
               </div>
             </div>
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" id="comp-3m">
               <h4>3M Fulfillment Network</h4>
               <div class="project-meta">Supply Chain Case Competition · Jan 2026</div>
               <div class="competition-meta">
@@ -2073,7 +1948,7 @@
                 <span class="tag">Supply Chain</span>
               </div>
             </div>
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" id="comp-quantum-frontiers">
               <h4>Quantum Frontiers</h4>
               <div class="project-meta">Supply Chain Case Competition · Nov 2025</div>
               <div class="competition-meta">
@@ -2227,7 +2102,7 @@
   <!-- Footer -->
   <footer id="contact" role="contentinfo">
     <div class="container">
-      <p class="footer-cta">Let's build something<span class="accent">.</span></p>
+      <p class="footer-cta">Looking for a new grad role<span class="accent">.</span></p>
       <a href="mailto:wrbell@umich.edu" class="btn btn-primary" style="margin-bottom: var(--space-lg);">Contact Me</a>
       <div class="footer-links">
         <a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a>
@@ -2261,6 +2136,12 @@
   </div>
 
   <script>
+    // === Event Tracking ===
+    function trackEvent(action, category, label) {
+      if (typeof gtag === 'function') gtag('event', action, { event_category: category, event_label: label });
+      window.dispatchEvent(new CustomEvent('track', { detail: { action: action, category: category, label: label } }));
+    }
+
     // === Edition Gate ===
     (function() {
       var edition = new URLSearchParams(window.location.search).get('edition');
@@ -2408,6 +2289,7 @@
     }
 
     function openResumeModal() {
+      trackEvent('resume_view', 'resume', 'modal_open');
       previouslyFocused = document.activeElement;
       resumeModal.classList.add('open');
       resumeModal.setAttribute('aria-hidden', 'false');
@@ -2456,6 +2338,10 @@
     }
     resumeModal.querySelector('.resume-modal-backdrop').addEventListener('click', closeResumeModal);
     resumeModal.querySelector('.resume-modal-close').addEventListener('click', closeResumeModal);
+    // Resume tracking on modal footer links
+    var resumeFooterLinks = resumeModal.querySelectorAll('.resume-modal-footer .btn-sm');
+    if (resumeFooterLinks[0]) resumeFooterLinks[0].addEventListener('click', function() { trackEvent('resume_open', 'resume', 'new_tab'); });
+    if (resumeFooterLinks[1]) resumeFooterLinks[1].addEventListener('click', function() { trackEvent('resume_download', 'resume', 'download'); });
 
     // === Side Index Active Tracking ===
     const sideIndex = document.querySelector('.side-index');
@@ -2569,6 +2455,39 @@
             sibling = sibling.nextElementSibling;
           }
           year.classList.toggle('chrono-hidden', !hasVisible);
+        });
+      });
+    }
+
+    // === Chrono Details Navigation ===
+    var chronoTrack = document.querySelector('.chrono-track');
+    if (chronoTrack) {
+      chronoTrack.addEventListener('click', function(e) {
+        var link = e.target.closest('.chrono-details-link');
+        if (!link) return;
+        e.preventDefault();
+        var targetId = link.getAttribute('href').slice(1);
+        // Switch to section view
+        setChronoView(false);
+        localStorage.setItem('view', 'sections');
+        // Scroll to target and highlight
+        requestAnimationFrame(function() {
+          var target = document.getElementById(targetId);
+          if (!target) return;
+          var navHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 60;
+          var top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+          target.style.outline = '2px solid var(--accent)';
+          target.style.outlineOffset = '4px';
+          target.style.transition = 'outline-color 0.3s';
+          setTimeout(function() {
+            target.style.outlineColor = 'transparent';
+            setTimeout(function() {
+              target.style.outline = '';
+              target.style.outlineOffset = '';
+              target.style.transition = '';
+            }, 300);
+          }, 2000);
         });
       });
     }
