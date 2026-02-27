@@ -15,6 +15,14 @@ The site is a single-page portfolio built as a single `index.html` file with inl
 - `assets/headshot.jpg` — headshot photo (placeholder, to be provided)
 - `assets/willem-bell-resume.pdf` — resume PDF (placeholder, to be provided)
 
+### CI checks (branch protection)
+Three required status checks run on every PR:
+- **HTML Validation** — validates `index.html` markup
+- **Lighthouse CI** — performance/accessibility audit
+- **Link Check** — verifies all links resolve
+
+Auto-merge is enabled. When creating PRs, always enable auto-merge with `gh pr merge --auto --squash` so they merge automatically once checks pass.
+
 ## Deployment
 
 Pushing to `main` triggers automatic deployment to GitHub Pages at https://wrbell.github.io/.
