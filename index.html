@@ -450,10 +450,10 @@
     .headshot .bracket-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
 
     /* === Section Dividers === */
-    #about, #experience, #projects, #research, #skills, #education, #extracurricular {
+    #about, #experience, #projects, #supply-chain-cases, #skills, #education, #extracurricular {
       position: relative;
     }
-    #about::before, #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before {
+    #about::before, #experience::before, #projects::before, #supply-chain-cases::before, #skills::before, #education::before, #extracurricular::before {
       content: '';
       position: absolute;
       top: 0;
@@ -1329,7 +1329,7 @@
       .project-card, .project-featured, .edu-card { break-inside: avoid; box-shadow: none; }
       .lane-label { break-after: avoid; }
       .project-card::before, .nav-links a::after { display: none; }
-      #about::before, #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before { display: none; }
+      #about::before, #experience::before, #projects::before, #supply-chain-cases::before, #skills::before, #education::before, #extracurricular::before { display: none; }
       .status-dot { animation: none; background: #111; }
       .cursor { display: none; }
       .edition-banner { display: none !important; }
@@ -1360,7 +1360,7 @@
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
-      <a href="#research">Research</a>
+      <a href="#supply-chain-cases">Supply Chain</a>
       <a href="#extracurricular">Extracurricular</a>
       <a href="#skills">Skills</a>
       <a href="#education">Education</a>
@@ -1372,7 +1372,7 @@
     <a href="#about" class="side-index-link">About</a>
     <a href="#experience" class="side-index-link">Experience</a>
     <a href="#projects" class="side-index-link">Projects</a>
-    <a href="#research" class="side-index-link">Research</a>
+    <a href="#supply-chain-cases" class="side-index-link">Supply Chain</a>
     <a href="#extracurricular" class="side-index-link">Extracurricular</a>
     <a href="#skills" class="side-index-link">Skills</a>
     <a href="#education" class="side-index-link">Education</a>
@@ -1442,7 +1442,7 @@
           <button type="button" class="chrono-filter" data-filter="experience">Experience</button>
           <button type="button" class="chrono-filter" data-filter="project">Project</button>
           <button type="button" class="chrono-filter" data-filter="research">Research</button>
-          <button type="button" class="chrono-filter" data-filter="competition">Competition</button>
+          <button type="button" class="chrono-filter" data-filter="supply chain cases">Supply Chain Cases</button>
           <button type="button" class="chrono-filter" data-filter="coursework">Coursework</button>
         </div>
         <div class="chrono-track">
@@ -1523,7 +1523,7 @@
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-02">
-            <span class="chrono-badge chrono-badge--competition">Competition</span>
+            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
             <h3>Colorado State Rams</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Feb 2026</div>
@@ -1531,7 +1531,7 @@
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-01">
-            <span class="chrono-badge chrono-badge--competition">Competition</span>
+            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
             <h3>Land O'Lakes / Kozy Shack</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Jan 2026</div>
@@ -1541,7 +1541,7 @@
           <div class="chrono-year">2025</div>
 
           <div class="chrono-card stagger-item" data-date="2025-12">
-            <span class="chrono-badge chrono-badge--competition">Competition</span>
+            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
             <h3>3M Fulfillment Network</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Dec 2025</div>
@@ -1549,7 +1549,7 @@
           </div>
 
           <div class="chrono-card stagger-item" data-date="2025-11">
-            <span class="chrono-badge chrono-badge--competition">Competition</span>
+            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
             <h3>Quantum Frontiers</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Nov 2025</div>
@@ -1625,6 +1625,15 @@
             <a href="#exp-spacex-automation" class="chrono-details-link">View details &rarr;</a>
           </div>
 
+          <div class="chrono-card stagger-item" data-date="2022-01">
+            <span class="chrono-badge chrono-badge--experience">Experience</span>
+            <h3>UM-Dearborn</h3>
+            <div class="chrono-meta">SI Assistant Supervisor</div>
+            <div class="chrono-location">Dearborn, MI</div>
+            <div class="chrono-date">2022 — 2023</div>
+            <a href="#exp-si-supervisor" class="chrono-details-link">View details &rarr;</a>
+          </div>
+
           <div class="chrono-year">2021</div>
 
           <div class="chrono-card stagger-item" data-date="2021-07">
@@ -1645,6 +1654,17 @@
             <a href="#exp-dte-fermi" class="chrono-details-link">View details &rarr;</a>
           </div>
 
+          <div class="chrono-year">2020</div>
+
+          <div class="chrono-card stagger-item" data-date="2020-01">
+            <span class="chrono-badge chrono-badge--experience">Experience</span>
+            <h3>UM-Dearborn</h3>
+            <div class="chrono-meta">SI Leader</div>
+            <div class="chrono-location">Dearborn, MI</div>
+            <div class="chrono-date">2020 — 2023</div>
+            <a href="#exp-si-leader" class="chrono-details-link">View details &rarr;</a>
+          </div>
+
         </div>
       </div>
     </section>
@@ -1656,103 +1676,195 @@
           <h2 id="experience-heading">Experience</h2>
           <div class="line" aria-hidden="true"></div>
         </div>
-        <div class="timeline">
-          <div class="timeline-item stagger-item" id="exp-spacex-starfactory">
-            <div class="timeline-date">Jan 2025 — Jul 2025</div>
-            <div class="timeline-content">
-              <h3>SpaceX</h3>
-              <div class="role">Starfactory Automation & Controls Intern</div>
-              <div class="location">Starbase, TX</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-              <div class="tags">
-                <span class="tag">EPLAN</span>
-                <span class="tag">Siemens PLCs</span>
-                <span class="tag">S120 Drives</span>
-                <span class="tag">KUKA Robots</span>
-                <span class="tag">NX</span>
+        <div class="project-lane">
+          <h3 class="lane-label">Industry</h3>
+          <div class="timeline">
+            <div class="timeline-item stagger-item" id="exp-spacex-starfactory">
+              <div class="timeline-date">Jan 2025 — Jul 2025</div>
+              <div class="timeline-content">
+                <h3>SpaceX</h3>
+                <div class="role">Starfactory Automation & Controls Intern</div>
+                <div class="location">Starbase, TX</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                <div class="tags">
+                  <span class="tag">EPLAN</span>
+                  <span class="tag">Siemens PLCs</span>
+                  <span class="tag">S120 Drives</span>
+                  <span class="tag">KUKA Robots</span>
+                  <span class="tag">NX</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item stagger-item" id="exp-spacex-lasers">
+              <div class="timeline-date">May 2024 — Aug 2024</div>
+              <div class="timeline-content">
+                <h3>SpaceX</h3>
+                <div class="role">Space Lasers Integration & Test Intern</div>
+                <div class="location">Redmond, WA</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+                <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+                <div class="tags">
+                  <span class="tag">NX</span>
+                  <span class="tag">ANSYS</span>
+                  <span class="tag">Vibration Testing</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item stagger-item" id="exp-tesla-4680">
+              <div class="timeline-date">Sep 2023 — Apr 2024</div>
+              <div class="timeline-content">
+                <h3>Tesla 4680</h3>
+                <div class="role">Controls Development Intern</div>
+                <div class="location">Austin, TX</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+                <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+                <div class="tags">
+                  <span class="tag">DeltaV</span>
+                  <span class="tag">TwinCAT</span>
+                  <span class="tag">Controls FAT</span>
+                  <span class="tag">VFD</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item stagger-item" id="exp-spacex-launch">
+              <div class="timeline-date">May 2023 — Aug 2023</div>
+              <div class="timeline-content">
+                <h3>SpaceX</h3>
+                <div class="role">Starship Launch Intern</div>
+                <div class="location">Starbase, TX</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur.</p>
+                <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit.</p>
+                <div class="tags">
+                  <span class="tag">Controls Hardware</span>
+                  <span class="tag">Commissioning</span>
+                  <span class="tag">System Integration</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item stagger-item" id="exp-spacex-automation">
+              <div class="timeline-date">May 2022 — Aug 2022</div>
+              <div class="timeline-content">
+                <h3>SpaceX</h3>
+                <div class="role">Starship Automation & Controls Intern</div>
+                <div class="location">Starbase, TX</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Quis autem vel eum iure reprehenderit qui in ea voluptate.</p>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus.</p>
+                <div class="tags">
+                  <span class="tag">Cryogenic Systems</span>
+                  <span class="tag">Instrumentation</span>
+                  <span class="tag">VFD</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item stagger-item" id="exp-dte-fermi">
+              <div class="timeline-date">May 2021 — Feb 2022</div>
+              <div class="timeline-content">
+                <h3>DTE Energy — Fermi Nuclear Power Plant</h3>
+                <div class="role">Student Co-Op</div>
+                <div class="location">Newport, MI</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+                <p>Ut enim ad minima veniam quis nostrum exercitationem ullam.</p>
+                <div class="tags">
+                  <span class="tag">Nuclear</span>
+                  <span class="tag">Design Documentation</span>
+                  <span class="tag">Regulatory Compliance</span>
+                </div>
               </div>
             </div>
           </div>
-          <div class="timeline-item stagger-item" id="exp-spacex-lasers">
-            <div class="timeline-date">May 2024 — Aug 2024</div>
-            <div class="timeline-content">
-              <h3>SpaceX</h3>
-              <div class="role">Space Lasers Integration & Test Intern</div>
-              <div class="location">Redmond, WA</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-              <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-              <div class="tags">
-                <span class="tag">NX</span>
-                <span class="tag">ANSYS</span>
-                <span class="tag">Vibration Testing</span>
+        </div>
+        <div class="project-lane">
+          <h3 class="lane-label">Research</h3>
+          <div class="timeline">
+            <div class="timeline-item stagger-item" id="res-pannier-2025">
+              <div class="timeline-date">Aug 2025 — Present</div>
+              <div class="timeline-content">
+                <h3>Pannier Research Lab</h3>
+                <div class="role">Research Assistant</div>
+                <div class="location">Dearborn, MI</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+                <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+                <div class="tags">
+                  <span class="tag">MATLAB</span>
+                  <span class="tag">G-Code</span>
+                  <span class="tag">Toolchanger</span>
+                  <span class="tag">Automation</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item stagger-item" id="res-pannier-2024">
+              <div class="timeline-date">Sep 2024 — Jan 2025</div>
+              <div class="timeline-content">
+                <h3>Pannier Research Lab</h3>
+                <div class="role">Research Assistant</div>
+                <div class="location">Dearborn, MI</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+                <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+                <div class="tags">
+                  <span class="tag">MATLAB</span>
+                  <span class="tag">G-Code</span>
+                  <span class="tag">Toolchanger</span>
+                  <span class="tag">Automation</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item stagger-item" id="res-pannier-2021">
+              <div class="timeline-date">Jul 2021 — May 2023</div>
+              <div class="timeline-content">
+                <h3>Pannier Research Lab</h3>
+                <div class="role">Undergraduate Researcher</div>
+                <div class="location">Dearborn, MI</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+                <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
+                <div class="tags">
+                  <span class="tag">MATLAB</span>
+                  <span class="tag">G-Code</span>
+                  <span class="tag">Toolchanger</span>
+                  <span class="tag">Automation</span>
+                </div>
               </div>
             </div>
           </div>
-          <div class="timeline-item stagger-item" id="exp-tesla-4680">
-            <div class="timeline-date">Sep 2023 — Apr 2024</div>
-            <div class="timeline-content">
-              <h3>Tesla 4680</h3>
-              <div class="role">Controls Development Intern</div>
-              <div class="location">Austin, TX</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-              <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
-              <div class="tags">
-                <span class="tag">DeltaV</span>
-                <span class="tag">TwinCAT</span>
-                <span class="tag">Controls FAT</span>
-                <span class="tag">VFD</span>
+        </div>
+        <div class="project-lane">
+          <h3 class="lane-label">Campus</h3>
+          <div class="timeline">
+            <div class="timeline-item stagger-item" id="exp-si-supervisor">
+              <div class="timeline-date">2022 — 2023</div>
+              <div class="timeline-content">
+                <h3>UM-Dearborn</h3>
+                <div class="role">SI Assistant Supervisor</div>
+                <div class="location">Dearborn, MI</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <div class="tags">
+                  <span class="tag">Leadership</span>
+                  <span class="tag">Tutoring</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="timeline-item stagger-item" id="exp-spacex-launch">
-            <div class="timeline-date">May 2023 — Aug 2023</div>
-            <div class="timeline-content">
-              <h3>SpaceX</h3>
-              <div class="role">Starship Launch Intern</div>
-              <div class="location">Starbase, TX</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur.</p>
-              <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit.</p>
-              <div class="tags">
-                <span class="tag">Controls Hardware</span>
-                <span class="tag">Commissioning</span>
-                <span class="tag">System Integration</span>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-item stagger-item" id="exp-spacex-automation">
-            <div class="timeline-date">May 2022 — Aug 2022</div>
-            <div class="timeline-content">
-              <h3>SpaceX</h3>
-              <div class="role">Starship Automation & Controls Intern</div>
-              <div class="location">Starbase, TX</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Quis autem vel eum iure reprehenderit qui in ea voluptate.</p>
-              <p>At vero eos et accusamus et iusto odio dignissimos ducimus.</p>
-              <div class="tags">
-                <span class="tag">Cryogenic Systems</span>
-                <span class="tag">Instrumentation</span>
-                <span class="tag">VFD</span>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-item stagger-item" id="exp-dte-fermi">
-            <div class="timeline-date">May 2021 — Feb 2022</div>
-            <div class="timeline-content">
-              <h3>DTE Energy — Fermi Nuclear Power Plant</h3>
-              <div class="role">Student Co-Op</div>
-              <div class="location">Newport, MI</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
-              <p>Ut enim ad minima veniam quis nostrum exercitationem ullam.</p>
-              <div class="tags">
-                <span class="tag">Nuclear</span>
-                <span class="tag">Design Documentation</span>
-                <span class="tag">Regulatory Compliance</span>
+            <div class="timeline-item stagger-item" id="exp-si-leader">
+              <div class="timeline-date">2020 — 2023</div>
+              <div class="timeline-content">
+                <h3>UM-Dearborn</h3>
+                <div class="role">SI Leader</div>
+                <div class="location">Dearborn, MI</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <div class="tags">
+                  <span class="tag">Tutoring</span>
+                  <span class="tag">STEM Education</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1896,69 +2008,14 @@
       </div>
     </section>
 
-    <!-- Research -->
-    <section id="research" class="fade-in section-default" aria-labelledby="research-heading">
+    <!-- Supply Chain Cases -->
+    <section id="supply-chain-cases" class="fade-in section-default" aria-labelledby="supply-chain-heading">
       <div class="container">
         <div class="section-header">
-          <h2 id="research-heading">Research</h2>
+          <h2 id="supply-chain-heading">Supply Chain Cases</h2>
           <div class="line" aria-hidden="true"></div>
         </div>
-        <div class="timeline">
-          <div class="timeline-item stagger-item" id="res-pannier-2025">
-            <div class="timeline-date">Aug 2025 — Present</div>
-            <div class="timeline-content">
-              <h3>Pannier Research Lab</h3>
-              <div class="role">Research Assistant</div>
-              <div class="location">Dearborn, MI</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-              <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-              <div class="tags">
-                <span class="tag">MATLAB</span>
-                <span class="tag">G-Code</span>
-                <span class="tag">Toolchanger</span>
-                <span class="tag">Automation</span>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-item stagger-item" id="res-pannier-2024">
-            <div class="timeline-date">Sep 2024 — Jan 2025</div>
-            <div class="timeline-content">
-              <h3>Pannier Research Lab</h3>
-              <div class="role">Research Assistant</div>
-              <div class="location">Dearborn, MI</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-              <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-              <div class="tags">
-                <span class="tag">MATLAB</span>
-                <span class="tag">G-Code</span>
-                <span class="tag">Toolchanger</span>
-                <span class="tag">Automation</span>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-item stagger-item" id="res-pannier-2021">
-            <div class="timeline-date">Jul 2021 — May 2023</div>
-            <div class="timeline-content">
-              <h3>Pannier Research Lab</h3>
-              <div class="role">Undergraduate Researcher</div>
-              <div class="location">Dearborn, MI</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-              <p>Excepteur sint occaecat cupidatat non proident sunt in culpa.</p>
-              <div class="tags">
-                <span class="tag">MATLAB</span>
-                <span class="tag">G-Code</span>
-                <span class="tag">Toolchanger</span>
-                <span class="tag">Automation</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Supply Chain Cases lane -->
         <div class="project-lane project-lane--competitions">
-          <h3 class="lane-label">Supply Chain Cases</h3>
           <div class="project-grid">
             <div class="project-card stagger-item" id="comp-colorado-state">
               <h4>Colorado State Rams</h4>
@@ -2026,7 +2083,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
