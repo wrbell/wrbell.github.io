@@ -89,8 +89,6 @@
       --nav-height: 60px;
       --radius: 6px;
       --accent-glow: rgba(0, 229, 160, 0.06);
-      --accent-gold: #f0b429;
-      --accent-gold-dim: rgba(240, 180, 41, 0.1);
       --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.3);
       --shadow-card-hover: 0 4px 30px rgba(0, 0, 0, 0.4);
       --radius-lg: 10px;
@@ -106,8 +104,6 @@
       --accent: #00b880;
       --accent-dim: rgba(0, 184, 128, 0.1);
       --accent-glow: rgba(0, 184, 128, 0.06);
-      --accent-gold: #c89520;
-      --accent-gold-dim: rgba(200, 149, 32, 0.1);
       --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
       --shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.12);
     }
@@ -593,36 +589,20 @@
 
     /* === Competition Lane === */
     .project-lane--competitions .lane-label::before {
-      background: var(--accent-gold);
+      background: var(--accent);
     }
     .project-lane--competitions .project-card:hover {
-      border-color: var(--accent-gold);
+      border-color: var(--accent);
     }
     .project-lane--competitions .project-card::before {
-      background: var(--accent-gold);
+      background: var(--accent);
     }
     .project-lane--competitions .project-card .project-meta {
-      color: var(--accent-gold);
+      color: var(--accent);
     }
     .project-lane--competitions .tag {
-      border-color: rgba(240, 180, 41, 0.2);
-      color: var(--accent-gold);
-    }
-    .competition-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-xs);
-      font-family: var(--font-mono);
-      font-size: 0.6875rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent-gold);
-      background: var(--accent-gold-dim);
-      border: 1px solid rgba(240, 180, 41, 0.25);
-      border-radius: var(--radius);
-      padding: 2px 8px;
-      margin-bottom: var(--space-sm);
+      border-color: var(--accent-dim);
+      color: var(--accent);
     }
     .competition-meta {
       display: flex;
@@ -636,7 +616,7 @@
     .competition-meta span::before {
       content: '›';
       margin-right: var(--space-xs);
-      color: var(--accent-gold);
+      color: var(--accent);
     }
 
     /* === Skills === */
@@ -800,9 +780,9 @@
       color: var(--accent);
     }
     .project-lane--competitions .tag.active {
-      background: var(--accent-gold-dim);
-      border-color: var(--accent-gold);
-      color: var(--accent-gold);
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
     }
     .dimmed {
       opacity: 0.15;
@@ -1034,11 +1014,8 @@
         --text: #111;
         --muted: #555;
         --accent: #111;
-        --accent-gold: #111;
-        --accent-gold-dim: transparent;
       }
       body { font-size: 12pt; }
-      .competition-badge { border-color: #999; }
       nav, .headshot-container, .skip-link, .back-to-top, .theme-toggle, .resume-modal { display: none !important; }
       .hero { min-height: auto; padding-top: 0; }
       section { padding: 1rem 0; }
@@ -1398,12 +1375,11 @@
             </div>
           </div>
         </div>
-        <!-- Competitions lane -->
+        <!-- Supply Chain Cases lane -->
         <div class="project-lane project-lane--competitions">
-          <h3 class="lane-label">Competitions</h3>
+          <h3 class="lane-label">Supply Chain Cases</h3>
           <div class="project-grid">
             <div class="project-card stagger-item">
-              <span class="competition-badge">&#9733; [PLACEMENT]</span>
               <h4>Colorado State Rams</h4>
               <div class="project-meta">Supply Chain Case Competition · Feb 2026</div>
               <div class="competition-meta">
@@ -1421,7 +1397,6 @@
               </div>
             </div>
             <div class="project-card stagger-item">
-              <span class="competition-badge">&#9733; [PLACEMENT]</span>
               <h4>Land O'Lakes / Kozy Shack</h4>
               <div class="project-meta">Supply Chain Case Competition · Jan 2026</div>
               <div class="competition-meta">
@@ -1439,7 +1414,6 @@
               </div>
             </div>
             <div class="project-card stagger-item">
-              <span class="competition-badge">&#9733; [PLACEMENT]</span>
               <h4>3M Fulfillment Network</h4>
               <div class="project-meta">Supply Chain Case Competition · Jan 2026</div>
               <div class="competition-meta">
@@ -1457,7 +1431,6 @@
               </div>
             </div>
             <div class="project-card stagger-item">
-              <span class="competition-badge">&#9733; [PLACEMENT]</span>
               <h4>Quantum Frontiers</h4>
               <div class="project-meta">Supply Chain Case Competition · Nov 2025</div>
               <div class="competition-meta">
