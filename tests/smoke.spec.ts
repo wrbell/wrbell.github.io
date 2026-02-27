@@ -124,3 +124,50 @@ test.describe("localStorage persistence", () => {
     await expect(page.locator("#timeline")).toBeVisible();
   });
 });
+
+test.describe("Timeline filter buttons", () => {
+  test("filters cards by type and resets with All", async ({ page }) => {
+    await page.goto("/");
+
+    // Switch to chrono view
+    await page.locator(".view-toggle").click();
+    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
+
+    // Should have 6 filter buttons
+    const filters = page.locator(".chrono-filter");
+    await expect(filters).toHaveCount(6);
+
+    // "All" should be active by default
+    await expect(filters.first()).toHaveClass(/\bactive\b/);
+
+    // Click "Experience" filter
+    await page.locator('.chrono-filter[data-filter="experience"]').click();
+
+    // Only Experience badges should be visible
+    const visibleBadges = page.locator(
+      ".chrono-card:not(.chrono-hidden) .chrono-badge"
+    );
+    const visibleCount = await visibleBadges.count();
+    expect(visibleCount).toBeGreaterThan(0);
+    for (let i = 0; i < visibleCount; i++) {
+      await expect(visibleBadges.nth(i)).toHaveText("Experience");
+    }
+
+    // Some cards should be hidden
+    const hiddenCards = page.locator(".chrono-card.chrono-hidden");
+    expect(await hiddenCards.count()).toBeGreaterThan(0);
+
+    // Some year markers may be hidden
+    const hiddenYears = page.locator(".chrono-year.chrono-hidden");
+    const hiddenYearCount = await hiddenYears.count();
+    // Just verify the count is a number (may be 0 if all years have experience cards)
+    expect(hiddenYearCount).toBeGreaterThanOrEqual(0);
+
+    // Click "All" to reset
+    await page.locator('.chrono-filter[data-filter="all"]').click();
+
+    // No cards or years should be hidden
+    await expect(page.locator(".chrono-card.chrono-hidden")).toHaveCount(0);
+    await expect(page.locator(".chrono-year.chrono-hidden")).toHaveCount(0);
+  });
+});
