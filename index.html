@@ -1219,6 +1219,29 @@
       border: 2px solid var(--bg);
       box-shadow: 0 0 0 2px var(--accent);
     }
+    .chrono-semester {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: var(--space-md) 0 var(--space-sm);
+      position: relative;
+    }
+    .chrono-semester.chrono-hidden { display: none; }
+    .chrono-semester::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--muted);
+      opacity: 0.45;
+    }
     .chrono-details-link {
       display: inline-block;
       font-family: var(--font-mono);
@@ -1546,6 +1569,8 @@
 
           <div class="chrono-year">2026</div>
 
+          <div class="chrono-semester" data-edition="fall">Fall 2026</div>
+
           <div class="chrono-card stagger-item" data-date="2026-09" data-edition="fall">
             <span class="chrono-badge chrono-badge--research">Research</span>
             <h3>Senior Design</h3>
@@ -1561,6 +1586,8 @@
             <div class="chrono-date">Sep 2026</div>
             <a href="#proj-dfm" class="chrono-details-link">View details &rarr;</a>
           </div>
+
+          <div class="chrono-semester">Summer 2026</div>
 
           <div class="chrono-card stagger-item" data-date="2026-05" data-edition="fall">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
@@ -1578,6 +1605,8 @@
             <div class="chrono-date">May 2026</div>
             <a href="#proj-stark-translate" class="chrono-details-link">View details &rarr;</a>
           </div>
+
+          <div class="chrono-semester">Winter 2026</div>
 
           <div class="chrono-card chrono-card--group stagger-item" data-date="2026-04">
             <span class="chrono-badge chrono-badge--coursework">Coursework</span>
@@ -1646,6 +1675,8 @@
 
           <div class="chrono-year">2025</div>
 
+          <div class="chrono-semester">Fall 2025</div>
+
           <div class="chrono-card stagger-item" data-date="2025-12">
             <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
             <h3>3M Fulfillment Network</h3>
@@ -1662,6 +1693,8 @@
             <a href="#comp-quantum-frontiers" class="chrono-details-link">View details &rarr;</a>
           </div>
 
+          <div class="chrono-semester">Summer 2025</div>
+
           <div class="chrono-card stagger-item" data-date="2025-08">
             <span class="chrono-badge chrono-badge--research">Research</span>
             <h3>Pannier Research Lab</h3>
@@ -1670,6 +1703,8 @@
             <div class="chrono-date">Aug 2025 — Present</div>
             <a href="#res-pannier-2025" class="chrono-details-link">View details &rarr;</a>
           </div>
+
+          <div class="chrono-semester">Winter 2025</div>
 
           <div class="chrono-card stagger-item" data-date="2025-01">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
@@ -1682,6 +1717,8 @@
 
           <div class="chrono-year">2024</div>
 
+          <div class="chrono-semester">Fall 2024</div>
+
           <div class="chrono-card stagger-item" data-date="2024-09">
             <span class="chrono-badge chrono-badge--research">Research</span>
             <h3>Pannier Research Lab</h3>
@@ -1691,6 +1728,8 @@
             <a href="#res-pannier-2024" class="chrono-details-link">View details &rarr;</a>
           </div>
 
+          <div class="chrono-semester">Summer 2024</div>
+
           <div class="chrono-card stagger-item" data-date="2024-05">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
             <h3>SpaceX</h3>
@@ -1699,6 +1738,8 @@
             <div class="chrono-date">May 2024 — Aug 2024</div>
             <a href="#exp-spacex-lasers" class="chrono-details-link">View details &rarr;</a>
           </div>
+
+          <div class="chrono-semester">Winter 2024</div>
 
           <div class="chrono-card stagger-item" data-date="2024-01">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
@@ -1711,6 +1752,8 @@
 
           <div class="chrono-year">2023</div>
 
+          <div class="chrono-semester">Summer 2023</div>
+
           <div class="chrono-card stagger-item" data-date="2023-05">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
             <h3>SpaceX</h3>
@@ -1722,6 +1765,8 @@
 
           <div class="chrono-year">2022</div>
 
+          <div class="chrono-semester">Summer 2022</div>
+
           <div class="chrono-card stagger-item" data-date="2022-05">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
             <h3>SpaceX</h3>
@@ -1730,6 +1775,8 @@
             <div class="chrono-date">May 2022 — Aug 2022</div>
             <a href="#exp-spacex-automation" class="chrono-details-link">View details &rarr;</a>
           </div>
+
+          <div class="chrono-semester">Winter 2022</div>
 
           <div class="chrono-card stagger-item" data-date="2022-01">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
@@ -1741,6 +1788,8 @@
           </div>
 
           <div class="chrono-year">2021</div>
+
+          <div class="chrono-semester">Summer 2021</div>
 
           <div class="chrono-card stagger-item" data-date="2021-07">
             <span class="chrono-badge chrono-badge--research">Research</span>
@@ -1762,12 +1811,14 @@
 
           <div class="chrono-year">2020</div>
 
-          <div class="chrono-card stagger-item" data-date="2020-01">
+          <div class="chrono-semester">Summer 2020</div>
+
+          <div class="chrono-card stagger-item" data-date="2020-06">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
             <h3>UM-Dearborn</h3>
             <div class="chrono-meta">SI Leader</div>
             <div class="chrono-location">Dearborn, MI</div>
-            <div class="chrono-date">2020 — 2023</div>
+            <div class="chrono-date">Jun 2020 — Sep 2023</div>
             <a href="#exp-si-leader" class="chrono-details-link">View details &rarr;</a>
           </div>
 
@@ -1971,7 +2022,7 @@
               </div>
             </div>
             <div class="timeline-item stagger-item" id="exp-si-leader">
-              <div class="timeline-date">2020 — 2023</div>
+              <div class="timeline-date">Jun 2020 — Sep 2023</div>
               <div class="timeline-content">
                 <h3>UM-Dearborn</h3>
                 <div class="role">SI Leader</div>
@@ -2716,24 +2767,46 @@
     function applyChronoFilter(filter) {
       var cards = document.querySelectorAll('.chrono-card');
       var years = document.querySelectorAll('.chrono-year');
+      var semesters = document.querySelectorAll('.chrono-semester');
 
       if (filter === 'all') {
         cards.forEach(function(c) { c.classList.remove('chrono-hidden'); });
         years.forEach(function(y) { y.classList.remove('chrono-hidden'); });
+        semesters.forEach(function(s) { s.classList.remove('chrono-hidden'); });
         return;
       }
 
+      // Pass 1: show/hide cards by badge text
       cards.forEach(function(c) {
         var badge = c.querySelector('.chrono-badge');
         var badgeText = badge ? badge.textContent.trim().toLowerCase() : '';
         c.classList.toggle('chrono-hidden', badgeText !== filter);
       });
 
+      // Pass 2: hide semester labels when all their cards are hidden
+      semesters.forEach(function(sem) {
+        var hasVisible = false;
+        var sibling = sem.nextElementSibling;
+        while (sibling
+            && !sibling.classList.contains('chrono-year')
+            && !sibling.classList.contains('chrono-semester')) {
+          if (sibling.classList.contains('chrono-card')
+              && !sibling.classList.contains('chrono-hidden')) {
+            hasVisible = true;
+            break;
+          }
+          sibling = sibling.nextElementSibling;
+        }
+        sem.classList.toggle('chrono-hidden', !hasVisible);
+      });
+
+      // Pass 3: hide year headers when no visible cards remain
       years.forEach(function(year) {
         var hasVisible = false;
         var sibling = year.nextElementSibling;
         while (sibling && !sibling.classList.contains('chrono-year')) {
-          if (sibling.classList.contains('chrono-card') && !sibling.classList.contains('chrono-hidden')) {
+          if (sibling.classList.contains('chrono-card')
+              && !sibling.classList.contains('chrono-hidden')) {
             hasVisible = true;
             break;
           }
