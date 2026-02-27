@@ -264,6 +264,160 @@ test.describe("Mobile navigation toggle", () => {
   });
 });
 
+test.describe("Mobile nav scroll lock", () => {
+  test("locks body scroll when open, restores when closed", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+
+    // Scroll down first so we can verify position is preserved
+    await page.evaluate(() => window.scrollTo(0, 200));
+    await page.waitForFunction(() => window.scrollY >= 200);
+
+    const navToggle = page.locator(".nav-toggle");
+    const navLinks = page.locator(".nav-links");
+
+    // Open nav
+    await navToggle.click();
+    await expect(navLinks).toHaveClass(/\bopen\b/);
+
+    // Body overflow should be hidden
+    const overflowOpen = await page.evaluate(
+      () => document.body.style.overflow
+    );
+    expect(overflowOpen).toBe("hidden");
+
+    // Close nav
+    await navToggle.click();
+    await expect(navLinks).not.toHaveClass(/\bopen\b/);
+
+    // Body overflow should be restored
+    const overflowClosed = await page.evaluate(
+      () => document.body.style.overflow
+    );
+    expect(overflowClosed).toBe("");
+
+    // Scroll position should be preserved
+    const scrollY = await page.evaluate(() => window.scrollY);
+    expect(scrollY).toBeGreaterThanOrEqual(190);
+  });
+});
+
+test.describe("Mobile nav backdrop click", () => {
+  test("clicking empty overlay area closes menu", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+
+    const navToggle = page.locator(".nav-toggle");
+    const navLinks = page.locator(".nav-links");
+
+    // Open nav
+    await navToggle.click();
+    await expect(navLinks).toHaveClass(/\bopen\b/);
+
+    // Dispatch click directly on overlay element (not a child link)
+    await navLinks.dispatchEvent("click");
+
+    // Menu should be closed
+    await expect(navLinks).not.toHaveClass(/\bopen\b/);
+    await expect(navToggle).toHaveAttribute("aria-expanded", "false");
+  });
+});
+
+test.describe("Mobile nav link closes menu", () => {
+  test("clicking a nav link closes menu and restores scroll", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+
+    const navToggle = page.locator(".nav-toggle");
+    const navLinks = page.locator(".nav-links");
+
+    // Open nav
+    await navToggle.click();
+    await expect(navLinks).toHaveClass(/\bopen\b/);
+
+    // Dispatch click on a nav link (fixed-position overlay may be outside Playwright's viewport)
+    await navLinks.locator('a[href^="#"]').first().dispatchEvent("click");
+
+    // Menu should close
+    await expect(navLinks).not.toHaveClass(/\bopen\b/);
+    await expect(navToggle).toHaveAttribute("aria-expanded", "false");
+
+    // Scroll should be restored
+    const overflow = await page.evaluate(() => document.body.style.overflow);
+    expect(overflow).toBe("");
+  });
+});
+
+test.describe("Mobile nav resize handler", () => {
+  test("resizing viewport past 768px auto-closes open menu", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+
+    const navToggle = page.locator(".nav-toggle");
+    const navLinks = page.locator(".nav-links");
+
+    // Open nav
+    await navToggle.click();
+    await expect(navLinks).toHaveClass(/\bopen\b/);
+
+    // Resize to desktop width
+    await page.setViewportSize({ width: 1024, height: 768 });
+
+    // Menu should auto-close
+    await expect(navLinks).not.toHaveClass(/\bopen\b/);
+    await expect(navToggle).toHaveAttribute("aria-expanded", "false");
+
+    // Scroll should be restored
+    const overflow = await page.evaluate(() => document.body.style.overflow);
+    expect(overflow).toBe("");
+  });
+});
+
+test.describe("Mobile nav focus trap", () => {
+  test("Tab wraps within menu, Shift+Tab wraps backwards", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+
+    const navToggle = page.locator(".nav-toggle");
+    const navLinks = page.locator(".nav-links");
+
+    // Open nav
+    await navToggle.click();
+    await expect(navLinks).toHaveClass(/\bopen\b/);
+
+    // First link should be focused
+    const firstLink = navLinks.locator("a").first();
+    await expect(firstLink).toBeFocused();
+
+    // Get all focusable elements in the trap (navToggle + nav links)
+    const navLinkEls = navLinks.locator("a");
+    const lastLink = navLinkEls.last();
+
+    // Tab to the last link
+    const linkCount = await navLinkEls.count();
+    for (let i = 1; i < linkCount; i++) {
+      await page.keyboard.press("Tab");
+    }
+    await expect(lastLink).toBeFocused();
+
+    // One more Tab should wrap back to navToggle
+    await page.keyboard.press("Tab");
+    await expect(navToggle).toBeFocused();
+
+    // Shift+Tab should wrap to last link
+    await page.keyboard.press("Shift+Tab");
+    await expect(lastLink).toBeFocused();
+  });
+});
+
 test.describe("Back-to-top button", () => {
   test("appears on scroll, scrolls to top on click", async ({ page }) => {
     await page.goto("/");

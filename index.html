@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Willem Bell — Mechanical & Software Engineer</title>
   <meta name="description" content="Willem Bell — Mechanical engineering & computer science student at UM-Dearborn. SpaceX and Tesla intern. BSE ME + CS, December 2026.">
   <meta property="og:title" content="Willem Bell — Mechanical & Software Engineer">
@@ -289,6 +289,7 @@
         opacity: 0;
         pointer-events: none;
         transition: transform 0.3s ease, opacity 0.3s ease;
+        padding-bottom: env(safe-area-inset-bottom, 0px);
       }
       .nav-links.open {
         transform: translateY(0);
@@ -2535,18 +2536,71 @@
     // === Mobile nav toggle ===
     const navToggle = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
+    var navFocusTrapHandler = null;
+
+    function openNav() {
+      navLinks.classList.add('open');
+      navToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      // Focus first link
+      var firstLink = navLinks.querySelector('a');
+      if (firstLink) firstLink.focus();
+      // Focus trap
+      navFocusTrapHandler = function(e) {
+        if (e.key !== 'Tab') return;
+        var focusable = Array.from(navLinks.querySelectorAll('a, button'));
+        focusable.unshift(navToggle);
+        if (focusable.length === 0) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      };
+      document.addEventListener('keydown', navFocusTrapHandler);
+    }
+
+    function closeNav() {
+      if (!navLinks.classList.contains('open')) return;
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      if (navFocusTrapHandler) {
+        document.removeEventListener('keydown', navFocusTrapHandler);
+        navFocusTrapHandler = null;
+      }
+    }
+
     navToggle.addEventListener('click', () => {
-      const open = navLinks.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', open);
+      if (navLinks.classList.contains('open')) {
+        closeNav();
+      } else {
+        openNav();
+      }
+    });
+
+    // Backdrop click: close when clicking the overlay itself, not child links
+    navLinks.addEventListener('click', (e) => {
+      if (e.target === navLinks) closeNav();
+    });
+
+    // Resize handler: close nav when viewport grows past mobile breakpoint
+    window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+      if (e.matches) closeNav();
     });
 
     // === Escape key handler (nav + modal) ===
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        if (navLinks.classList.contains('open')) {
-          navLinks.classList.remove('open');
-          navToggle.setAttribute('aria-expanded', 'false');
-        }
+        closeNav();
         closeResumeModal();
       }
     });
@@ -2559,8 +2613,7 @@
         const target = document.querySelector(href);
         if (target) {
           e.preventDefault();
-          navLinks.classList.remove('open');
-          navToggle.setAttribute('aria-expanded', 'false');
+          closeNav();
           if (document.body.classList.contains('chrono-view')) {
             setChronoView(false);
             localStorage.setItem('view', 'sections');
