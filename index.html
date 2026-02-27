@@ -34,6 +34,7 @@
   </script>
   <link rel="canonical" href="https://wrbell.github.io/">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <style>
     @font-face {
       font-family: 'Inter';
@@ -55,7 +56,9 @@
   <script>
     (function() {
       var theme = localStorage.getItem('theme');
-      if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
     })();
   </script>
   <style>
@@ -66,6 +69,7 @@
     img, picture, video, canvas, svg { display: block; max-width: 100%; }
     input, button, textarea, select { font: inherit; }
     a { color: inherit; text-decoration: none; }
+    a, button { -webkit-tap-highlight-color: transparent; }
     ul, ol { list-style: none; }
 
     /* === Custom Properties === */
@@ -92,6 +96,10 @@
       --shadow-card: 0 2px 20px rgba(0, 0, 0, 0.3);
       --shadow-card-hover: 0 4px 30px rgba(0, 0, 0, 0.4);
       --radius-lg: 10px;
+    }
+
+    body, nav, .project-card, .chrono-card, .back-to-top, .tag, footer {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
     /* === Light Mode === */
@@ -189,6 +197,8 @@
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       z-index: 100;
+      padding-left: var(--space-lg);
+      padding-right: var(--space-lg);
     }
     .nav-logo {
       font-family: var(--font-mono);
@@ -230,8 +240,8 @@
       flex-direction: column;
       justify-content: center;
       gap: 5px;
-      width: 32px;
-      height: 32px;
+      width: 44px;
+      height: 44px;
       background: none;
       border: none;
       cursor: pointer;
@@ -347,6 +357,8 @@
     .btn:hover, .btn:focus { border-color: var(--accent); background: var(--accent-dim); box-shadow: 0 0 15px rgba(0, 229, 160, 0.06); }
     .btn-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; box-shadow: 0 0 20px rgba(0, 229, 160, 0.15); }
     .btn-primary:hover, .btn-primary:focus { background: #00cc8e; border-color: #00cc8e; box-shadow: 0 0 30px rgba(0, 229, 160, 0.25); }
+    .btn-icon { padding: 0; width: 44px; height: 44px; justify-content: center; }
+    .btn-icon svg { width: 20px; height: 20px; flex-shrink: 0; }
 
     .status-bar {
       display: flex;
@@ -558,6 +570,9 @@
       white-space: pre;
       box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
     }
+    @media (max-width: 767px) {
+      .ascii-diagram { font-size: 0.625rem; }
+    }
     .project-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -700,8 +715,8 @@
 
     /* === Theme Toggle === */
     .theme-toggle {
-      width: 32px;
-      height: 32px;
+      width: 44px;
+      height: 44px;
       background: none;
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -739,7 +754,8 @@
       display: inline-flex;
       align-items: center;
       gap: var(--space-xs);
-      padding: 0.375rem 0.875rem;
+      padding: 0.5rem 0.875rem;
+      min-height: 44px;
       font-family: var(--font-mono);
       font-size: 0.6875rem;
       border-radius: var(--radius);
@@ -847,8 +863,8 @@
       color: var(--muted);
     }
     .resume-modal-close {
-      width: 32px;
-      height: 32px;
+      width: 44px;
+      height: 44px;
       background: none;
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -912,8 +928,8 @@
       position: fixed;
       bottom: var(--space-lg);
       right: var(--space-lg);
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: var(--surface);
       border: 1px solid var(--border);
@@ -1020,8 +1036,8 @@
 
     /* === View Toggle Button === */
     .view-toggle {
-      width: 32px;
-      height: 32px;
+      width: 44px;
+      height: 44px;
       background: none;
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -1038,6 +1054,30 @@
 
     /* === Chronological Timeline === */
     .chrono-view-section { display: none; }
+    .chrono-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+    .chrono-filter {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.375rem 0.875rem;
+      min-height: 44px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .chrono-filter:hover, .chrono-filter:focus { border-color: var(--accent); color: var(--accent); }
+    .chrono-filter.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .chrono-card.chrono-hidden { display: none; }
+    .chrono-year.chrono-hidden { display: none; }
     .chrono-track {
       position: relative;
       max-width: 800px;
@@ -1059,7 +1099,12 @@
       font-weight: 700;
       color: var(--text);
       margin: var(--space-xl) 0 var(--space-lg);
-      position: relative;
+      position: sticky;
+      top: var(--nav-height);
+      z-index: 10;
+      background: var(--bg);
+      padding-top: var(--space-sm);
+      padding-bottom: var(--space-sm);
     }
     .chrono-year:first-child { margin-top: 0; }
     .chrono-year::before {
@@ -1096,7 +1141,7 @@
       background: var(--border);
     }
     .chrono-card:hover { border-color: var(--accent); box-shadow: var(--shadow-card-hover), 0 0 20px var(--accent-glow); transform: translateY(-2px); }
-    .chrono-card h4 { font-size: 1.0625rem; margin-bottom: var(--space-xs); }
+    .chrono-card h3 { font-size: 1.0625rem; margin-bottom: var(--space-xs); }
     .chrono-card .chrono-meta {
       font-family: var(--font-mono);
       font-size: 0.75rem;
@@ -1155,6 +1200,42 @@
     body.chrono-view .side-index { display: none !important; }
     body.chrono-view .chrono-view-section { display: block; }
 
+    /* === Edition Gate === */
+    [data-edition] { display: none; }
+    body.future-edition [data-edition] { display: block; }
+
+    .edition-banner {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: 0.375rem var(--space-lg);
+      background: rgba(0, 229, 160, 0.08);
+      border-bottom: 1px solid rgba(0, 229, 160, 0.2);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+    body.future-edition .edition-banner { display: flex; }
+
+    .edition-banner button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.875rem;
+      line-height: 1;
+      padding: 0 0 0 var(--space-sm);
+    }
+    .edition-banner button:hover { color: var(--accent); }
+
     /* === Print Styles === */
     @media print {
       :root {
@@ -1173,6 +1254,7 @@
       .container { max-width: 100%; padding: 0; }
       a[href^="http"]::after { content: ' (' attr(href) ')'; font-size: 0.75em; color: #555; }
       .btn { border: 1px solid #999; padding: 0.25rem 0.5rem; }
+      .btn-icon { width: auto; height: auto; padding: 0.25rem; }
       .btn-primary { background: none; color: var(--text); }
       .project-card, .project-featured, .edu-card { break-inside: avoid; box-shadow: none; }
       .lane-label { break-after: avoid; }
@@ -1180,10 +1262,15 @@
       #about::before, #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before { display: none; }
       .status-dot { animation: none; background: #111; }
       .cursor { display: none; }
+      .edition-banner { display: none !important; }
     }
   </style>
 </head>
 <body>
+  <div class="edition-banner" aria-live="polite">
+    <span>&#9670; Fall 2026 Preview</span>
+    <button aria-label="Dismiss preview banner">&times;</button>
+  </div>
   <a href="#main" class="skip-link">Skip to content</a>
 
   <nav aria-label="Main navigation">
@@ -1214,7 +1301,7 @@
     <a href="#experience" class="side-index-link">Experience</a>
     <a href="#projects" class="side-index-link">Projects</a>
     <a href="#research" class="side-index-link">Research</a>
-    <a href="#extracurricular" class="side-index-link">Activities</a>
+    <a href="#extracurricular" class="side-index-link">Extracurricular</a>
     <a href="#skills" class="side-index-link">Skills</a>
     <a href="#education" class="side-index-link">Education</a>
     <a href="#contact" class="side-index-link">Contact</a>
@@ -1229,14 +1316,17 @@
             <h1 class="hero-name">Willem <span class="accent">Bell</span></h1>
             <p class="hero-tagline">mechanical engineering · computer science · robotics<span class="cursor" aria-hidden="true"></span></p>
             <div class="hero-links">
-              <a href="https://github.com/wrbell" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
-              <a href="https://linkedin.com/in/willembell/" class="btn" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://github.com/wrbell" class="btn btn-icon" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+              </a>
+              <a href="https://linkedin.com/in/willembell/" class="btn btn-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 01.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
+              </a>
               <a href="assets/willem-bell-resume.pdf" class="btn btn-primary" id="resume-btn" target="_blank" rel="noopener noreferrer">Resume</a>
             </div>
             <div class="status-bar">
-              <span class="status-item"><span class="status-dot" aria-hidden="true"></span> Open to opportunities</span>
-              <span class="status-item">Dearborn, MI</span>
-              <span class="status-item">UM-Dearborn</span>
+              <span class="status-item"><span class="status-dot" aria-hidden="true"></span> Open to new grad roles</span>
+              <span class="status-item">🎓 BSE Dec 2026</span>
             </div>
           </div>
           <div class="headshot-container">
@@ -1275,13 +1365,21 @@
           <h2 id="timeline-heading">Timeline</h2>
           <div class="line" aria-hidden="true"></div>
         </div>
+        <div class="chrono-filters" role="toolbar" aria-label="Filter timeline by type">
+          <button type="button" class="chrono-filter active" data-filter="all">All</button>
+          <button type="button" class="chrono-filter" data-filter="experience">Experience</button>
+          <button type="button" class="chrono-filter" data-filter="project">Project</button>
+          <button type="button" class="chrono-filter" data-filter="research">Research</button>
+          <button type="button" class="chrono-filter" data-filter="competition">Competition</button>
+          <button type="button" class="chrono-filter" data-filter="coursework">Coursework</button>
+        </div>
         <div class="chrono-track">
 
           <div class="chrono-year">2026</div>
 
-          <div class="chrono-card stagger-item" data-date="2026-09">
+          <div class="chrono-card stagger-item" data-date="2026-09" data-edition="fall">
             <span class="chrono-badge chrono-badge--project">Coursework</span>
-            <h4>CFD — Final Project</h4>
+            <h3>CFD — Final Project</h3>
             <div class="chrono-meta">ME 4301 · Mechanical Engineering</div>
             <div class="chrono-date">Sep 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1291,9 +1389,9 @@
             </div>
           </div>
 
-          <div class="chrono-card stagger-item" data-date="2026-09">
+          <div class="chrono-card stagger-item" data-date="2026-09" data-edition="fall">
             <span class="chrono-badge chrono-badge--research">Research</span>
-            <h4>Senior Design</h4>
+            <h3>Senior Design</h3>
             <div class="chrono-meta">ME 4671 · Mechanical Engineering</div>
             <div class="chrono-date">Sep 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1303,9 +1401,9 @@
             </div>
           </div>
 
-          <div class="chrono-card stagger-item" data-date="2026-09">
+          <div class="chrono-card stagger-item" data-date="2026-09" data-edition="fall">
             <span class="chrono-badge chrono-badge--project">Project</span>
-            <h4>Design for Manufacturing</h4>
+            <h3>Design for Manufacturing</h3>
             <div class="chrono-meta">Python / CAD Automation</div>
             <div class="chrono-date">Sep 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1317,7 +1415,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-05">
             <span class="chrono-badge chrono-badge--project">Project</span>
-            <h4>stark-translate</h4>
+            <h3>stark-translate</h3>
             <div class="chrono-meta">Python / Live Bilingual Speech-to-Text</div>
             <div class="chrono-date">May 2026</div>
             <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
@@ -1333,7 +1431,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-04">
             <span class="chrono-badge chrono-badge--project">Coursework</span>
-            <h4>Vibrations — Final Project</h4>
+            <h3>Vibrations — Final Project</h3>
             <div class="chrono-meta">ME 440 · Mechanical Engineering</div>
             <div class="chrono-date">Apr 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1345,7 +1443,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-04">
             <span class="chrono-badge chrono-badge--project">Coursework</span>
-            <h4>Fluids Lab — Final Project</h4>
+            <h3>Fluids Lab — Final Project</h3>
             <div class="chrono-meta">ME 379 · Mechanical Engineering</div>
             <div class="chrono-date">Apr 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1357,7 +1455,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-04">
             <span class="chrono-badge chrono-badge--project">Coursework</span>
-            <h4>Machine Design — Final Project</h4>
+            <h3>Machine Design — Final Project</h3>
             <div class="chrono-meta">ME 3601 · Mechanical Engineering</div>
             <div class="chrono-date">Apr 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1369,7 +1467,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-04">
             <span class="chrono-badge chrono-badge--project">Project</span>
-            <h4>fast-fem</h4>
+            <h3>fast-fem</h3>
             <div class="chrono-meta">ANSYS / Python / FEA Self-Study</div>
             <div class="chrono-date">Apr 2026</div>
             <p>Accelerated FEA self-study for 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calculations. Mesh convergence studies, post-mortems, and reproducible methodology.</p>
@@ -1383,7 +1481,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-03">
             <span class="chrono-badge chrono-badge--project">Project</span>
-            <h4>W26-Cobot-Axis</h4>
+            <h3>W26-Cobot-Axis</h3>
             <div class="chrono-meta">ME 472 Mechatronics — Winter 2026</div>
             <div class="chrono-date">Mar 2026</div>
             <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040).</p>
@@ -1398,7 +1496,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-02">
             <span class="chrono-badge chrono-badge--competition">Competition</span>
-            <h4>Colorado State Rams</h4>
+            <h3>Colorado State Rams</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Feb 2026</div>
             <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</p>
@@ -1412,7 +1510,7 @@
 
           <div class="chrono-card stagger-item" data-date="2026-01">
             <span class="chrono-badge chrono-badge--competition">Competition</span>
-            <h4>Land O'Lakes / Kozy Shack</h4>
+            <h3>Land O'Lakes / Kozy Shack</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Jan 2026</div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
@@ -1428,7 +1526,7 @@
 
           <div class="chrono-card stagger-item" data-date="2025-12">
             <span class="chrono-badge chrono-badge--competition">Competition</span>
-            <h4>3M Fulfillment Network</h4>
+            <h3>3M Fulfillment Network</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Dec 2025</div>
             <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
@@ -1442,7 +1540,7 @@
 
           <div class="chrono-card stagger-item" data-date="2025-11">
             <span class="chrono-badge chrono-badge--competition">Competition</span>
-            <h4>Quantum Frontiers</h4>
+            <h3>Quantum Frontiers</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Nov 2025</div>
             <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
@@ -1456,7 +1554,7 @@
 
           <div class="chrono-card stagger-item" data-date="2025-08">
             <span class="chrono-badge chrono-badge--research">Research</span>
-            <h4>Pannier Research Lab</h4>
+            <h3>Pannier Research Lab</h3>
             <div class="chrono-meta">Research Assistant</div>
             <div class="chrono-location">Dearborn, MI</div>
             <div class="chrono-date">Aug 2025 — Present</div>
@@ -1473,7 +1571,7 @@
 
           <div class="chrono-card stagger-item" data-date="2025-01">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>SpaceX</h4>
+            <h3>SpaceX</h3>
             <div class="chrono-meta">Starfactory Automation &amp; Controls Intern</div>
             <div class="chrono-location">Starbase, TX</div>
             <div class="chrono-date">Jan 2025 — Jul 2025</div>
@@ -1493,7 +1591,7 @@
 
           <div class="chrono-card stagger-item" data-date="2024-09">
             <span class="chrono-badge chrono-badge--research">Research</span>
-            <h4>Pannier Research Lab</h4>
+            <h3>Pannier Research Lab</h3>
             <div class="chrono-meta">Research Assistant</div>
             <div class="chrono-location">Dearborn, MI</div>
             <div class="chrono-date">Sep 2024 — Jan 2025</div>
@@ -1510,7 +1608,7 @@
 
           <div class="chrono-card stagger-item" data-date="2024-05">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>SpaceX</h4>
+            <h3>SpaceX</h3>
             <div class="chrono-meta">Space Lasers Integration &amp; Test Intern</div>
             <div class="chrono-location">Redmond, WA</div>
             <div class="chrono-date">May 2024 — Aug 2024</div>
@@ -1526,7 +1624,7 @@
 
           <div class="chrono-card stagger-item" data-date="2024-01">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>Tesla 4680</h4>
+            <h3>Tesla 4680</h3>
             <div class="chrono-meta">Controls Development Intern</div>
             <div class="chrono-location">Austin, TX</div>
             <div class="chrono-date">Sep 2023 — Apr 2024</div>
@@ -1545,7 +1643,7 @@
 
           <div class="chrono-card stagger-item" data-date="2023-05">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>SpaceX</h4>
+            <h3>SpaceX</h3>
             <div class="chrono-meta">Starship Launch Intern</div>
             <div class="chrono-location">Starbase, TX</div>
             <div class="chrono-date">May 2023 — Aug 2023</div>
@@ -1563,7 +1661,7 @@
 
           <div class="chrono-card stagger-item" data-date="2022-05">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>SpaceX</h4>
+            <h3>SpaceX</h3>
             <div class="chrono-meta">Starship Automation &amp; Controls Intern</div>
             <div class="chrono-location">Starbase, TX</div>
             <div class="chrono-date">May 2022 — Aug 2022</div>
@@ -1581,7 +1679,7 @@
 
           <div class="chrono-card stagger-item" data-date="2021-07">
             <span class="chrono-badge chrono-badge--research">Research</span>
-            <h4>Pannier Research Lab</h4>
+            <h3>Pannier Research Lab</h3>
             <div class="chrono-meta">Undergraduate Researcher</div>
             <div class="chrono-location">Dearborn, MI</div>
             <div class="chrono-date">Jul 2021 — May 2023</div>
@@ -1598,7 +1696,7 @@
 
           <div class="chrono-card stagger-item" data-date="2021-05">
             <span class="chrono-badge chrono-badge--experience">Experience</span>
-            <h4>DTE Energy — Fermi Nuclear Power Plant</h4>
+            <h3>DTE Energy — Fermi Nuclear Power Plant</h3>
             <div class="chrono-meta">Student Co-Op</div>
             <div class="chrono-location">Newport, MI</div>
             <div class="chrono-date">May 2021 — Feb 2022</div>
@@ -1757,7 +1855,7 @@
               <span class="tag">MLX</span>
             </div>
             <div class="project-ctas">
-              <a href="https://github.com/wrbell/stark-translate" class="btn-sm" target="_blank" rel="noopener noreferrer">View Code &rarr;</a>
+              <a href="https://github.com/wrbell/stark-translate" class="btn-sm" target="_blank" rel="noopener noreferrer" aria-label="View stark-translate source code on GitHub">View Code &rarr;</a>
             </div>
           </div>
           <div class="project-grid">
@@ -1772,10 +1870,10 @@
                 <span class="tag">FEA</span>
               </div>
               <div class="project-ctas">
-                <a href="https://github.com/wrbell/fast-fem" class="btn-sm" target="_blank" rel="noopener noreferrer">View Code &rarr;</a>
+                <a href="https://github.com/wrbell/fast-fem" class="btn-sm" target="_blank" rel="noopener noreferrer" aria-label="View fast-fem source code on GitHub">View Code &rarr;</a>
               </div>
             </div>
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" data-edition="fall">
               <h4>Design for Manufacturing</h4>
               <div class="project-meta">Python / CAD Automation</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1803,10 +1901,10 @@
                 <span class="tag">Raspberry Pi</span>
               </div>
               <div class="project-ctas">
-                <a href="https://github.com/wrbell/W26-Cobot-Axis" class="btn-sm" target="_blank" rel="noopener noreferrer">View Code &rarr;</a>
+                <a href="https://github.com/wrbell/W26-Cobot-Axis" class="btn-sm" target="_blank" rel="noopener noreferrer" aria-label="View W26-Cobot-Axis source code on GitHub">View Code &rarr;</a>
               </div>
             </div>
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" data-edition="fall">
               <h4>Senior Design</h4>
               <div class="project-meta">ME 4671 · Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1849,7 +1947,7 @@
                 <span class="tag">FEA</span>
               </div>
             </div>
-            <div class="project-card stagger-item">
+            <div class="project-card stagger-item" data-edition="fall">
               <h4>CFD — Final Project</h4>
               <div class="project-meta">ME 4301 · Mechanical Engineering</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -2163,6 +2261,12 @@
   </div>
 
   <script>
+    // === Edition Gate ===
+    (function() {
+      var edition = new URLSearchParams(window.location.search).get('edition');
+      if (edition === 'fall') document.body.classList.add('future-edition');
+    })();
+
     // === Theme Toggle ===
     const themeToggle = document.querySelector('.theme-toggle');
     function setTheme(theme) {
@@ -2176,7 +2280,11 @@
         themeToggle.title = 'Switch to light mode';
       }
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+    var savedTheme = localStorage.getItem('theme');
+    if (!savedTheme) {
+      savedTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    setTheme(savedTheme);
     themeToggle.addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       localStorage.setItem('theme', next);
@@ -2292,15 +2400,52 @@
     // === Resume Modal ===
     var resumeModal = document.getElementById('resume-modal');
     var resumeBtn = document.getElementById('resume-btn');
+    var previouslyFocused = null;
+    var focusTrapHandler = null;
+
+    function getFocusableElements() {
+      return resumeModal.querySelectorAll('button, a[href], object, [tabindex]:not([tabindex="-1"])');
+    }
+
     function openResumeModal() {
+      previouslyFocused = document.activeElement;
       resumeModal.classList.add('open');
       resumeModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      var closeBtn = resumeModal.querySelector('.resume-modal-close');
+      if (closeBtn) closeBtn.focus();
+      focusTrapHandler = function(e) {
+        if (e.key !== 'Tab') return;
+        var focusable = getFocusableElements();
+        if (focusable.length === 0) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      };
+      resumeModal.addEventListener('keydown', focusTrapHandler);
     }
     function closeResumeModal() {
       resumeModal.classList.remove('open');
       resumeModal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      if (focusTrapHandler) {
+        resumeModal.removeEventListener('keydown', focusTrapHandler);
+        focusTrapHandler = null;
+      }
+      if (previouslyFocused) {
+        previouslyFocused.focus();
+        previouslyFocused = null;
+      }
     }
     // Desktop only: intercept resume button to show modal
     if (window.innerWidth >= 768) {
@@ -2383,6 +2528,58 @@
       setChronoView(!isChrono);
       if (!isChrono) window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // === Timeline Filter Buttons ===
+    var filterBar = document.querySelector('.chrono-filters');
+    if (filterBar) {
+      filterBar.addEventListener('click', function(e) {
+        var btn = e.target.closest('.chrono-filter');
+        if (!btn) return;
+        var filter = btn.getAttribute('data-filter');
+
+        // Toggle active class on buttons
+        filterBar.querySelectorAll('.chrono-filter').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        var cards = document.querySelectorAll('.chrono-card');
+        var years = document.querySelectorAll('.chrono-year');
+
+        if (filter === 'all') {
+          cards.forEach(function(c) { c.classList.remove('chrono-hidden'); });
+          years.forEach(function(y) { y.classList.remove('chrono-hidden'); });
+          return;
+        }
+
+        // Filter cards by badge text
+        cards.forEach(function(c) {
+          var badge = c.querySelector('.chrono-badge');
+          var badgeText = badge ? badge.textContent.trim().toLowerCase() : '';
+          c.classList.toggle('chrono-hidden', badgeText !== filter);
+        });
+
+        // Hide year markers that have no visible cards following them
+        years.forEach(function(year) {
+          var hasVisible = false;
+          var sibling = year.nextElementSibling;
+          while (sibling && !sibling.classList.contains('chrono-year')) {
+            if (sibling.classList.contains('chrono-card') && !sibling.classList.contains('chrono-hidden')) {
+              hasVisible = true;
+              break;
+            }
+            sibling = sibling.nextElementSibling;
+          }
+          year.classList.toggle('chrono-hidden', !hasVisible);
+        });
+      });
+    }
+
+    // === Edition Banner Dismiss ===
+    var editionBanner = document.querySelector('.edition-banner');
+    if (editionBanner) {
+      editionBanner.querySelector('button').addEventListener('click', function() {
+        editionBanner.style.display = 'none';
+      });
+    }
   </script>
 </body>
 </html>
