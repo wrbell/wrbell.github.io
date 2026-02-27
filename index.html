@@ -295,7 +295,11 @@
         pointer-events: auto;
       }
       .nav-links a { font-size: 1rem; }
-      .nav-links { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    }
+    @supports (padding: env(safe-area-inset-bottom)) {
+      @media (max-width: 767px) {
+        .nav-links { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      }
     }
 
     @media (min-width: 768px) {
@@ -812,7 +816,7 @@
     /* === Tag Clear Button === */
     .tag-clear-btn {
       position: fixed;
-      bottom: calc(var(--space-lg) + 56px + env(safe-area-inset-bottom, 0px));
+      bottom: calc(var(--space-lg) + 56px);
       right: var(--space-lg);
       padding: 0.5rem 1rem;
       font-family: var(--font-mono);
@@ -1004,7 +1008,7 @@
     /* === Back to Top === */
     .back-to-top {
       position: fixed;
-      bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 0px));
+      bottom: var(--space-lg);
       right: var(--space-lg);
       width: 44px;
       height: 44px;
@@ -1024,6 +1028,10 @@
     }
     .back-to-top.visible { opacity: 1; pointer-events: auto; }
     .back-to-top:hover { border-color: var(--accent); box-shadow: 0 0 15px rgba(0, 229, 160, 0.06); }
+    @supports (padding: env(safe-area-inset-bottom)) {
+      .back-to-top { bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 0px)); }
+      .tag-clear-btn { bottom: calc(var(--space-lg) + 56px + env(safe-area-inset-bottom, 0px)); }
+    }
 
     /* === Scroll Animations === */
     .fade-in {
