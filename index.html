@@ -810,6 +810,24 @@
       transition: opacity 0.3s, transform 0.3s;
     }
 
+    /* === Presentation Link === */
+    .presentation-link {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .presentation-link:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
     /* === Stagger Animations === */
     .stagger-item {
       opacity: 0;
@@ -1099,9 +1117,9 @@
         </div>
         <div class="about-content">
           <!-- PERSONALIZE: Update these paragraphs with your own voice -->
-          <p>I'm a mechanical engineering and computer science student at the University of Michigan — Dearborn, graduating December 2026. My work sits at the intersection of physical systems and software — building tools that bridge hardware and code.</p>
-          <p>I've spent four internships at SpaceX across Starship launch, space lasers, and Starfactory automation, plus a controls stint at Tesla's 4680 battery line. These experiences shaped how I think about manufacturing systems: robust, automated, and instrumented.</p>
-          <p>Outside of industry, I lead research in additive manufacturing at UM-Dearborn's Pannier Lab, race electric vehicles with Dearborn Electric Racing, and build open-source tools for problems I encounter — from real-time translation to FEA workflows.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error.</p>
+          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</p>
         </div>
       </div>
     </section>
@@ -1383,14 +1401,33 @@
           <div class="project-grid">
             <div class="project-card stagger-item">
               <span class="competition-badge">&#9733; [PLACEMENT]</span>
-              <h4>Land O'Lakes / Kozy Shack</h4>
-              <div class="project-meta">Supply Chain Case Competition · [DATE]</div>
+              <h4>Colorado State Rams</h4>
+              <div class="project-meta">Supply Chain Case Competition · Feb 2026</div>
               <div class="competition-meta">
                 <span>[X]-hour sprint</span>
                 <span>[X]-person team</span>
                 <span>[X] teams competing</span>
               </div>
-              <p><strong>[RESULT sentence]</strong> — Built a demand-forecasting and distribution model for Kozy Shack pudding SKUs under Land O'Lakes' portfolio. Formulated the problem as a mixed-integer linear program in PuLP, optimizing warehouse allocation against seasonal demand curves.</p>
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</p>
+              <a href="assets/colorado-state-rams.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
+              <div class="tags">
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
+              </div>
+            </div>
+            <div class="project-card stagger-item">
+              <span class="competition-badge">&#9733; [PLACEMENT]</span>
+              <h4>Land O'Lakes / Kozy Shack</h4>
+              <div class="project-meta">Supply Chain Case Competition · Jan 2026</div>
+              <div class="competition-meta">
+                <span>[X]-hour sprint</span>
+                <span>[X]-person team</span>
+                <span>[X] teams competing</span>
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+              <a href="assets/kozy-shack.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
               <div class="tags">
                 <span class="tag">Python</span>
                 <span class="tag">PuLP</span>
@@ -1401,18 +1438,37 @@
             <div class="project-card stagger-item">
               <span class="competition-badge">&#9733; [PLACEMENT]</span>
               <h4>3M Fulfillment Network</h4>
-              <div class="project-meta">Supply Chain Case Competition · [DATE]</div>
+              <div class="project-meta">Supply Chain Case Competition · Jan 2026</div>
               <div class="competition-meta">
                 <span>[X]-hour sprint</span>
                 <span>[X]-person team</span>
                 <span>[X] teams competing</span>
               </div>
-              <p><strong>[RESULT sentence]</strong> — Redesigned 3M's multi-echelon fulfillment network to minimize total logistics cost. Modeled facility-to-customer assignments as a capacitated network optimization problem in PuLP, balancing service-level constraints against transportation spend.</p>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+              <a href="assets/3m-fulfillment.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
               <div class="tags">
                 <span class="tag">Python</span>
                 <span class="tag">Network Optimization</span>
                 <span class="tag">PuLP</span>
                 <span class="tag">Supply Chain</span>
+              </div>
+            </div>
+            <div class="project-card stagger-item">
+              <span class="competition-badge">&#9733; [PLACEMENT]</span>
+              <h4>Quantum Frontiers</h4>
+              <div class="project-meta">Supply Chain Case Competition · Nov 2025</div>
+              <div class="competition-meta">
+                <span>[X]-hour sprint</span>
+                <span>[X]-person team</span>
+                <span>[X] teams competing</span>
+              </div>
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
+              <a href="assets/quantum-frontiers.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
+              <div class="tags">
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
               </div>
             </div>
           </div>
@@ -1429,6 +1485,14 @@
           <div class="line" aria-hidden="true"></div>
         </div>
         <div class="timeline">
+          <div class="timeline-item stagger-item">
+            <div class="timeline-date">Oct 2025 — Present</div>
+            <div class="timeline-content">
+              <h3>Supply Chain Association</h3>
+              <div class="role">Data Analysis Lead, Finance Co-Lead</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+          </div>
           <div class="timeline-item stagger-item">
             <div class="timeline-date">Sep 2024 — Jan 2025</div>
             <div class="timeline-content">
@@ -1641,6 +1705,13 @@
     }, { passive: true });
     backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // === Keyboard shortcut: press 't' to scroll to top ===
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 't' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     });
 
     // === Mobile nav toggle ===
