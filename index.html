@@ -130,9 +130,6 @@
       background: #ececf0;
       box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.06);
     }
-    [data-theme="light"] .github-chart img {
-      filter: brightness(0.9) contrast(1.1);
-    }
     @media (max-width: 767px) {
       [data-theme="light"] .nav-links {
         background: rgba(245, 245, 248, 0.95);
@@ -428,10 +425,10 @@
     .headshot .bracket-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
 
     /* === Section Dividers === */
-    #about, #experience, #projects, #research, #skills, #education, #extracurricular, #github {
+    #about, #experience, #projects, #research, #skills, #education, #extracurricular {
       position: relative;
     }
-    #about::before, #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before, #github::before {
+    #about::before, #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before {
       content: '';
       position: absolute;
       top: 0;
@@ -466,6 +463,28 @@
       font-size: 0.9375rem;
       margin-bottom: var(--space-md);
       max-width: 60ch;
+    }
+    .coursework-label {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-bottom: var(--space-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .coursework-list {
+      columns: 2;
+      column-gap: var(--space-xl);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9375rem;
+    }
+    .coursework-list li::before {
+      content: '›';
+      color: var(--accent);
+      margin-right: var(--space-xs);
     }
     .tags { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
     .tag {
@@ -687,66 +706,6 @@
     }
     .about-content p { margin-bottom: var(--space-md); }
     .about-content p:last-child { margin-bottom: 0; }
-
-    /* === GitHub Activity === */
-    .github-chart {
-      margin-bottom: var(--space-xl);
-      overflow-x: auto;
-    }
-    .github-chart img {
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-      border-radius: var(--radius);
-    }
-    .github-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-md);
-    }
-    .github-repo-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: var(--space-lg);
-      box-shadow: var(--shadow-card);
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-    }
-    .github-repo-card:hover {
-      border-color: var(--accent);
-      box-shadow: var(--shadow-card-hover);
-      transform: translateY(-2px);
-    }
-    .github-repo-card h4 {
-      font-size: 1rem;
-      margin-bottom: var(--space-xs);
-      font-family: var(--font-mono);
-    }
-    .github-repo-card h4 a {
-      color: var(--accent);
-      transition: opacity 0.2s;
-    }
-    .github-repo-card h4 a:hover { opacity: 0.8; }
-    .github-repo-card p {
-      color: var(--muted);
-      font-size: 0.875rem;
-      margin-bottom: var(--space-sm);
-    }
-    .github-repo-meta {
-      display: flex;
-      gap: var(--space-md);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-    .github-repo-meta span { display: flex; align-items: center; gap: var(--space-xs); }
-    .github-fallback {
-      text-align: center;
-      padding: var(--space-lg);
-      font-family: var(--font-mono);
-      font-size: 0.875rem;
-    }
-    .github-fallback a { color: var(--accent); }
 
     /* === CTA Buttons on Cards === */
     .project-ctas {
@@ -977,7 +936,6 @@
       .timeline-item { grid-template-columns: 140px 1fr; }
       .project-grid { grid-template-columns: 1fr 1fr; }
       .skills-grid { grid-template-columns: 1fr 1fr 1fr; }
-      .github-grid { grid-template-columns: 1fr 1fr 1fr; }
     }
 
     /* === Responsive: Desktop (1200px+) === */
@@ -999,7 +957,7 @@
       .stagger-item { opacity: 1; transform: none; transition: none; }
       .hero-tagline { width: 100%; overflow: visible; white-space: normal; }
       .cursor { opacity: 1; }
-      .project-card:hover, .github-repo-card:hover { transform: none; }
+      .project-card:hover { transform: none; }
       .tag:hover { transform: none; }
       .timeline-content { transition: none; }
       .nav-links a::after { transition: none; }
@@ -1027,7 +985,7 @@
       .project-card, .project-featured, .edu-card { break-inside: avoid; box-shadow: none; }
       .lane-label { break-after: avoid; }
       .project-card::before, .nav-links a::after { display: none; }
-      #about::before, #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before, #github::before { display: none; }
+      #about::before, #experience::before, #projects::before, #research::before, #skills::before, #education::before, #extracurricular::before { display: none; }
       .status-dot { animation: none; background: #111; }
       .cursor { display: none; }
     }
@@ -1553,25 +1511,6 @@
       </div>
     </section>
 
-    <!-- GitHub Activity -->
-    <section id="github" class="fade-in" aria-labelledby="github-heading">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="github-heading">GitHub</h2>
-          <div class="line" aria-hidden="true"></div>
-        </div>
-        <div class="github-chart">
-          <img src="https://ghchart.rshah.org/00e5a0/wrbell" alt="Willem Bell's GitHub contribution graph" loading="lazy">
-        </div>
-        <div id="github-repos" class="github-grid">
-          <!-- Populated by JS -->
-        </div>
-        <div class="github-fallback" id="github-fallback" style="display:none;">
-          <p>View my repositories on <a href="https://github.com/wrbell" target="_blank" rel="noopener noreferrer">GitHub &rarr;</a></p>
-        </div>
-      </div>
-    </section>
-
     <!-- Education -->
     <section id="education" class="fade-in" aria-labelledby="education-heading">
       <div class="container">
@@ -1585,7 +1524,13 @@
             <div class="timeline-content">
               <h3>University of Michigan — Dearborn</h3>
               <div class="role">BSE Mechanical Engineering, Computer Science</div>
-              <p>Relevant coursework: ME 472 Mechatronics, ME 3601 Machine Elements, ME 440 Vibrations, ME 379 Thermal-Fluid, [...]</p>
+              <p class="coursework-label">Relevant Coursework</p>
+              <ul class="coursework-list">
+                <li>ME 472 Mechatronics</li>
+                <li>ME 3601 Machine Elements</li>
+                <li>ME 440 Vibrations</li>
+                <li>ME 379 Thermal-Fluid</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -1723,29 +1668,6 @@
         }
       });
     });
-
-    // === GitHub Repos ===
-    (function loadGitHubRepos() {
-      var container = document.getElementById('github-repos');
-      var fallback = document.getElementById('github-fallback');
-      fetch('https://api.github.com/users/wrbell/repos?sort=updated&per_page=6')
-        .then(function(res) { if (!res.ok) throw new Error(res.status); return res.json(); })
-        .then(function(repos) {
-          var publicRepos = repos.filter(function(r) { return !r.fork; }).slice(0, 6);
-          if (!publicRepos.length) { fallback.style.display = 'block'; return; }
-          container.innerHTML = publicRepos.map(function(repo) {
-            return '<div class="github-repo-card stagger-item visible">' +
-              '<h4><a href="' + repo.html_url + '" target="_blank" rel="noopener noreferrer">' + repo.name + '</a></h4>' +
-              '<p>' + (repo.description || 'No description') + '</p>' +
-              '<div class="github-repo-meta">' +
-                (repo.language ? '<span>' + repo.language + '</span>' : '') +
-                '<span>&#9733; ' + repo.stargazers_count + '</span>' +
-              '</div>' +
-            '</div>';
-          }).join('');
-        })
-        .catch(function() { fallback.style.display = 'block'; });
-    })();
 
     // === Tag Filtering ===
     var activeTag = null;
