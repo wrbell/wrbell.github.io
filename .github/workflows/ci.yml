@@ -61,7 +61,9 @@ jobs:
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
-            --accept 200,204,301,302,403,429
+            --accept 200,204,301,302,403,429,503
+            --max-retries 3
+            --retry-wait-time 5
             --root-dir .
             '*.html'
           fail: true

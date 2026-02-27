@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>404 — wrbell.eng</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <script>
     (function() {
-      var theme = localStorage.getItem('theme');
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
       if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
         document.documentElement.setAttribute('data-theme', 'light');
       }
@@ -19,14 +20,14 @@
       font-style: normal;
       font-weight: 400 700;
       font-display: swap;
-      src: url('assets/fonts/inter-latin.woff2') format('woff2');
+      src: url('assets/fonts/inter-latin.woff2?v=1') format('woff2');
     }
     @font-face {
       font-family: 'JetBrains Mono';
       font-style: normal;
       font-weight: 400 700;
       font-display: swap;
-      src: url('assets/fonts/jetbrains-mono-latin.woff2') format('woff2');
+      src: url('assets/fonts/jetbrains-mono-latin.woff2?v=1') format('woff2');
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
