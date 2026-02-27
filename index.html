@@ -126,7 +126,11 @@
       background: rgba(245, 245, 248, 0.85);
     }
     [data-theme="light"] .btn-primary {
+      color: var(--text);
       box-shadow: 0 0 20px rgba(0, 184, 128, 0.12);
+    }
+    [data-theme="light"] .chrono-filter.active {
+      color: var(--text);
     }
     [data-theme="light"] .btn-primary:hover,
     [data-theme="light"] .btn-primary:focus {
@@ -143,11 +147,6 @@
       color: #4a4a68;
     }
     [data-theme="light"] .tag { color: #484868; border-color: #9898b0; }
-    @media (max-width: 767px) {
-      [data-theme="light"] .nav-links {
-        background: rgba(245, 245, 248, 0.95);
-      }
-    }
 
     /* === Typography === */
     body {
@@ -294,13 +293,6 @@
         pointer-events: auto;
       }
       .nav-links a { font-size: 1rem; }
-      .hero-tagline {
-        width: 100%;
-        overflow: visible;
-        white-space: normal;
-        animation: none;
-      }
-      .cursor { display: none; }
     }
 
     @media (min-width: 768px) {
@@ -347,6 +339,15 @@
     }
     @keyframes typing { to { width: 100%; } }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    @media (max-width: 767px) {
+      .hero-tagline {
+        width: 100%;
+        overflow: visible;
+        white-space: normal;
+        animation: none;
+      }
+      .cursor { display: none; }
+    }
 
     .hero-links { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-lg); }
     .btn {
@@ -2053,7 +2054,7 @@
             <h4>stark-translate</h4>
             <div class="project-meta">Python / Live Bilingual Speech-to-Text</div>
             <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
-            <div class="ascii-diagram" aria-label="Pipeline architecture diagram">
+            <div class="ascii-diagram" aria-label="Pipeline architecture diagram" tabindex="0">
  ┌─────────────┐    ┌────────────────┐    ┌─────────────────────┐    ┌────────────┐
  │  Mic Input  │───▶│  Whisper ASR   │───▶│  MarianMT /         │───▶│  WebSocket │
  │  (Audio)    │    │  (EN text)     │    │  TranslateGemma     │    │  Display   │
@@ -2443,12 +2444,12 @@
     <div class="resume-modal-content" role="dialog" aria-label="Resume preview">
       <div class="resume-modal-header">
         <span>resume.pdf</span>
-        <button class="resume-modal-close" aria-label="Close resume preview">&times;</button>
+        <button class="resume-modal-close" aria-label="Close resume preview" tabindex="-1">&times;</button>
       </div>
       <div class="resume-modal-body"></div>
       <div class="resume-modal-footer">
-        <a href="assets/willem-bell-resume.pdf" class="btn-sm" target="_blank" rel="noopener noreferrer">Open in New Tab &rarr;</a>
-        <a href="assets/willem-bell-resume.pdf" class="btn-sm" download>Download PDF &darr;</a>
+        <a href="assets/willem-bell-resume.pdf" class="btn-sm" target="_blank" rel="noopener noreferrer" tabindex="-1">Open in New Tab &rarr;</a>
+        <a href="assets/willem-bell-resume.pdf" class="btn-sm" download tabindex="-1">Download PDF &darr;</a>
       </div>
     </div>
   </div>
@@ -2687,6 +2688,7 @@
       previouslyFocused = document.activeElement;
       resumeModal.classList.add('open');
       resumeModal.setAttribute('aria-hidden', 'false');
+      resumeModal.querySelectorAll('[tabindex="-1"]').forEach(function(el) { el.removeAttribute('tabindex'); });
       document.body.style.overflow = 'hidden';
       var closeBtn = resumeModal.querySelector('.resume-modal-close');
       if (closeBtn) closeBtn.focus();
@@ -2713,6 +2715,7 @@
     function closeResumeModal() {
       resumeModal.classList.remove('open');
       resumeModal.setAttribute('aria-hidden', 'true');
+      resumeModal.querySelectorAll('button, a[href]').forEach(function(el) { el.setAttribute('tabindex', '-1'); });
       document.body.style.overflow = '';
       var body = resumeModal.querySelector('.resume-modal-body');
       var pdfObj = body.querySelector('object');

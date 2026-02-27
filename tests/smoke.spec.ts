@@ -380,9 +380,13 @@ test.describe("Mobile nav resize handler", () => {
 });
 
 test.describe("Mobile nav focus trap", () => {
+  // WebKit on macOS doesn't Tab-focus <a> elements by default (requires
+  // "Press Tab to highlight each item" Safari accessibility setting).
   test("Tab wraps within menu, Shift+Tab wraps backwards", async ({
     page,
+    browserName,
   }) => {
+    test.skip(browserName === "webkit", "WebKit doesn't Tab-focus links by default");
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto("/");
 
@@ -501,6 +505,13 @@ test.describe("Nav scroll offset", () => {
     page,
   }) => {
     await page.goto("/");
+
+    // On mobile viewports, open the hamburger menu first
+    const navToggle = page.locator(".nav-toggle");
+    if (await navToggle.isVisible()) {
+      await navToggle.click();
+      await expect(page.locator(".nav-links")).toHaveClass(/\bopen\b/);
+    }
 
     const navLink = page.locator('a[href="#skills"]').first();
     await navLink.click();
