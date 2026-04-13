@@ -1,8 +1,12 @@
 {
   "private": true,
+  "scripts": {
+    "build": "node build.js"
+  },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.1",
     "@playwright/test": "^1.52.0",
+    "html-minifier-terser": "^7.2.0",
     "serve": "^14.2.5"
   }
 }
