@@ -330,9 +330,8 @@
       color: var(--muted);
       margin-bottom: var(--space-lg);
       display: inline-block;
-      overflow: hidden;
       white-space: nowrap;
-      width: 0;
+      clip-path: inset(0 100% 0 0);
       animation: typing 2s steps(50, end) 0.5s forwards;
     }
     .cursor {
@@ -346,13 +345,12 @@
       animation: blink 1s step-end 2.5s infinite;
       animation-fill-mode: forwards;
     }
-    @keyframes typing { to { width: 100%; } }
+    @keyframes typing { to { clip-path: inset(0 0 0 0); } }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     @media (max-width: 767px) {
       .hero-tagline {
-        width: 100%;
-        overflow: visible;
         white-space: normal;
+        clip-path: none;
         animation: none;
       }
       .cursor { display: none; }
@@ -399,66 +397,6 @@
       0%, 100% { box-shadow: 0 0 0 0 rgba(0, 229, 160, 0.4); }
       50% { box-shadow: 0 0 0 4px rgba(0, 229, 160, 0); }
     }
-
-    /* Headshot placeholder */
-    .headshot-container {
-      display: none;
-      justify-content: center;
-      align-items: center;
-    }
-    .headshot {
-      position: relative;
-      width: 280px;
-      height: 340px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .headshot img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .headshot-placeholder {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-    /* Viewfinder brackets */
-    .headshot::before, .headshot::after {
-      content: '';
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      border-color: var(--accent);
-      border-style: solid;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .headshot::before {
-      top: 12px; left: 12px;
-      border-width: 2px 0 0 2px;
-    }
-    .headshot::after {
-      bottom: 12px; right: 12px;
-      border-width: 0 2px 2px 0;
-    }
-    .headshot .bracket-tr, .headshot .bracket-bl {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      border-color: var(--accent);
-      border-style: solid;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .headshot .bracket-tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
-    .headshot .bracket-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
 
     /* === Section Dividers === */
     #about, #experience, #projects, #supply-chain-cases, #skills, #education, #extracurricular {
@@ -1051,7 +989,6 @@
     @media (min-width: 768px) {
       .nav-links { display: flex; }
       .hero-grid { grid-template-columns: 1fr 1fr; }
-      /* .headshot-container { display: flex; } — uncomment when assets/headshot.jpg is added */
       .timeline-item { grid-template-columns: 140px 1fr; }
       .project-grid { grid-template-columns: 1fr 1fr; }
       .skills-grid { grid-template-columns: 1fr 1fr 1fr; }
@@ -1093,7 +1030,6 @@
     @media (min-width: 1200px) {
       .container { padding: 0 var(--space-xl); }
       section { padding: var(--space-2xl) 0; }
-      .headshot { width: 320px; height: 400px; }
       .side-index { right: 1.5rem; }
     }
 
@@ -1107,7 +1043,7 @@
       html { scroll-behavior: auto; }
       .fade-in { opacity: 1; transform: none; }
       .stagger-item { opacity: 1; transform: none; transition: none; }
-      .hero-tagline { width: 100%; overflow: visible; white-space: normal; }
+      .hero-tagline { clip-path: none; white-space: normal; }
       .cursor { opacity: 1; }
       .project-card:hover { transform: none; }
       .tag:hover { transform: none; }
@@ -1121,7 +1057,6 @@
     /* === Landscape Mode === */
     @media (orientation: landscape) and (max-height: 500px) {
       .hero { min-height: auto; padding-top: calc(var(--nav-height) + var(--space-lg)); padding-bottom: var(--space-lg); }
-      .headshot-container { display: none; }
       section { padding: var(--space-lg) 0; }
     }
 
@@ -1441,7 +1376,7 @@
         --accent: #111;
       }
       body { font-size: 12pt; }
-      nav, .headshot-container, .skip-link, .back-to-top, .theme-toggle, .resume-modal, .side-index, .view-toggle, .chrono-view-section { display: none !important; }
+      nav, .skip-link, .back-to-top, .theme-toggle, .resume-modal, .side-index, .view-toggle, .chrono-view-section { display: none !important; }
       .hero { min-height: auto; padding-top: 0; }
       section { padding: 1rem 0; }
       .fade-in { opacity: 1; transform: none; }
@@ -1529,15 +1464,6 @@
             <div class="status-bar">
               <span class="status-item"><span class="status-dot" aria-hidden="true"></span> Open to new grad roles</span>
               <span class="status-item">🎓 BSE Dec 2026</span>
-            </div>
-          </div>
-          <div class="headshot-container">
-            <div class="headshot">
-              <span class="bracket-tr" aria-hidden="true"></span>
-              <span class="bracket-bl" aria-hidden="true"></span>
-              <span class="headshot-placeholder">Your Photo</span>
-              <!-- Replace the placeholder span above with: -->
-              <!-- <img src="assets/headshot.jpg" alt="Willem Bell" /> -->
             </div>
           </div>
         </div>
