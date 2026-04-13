@@ -126,11 +126,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check index.html size
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build minified output
+        run: npm run build
+
+      - name: Check source size
         run: |
           SIZE=$(wc -c < index.html)
-          echo "index.html: $SIZE bytes"
+          echo "index.html (source): $SIZE bytes"
           if [ "$SIZE" -gt 153600 ]; then
-            echo "::error::index.html exceeds 150 KB ($SIZE bytes)"
+            echo "::error::index.html source exceeds 150 KB ($SIZE bytes)"
+            exit 1
+          fi
+
+      - name: Check minified size
+        run: |
+          SIZE=$(wc -c < dist/index.html)
+          echo "index.html (minified): $SIZE bytes"
+          if [ "$SIZE" -gt 92160 ]; then
+            echo "::error::Minified index.html exceeds 90 KB ($SIZE bytes)"
             exit 1
           fi
