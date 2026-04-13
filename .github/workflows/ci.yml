@@ -94,3 +94,35 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
+
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+
+  size-budget:
+    name: Size Budget
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check index.html size
+        run: |
+          SIZE=$(wc -c < index.html)
+          echo "index.html: $SIZE bytes"
+          if [ "$SIZE" -gt 153600 ]; then
+            echo "::error::index.html exceeds 150 KB ($SIZE bytes)"
+            exit 1
+          fi
