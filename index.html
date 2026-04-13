@@ -36,15 +36,15 @@
   <!-- TODO: Add og:image + twitter:image meta tags once assets/og-image.png (1200×630) is created -->
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
-  <link rel="preload" href="assets/fonts/inter-latin.woff2?v=1" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2?v=1" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
   <style>
     @font-face {
       font-family: 'Inter';
       font-style: normal;
       font-weight: 400 700;
       font-display: swap;
-      src: url('assets/fonts/inter-latin.woff2?v=1') format('woff2');
+      src: url('assets/fonts/inter-latin.v1.woff2') format('woff2');
       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
     @font-face {
@@ -52,10 +52,11 @@
       font-style: normal;
       font-weight: 400 700;
       font-display: swap;
-      src: url('assets/fonts/jetbrains-mono-latin.woff2?v=1') format('woff2');
+      src: url('assets/fonts/jetbrains-mono-latin.v1.woff2') format('woff2');
       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
   </style>
+  <!-- SYNC: theme-detection script — identical copy in 404.html -->
   <script>
     (function() {
       var theme;
@@ -1426,6 +1427,7 @@
     /* === Content Visibility for Below-Fold Sections === */
     #experience, #projects, #supply-chain-cases, #extracurricular, #skills, #education {
       content-visibility: auto;
+      contain-intrinsic-size: auto 600px;
     }
 
     /* === Print Styles === */
@@ -2536,8 +2538,14 @@
     // === Back-to-top button ===
     const backToTop = document.querySelector('.back-to-top');
     if (backToTop) {
+      let scrollTicking = false;
       window.addEventListener('scroll', () => {
-        backToTop.classList.toggle('visible', window.scrollY > 500);
+        if (scrollTicking) return;
+        scrollTicking = true;
+        requestAnimationFrame(() => {
+          backToTop.classList.toggle('visible', window.scrollY > 500);
+          scrollTicking = false;
+        });
       }, { passive: true });
       backToTop.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2564,7 +2572,7 @@
       // Focus first link
       var firstLink = navLinks.querySelector('a');
       if (firstLink) firstLink.focus();
-      // Focus trap
+      // Focus trap: focusable[] is [navToggle, ...navLinks a, button] so Tab wraps from last link back to the hamburger.
       navFocusTrapHandler = function(e) {
         if (e.key !== 'Tab') return;
         var focusable = Array.from(navLinks.querySelectorAll('a, button'));
@@ -2636,6 +2644,7 @@
         if (target) {
           e.preventDefault();
           closeNav();
+          // Also forces switch from chrono to section view — dual responsibility: scroll AND view mode reset.
           if (document.body.classList.contains('chrono-view')) {
             setChronoView(false);
             storageSet('view', 'sections');
@@ -2668,7 +2677,7 @@
       document.querySelectorAll('.tag').forEach(function(t) {
         t.classList.toggle('active', t.textContent.trim() === tagText);
       });
-      // Dim non-matching cards
+      // Dim non-matching cards; O(cards × tags) per click — acceptable at portfolio scale (~20 cards).
       document.querySelectorAll('.project-card, .project-featured').forEach(function(card) {
         var tags = Array.from(card.querySelectorAll('.tag')).map(function(t) { return t.textContent.trim(); });
         card.classList.toggle('dimmed', tags.indexOf(tagText) === -1);
@@ -2855,6 +2864,7 @@
           && getComputedStyle(card).display !== 'none';
     }
 
+    // Walks DOM siblings from each .chrono-semester until hitting .chrono-year or another .chrono-semester; hides label if no visible cards remain in that span.
     function hideEmptyChronoGroups() {
       var semesters = document.querySelectorAll('.chrono-semester');
       var years = document.querySelectorAll('.chrono-year');
