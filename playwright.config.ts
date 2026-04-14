@@ -36,6 +36,14 @@ export default defineConfig({
       use: { ...devices["iPad Pro 11"] },
     },
     {
+      name: "ipad-landscape",
+      use: { ...devices["iPad Pro 11 landscape"] },
+    },
+    {
+      name: "chromium-half",
+      use: { browserName: "chromium", viewport: { width: 960, height: 1080 } },
+    },
+    {
       name: "android-chrome",
       use: { ...devices["Pixel 7"] },
     },
