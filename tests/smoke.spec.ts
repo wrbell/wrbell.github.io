@@ -604,12 +604,12 @@ test.describe("Project details expand", () => {
     await page.locator(".view-toggle").click();
     await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
 
-    // Wait for the section to be visible
-    await page.evaluate(() => window.scrollTo(0, 600));
-
     const details = page.locator(".project-details").first();
     const toggle = details.locator(".project-details-toggle");
     const body = details.locator(".project-details-body");
+
+    // Scroll toggle into view (position varies by viewport)
+    await toggle.scrollIntoViewIfNeeded();
 
     // Details should start closed
     await expect(body).toBeHidden();
