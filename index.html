@@ -248,6 +248,13 @@
     }
     .nav-links a:hover::after, .nav-links a:focus::after { transform: scaleX(1); }
     .nav-links a:hover, .nav-links a:focus { color: var(--accent); }
+    .nav-cta {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.25em 0.75em;
+    }
+    .nav-cta::after { display: none; }
+    .nav-cta:hover, .nav-cta:focus { border-color: var(--accent); }
 
     /* === Nav Toggle (hamburger) === */
     .nav-toggle {
@@ -283,12 +290,13 @@
         top: var(--nav-height);
         left: 0;
         right: 0;
-        bottom: 0;
+        height: calc(100dvh - var(--nav-height));
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: var(--space-xl);
+        gap: clamp(0.5rem, 3vh, 2rem);
         background: var(--bg);
+        z-index: 99;
         transform: translateY(-100%);
         opacity: 0;
         pointer-events: none;
@@ -300,6 +308,8 @@
         pointer-events: auto;
       }
       .nav-links a { font-size: 1rem; }
+      .nav-link-mobile { display: block; }
+      .nav-cta { border: none; padding: 0; }
       .nav-links { padding-bottom: var(--safe-bottom, 0px); }
     }
 
@@ -399,10 +409,10 @@
     }
 
     /* === Section Dividers === */
-    #about, #experience, #projects, #supply-chain-cases, #skills, #education, #extracurricular {
+    #about, #experience, #projects, #skills, #education, #extracurricular {
       position: relative;
     }
-    #about::before, #experience::before, #projects::before, #supply-chain-cases::before, #skills::before, #education::before, #extracurricular::before {
+    #about::before, #experience::before, #projects::before, #skills::before, #education::before, #extracurricular::before {
       content: '';
       position: absolute;
       top: 0;
@@ -987,8 +997,8 @@
 
     /* === Responsive: Tablet (768px+) === */
     @media (min-width: 768px) {
-      .nav-links { display: flex; gap: var(--space-xs); }
-      .nav-links a { font-size: 0.625rem; letter-spacing: 0.04em; }
+      .nav-links { display: flex; }
+      .nav-link-mobile { display: none; }
       .hero-grid { grid-template-columns: 1fr 1fr; }
       .timeline-item { grid-template-columns: 140px 1fr; }
       .project-grid { grid-template-columns: 1fr 1fr; }
@@ -1027,16 +1037,9 @@
       .side-index { display: flex; right: 1rem; }
     }
 
-    /* === Responsive: Desktop (1024px+) === */
-    @media (min-width: 1024px) {
-      .nav-links { gap: var(--space-md); }
-      .nav-links a { font-size: 0.75rem; letter-spacing: 0.08em; }
-    }
-
     /* === Responsive: Desktop (1200px+) === */
     @media (min-width: 1200px) {
       .container { padding: 0 var(--space-xl); }
-      .nav-links { gap: var(--space-lg); }
       section { padding: var(--space-2xl) 0; }
       .side-index { right: 1.5rem; }
     }
@@ -1368,7 +1371,7 @@
     .edition-banner button:hover { color: var(--accent); }
 
     /* === Content Visibility for Below-Fold Sections === */
-    #experience, #projects, #supply-chain-cases, #extracurricular, #skills, #education {
+    #experience, #projects, #extracurricular, #skills, #education {
       content-visibility: auto;
       contain-intrinsic-size: auto 600px;
     }
@@ -1401,7 +1404,7 @@
       .project-card::before, .nav-links a::after { display: none; }
       .tag { cursor: default; border-color: #ccc; background: none; }
       .tag-clear-btn { display: none !important; }
-      #about::before, #experience::before, #projects::before, #supply-chain-cases::before, #skills::before, #education::before, #extracurricular::before { display: none; }
+      #about::before, #experience::before, #projects::before, #skills::before, #education::before, #extracurricular::before { display: none; }
       .status-dot { animation: none; background: #111; }
       .cursor { display: none; }
       .edition-banner { display: none !important; }
@@ -1430,14 +1433,14 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links">
-      <a href="#about">About</a>
+      <a href="#about" class="nav-link-mobile">About</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
-      <a href="#supply-chain-cases">Case Work</a>
-      <a href="#extracurricular">Extracurricular</a>
-      <a href="#skills">Skills</a>
+      <a href="#supply-chain-cases" class="nav-link-mobile">Competitions</a>
+      <a href="#extracurricular" class="nav-link-mobile">Extracurricular</a>
+      <a href="#skills" class="nav-link-mobile">Skills</a>
       <a href="#education">Education</a>
-      <a href="#contact">Contact</a>
+      <a href="#contact" class="nav-cta">Contact</a>
     </div>
   </nav>
 
@@ -1445,7 +1448,7 @@
     <a href="#about" class="side-index-link">About</a>
     <a href="#experience" class="side-index-link">Experience</a>
     <a href="#projects" class="side-index-link">Projects</a>
-    <a href="#supply-chain-cases" class="side-index-link">Case Work</a>
+    <a href="#supply-chain-cases" class="side-index-link">Competitions</a>
     <a href="#extracurricular" class="side-index-link">Extracurricular</a>
     <a href="#skills" class="side-index-link">Skills</a>
     <a href="#education" class="side-index-link">Education</a>
@@ -1506,7 +1509,7 @@
           <button type="button" class="chrono-filter active" data-filter="experience">Experience</button>
           <button type="button" class="chrono-filter" data-filter="project">Project</button>
           <button type="button" class="chrono-filter" data-filter="research">Research</button>
-          <button type="button" class="chrono-filter" data-filter="supply chain cases">Supply Chain Cases</button>
+          <button type="button" class="chrono-filter" data-filter="competitions">Competitions</button>
           <button type="button" class="chrono-filter" data-filter="coursework">Coursework</button>
         </div>
         <div class="chrono-track">
@@ -1602,7 +1605,7 @@
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-02">
-            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
+            <span class="chrono-badge chrono-badge--competition">Competitions</span>
             <h3>Colorado State Rams</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Feb 2026</div>
@@ -1610,7 +1613,7 @@
           </div>
 
           <div class="chrono-card stagger-item" data-date="2026-01">
-            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
+            <span class="chrono-badge chrono-badge--competition">Competitions</span>
             <h3>Land O'Lakes / Kozy Shack</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Jan 2026</div>
@@ -1622,7 +1625,7 @@
           <div class="chrono-semester">Fall 2025</div>
 
           <div class="chrono-card stagger-item" data-date="2025-12">
-            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
+            <span class="chrono-badge chrono-badge--competition">Competitions</span>
             <h3>3M Fulfillment Network</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Dec 2025</div>
@@ -1630,7 +1633,7 @@
           </div>
 
           <div class="chrono-card stagger-item" data-date="2025-11">
-            <span class="chrono-badge chrono-badge--competition">Supply Chain Cases</span>
+            <span class="chrono-badge chrono-badge--competition">Competitions</span>
             <h3>Quantum Frontiers</h3>
             <div class="chrono-meta">Supply Chain Case Competition</div>
             <div class="chrono-date">Nov 2025</div>
@@ -1981,6 +1984,75 @@
             </div>
           </div>
         </div>
+        <div id="supply-chain-cases" class="project-lane project-lane--competitions">
+          <h3 class="lane-label">Competitions</h3>
+          <div class="project-grid">
+            <div class="project-card stagger-item" id="comp-colorado-state">
+              <h4>Colorado State Rams</h4>
+              <div class="project-meta">Supply Chain Case Competition · Feb 2026</div>
+              <div class="competition-meta">
+                <span>1-week sprint</span>
+                <span>4-person team</span>
+              </div>
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</p>
+              <a href="assets/colorado-state-rams.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
+              <div class="tags">
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
+              </div>
+            </div>
+            <div class="project-card stagger-item" id="comp-kozy-shack">
+              <h4>Land O'Lakes / Kozy Shack</h4>
+              <div class="project-meta">Supply Chain Case Competition · Jan 2026</div>
+              <div class="competition-meta">
+                <span>24-hour sprint</span>
+                <span>4-person team</span>
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+              <a href="assets/kozy-shack.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
+              <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">PuLP</span>
+                <span class="tag">Forecasting</span>
+                <span class="tag">Supply Chain</span>
+              </div>
+            </div>
+            <div class="project-card stagger-item" id="comp-3m">
+              <h4>3M Fulfillment Network</h4>
+              <div class="project-meta">Supply Chain Case Competition · Jan 2026</div>
+              <div class="competition-meta">
+                <span>2-week sprint</span>
+                <span>4-person team</span>
+              </div>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+              <a href="assets/3m-fulfillment.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
+              <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">Network Optimization</span>
+                <span class="tag">PuLP</span>
+                <span class="tag">Supply Chain</span>
+              </div>
+            </div>
+            <div class="project-card stagger-item" id="comp-quantum-frontiers">
+              <h4>Quantum Frontiers</h4>
+              <div class="project-meta">Supply Chain Case Competition · Nov 2025</div>
+              <div class="competition-meta">
+                <span>2-week sprint</span>
+                <span>4-person team</span>
+              </div>
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
+              <a href="assets/quantum-frontiers.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
+              <div class="tags">
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
+                <span class="tag">[TAG]</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -2159,84 +2231,7 @@
       </div>
     </section>
 
-    <!-- Supply Chain Cases -->
-    <section id="supply-chain-cases" class="fade-in section-default" aria-labelledby="supply-chain-heading">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="supply-chain-heading">Supply Chain Cases</h2>
-          <div class="line" aria-hidden="true"></div>
-        </div>
-        <div class="project-lane project-lane--competitions">
-          <div class="project-grid">
-            <div class="project-card stagger-item" id="comp-colorado-state">
-              <h4>Colorado State Rams</h4>
-              <div class="project-meta">Supply Chain Case Competition · Feb 2026</div>
-              <div class="competition-meta">
-                <span>1-week sprint</span>
-                <span>4-person team</span>
-              </div>
-              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</p>
-              <a href="assets/colorado-state-rams.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
-              <div class="tags">
-                <span class="tag">[TAG]</span>
-                <span class="tag">[TAG]</span>
-                <span class="tag">[TAG]</span>
-                <span class="tag">[TAG]</span>
-              </div>
-            </div>
-            <div class="project-card stagger-item" id="comp-kozy-shack">
-              <h4>Land O'Lakes / Kozy Shack</h4>
-              <div class="project-meta">Supply Chain Case Competition · Jan 2026</div>
-              <div class="competition-meta">
-                <span>24-hour sprint</span>
-                <span>4-person team</span>
-              </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-              <a href="assets/kozy-shack.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
-              <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">PuLP</span>
-                <span class="tag">Forecasting</span>
-                <span class="tag">Supply Chain</span>
-              </div>
-            </div>
-            <div class="project-card stagger-item" id="comp-3m">
-              <h4>3M Fulfillment Network</h4>
-              <div class="project-meta">Supply Chain Case Competition · Jan 2026</div>
-              <div class="competition-meta">
-                <span>2-week sprint</span>
-                <span>4-person team</span>
-              </div>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
-              <a href="assets/3m-fulfillment.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
-              <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">Network Optimization</span>
-                <span class="tag">PuLP</span>
-                <span class="tag">Supply Chain</span>
-              </div>
-            </div>
-            <div class="project-card stagger-item" id="comp-quantum-frontiers">
-              <h4>Quantum Frontiers</h4>
-              <div class="project-meta">Supply Chain Case Competition · Nov 2025</div>
-              <div class="competition-meta">
-                <span>2-week sprint</span>
-                <span>4-person team</span>
-              </div>
-              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
-              <a href="assets/quantum-frontiers.pdf" class="presentation-link" target="_blank" rel="noopener noreferrer">View Presentation &rarr;</a>
-              <div class="tags">
-                <span class="tag">[TAG]</span>
-                <span class="tag">[TAG]</span>
-                <span class="tag">[TAG]</span>
-                <span class="tag">[TAG]</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <!-- Competitions (formerly Supply Chain Cases) -->
     <!-- Extracurricular -->
     <section id="extracurricular" class="fade-in section-default" aria-labelledby="extracurricular-heading">
       <div class="container">

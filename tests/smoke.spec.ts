@@ -513,48 +513,48 @@ test.describe("Nav scroll offset", () => {
       await expect(page.locator(".nav-links")).toHaveClass(/\bopen\b/);
     }
 
-    const navLink = page.locator('a[href="#skills"]').first();
+    const navLink = page.locator('a[href="#education"]').first();
     await navLink.click();
 
     // Wait for smooth scroll to complete
     await page.waitForTimeout(800);
 
-    const skillsTop = await page
-      .locator("#skills")
+    const sectionTop = await page
+      .locator("#education")
       .evaluate((el) => el.getBoundingClientRect().top);
     const navHeight = await page
       .locator("nav")
       .evaluate((el) => el.getBoundingClientRect().height);
 
     // The section top should be at or below the nav bottom
-    expect(skillsTop).toBeGreaterThanOrEqual(navHeight - 2);
+    expect(sectionTop).toBeGreaterThanOrEqual(navHeight - 2);
   });
 });
 
-test.describe("Supply Chain Cases filter", () => {
-  test("shows exactly 4 Supply Chain Cases cards", async ({ page }) => {
+test.describe("Competitions filter", () => {
+  test("shows exactly 4 Competitions cards", async ({ page }) => {
     await page.goto("/");
 
     // Chrono view is the default
     await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
 
-    // Click Supply Chain Cases filter
+    // Click Competitions filter
     await page
-      .locator('.chrono-filter[data-filter="supply chain cases"]')
+      .locator('.chrono-filter[data-filter="competitions"]')
       .click();
 
     // Exactly 4 visible cards
     const visibleCards = page.locator(".chrono-card:not(.chrono-hidden)");
     await expect(visibleCards).toHaveCount(4);
 
-    // All visible cards should have "Supply Chain Cases" badge
+    // All visible cards should have "Competitions" badge
     const badges = page.locator(
       ".chrono-card:not(.chrono-hidden) .chrono-badge"
     );
     const count = await badges.count();
     expect(count).toBe(4);
     for (let i = 0; i < count; i++) {
-      await expect(badges.nth(i)).toHaveText("Supply Chain Cases");
+      await expect(badges.nth(i)).toHaveText("Competitions");
     }
   });
 });
