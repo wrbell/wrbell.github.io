@@ -8,9 +8,11 @@ test.describe("Tag filtering", () => {
     await page.locator(".view-toggle").click();
     await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
 
-    // Pick the first tag inside a project card
-    const tag = page.locator(".project-card .tag, .project-featured .tag").first();
-    const tagText = (await tag.textContent())!.trim();
+    // Pick the first real tag (skip [TAG] placeholders)
+    const tag = page
+      .locator(".project-card .tag, .project-featured .tag")
+      .filter({ hasNotText: "[TAG]" })
+      .first();
 
     await tag.click();
 
