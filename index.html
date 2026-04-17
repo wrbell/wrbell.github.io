@@ -37,6 +37,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/inter-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/jetbrains-mono-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/fraunces-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
   <script>
     (function() {
       var theme;
@@ -76,7 +77,8 @@
       font-style: italic;
       font-weight: 400 700;
       font-display: swap;
-      src: url('assets/fonts/fraunces-latin-italic.v1.woff2') format('woff2-variations');
+      src: url('assets/fonts/fraunces-latin.v1.woff2') format('woff2-variations');
+      font-synthesis: style;
       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2212;
     }
 
@@ -104,7 +106,7 @@
 
       --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-      --font-display: 'Fraunces', 'Inter', serif;
+      --font-display: 'Fraunces', 'Georgia', 'Times New Roman', serif;
 
       --r-sm: 4px;
       --r-md: 6px;
@@ -147,14 +149,6 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: -100px 0 0;
-      background: radial-gradient(ellipse 1200px 600px at 50% 0, var(--accent-dim), transparent 60%);
-      pointer-events: none;
-      z-index: -1;
     }
     img, svg { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
@@ -277,7 +271,15 @@
     [data-theme="light"] .theme-toggle .icon-light { display: none; }
 
     /* === Hero === */
-    .hero { padding: 96px 0 120px; position: relative; }
+    .hero { padding: 96px 0 120px; position: relative; overflow: hidden; }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 1200px 600px at 50% -100px, var(--accent-dim), transparent 60%);
+      pointer-events: none;
+      z-index: -1;
+    }
     .hero-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
@@ -301,9 +303,9 @@
     .hero h1 {
       font-family: var(--font-display);
       font-weight: 400;
-      font-size: clamp(56px, 10vw, 140px);
-      line-height: 0.86;
-      letter-spacing: -0.04em;
+      font-size: clamp(56px, 11vw, 160px);
+      line-height: 0.88;
+      letter-spacing: -0.045em;
       margin-bottom: 36px;
       color: var(--text);
     }

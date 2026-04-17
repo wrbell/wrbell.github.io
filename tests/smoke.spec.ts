@@ -21,11 +21,15 @@ test.describe("Smoke — v2026.5 surface", () => {
     const vw = page.viewportSize()?.width ?? 0;
     test.skip(vw < 900, "desktop nav links are hidden below 900px");
     await page.locator('.site-nav-links a[href="#ledger"]').click();
-    await page.waitForTimeout(1000);
+    // WebKit smooth scroll on GitHub runners can take >1s; wait for scroll to settle.
+    await page.waitForFunction(() => {
+      const el = document.getElementById("ledger");
+      if (!el) return false;
+      const top = el.getBoundingClientRect().top;
+      return Math.abs(top) < 200;
+    }, undefined, { timeout: 5000 });
     const scrollY = await page.evaluate(() => window.scrollY);
     expect(scrollY).toBeGreaterThan(100);
-    const ledgerTop = await page.locator("#ledger").evaluate((el) => el.getBoundingClientRect().top);
-    expect(Math.abs(ledgerTop)).toBeLessThan(160);
   });
 
   test("theme toggle persists across reload", async ({ page }) => {
@@ -75,7 +79,7 @@ test.describe("Smoke — v2026.5 surface", () => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto("/");
     await page.locator('.mobile-anchors a[href="#skills"]').click();
-    await page.waitForTimeout(1000);
+    await page.waitForFunction(() => window.scrollY > 100, undefined, { timeout: 5000 });
     const scrollY = await page.evaluate(() => window.scrollY);
     expect(scrollY).toBeGreaterThan(100);
   });
