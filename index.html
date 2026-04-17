@@ -133,6 +133,10 @@
       --accent-2:    #004d33;
       --accent-dim:  rgba(0, 110, 74, 0.08);
       --accent-glow: rgba(0, 110, 74, 0.12);
+      --lane-industry:   #1a56b0;
+      --lane-research:   #6028b8;
+      --lane-coursework: #8a4a00;
+      --lane-campus:     #006e4a;
       --shadow-card: 0 2px 12px rgba(0,0,0,0.06);
       --shadow-hi:   0 8px 28px rgba(0,0,0,0.10);
     }
@@ -626,34 +630,108 @@
     }
 
     /* === Skills === */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 56px;
-    }
-    .skills-col h3 {
+    .skills-legend {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
       font-family: var(--font-mono);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
+      font-size: 11.5px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .skills-legend .leg {
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .skills-legend strong {
       color: var(--text);
-      padding-bottom: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 10.5px;
+    }
+    .dots {
+      display: inline-flex; gap: 4px;
+      flex-shrink: 0;
+    }
+    .dots .d {
+      width: 7px; height: 7px; border-radius: 50%;
+      border: 1px solid var(--accent);
+      background: transparent;
+    }
+    .dots .d.on { background: var(--accent); }
+    .skills-tier {
+      margin-bottom: 56px;
+    }
+    .skills-tier:last-child { margin-bottom: 0; }
+    .skills-tier-head {
+      display: grid;
+      grid-template-columns: 160px 1fr auto;
+      gap: 32px;
+      align-items: baseline;
+      padding-bottom: 18px;
       margin-bottom: 20px;
       border-bottom: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
     }
-    .skills-col h3 span {
-      color: var(--muted);
+    .skills-tier-name {
+      font-family: var(--font-display);
+      font-style: italic;
       font-weight: 400;
+      font-size: 32px;
+      line-height: 1;
+      color: var(--accent);
+      letter-spacing: -0.02em;
     }
-    .skills-col ul { display: flex; flex-direction: column; gap: 0; }
-    .skills-col li {
-      padding: 10px 0;
+    .skills-tier-blurb {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 52ch;
+    }
+    .skills-tier-count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .skills-rows {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0 48px;
+    }
+    .skills-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 18px;
+      align-items: center;
+      padding: 12px 0;
       border-bottom: 1px dashed var(--border);
-      font-size: 14px;
-      color: var(--text);
     }
-    .skills-col li:last-child { border-bottom: none; }
+    .skills-row:nth-last-child(-n+2) { border-bottom: none; }
+    .skills-row .name {
+      font-size: 14.5px;
+      color: var(--text);
+      letter-spacing: -0.005em;
+    }
+    .skills-row .dom {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--r-pill);
+      border: 1px solid var(--border-hi);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .skills-row .dom.m  { color: var(--lane-industry);   border-color: color-mix(in srgb, var(--lane-industry) 40%, var(--border-hi)); }
+    .skills-row .dom.c  { color: var(--lane-coursework); border-color: color-mix(in srgb, var(--lane-coursework) 40%, var(--border-hi)); }
+    .skills-row .dom.s  { color: var(--accent);           border-color: color-mix(in srgb, var(--accent) 50%, var(--border-hi)); }
+    .skills-row .dom.r  { color: var(--lane-research);   border-color: color-mix(in srgb, var(--lane-research) 40%, var(--border-hi)); }
 
     /* === Timeline === */
     .timeline { overflow: hidden; position: relative; }
@@ -717,6 +795,62 @@
       color: var(--text-dim);
       line-height: 1.6;
     }
+    /* Today marker — a slim vertical pillar that lives inside the scroll track */
+    .tnow {
+      scroll-snap-align: center;
+      width: 72px;
+      padding: 32px 0;
+      position: relative;
+      display: grid;
+      place-items: center;
+      border-right: 1px solid var(--border);
+    }
+    .tnow::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, transparent 0%, var(--accent) 20%, var(--accent) 80%, transparent 100%);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+    .tnow::after {
+      content: '';
+      position: absolute;
+      left: 50%; top: 36px;
+      width: 13px; height: 13px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--accent), 0 0 24px var(--accent-glow);
+      animation: now-pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes now-pulse {
+      0%,100% { box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--accent), 0 0 24px var(--accent-glow); }
+      50%     { box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--accent), 0 0 40px var(--accent); }
+    }
+    .tnow-label {
+      position: relative;
+      z-index: 1;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--bg);
+      padding: 14px 4px;
+      margin-top: 72px;
+    }
+    .tnow-label strong { font-weight: 700; }
+    .tnow-label .sub {
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.18em;
+    }
+
     .timeline-hint {
       font-family: var(--font-mono);
       font-size: 10.5px;
@@ -817,11 +951,20 @@
       .entry { grid-template-columns: 1fr; gap: 10px; padding: 28px 0; }
       .entry-date { padding-top: 0; }
       .entry-tags { justify-content: flex-start; }
-      .skills-grid { grid-template-columns: 1fr; gap: 32px; }
+      .skills-rows { grid-template-columns: 1fr; gap: 0; }
+      .skills-tier-head { grid-template-columns: 1fr; gap: 8px; }
+      .skills-tier-count { justify-self: start; }
+      .skills-legend { gap: 18px 24px; font-size: 11px; }
+      .skills-row { grid-template-columns: 1fr auto; gap: 10px; padding: 11px 0; }
+      .skills-row .dots { grid-column: 1 / -1; margin-top: 2px; }
+      .skills-row:nth-last-child(-n+2) { border-bottom: 1px dashed var(--border); }
+      .skills-row:last-child { border-bottom: none; }
       .site-footer { padding: 72px 0 32px; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
       .footer-copy { flex-direction: column; gap: 8px; align-items: flex-start; }
       .timeline-track { padding: 16px 20px 24px; grid-auto-columns: 280px; }
+      .tnow { width: 56px; padding: 24px 0; }
+      .tnow-label { letter-spacing: 0.22em; font-size: 10px; }
       .ascii { font-size: 9.5px; padding: 14px; }
     }
     @media (max-width: 480px) {
@@ -833,7 +976,7 @@
     /* === Reduced motion === */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-      .hero-eyebrow .dot, .timeline-hint::after { animation: none !important; }
+      .hero-eyebrow .dot, .timeline-hint::after, .tnow::after { animation: none !important; }
     }
   </style>
 </head>
@@ -1206,6 +1349,9 @@
           <div class="role">Automation &amp; Controls · Starbase</div>
           <p>Siemens, KUKA, EPLAN, NX — station-side automation across multiple factory cells.</p>
         </div>
+        <div class="tnow" role="listitem" aria-label="Today">
+          <div class="tnow-label"><strong>NOW</strong> <span class="sub">· Apr 2026</span></div>
+        </div>
         <div class="tcard" role="listitem">
           <div class="date">Dec 2026</div>
           <h3>BSE <em>ME + CS</em></h3>
@@ -1223,44 +1369,63 @@
         <div class="section-num">§<span class="accent">05</span> / Stack</div>
         <h2 id="skills-heading" class="section-title">What I <span class="italic">reach for</span>,<br>in rough order of recency.</h2>
       </div>
-      <div class="skills-grid">
-        <div class="skills-col">
-          <h3>Mechanical / Controls <span>10</span></h3>
-          <ul>
-            <li>ANSYS / FEA</li>
-            <li>Siemens PLCs / S120 Drives</li>
-            <li>EPLAN</li>
-            <li>KUKA Robots</li>
-            <li>NX / CAD</li>
-            <li>TwinCAT / DeltaV</li>
-            <li>CAN Bus (FlexCAN)</li>
-            <li>RTDE / UR Robots</li>
-            <li>Klipper / Stepper Control</li>
-            <li>Embedded (RP2040 / Teensy)</li>
-          </ul>
+      <div class="skills-legend" aria-label="How to read this section">
+        <span class="leg"><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span><strong>Daily</strong></span>
+        <span class="leg"><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span><strong>Familiar</strong></span>
+        <span class="leg"><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span><strong>Learning</strong></span>
+        <span class="leg" style="margin-left:auto"><span class="dom m" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--lane-industry)">Mech</span> <span class="dom c" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--lane-coursework)">Controls</span> <span class="dom s" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--accent)">Soft</span> <span class="dom r" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--lane-research)">Research</span></span>
+      </div>
+
+      <div class="skills-tier">
+        <div class="skills-tier-head">
+          <div class="skills-tier-name">Daily driver.</div>
+          <div class="skills-tier-blurb">Things I'd confidently ship production work in tomorrow — shipped in the last 12 months across paid work, research, or coursework.</div>
+          <div class="skills-tier-count">09 tools</div>
         </div>
-        <div class="skills-col">
-          <h3>Software <span>7</span></h3>
-          <ul>
-            <li>Python</li>
-            <li>C / C++</li>
-            <li>JavaScript</li>
-            <li>Git</li>
-            <li>Linux</li>
-            <li>Docker</li>
-            <li>Jupyter</li>
-          </ul>
+        <div class="skills-rows">
+          <div class="skills-row"><span class="name">Python</span><span class="dom s">Soft</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span></div>
+          <div class="skills-row"><span class="name">Siemens PLCs · S120 drives</span><span class="dom c">Controls</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span></div>
+          <div class="skills-row"><span class="name">ANSYS · FEA</span><span class="dom m">Mech</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span></div>
+          <div class="skills-row"><span class="name">EPLAN</span><span class="dom c">Controls</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span></div>
+          <div class="skills-row"><span class="name">NX / CAD</span><span class="dom m">Mech</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span></div>
+          <div class="skills-row"><span class="name">MATLAB</span><span class="dom m">Mech</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span></div>
+          <div class="skills-row"><span class="name">Git · Linux shell</span><span class="dom s">Soft</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span></div>
+          <div class="skills-row"><span class="name">RTDE · UR robots</span><span class="dom c">Controls</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span></div>
+          <div class="skills-row"><span class="name">Jupyter · NumPy · pandas</span><span class="dom s">Soft</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span></div>
         </div>
-        <div class="skills-col">
-          <h3>ML / Research <span>6</span></h3>
-          <ul>
-            <li>Whisper / Speech-to-Text</li>
-            <li>MarianMT / TranslateGemma</li>
-            <li>PyTorch</li>
-            <li>WebSockets</li>
-            <li>Raspberry Pi</li>
-            <li>MLX / CUDA</li>
-          </ul>
+      </div>
+
+      <div class="skills-tier">
+        <div class="skills-tier-head">
+          <div class="skills-tier-name">Familiar.</div>
+          <div class="skills-tier-blurb">Used on real projects — give me an afternoon to warm up and I'm productive again.</div>
+          <div class="skills-tier-count">09 tools</div>
+        </div>
+        <div class="skills-rows">
+          <div class="skills-row"><span class="name">KUKA robots · KRL</span><span class="dom c">Controls</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">TwinCAT · DeltaV</span><span class="dom c">Controls</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">C / C++</span><span class="dom s">Soft</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">Klipper · stepper control</span><span class="dom c">Controls</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">Embedded (RP2040 · Teensy)</span><span class="dom c">Controls</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">CAN bus (FlexCAN)</span><span class="dom c">Controls</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">Whisper · speech-to-text</span><span class="dom r">Research</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">PyTorch</span><span class="dom r">Research</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">WebSockets · Flask</span><span class="dom s">Soft</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
+        </div>
+      </div>
+
+      <div class="skills-tier">
+        <div class="skills-tier-head">
+          <div class="skills-tier-name">Learning.</div>
+          <div class="skills-tier-blurb">Actively working through — in coursework, side projects, or a specific problem on my bench.</div>
+          <div class="skills-tier-count">05 tools</div>
+        </div>
+        <div class="skills-rows">
+          <div class="skills-row"><span class="name">MarianMT · TranslateGemma</span><span class="dom r">Research</span><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">MLX · CUDA</span><span class="dom r">Research</span><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">Rust</span><span class="dom s">Soft</span><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">Docker</span><span class="dom s">Soft</span><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">PuLP · network optimization</span><span class="dom r">Research</span><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span></div>
         </div>
       </div>
     </div>
