@@ -37,7 +37,6 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/inter-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/jetbrains-mono-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/fraunces-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
   <script>
     (function() {
       var theme;
@@ -149,11 +148,11 @@
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
-    body::before {
+    .hero::before {
       content: '';
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(ellipse 1200px 600px at 50% -200px, var(--accent-dim), transparent 60%);
+      position: absolute;
+      inset: -100px 0 0;
+      background: radial-gradient(ellipse 1200px 600px at 50% 0, var(--accent-dim), transparent 60%);
       pointer-events: none;
       z-index: -1;
     }
@@ -302,9 +301,9 @@
     .hero h1 {
       font-family: var(--font-display);
       font-weight: 400;
-      font-size: clamp(64px, 13vw, 200px);
+      font-size: clamp(56px, 10vw, 140px);
       line-height: 0.86;
-      letter-spacing: -0.045em;
+      letter-spacing: -0.04em;
       margin-bottom: 36px;
       color: var(--text);
     }
