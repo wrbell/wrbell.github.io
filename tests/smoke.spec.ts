@@ -1,635 +1,89 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("Tag filtering", () => {
-  test("toggles active/dimmed classes on click", async ({ page }) => {
-    await page.goto("/");
-
-    // Switch to section view (chrono is default)
-    await page.locator(".view-toggle").click();
-    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
-
-    // Pick the first real tag (skip [TAG] placeholders)
-    const tag = page
-      .locator(".project-card .tag, .project-featured .tag")
-      .filter({ hasNotText: "[TAG]" })
-      .first();
-
-    await tag.click();
-
-    // The clicked tag should be active
-    await expect(tag).toHaveClass(/\bactive\b/);
-
-    // Cards that contain the tag should NOT be dimmed
-    const matchingCard = tag.locator("closest=.project-card, .project-featured");
-    // Use a broader check: at least one card is dimmed, the parent card is not
-    const allCards = page.locator(".project-card, .project-featured");
-    const cardCount = await allCards.count();
-
-    // At least one card should be dimmed (assumes multiple cards with different tags)
-    const dimmedCards = page.locator(".project-card.dimmed, .project-featured.dimmed");
-    const nonDimmedCards = page.locator(
-      ".project-card:not(.dimmed), .project-featured:not(.dimmed)"
-    );
-
-    // The card containing our clicked tag should not be dimmed
-    // Verify by checking that the tag's ancestor card lacks .dimmed
-    const parentCard = page.locator(".project-card, .project-featured").filter({
-      has: page.locator(`.tag.active`),
-    });
-    await expect(parentCard.first()).not.toHaveClass(/\bdimmed\b/);
-
-    // At least one card should have the dimmed class (if there are cards without this tag)
-    if (cardCount > 1) {
-      expect(await dimmedCards.count()).toBeGreaterThan(0);
-    }
-
-    // Click the same tag again to deactivate
-    await tag.click();
-
-    // All active and dimmed classes should be removed
-    await expect(page.locator(".tag.active")).toHaveCount(0);
-    await expect(page.locator(".dimmed")).toHaveCount(0);
+test.describe("Smoke — v2026.5 surface", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.emulateMedia({ colorScheme: "dark" });
   });
-});
 
-test.describe("Resume modal lifecycle", () => {
-  test("opens on click, closes on Escape, closes on backdrop click", async ({
-    page,
-  }) => {
-    // Use desktop viewport so the modal intercept is active (>= 768px)
+  test("renders hero and all 5 sections", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator("h1")).toBeVisible();
+    await expect(page.locator("#about h2")).toBeVisible();
+    await expect(page.locator("#work h2")).toBeVisible();
+    await expect(page.locator("#ledger h2")).toBeVisible();
+    await expect(page.locator("#timeline h2")).toBeVisible();
+    await expect(page.locator("#skills h2")).toBeVisible();
+    await expect(page.locator("#contact")).toBeVisible();
+  });
+
+  test("desktop nav links scroll to sections", async ({ page }, testInfo) => {
+    await page.goto("/");
+    const vw = page.viewportSize()?.width ?? 0;
+    test.skip(vw < 900, "desktop nav links are hidden below 900px");
+    await page.locator('.site-nav-links a[href="#ledger"]').click();
+    await page.waitForTimeout(1000);
+    const scrollY = await page.evaluate(() => window.scrollY);
+    expect(scrollY).toBeGreaterThan(100);
+    const ledgerTop = await page.locator("#ledger").evaluate((el) => el.getBoundingClientRect().top);
+    expect(Math.abs(ledgerTop)).toBeLessThan(160);
+  });
+
+  test("theme toggle persists across reload", async ({ page }) => {
+    await page.goto("/");
+    await page.locator(".theme-toggle").click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    await page.reload();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    await page.locator(".theme-toggle").click();
+    await expect(page.locator("html")).not.toHaveAttribute("data-theme", "light");
+  });
+
+  test("deploy date is populated", async ({ page }) => {
+    await page.goto("/");
+    const text = await page.locator("#deploy-date").textContent();
+    expect(text).toBeTruthy();
+    expect(text!.length).toBeGreaterThan(3);
+    expect(text).not.toBe("today");
+  });
+
+  test("hero Resume CTA links to resume PDF", async ({ page }) => {
+    await page.goto("/");
+    const href = await page.locator(".hero-cta .btn.primary").getAttribute("href");
+    expect(href).toMatch(/willem-bell-resume\.pdf$/);
+  });
+
+  test("horizontal timeline scrolls", async ({ page }) => {
+    await page.goto("/");
+    const track = page.locator(".timeline-track");
+    await track.scrollIntoViewIfNeeded();
+    const initial = await track.evaluate((el) => el.scrollLeft);
+    await track.evaluate((el) => el.scrollBy({ left: 400, behavior: "instant" as ScrollBehavior }));
+    await page.waitForTimeout(200);
+    const after = await track.evaluate((el) => el.scrollLeft);
+    expect(after).toBeGreaterThan(initial);
+  });
+
+  test("mobile anchor chips visible under 900px, hidden above", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto("/");
-
-    const modal = page.locator("#resume-modal");
-    const resumeBtn = page.locator("#resume-btn");
-
-    // Modal should start closed
-    await expect(modal).not.toHaveClass(/\bopen\b/);
-    await expect(modal).toHaveAttribute("aria-hidden", "true");
-
-    // Open modal
-    await resumeBtn.click();
-    await expect(modal).toHaveClass(/\bopen\b/);
-    await expect(modal).toHaveAttribute("aria-hidden", "false");
-
-    // Body should have overflow hidden
-    const bodyOverflow = await page.evaluate(
-      () => document.body.style.overflow
-    );
-    expect(bodyOverflow).toBe("hidden");
-
-    // Close with Escape
-    await page.keyboard.press("Escape");
-    await expect(modal).not.toHaveClass(/\bopen\b/);
-    await expect(modal).toHaveAttribute("aria-hidden", "true");
-
-    // Body overflow should be restored
-    const bodyOverflowAfter = await page.evaluate(
-      () => document.body.style.overflow
-    );
-    expect(bodyOverflowAfter).toBe("");
-
-    // Re-open, then close via backdrop click
-    await resumeBtn.click();
-    await expect(modal).toHaveClass(/\bopen\b/);
-
-    // Backdrop sits behind the modal content; dispatch click directly.
-    await page.locator(".resume-modal-backdrop").dispatchEvent("click");
-    await expect(modal).not.toHaveClass(/\bopen\b/);
-    await expect(modal).toHaveAttribute("aria-hidden", "true");
+    await expect(page.locator(".mobile-anchors")).toBeHidden();
+    await page.setViewportSize({ width: 375, height: 667 });
+    await expect(page.locator(".mobile-anchors")).toBeVisible();
   });
-});
 
-test.describe("localStorage persistence", () => {
-  test("theme and view preference survive page reload", async ({ page }) => {
-    await page.emulateMedia({ colorScheme: 'dark' });
-    await page.goto("/");
-
-    // Default should be dark (no data-theme attribute)
-    const htmlEl = page.locator("html");
-    await expect(htmlEl).not.toHaveAttribute("data-theme", "light");
-
-    // Default should be chrono view
-    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
-
-    // Switch to light mode
-    await page.locator(".theme-toggle").click();
-    await expect(htmlEl).toHaveAttribute("data-theme", "light");
-
-    // Switch to section view
-    await page.locator(".view-toggle").click();
-    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
-
-    // Reload the page
-    await page.reload();
-
-    // Theme should persist
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
-
-    // Section view should persist
-    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
-  });
-});
-
-test.describe("Timeline filter buttons", () => {
-  test("filters cards by type and resets with All", async ({ page }) => {
-    await page.goto("/");
-
-    // Chrono view is the default
-    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
-
-    // Should have 6 filter buttons
-    const filters = page.locator(".chrono-filter");
-    await expect(filters).toHaveCount(6);
-
-    // "Experience" should be active by default
-    await expect(
-      page.locator('.chrono-filter[data-filter="experience"]')
-    ).toHaveClass(/\bactive\b/);
-
-    // Only Experience badges should be visible by default
-    const visibleBadges = page.locator(
-      ".chrono-card:not(.chrono-hidden) .chrono-badge"
-    );
-    const visibleCount = await visibleBadges.count();
-    expect(visibleCount).toBeGreaterThan(0);
-    for (let i = 0; i < visibleCount; i++) {
-      await expect(visibleBadges.nth(i)).toHaveText("Experience");
-    }
-
-    // Some cards should be hidden
-    const hiddenCards = page.locator(".chrono-card.chrono-hidden");
-    expect(await hiddenCards.count()).toBeGreaterThan(0);
-
-    // Click "All" to show everything
-    await page.locator('.chrono-filter[data-filter="all"]').click();
-
-    // No cards or years should be hidden
-    await expect(page.locator(".chrono-card.chrono-hidden")).toHaveCount(0);
-    await expect(page.locator(".chrono-year.chrono-hidden")).toHaveCount(0);
-
-    // Click "Experience" to re-filter
-    await page.locator('.chrono-filter[data-filter="experience"]').click();
-
-    // Only Experience badges should be visible again
-    const reFilteredBadges = page.locator(
-      ".chrono-card:not(.chrono-hidden) .chrono-badge"
-    );
-    const reFilteredCount = await reFilteredBadges.count();
-    expect(reFilteredCount).toBeGreaterThan(0);
-    for (let i = 0; i < reFilteredCount; i++) {
-      await expect(reFilteredBadges.nth(i)).toHaveText("Experience");
-    }
-  });
-});
-
-test.describe("Chrono details link navigation", () => {
-  test("navigates from chrono card to section card", async ({ page }) => {
-    await page.goto("/");
-
-    // Chrono view is the default
-    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
-
-    // Show all cards first (Experience filter is active by default)
-    await page.locator('.chrono-filter[data-filter="all"]').click();
-
-    // Click the first visible chrono-details-link (skip edition-gated cards)
-    const link = page.locator(".chrono-card:not([data-edition]) > .chrono-details-link").first();
-    const href = await link.getAttribute("href");
-    expect(href).toBeTruthy();
-
-    await link.click();
-
-    // Should switch to section view
-    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
-
-    // Target element should exist and eventually be visible
-    const targetId = href!.slice(1);
-    const target = page.locator(`#${targetId}`);
-    await expect(target).toBeAttached();
-  });
-});
-
-test.describe("Chrono group card", () => {
-  test("expands and collapses coursework list", async ({ page }) => {
-    await page.goto("/");
-    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
-
-    // Show coursework (Experience filter is active by default)
-    await page.locator('.chrono-filter[data-filter="coursework"]').click();
-
-    const toggle = page.locator(".chrono-group-toggle");
-    const list = page.locator("#cw-group-list");
-
-    // List starts hidden
-    await expect(list).toBeHidden();
-    await expect(toggle).toHaveAttribute("aria-expanded", "false");
-
-    // Expand
-    await toggle.click();
-    await expect(list).toBeVisible();
-    await expect(toggle).toHaveAttribute("aria-expanded", "true");
-
-    // Has 3 visible course items (CFD hidden by edition gate)
-    await expect(list.locator(".chrono-group-item:not([data-edition])")).toHaveCount(3);
-
-    // Collapse
-    await toggle.click();
-    await expect(list).toBeHidden();
-  });
-});
-
-test.describe("Mobile navigation toggle", () => {
-  test("opens and closes nav, responds to Escape", async ({ page }) => {
+  test("mobile anchor chip click scrolls to section", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto("/");
-
-    const navToggle = page.locator(".nav-toggle");
-    const navLinks = page.locator(".nav-links");
-
-    // Click to open
-    await navToggle.click();
-    await expect(navLinks).toHaveClass(/\bopen\b/);
-    await expect(navToggle).toHaveAttribute("aria-expanded", "true");
-
-    // Click to close
-    await navToggle.click();
-    await expect(navLinks).not.toHaveClass(/\bopen\b/);
-    await expect(navToggle).toHaveAttribute("aria-expanded", "false");
-
-    // Re-open, then press Escape to close
-    await navToggle.click();
-    await expect(navLinks).toHaveClass(/\bopen\b/);
-    await page.keyboard.press("Escape");
-    await expect(navLinks).not.toHaveClass(/\bopen\b/);
-    await expect(navToggle).toHaveAttribute("aria-expanded", "false");
-  });
-});
-
-test.describe("Mobile nav scroll lock", () => {
-  test("locks body scroll when open, restores when closed", async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto("/");
-
-    // Scroll down first so we can verify position is preserved
-    await page.evaluate(() => window.scrollTo(0, 200));
-    await page.waitForFunction(() => window.scrollY >= 200);
-
-    const navToggle = page.locator(".nav-toggle");
-    const navLinks = page.locator(".nav-links");
-
-    // Open nav
-    await navToggle.click();
-    await expect(navLinks).toHaveClass(/\bopen\b/);
-
-    // Body overflow should be hidden
-    const overflowOpen = await page.evaluate(
-      () => document.body.style.overflow
-    );
-    expect(overflowOpen).toBe("hidden");
-
-    // Close nav
-    await navToggle.click();
-    await expect(navLinks).not.toHaveClass(/\bopen\b/);
-
-    // Body overflow should be restored
-    const overflowClosed = await page.evaluate(
-      () => document.body.style.overflow
-    );
-    expect(overflowClosed).toBe("");
-
-    // Scroll position should be preserved
+    await page.locator('.mobile-anchors a[href="#skills"]').click();
+    await page.waitForTimeout(1000);
     const scrollY = await page.evaluate(() => window.scrollY);
-    expect(scrollY).toBeGreaterThanOrEqual(190);
+    expect(scrollY).toBeGreaterThan(100);
   });
-});
 
-test.describe("Mobile nav backdrop click", () => {
-  test("clicking empty overlay area closes menu", async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto("/");
-
-    const navToggle = page.locator(".nav-toggle");
-    const navLinks = page.locator(".nav-links");
-
-    // Open nav
-    await navToggle.click();
-    await expect(navLinks).toHaveClass(/\bopen\b/);
-
-    // Dispatch click directly on overlay element (not a child link)
-    await navLinks.dispatchEvent("click");
-
-    // Menu should be closed
-    await expect(navLinks).not.toHaveClass(/\bopen\b/);
-    await expect(navToggle).toHaveAttribute("aria-expanded", "false");
-  });
-});
-
-test.describe("Mobile nav link closes menu", () => {
-  test("clicking a nav link closes menu and restores scroll", async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto("/");
-
-    const navToggle = page.locator(".nav-toggle");
-    const navLinks = page.locator(".nav-links");
-
-    // Open nav
-    await navToggle.click();
-    await expect(navLinks).toHaveClass(/\bopen\b/);
-
-    // Dispatch click on a nav link (fixed-position overlay may be outside Playwright's viewport)
-    await navLinks.locator('a[href^="#"]').first().dispatchEvent("click");
-
-    // Menu should close
-    await expect(navLinks).not.toHaveClass(/\bopen\b/);
-    await expect(navToggle).toHaveAttribute("aria-expanded", "false");
-
-    // Scroll should be restored
-    const overflow = await page.evaluate(() => document.body.style.overflow);
-    expect(overflow).toBe("");
-  });
-});
-
-test.describe("Mobile nav resize handler", () => {
-  test("resizing viewport past 768px auto-closes open menu", async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto("/");
-
-    const navToggle = page.locator(".nav-toggle");
-    const navLinks = page.locator(".nav-links");
-
-    // Open nav
-    await navToggle.click();
-    await expect(navLinks).toHaveClass(/\bopen\b/);
-
-    // Resize to desktop width
-    await page.setViewportSize({ width: 1024, height: 768 });
-
-    // Menu should auto-close
-    await expect(navLinks).not.toHaveClass(/\bopen\b/);
-    await expect(navToggle).toHaveAttribute("aria-expanded", "false");
-
-    // Scroll should be restored
-    const overflow = await page.evaluate(() => document.body.style.overflow);
-    expect(overflow).toBe("");
-  });
-});
-
-test.describe("Mobile nav focus trap", () => {
-  // WebKit on macOS doesn't Tab-focus <a> elements by default (requires
-  // "Press Tab to highlight each item" Safari accessibility setting).
-  test("Tab wraps within menu, Shift+Tab wraps backwards", async ({
-    page,
-    browserName,
-  }) => {
-    test.skip(browserName === "webkit", "WebKit doesn't Tab-focus links by default");
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto("/");
-
-    const navToggle = page.locator(".nav-toggle");
-    const navLinks = page.locator(".nav-links");
-
-    // Open nav
-    await navToggle.click();
-    await expect(navLinks).toHaveClass(/\bopen\b/);
-
-    // First link should be focused
-    const firstLink = navLinks.locator("a").first();
-    await expect(firstLink).toBeFocused();
-
-    // Get all focusable elements in the trap (navToggle + nav links)
-    const navLinkEls = navLinks.locator("a");
-    const lastLink = navLinkEls.last();
-
-    // Tab to the last link
-    const linkCount = await navLinkEls.count();
-    for (let i = 1; i < linkCount; i++) {
-      await page.keyboard.press("Tab");
-    }
-    await expect(lastLink).toBeFocused();
-
-    // One more Tab should wrap back to navToggle
-    await page.keyboard.press("Tab");
-    await expect(navToggle).toBeFocused();
-
-    // Shift+Tab should wrap to last link
-    await page.keyboard.press("Shift+Tab");
-    await expect(lastLink).toBeFocused();
-  });
-});
-
-test.describe("Back-to-top button", () => {
-  test("appears on scroll, scrolls to top on click", async ({ page }) => {
-    await page.goto("/");
-
-    const backToTop = page.locator(".back-to-top");
-
-    // Should not be visible initially
-    await expect(backToTop).not.toHaveClass(/\bvisible\b/);
-
-    // Scroll past 500px
-    await page.evaluate(() => window.scrollTo(0, 600));
-    await expect(backToTop).toHaveClass(/\bvisible\b/);
-
-    // Click to scroll to top
-    await backToTop.click();
-    await page.waitForFunction(() => window.scrollY < 10);
-
-    // visible class should be removed
-    await expect(backToTop).not.toHaveClass(/\bvisible\b/);
-  });
-});
-
-test.describe("Theme toggle interaction", () => {
-  test("switches between dark and light mode", async ({ page }) => {
-    await page.emulateMedia({ colorScheme: "dark" });
-    await page.goto("/");
-
-    const htmlEl = page.locator("html");
-    const themeToggle = page.locator(".theme-toggle");
-
-    // Default dark — no data-theme attribute
-    await expect(htmlEl).not.toHaveAttribute("data-theme", "light");
-
-    // Click to switch to light
-    await themeToggle.click();
-    await expect(htmlEl).toHaveAttribute("data-theme", "light");
-
-    // Click to switch back to dark
-    await themeToggle.click();
-    await expect(htmlEl).not.toHaveAttribute("data-theme");
-  });
-});
-
-test.describe("Chrono view re-entry defaults to Experience", () => {
-  test("resets to Experience filter when re-entering chrono", async ({
-    page,
-  }) => {
-    await page.goto("/");
-
-    const viewToggle = page.locator(".view-toggle");
-    const expFilter = page.locator(
-      '.chrono-filter[data-filter="experience"]'
-    );
-    const allFilter = page.locator('.chrono-filter[data-filter="all"]');
-
-    // Chrono view is the default, Experience should be active
-    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
-    await expect(expFilter).toHaveClass(/\bactive\b/);
-
-    // Click "All"
-    await allFilter.click();
-    await expect(allFilter).toHaveClass(/\bactive\b/);
-    await expect(expFilter).not.toHaveClass(/\bactive\b/);
-
-    // Toggle to sections
-    await viewToggle.click();
-    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
-
-    // Re-enter chrono
-    await viewToggle.click();
-    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
-
-    // Experience should be active again, All should not
-    await expect(expFilter).toHaveClass(/\bactive\b/);
-    await expect(allFilter).not.toHaveClass(/\bactive\b/);
-  });
-});
-
-test.describe("Nav scroll offset", () => {
-  test("scrolled section is not hidden behind fixed nav", async ({
-    page,
-  }) => {
-    await page.goto("/");
-
-    // On mobile viewports, open the hamburger menu first
-    const navToggle = page.locator(".nav-toggle");
-    if (await navToggle.isVisible()) {
-      await navToggle.click();
-      await expect(page.locator(".nav-links")).toHaveClass(/\bopen\b/);
-    }
-
-    const navLink = page.locator('a[href="#education"]').first();
-    await navLink.click();
-
-    // Wait for smooth scroll to complete
-    await page.waitForTimeout(800);
-
-    const sectionTop = await page
-      .locator("#education")
-      .evaluate((el) => el.getBoundingClientRect().top);
-    const navHeight = await page
-      .locator("nav")
-      .evaluate((el) => el.getBoundingClientRect().height);
-
-    // The section top should be at or below the nav bottom
-    expect(sectionTop).toBeGreaterThanOrEqual(navHeight - 2);
-  });
-});
-
-test.describe("Competitions filter", () => {
-  test("shows exactly 4 Competitions cards", async ({ page }) => {
-    await page.goto("/");
-
-    // Chrono view is the default
-    await expect(page.locator("body")).toHaveClass(/\bchrono-view\b/);
-
-    // Click Competitions filter
-    await page
-      .locator('.chrono-filter[data-filter="competitions"]')
-      .click();
-
-    // Exactly 4 visible cards
-    const visibleCards = page.locator(".chrono-card:not(.chrono-hidden)");
-    await expect(visibleCards).toHaveCount(4);
-
-    // All visible cards should have "Competitions" badge
-    const badges = page.locator(
-      ".chrono-card:not(.chrono-hidden) .chrono-badge"
-    );
-    const count = await badges.count();
-    expect(count).toBe(4);
-    for (let i = 0; i < count; i++) {
-      await expect(badges.nth(i)).toHaveText("Competitions");
-    }
-  });
-});
-
-test.describe("Tag clear button", () => {
-  test("appears on tag activation, clears filter on click", async ({
-    page,
-  }) => {
-    await page.goto("/");
-
-    // Switch to section view (chrono is default)
-    await page.locator(".view-toggle").click();
-    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
-
-    const clearBtn = page.locator(".tag-clear-btn");
-
-    // Should start hidden
-    await expect(clearBtn).toBeHidden();
-
-    // Click a tag to activate filtering
-    const tag = page
-      .locator(".project-card .tag, .project-featured .tag")
-      .first();
-    await tag.click();
-    await expect(tag).toHaveClass(/\bactive\b/);
-
-    // Clear button should be visible
-    await expect(clearBtn).toBeVisible();
-
-    // Click the clear button
-    await clearBtn.click();
-
-    // All active and dimmed classes should be removed
-    await expect(page.locator(".tag.active")).toHaveCount(0);
-    await expect(page.locator(".dimmed")).toHaveCount(0);
-
-    // Clear button should be hidden again
-    await expect(clearBtn).toBeHidden();
-  });
-});
-
-test.describe("Project details expand", () => {
-  test("toggles detail content on click", async ({ page }) => {
-    await page.goto("/");
-
-    // Switch to section view (chrono is default)
-    await page.locator(".view-toggle").click();
-    await expect(page.locator("body")).not.toHaveClass(/\bchrono-view\b/);
-
-    const details = page.locator(".project-details").first();
-    const toggle = details.locator(".project-details-toggle");
-    const body = details.locator(".project-details-body");
-
-    // Scroll toggle into view (position varies by viewport)
-    await toggle.scrollIntoViewIfNeeded();
-
-    // Details should start closed
-    await expect(body).toBeHidden();
-
-    // Click to open
-    await toggle.click();
-    await expect(body).toBeVisible();
-
-    // Click to close
-    await toggle.click();
-    await expect(body).toBeHidden();
-  });
-});
-
-test.describe("404 page", () => {
-  test("renders with correct heading and home link", async ({ page }) => {
+  test("404 page renders with heading and home link", async ({ page }) => {
     await page.goto("/404.html");
-    await expect(page.locator("h1")).toContainText("404");
-    await expect(page.locator('a.btn-primary[href="/"]')).toBeVisible();
+    await expect(page.locator("h1")).toBeVisible();
+    const homeLink = page.locator('a[href="/"]').first();
+    await expect(homeLink).toBeVisible();
   });
 });
