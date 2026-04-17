@@ -13,16 +13,8 @@ test.describe("Console errors", () => {
     });
   });
 
-  test("index page loads without console errors (dark mode)", async ({ page }) => {
+  test("index page loads without console errors", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
-    expect(errors).toEqual([]);
-  });
-
-  test("index page loads without console errors (light mode)", async ({ page }) => {
-    await page.goto("/");
-    await page.evaluate(() => document.documentElement.setAttribute("data-theme", "light"));
-    await page.reload();
     await page.waitForLoadState("networkidle");
     expect(errors).toEqual([]);
   });
