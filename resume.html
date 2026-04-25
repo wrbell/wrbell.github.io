@@ -7,6 +7,9 @@
   <meta name="description" content="Willem Bell — ME + CS, UM-Dearborn. Resume (printable).">
   <meta name="robots" content="noindex">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/inter-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/fraunces-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
   <style>
     @font-face {
       font-family: 'Inter';
@@ -107,7 +110,18 @@
       color: var(--ink-dim);
       text-align: right;
     }
-    .contact a { border-bottom: 1px dotted var(--line-hi); }
+    .contact a {
+      border-bottom: 1px dotted var(--line-hi);
+      /* Touch-target padding: ensures min 24x24 hit area on mobile (WCAG
+         2.5.8). Print stylesheet collapses these back to inline. */
+      display: inline-block;
+      padding: 4px 2px;
+      min-height: 24px;
+      line-height: 1.4;
+    }
+    @media print {
+      .contact a { display: inline; padding: 0; min-height: 0; line-height: inherit; }
+    }
     .contact .accent { color: var(--accent); }
 
     /* === Section === */
@@ -211,7 +225,7 @@
       gap: 14px;
       padding-top: 4px;
     }
-    .stack-col h4 {
+    .stack-col h3 {
       font-family: var(--font-mono);
       font-size: 8.5pt;
       letter-spacing: 0.1em;
@@ -478,7 +492,7 @@
       <div class="stack">
         <div></div>
         <div class="stack-col">
-          <h4>Mechanical / Controls</h4>
+          <h3>Mechanical / Controls</h3>
           <ul>
             <li>Siemens S7 / TIA <span class="lvl">daily</span></li>
             <li>S120 drives <span class="lvl">daily</span></li>
@@ -493,7 +507,7 @@
           </ul>
         </div>
         <div class="stack-col">
-          <h4>Software</h4>
+          <h3>Software</h3>
           <ul>
             <li>Python <span class="lvl">daily</span></li>
             <li>JavaScript / TS <span class="lvl">proficient</span></li>
@@ -505,7 +519,7 @@
           </ul>
         </div>
         <div class="stack-col">
-          <h4>ML / Research</h4>
+          <h3>ML / Research</h3>
           <ul>
             <li>Whisper ASR <span class="lvl">shipped</span></li>
             <li>MarianMT <span class="lvl">shipped</span></li>

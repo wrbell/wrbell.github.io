@@ -6,6 +6,9 @@
   <title>Lab notebook — Willem Bell</title>
   <meta name="description" content="Short-form, dated entries on in-progress work.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/inter-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/fraunces-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
   <script>
     (function() {
       var theme;
@@ -17,7 +20,9 @@
   </script>
   <style>
     @font-face { font-family: 'Inter'; font-weight: 400 700; font-display: swap; src: url('assets/fonts/inter-latin.v1.woff2') format('woff2'); }
-    @font-face { font-family: 'Fraunces'; font-style: italic; font-weight: 400 900; font-display: swap; src: url('assets/fonts/fraunces-latin.v1.woff2') format('woff2'); }
+    /* Fraunces is the giant italic h1 — `optional` guarantees no CLS swap on slow networks
+       (worst case: first-load serif fallback). Inter/JetBrains stay on `swap`. */
+    @font-face { font-family: 'Fraunces'; font-style: italic; font-weight: 400 900; font-display: optional; src: url('assets/fonts/fraunces-latin.v1.woff2') format('woff2'); }
     @font-face { font-family: 'JetBrains Mono'; font-weight: 400 700; font-display: swap; src: url('assets/fonts/jetbrains-mono-latin.v1.woff2') format('woff2'); }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
