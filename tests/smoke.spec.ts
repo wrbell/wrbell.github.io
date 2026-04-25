@@ -121,9 +121,11 @@ test.describe("Index — structure and CTAs", () => {
 
   test("footer Direct column links resolve to expected subpages", async ({ page }) => {
     const direct = page.locator(".footer-col", { hasText: "Direct" });
+    // Design trimmed the Direct column to email + resume + the in-page work
+    // anchor (cases / notebook are still reachable from #work cards).
+    await expect(direct.locator('a[href="mailto:wrbell@umich.edu"]')).toBeVisible();
     await expect(direct.locator('a[href="resume.html"]')).toBeVisible();
-    await expect(direct.locator('a[href="cases.html"]')).toBeVisible();
-    await expect(direct.locator('a[href="notebook.html"]')).toBeVisible();
+    await expect(direct.locator('a[href="#work"]')).toBeVisible();
   });
 });
 

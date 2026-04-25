@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Willem Bell — ME × CS</title>
+  <title>Willem Bell — ME + CS</title>
   <meta name="description" content="Willem Bell — Mechanical engineering & computer science at UM-Dearborn. SpaceX and Tesla internships. BSE ME + CS, December 2026.">
-  <meta property="og:title" content="Willem Bell — ME × CS">
-  <meta property="og:description" content="Portfolio of Willem Bell. Mechanical engineering & computer science at UM-Dearborn. SpaceX and Tesla internships.">
+  <meta property="og:title" content="Willem Bell — ME + CS">
+  <meta property="og:description" content="ME + CS at UM-Dearborn. SpaceX, Tesla, DTE Fermi internships. Building things that move.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://wrbell.github.io/">
   <meta property="og:image" content="https://wrbell.github.io/assets/og-card.png">
@@ -16,8 +16,8 @@
   <meta property="og:locale" content="en_US">
   <meta name="theme-color" content="#0a0a12">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Willem Bell — ME × CS">
-  <meta name="twitter:description" content="Portfolio of Willem Bell. Mechanical engineering & computer science at UM-Dearborn. SpaceX and Tesla internships.">
+  <meta name="twitter:title" content="Willem Bell — ME + CS">
+  <meta name="twitter:description" content="ME + CS at UM-Dearborn. SpaceX, Tesla, DTE Fermi internships. Building things that move.">
   <meta name="twitter:image" content="https://wrbell.github.io/assets/og-card.png">
   <script type="application/ld+json">
   {
@@ -262,6 +262,15 @@
       transition: color .2s;
     }
     .site-nav-links a:hover { color: var(--text); }
+    .site-nav-links a.is-active { color: var(--accent); }
+    .site-nav-links a.is-active::after {
+      content: '';
+      display: block;
+      height: 1px;
+      background: var(--accent);
+      margin-top: 3px;
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
     .site-nav-cta {
       padding: 8px 14px;
       border: 1px solid var(--border-hi);
@@ -427,6 +436,7 @@
       transition: border-color .2s, color .2s;
     }
     .mobile-anchors a:hover, .mobile-anchors a:focus { border-color: var(--accent); color: var(--accent); }
+    .mobile-anchors a.is-active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
 
     /* === Section header === */
     .section { padding: 112px 0; border-top: 1px solid var(--border); }
@@ -575,6 +585,12 @@
       border-color: var(--accent);
       box-shadow: var(--shadow-hi), 0 0 32px var(--accent-glow);
       transform: translateY(-3px);
+    }
+    /* Locked cards: no clickable CTA, so no hover lift / glow / accent border. */
+    .card.card--locked:hover {
+      border-color: var(--border);
+      box-shadow: none;
+      transform: none;
     }
     .card .lane {
       font-family: var(--font-mono);
@@ -890,6 +906,162 @@
     .skills-row .dom.s  { color: var(--accent);           border-color: color-mix(in srgb, var(--accent) 50%, var(--border-hi)); }
     .skills-row .dom.r  { color: var(--lane-research);   border-color: color-mix(in srgb, var(--lane-research) 40%, var(--border-hi)); }
 
+    /* === Timeline (full chronology) === */
+    .section--timeline { padding-bottom: 80px; }
+    .section--timeline .section-lede {
+      font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-top: 12px;
+    }
+
+    /* Lane colors — distinct palette for the timeline (separate from skill lanes) */
+    :root {
+      --tl-industry:   #d4a73a;       /* amber */
+      --tl-research:   #4a9eff;       /* blue */
+      --tl-project:    var(--accent); /* green */
+      --tl-extra:      #b48dff;       /* purple — racing, leadership, case comps */
+      --tl-milestone:  var(--text);
+    }
+    [data-theme="light"] {
+      /* Industry amber needs darkening for the .tl-lane chip text on white
+         (#b8861a is 3.24:1 — fails WCAG AA). */
+      --tl-industry:   #8a5a00;
+      --tl-research:   #1a6cd1;
+      --tl-extra:      #6a4ec4;
+    }
+
+    .timeline-track-wrap {
+      position: relative;
+      margin-top: 40px;
+    }
+    .timeline-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 8px 0 24px 0;
+      padding-left:  max(32px, calc((100vw - 1200px) / 2 + 32px));
+      padding-right: max(32px, calc((100vw - 1200px) / 2 + 32px));
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-hi) transparent;
+    }
+    .timeline-track::-webkit-scrollbar { height: 8px; }
+    .timeline-track::-webkit-scrollbar-track { background: transparent; }
+    .timeline-track::-webkit-scrollbar-thumb {
+      background: var(--border-hi); border-radius: 4px;
+    }
+    .timeline-track::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    .tl-card {
+      flex: 0 0 240px;
+      scroll-snap-align: start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--lane-color, var(--border-hi));
+      border-radius: 4px;
+      padding: 16px;
+      display: flex; flex-direction: column; gap: 6px;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+    }
+    .tl-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--lane-color, var(--border-hi));
+      box-shadow: var(--shadow-card);
+    }
+    .tl-card.tl--industry   { --lane-color: var(--tl-industry); }
+    .tl-card.tl--research   { --lane-color: var(--tl-research); }
+    .tl-card.tl--project    { --lane-color: var(--tl-project); }
+    .tl-card.tl--extra      { --lane-color: var(--tl-extra); }
+    .tl-card.tl--milestone  {
+      --lane-color: var(--tl-milestone);
+      background: var(--accent-dim);
+    }
+
+    .tl-meta {
+      display: flex; flex-direction: column; gap: 4px;
+      margin-bottom: 4px;
+    }
+    .tl-lane {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--lane-color);
+      font-weight: 500;
+    }
+    .tl-date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    .tl-org {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 17px;
+      line-height: 1.2;
+      color: var(--text);
+      margin-top: 4px;
+    }
+    .tl-role {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.3;
+    }
+    .tl-loc {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: auto;
+      padding-top: 6px;
+    }
+
+    /* Right-edge fade to hint scrollability */
+    .timeline-fade {
+      position: absolute; top: 0; bottom: 24px;
+      width: 80px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .timeline-fade--right {
+      right: 0;
+      background: linear-gradient(to left, var(--bg) 0%, transparent 100%);
+    }
+
+    /* Legend below track */
+    .timeline-legend {
+      display: flex; flex-wrap: wrap; gap: 20px 24px;
+      margin-top: 24px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .legend-item { display: inline-flex; align-items: center; gap: 8px; }
+    .legend-dot {
+      width: 10px; height: 10px; border-radius: 2px;
+      display: inline-block;
+    }
+    .legend-dot[data-lane="industry"]   { background: var(--tl-industry); }
+    .legend-dot[data-lane="research"]   { background: var(--tl-research); }
+    .legend-dot[data-lane="project"]    { background: var(--tl-project); }
+    .legend-dot[data-lane="extra"]      { background: var(--tl-extra); }
+    .legend-dot[data-lane="milestone"]  { background: var(--tl-milestone); }
+
+    /* Ledger foot pointer */
+    .ledger-foot {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border);
+      text-align: center;
+    }
+    .ledger-foot a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    .ledger-foot a:hover { color: var(--accent-2); }
+
     /* === Footer === */
     .site-footer {
       border-top: 1px solid var(--border);
@@ -984,6 +1156,13 @@
       .site-footer { padding: 72px 0 32px; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
       .footer-copy { flex-direction: column; gap: 8px; align-items: flex-start; }
+
+      /* Timeline mobile */
+      .timeline-track { padding-left: 20px; padding-right: 20px; gap: 12px; }
+      .tl-card { flex: 0 0 220px; padding: 14px; }
+      .timeline-fade { display: none; }
+      .timeline-legend { gap: 10px 18px; font-size: 10px; margin-top: 16px; }
+      .section--timeline { padding-bottom: 56px; }
     }
     @media (max-width: 480px) {
       .vitals { grid-template-columns: 1fr; gap: 16px; }
@@ -1077,6 +1256,7 @@
     <a href="#about" class="underline-hover">About</a>
     <a href="#work" class="underline-hover">Work</a>
     <a href="#ledger" class="underline-hover">Experience</a>
+    <a href="#timeline" class="underline-hover">Timeline</a>
     <a href="#stack" class="underline-hover">Stack</a>
     <a href="mailto:wrbell@umich.edu" class="site-nav-cta">Email →</a>
     <button type="button" class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
@@ -1088,7 +1268,7 @@
 
 <main id="main">
 
-  <header class="hero">
+  <header class="hero" data-screen-label="00 Hero">
     <div class="container">
       <div class="hero-grid">
         <div>
@@ -1097,10 +1277,10 @@
             <span class="eyebrow">Available — new grad, Q1 2027</span>
           </div>
           <h1><span class="w1">Willem <span class="dot">Bell.</span></span></h1>
-          <p class="hero-tagline">Mechanical engineer <span class="accent">×</span> software. Builds things that <em class="italic">move.</em></p>
-          <p class="hero-lede">ME × CS at UM‑Dearborn. Internships across <span class="accent">SpaceX</span> Starship, Starfactory, and Space Lasers, <span class="accent">Tesla 4680</span>, and <span class="accent">DTE Fermi</span>. Most useful at the seam between a Siemens panel and a PyTorch notebook.</p>
+          <p class="hero-tagline">Mechanical engineer <span class="accent">×</span> software. Builds things that <em class="italic">move</em>.</p>
+          <p class="hero-lede">ME × CS at UM‑Dearborn. Internships across <span class="accent">SpaceX</span> Starship, Starfactory, and Space Lasers, and <span class="accent">Tesla 4680</span>. I work the seam between a Siemens panel and a PyTorch notebook.</p>
           <div class="hero-cta">
-            <a href="mailto:wrbell@umich.edu" class="btn primary">Email me <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 3h6v6M3 9L9 3"/></svg></a>
+            <a href="mailto:wrbell@umich.edu" class="btn primary">Email <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 3h6v6M3 9L9 3"/></svg></a>
             <a href="resume.html" class="btn" target="_blank" rel="noopener noreferrer">Resume</a>
             <a href="https://github.com/wrbell" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://linkedin.com/in/willembell/" class="btn" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -1132,15 +1312,16 @@
     <a href="#about">About</a>
     <a href="#work">Work</a>
     <a href="#ledger">Experience</a>
+    <a href="#timeline">Timeline</a>
     <a href="#stack">Stack</a>
     <a href="mailto:wrbell@umich.edu">Email</a>
   </nav>
 
-  <section id="about" class="section" aria-labelledby="about-heading">
+  <section id="about" class="section" aria-labelledby="about-heading" data-screen-label="01 About">
     <div class="container">
       <div class="section-head">
         <div class="section-num">About</div>
-        <h2 id="about-heading" class="section-title">An engineer who ships, in both senses.</h2>
+        <h2 id="about-heading" class="section-title">An engineer who ships &mdash; <em class="italic">both kinds.</em></h2>
       </div>
       <div class="about-grid">
         <div class="about-sidebar">
@@ -1161,15 +1342,15 @@
             </div>
             <ol>
               <li class="live">
-                <time datetime="2026-W17">this week</time>
+                <time datetime="2026-04">Apr 2026</time>
                 <span class="what">Wrapping up <strong>ME 472</strong> — UR30 cobot riding a Klipper-driven 7th axis, RTDE bridge talking to an RP2040.</span>
               </li>
               <li>
-                <time datetime="2026-04">Apr 2026</time>
-                <span class="what">Finished <strong>ME 379 Fluids Lab</strong>. Six labs, six parity checks against closed-form predictions. Writeup landing within a week.</span>
+                <time datetime="2026-03">Mar 2026</time>
+                <span class="what">Finished <strong>ME 379 Fluids Lab</strong>. Six labs, six parity checks against closed-form predictions.</span>
               </li>
               <li>
-                <time datetime="2026-03">Mar 2026</time>
+                <time datetime="2026-02">Feb 2026</time>
                 <span class="what">Shipped <strong>me440-vibrations</strong> — a general MDOF forced-response solver in MATLAB, validated against textbook benchmarks.</span>
               </li>
               <li>
@@ -1178,11 +1359,11 @@
               </li>
               <li>
                 <time datetime="2025-11">Nov 2025</time>
-                <span class="what">Took over <strong>Data Analysis Lead</strong> on UM-Dearborn's Supply Chain Association.</span>
+                <span class="what">Stepped in as <strong>Data Analysis Lead</strong> on UM‑Dearborn's Supply Chain Association.</span>
               </li>
               <li>
                 <time datetime="2025-08">Aug 2025</time>
-                <span class="what">Back in <strong>Pannier Research Lab</strong> — toolchanger automation work continues.</span>
+                <span class="what">Back in <strong>Pannier Research Lab</strong> on toolchanger automation.</span>
               </li>
             </ol>
           </div>
@@ -1191,7 +1372,7 @@
     </div>
   </section>
 
-  <section id="work" class="section" aria-labelledby="work-heading">
+  <section id="work" class="section" aria-labelledby="work-heading" data-screen-label="02 Work">
     <div class="container">
       <div class="section-head">
         <div class="section-num">Work</div>
@@ -1298,15 +1479,12 @@
           <div class="tags">
             <span class="tag">Python</span>
             <span class="tag">Whisper</span>
-            <span class="tag">MarianMT</span>
-            <span class="tag">TranslateGemma</span>
-            <span class="tag">WebSocket</span>
             <span class="tag">MLX</span>
           </div>
         </article>
 
         <article class="card span-4">
-          <div class="lane course">ME 379 · just wrapped</div>
+          <div class="lane course">ME 379 · Winter 2026</div>
           <h3>Fluids Lab</h3>
           <div class="meta">Coursework · experimental fluid mechanics</div>
           <div class="shot" role="img" aria-label="Fluids Lab — to come"></div>
@@ -1316,8 +1494,6 @@
           </div>
           <div class="tags">
             <span class="tag">Fluid Mechanics</span>
-            <span class="tag">Lab</span>
-            <span class="tag">DAQ</span>
             <span class="tag">MATLAB</span>
           </div>
         </article>
@@ -1342,7 +1518,7 @@
         <article class="card span-3">
           <div class="lane course">Self-study · 2024–2025</div>
           <h3>fast-fem</h3>
-          <div class="meta">ANSYS × analytic parity lab</div>
+          <div class="meta">ANSYS validated against hand calcs</div>
           <p>Accelerated FEA self-study for 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calculations. Mesh convergence studies, post-mortems, and reproducible methodology.</p>
           <div class="card-cta-row">
             <a href="projects/fast-fem.html" class="card-cta">Case study →</a>
@@ -1356,7 +1532,7 @@
           </div>
         </article>
 
-        <article class="card span-3">
+        <article class="card span-3 card--locked">
           <div class="lane industry">SpaceX · Jan–Jul 2025</div>
           <h3>Starfactory automation</h3>
           <div class="meta">Automation &amp; controls intern · Starbase, TX</div>
@@ -1371,7 +1547,7 @@
           </div>
         </article>
 
-        <article class="card span-2">
+        <article class="card span-2 card--locked">
           <div class="lane industry">Tesla · Sep 2023–Apr 2024</div>
           <h3>Tesla 4680</h3>
           <div class="meta">Controls development intern · Austin, TX</div>
@@ -1385,11 +1561,11 @@
           </div>
         </article>
 
-        <article class="card span-2">
-          <div class="lane research">Pannier Lab · 2021–2025</div>
+        <article class="card span-2 card--locked">
+          <div class="lane research">Pannier Lab · 2021–present</div>
           <h3>Pannier Research Lab</h3>
-          <div class="meta">UM-Dearborn · three terms</div>
-          <p>Undergraduate researcher across three consecutive terms; toolchanger automation and G-code workflows. Handed off to the next cohort.</p>
+          <div class="meta">UM‑Dearborn · three terms</div>
+          <p>Undergraduate researcher across three terms; toolchanger automation and G-code workflows. Returned for a fourth term in Aug 2025.</p>
           <div class="tags">
             <span class="tag">MATLAB</span>
             <span class="tag">G-Code</span>
@@ -1416,11 +1592,11 @@
     </div>
   </section>
 
-  <section id="ledger" class="section" aria-labelledby="ledger-heading">
+  <section id="ledger" class="section" aria-labelledby="ledger-heading" data-screen-label="03 Experience">
     <div class="container">
       <div class="section-head">
         <div class="section-num">Experience</div>
-        <h2 id="ledger-heading" class="section-title">Where I've shown up.</h2>
+        <h2 id="ledger-heading" class="section-title">Featured <em class="italic">experience.</em></h2>
       </div>
       <div class="ledger">
 
@@ -1443,7 +1619,7 @@
         <article class="entry">
           <time class="entry-date" datetime="2022-05">May 2022 — Aug 2024</time>
           <div class="entry-body">
-            <h3>SpaceX <span style="color: var(--muted);">· three earlier internships</span></h3>
+            <h3>SpaceX <span style="color: var(--muted);">· previous internships</span></h3>
             <div class="role">Starship, Launch, Space Lasers</div>
             <div class="loc">Starbase, TX · Redmond, WA</div>
             <ul>
@@ -1473,81 +1649,189 @@
           </div>
         </article>
 
-        <article class="entry">
-          <time class="entry-date" datetime="2021-07">Jul 2021 — <span class="current">Present</span></time>
-          <div class="entry-body">
-            <h3>Pannier Research Lab · UM-Dearborn</h3>
-            <div class="role">Research Assistant (three terms)</div>
-            <div class="loc">Dearborn, MI</div>
-            <ul>
-              <li>Aug 2025 – Present · Research Assistant.</li>
-              <li>Sep 2024 – Jan 2025 · Research Assistant.</li>
-              <li>Jul 2021 – May 2023 · Undergraduate Researcher.</li>
-            </ul>
-          </div>
-          <div class="entry-tags">
-            <span class="tag">MATLAB</span><span class="tag">G-Code</span><span class="tag">Toolchanger</span><span class="tag">Automation</span>
-          </div>
-        </article>
-
-        <article class="entry">
-          <time class="entry-date" datetime="2025-11">Nov 2025 — Feb 2026</time>
-          <div class="entry-body">
-            <h3>Supply Chain Case Competitions</h3>
-            <div class="role">UM-Dearborn team · four cases</div>
-            <div class="loc">Dearborn, MI</div>
-            <ul>
-              <li>Colorado State Rams · 1-week sprint · Feb 2026.</li>
-              <li>Land O'Lakes / Kozy Shack · 24-hour sprint · Jan 2026.</li>
-              <li>3M Fulfillment Network · 2-week sprint · Dec 2025.</li>
-              <li>Quantum Frontiers · 2-week sprint · Nov 2025.</li>
-            </ul>
-          </div>
-          <div class="entry-tags">
-            <span class="tag">Python</span><span class="tag">PuLP</span><span class="tag">Network Optimization</span><span class="tag">Supply Chain</span>
-          </div>
-        </article>
-
-        <article class="entry">
-          <time class="entry-date" datetime="2021-09">Sep 2021 — <span class="current">Present</span></time>
-          <div class="entry-body">
-            <h3>Extracurricular</h3>
-            <div class="role">Teams &amp; leadership</div>
-            <div class="loc">UM-Dearborn</div>
-            <ul>
-              <li>Supply Chain Association · Data Analysis Lead, Finance Co-Lead · Oct 2025–Present.</li>
-              <li>Dearborn Electric Racing · Project Manager · Sep 2024–Jan 2025.</li>
-              <li>UMD Racing · Frame Lead · Nov 2022–Jun 2023.</li>
-              <li>Dearborn Electric Racing · Data Acquisition Lead · Sep 2021–Aug 2022.</li>
-            </ul>
-          </div>
-          <div class="entry-tags">
-            <span class="tag">Leadership</span><span class="tag">Racing</span><span class="tag">Data</span>
-          </div>
-        </article>
+        <p class="ledger-foot">For everything else — prior internships, research terms, case competitions, and student leadership — see the <a href="#timeline">timeline</a> below.</p>
 
       </div>
     </div>
   </section>
 
-  <section id="stack" class="section" aria-labelledby="stack-heading">
+  <section id="timeline" class="section section--timeline" aria-labelledby="timeline-heading" data-screen-label="04 Timeline">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num">Timeline</div>
+        <h2 id="timeline-heading" class="section-title">Everything, in <em class="italic">order.</em></h2>
+        <p class="section-lede">Internships, research terms, racing, case competitions, leadership. Scroll →</p>
+      </div>
+    </div>
+
+    <div class="timeline-track-wrap">
+      <div class="timeline-track" tabindex="0" role="region" aria-label="Career timeline, scrollable">
+
+        <article class="tl-card tl--industry">
+          <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2021-05">May 2021 — Feb 2022</time></div>
+          <div class="tl-org">DTE Fermi</div>
+          <div class="tl-role">Instrumentation &amp; Controls Intern</div>
+          <div class="tl-loc">Newport, MI</div>
+        </article>
+
+        <article class="tl-card tl--research">
+          <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2021-07">Jul 2021 — May 2023</time></div>
+          <div class="tl-org">Pannier Research Lab</div>
+          <div class="tl-role">Undergraduate Researcher</div>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--extra">
+          <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2021-09">Sep 2021 — Aug 2022</time></div>
+          <div class="tl-org">Dearborn Electric Racing</div>
+          <div class="tl-role">Data Acquisition Lead</div>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--industry">
+          <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2022-05">May — Aug 2022</time></div>
+          <div class="tl-org">SpaceX · Starship</div>
+          <div class="tl-role">Automation &amp; Controls Intern</div>
+          <div class="tl-loc">Starbase, TX</div>
+        </article>
+
+        <article class="tl-card tl--extra">
+          <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2022-11">Nov 2022 — Jun 2023</time></div>
+          <div class="tl-org">UMD Racing</div>
+          <div class="tl-role">Frame Lead</div>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--industry">
+          <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2023-05">May — Aug 2023</time></div>
+          <div class="tl-org">SpaceX · Starship</div>
+          <div class="tl-role">Launch Intern</div>
+          <div class="tl-loc">Starbase, TX</div>
+        </article>
+
+        <article class="tl-card tl--industry">
+          <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2023-09">Sep 2023 — Apr 2024</time></div>
+          <div class="tl-org">Tesla 4680</div>
+          <div class="tl-role">Controls Development Intern</div>
+          <div class="tl-loc">Austin, TX</div>
+        </article>
+
+        <article class="tl-card tl--industry">
+          <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2024-05">May — Aug 2024</time></div>
+          <div class="tl-org">SpaceX · Space Lasers</div>
+          <div class="tl-role">Integration &amp; Test Intern</div>
+          <div class="tl-loc">Redmond, WA</div>
+        </article>
+
+        <article class="tl-card tl--extra">
+          <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2024-09">Sep 2024 — Jan 2025</time></div>
+          <div class="tl-org">Dearborn Electric Racing</div>
+          <div class="tl-role">Project Manager</div>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--research">
+          <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2024-09">Sep 2024 — Jan 2025</time></div>
+          <div class="tl-org">Pannier Research Lab</div>
+          <div class="tl-role">Research Assistant</div>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--industry">
+          <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2025-01">Jan — Jul 2025</time></div>
+          <div class="tl-org">SpaceX · Starfactory</div>
+          <div class="tl-role">Automation &amp; Controls Intern</div>
+          <div class="tl-loc">Starbase, TX</div>
+        </article>
+
+        <article class="tl-card tl--project">
+          <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2025">2025</time> — <span class="current">Present</span></div>
+          <div class="tl-org">fast-fem</div>
+          <div class="tl-role">Personal project</div>
+          <div class="tl-loc">Open source</div>
+        </article>
+
+        <article class="tl-card tl--research">
+          <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2025-08">Aug 2025</time> — <span class="current">Present</span></div>
+          <div class="tl-org">Pannier Research Lab</div>
+          <div class="tl-role">Research Assistant</div>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--extra">
+          <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2025-10">Oct 2025</time> — <span class="current">Present</span></div>
+          <div class="tl-org">Supply Chain Association</div>
+          <div class="tl-role">Data Lead · Finance Co-Lead</div>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--extra">
+          <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2025-11">Nov 2025</time></div>
+          <div class="tl-org">Quantum Frontiers</div>
+          <div class="tl-role">Case competition · 2-week sprint</div>
+          <div class="tl-loc">UM-Dearborn team</div>
+        </article>
+
+        <article class="tl-card tl--extra">
+          <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2025-12">Dec 2025</time></div>
+          <div class="tl-org">3M Fulfillment Network</div>
+          <div class="tl-role">Case competition · 2-week sprint</div>
+          <div class="tl-loc">UM-Dearborn team</div>
+        </article>
+
+        <article class="tl-card tl--project">
+          <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026">2026</time> — <span class="current">Present</span></div>
+          <div class="tl-org">stark-translate</div>
+          <div class="tl-role">Personal project</div>
+          <div class="tl-loc">macOS · MLX</div>
+        </article>
+
+        <article class="tl-card tl--extra">
+          <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2026-01">Jan 2026</time></div>
+          <div class="tl-org">Land O'Lakes / Kozy Shack</div>
+          <div class="tl-role">Case competition · 24-hour sprint</div>
+          <div class="tl-loc">UM-Dearborn team</div>
+        </article>
+
+        <article class="tl-card tl--extra">
+          <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2026-02">Feb 2026</time></div>
+          <div class="tl-org">Colorado State Rams</div>
+          <div class="tl-role">Case competition · 1-week sprint</div>
+          <div class="tl-loc">UM-Dearborn team</div>
+        </article>
+
+      </div>
+      <div class="timeline-fade timeline-fade--right" aria-hidden="true"></div>
+    </div>
+
+    <div class="container">
+      <div class="timeline-legend" aria-label="Timeline legend">
+        <span class="legend-item"><span class="legend-dot" data-lane="industry"></span>Industry</span>
+        <span class="legend-item"><span class="legend-dot" data-lane="research"></span>Research</span>
+        <span class="legend-item"><span class="legend-dot" data-lane="project"></span>Project</span>
+        <span class="legend-item"><span class="legend-dot" data-lane="extra"></span>Extracurricular</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" class="section" aria-labelledby="stack-heading" data-screen-label="05 Stack">
     <div class="container">
       <div class="section-head">
         <div class="section-num">Stack</div>
-        <h2 id="stack-heading" class="section-title">What I reach for, <em class="italic">in rough order of recency.</em></h2>
+        <h2 id="stack-heading" class="section-title">What I <em class="italic">reach for.</em></h2>
       </div>
       <div class="skills-legend" aria-label="How to read this section">
         <span class="leg"><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span><strong>Daily</strong></span>
         <span class="leg"><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span><strong>Familiar</strong></span>
         <span class="leg"><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span><strong>Learning</strong></span>
-        <span class="leg" style="margin-left:auto"><span class="dom m" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--lane-industry)">Mech</span> <span class="dom c" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--lane-coursework)">Controls</span> <span class="dom s" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--accent)">Soft</span> <span class="dom r" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--lane-research)">Research</span></span>
+        <span class="leg" style="margin-left:auto"><span class="dom m" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--lane-industry)">Mech</span> <span class="dom c" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--lane-coursework)">Controls</span> <span class="dom s" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--accent)">Software</span> <span class="dom r" style="font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid;color:var(--lane-research)">Research</span></span>
       </div>
 
       <div class="skills-tier">
         <div class="skills-tier-head">
           <div class="skills-tier-name">Daily driver.</div>
-          <div class="skills-tier-blurb">Things I'd confidently ship production work in tomorrow — shipped in the last 12 months across paid work, research, or coursework.</div>
-          <div class="skills-tier-count">09 tools</div>
+          <div class="skills-tier-blurb">Currently shipping with these — across paid work, research, and coursework, in the last 12 months.</div>
+          <div class="skills-tier-count">9 tools</div>
         </div>
         <div class="skills-rows">
           <div class="skills-row"><span class="name">Python</span><span class="dom s">Soft</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span></div>
@@ -1566,7 +1850,7 @@
         <div class="skills-tier-head">
           <div class="skills-tier-name">Familiar.</div>
           <div class="skills-tier-blurb">Used on real projects — give me an afternoon to warm up and I'm productive again.</div>
-          <div class="skills-tier-count">09 tools</div>
+          <div class="skills-tier-count">9 tools</div>
         </div>
         <div class="skills-rows">
           <div class="skills-row"><span class="name">KUKA robots · KRL</span><span class="dom c">Controls</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
@@ -1585,7 +1869,7 @@
         <div class="skills-tier-head">
           <div class="skills-tier-name">Learning.</div>
           <div class="skills-tier-blurb">Actively working through — in coursework, side projects, or a specific problem on my bench.</div>
-          <div class="skills-tier-count">05 tools</div>
+          <div class="skills-tier-count">5 tools</div>
         </div>
         <div class="skills-rows">
           <div class="skills-row"><span class="name">MarianMT · TranslateGemma</span><span class="dom r">Research</span><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span></div>
@@ -1600,33 +1884,34 @@
 
 </main>
 
-<footer id="contact" class="site-footer" role="contentinfo">
+<footer id="contact" class="site-footer" role="contentinfo" data-screen-label="06 Contact">
   <div class="container">
-    <h2 class="footer-cta">Open to new&nbsp;grad <span class="italic">roles</span>, <span class="italic">internships</span>, and weird hardware.</h2>
+    <h2 class="footer-cta">Open to new&nbsp;grad <span class="italic">roles</span>, <span class="italic">internships</span>, and the kind of hardware that makes things&nbsp;move.</h2>
     <a href="mailto:wrbell@umich.edu" class="btn primary">wrbell@umich.edu →</a>
     <div class="footer-grid">
       <div class="footer-col">
         <h3>Direct</h3>
         <a href="mailto:wrbell@umich.edu" class="underline-hover">wrbell@umich.edu</a>
         <a href="resume.html" class="underline-hover" target="_blank" rel="noopener noreferrer">resume →</a>
-        <a href="cases.html" class="underline-hover">case competitions →</a>
-        <a href="notebook.html" class="underline-hover">lab notebook →</a>
+        <a href="#work" class="underline-hover">work →</a>
       </div>
       <div class="footer-col">
         <h3>Online</h3>
         <a href="https://github.com/wrbell" class="underline-hover" target="_blank" rel="noopener noreferrer">github/wrbell</a>
         <a href="https://linkedin.com/in/willembell/" class="underline-hover" target="_blank" rel="noopener noreferrer">linkedin/willembell</a>
+        <a href="https://wrbell.github.io/" class="underline-hover">wrbell.github.io</a>
       </div>
       <div class="footer-col">
         <h3>Based</h3>
         <span>Dearborn, MI</span>
         <span>Open to relocation</span>
+        <span>U.S. work-eligible</span>
       </div>
       <div class="footer-col">
         <h3>Colophon</h3>
         <span>Inter · JetBrains Mono · Fraunces</span>
-        <span>Built by hand</span>
-        <span>v. 2026.5</span>
+        <span>Hand-coded, no framework</span>
+        <span>v2026.5</span>
       </div>
     </div>
     <div class="footer-copy">
@@ -1706,6 +1991,39 @@
       });
     }, { threshold: 0.15 });
     document.querySelectorAll('.card .shot.viz').forEach(function(el) { vizIo.observe(el); });
+
+    // Active section highlight in nav + mobile chips.
+    // Picks the section whose top is closest to (but past) the trigger line.
+    var sections = ['about', 'work', 'ledger', 'timeline', 'stack'];
+    var navLinks = {};
+    var chipLinks = {};
+    sections.forEach(function(id) {
+      navLinks[id]  = document.querySelector('.site-nav-links a[href="#' + id + '"]');
+      chipLinks[id] = document.querySelector('.mobile-anchors a[href="#' + id + '"]');
+    });
+    function setActive(id) {
+      sections.forEach(function(s) {
+        if (navLinks[s])  navLinks[s].classList.toggle('is-active',  s === id);
+        if (chipLinks[s]) chipLinks[s].classList.toggle('is-active', s === id);
+      });
+    }
+    function updateActive() {
+      var trigger = window.scrollY + 120; // a bit below the sticky nav
+      var current = null;
+      sections.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (el.offsetTop <= trigger) current = id;
+      });
+      setActive(current);
+    }
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function() { updateActive(); ticking = false; });
+    }, { passive: true });
+    updateActive();
   })();
 
 </script>
