@@ -8,27 +8,34 @@ This is **wrbell.github.io**, a GitHub Pages personal site for Willem Bell. The 
 
 ## Current State (v2026.5 redesign)
 
-The site is a single-page portfolio built as a single `index.html` file with inline CSS and JS — no frameworks or build tools. Refined + Editorial hybrid aesthetic: Fraunces italic display serif for the giant name wordmark and section titles, JetBrains Mono for eyebrows/metadata/tags, Inter for prose. Dark theme accent `#00e5a0`, light theme accent `#006e4a`. All three font families are self-hosted from `assets/fonts/`.
+The site is built as `index.html` (single-page) plus a small set of subpages. All inline CSS/JS, no frameworks or build tools. Refined + Editorial hybrid aesthetic: Fraunces italic display serif for the giant name wordmark and section titles, JetBrains Mono for eyebrows/metadata/tags, Inter for prose. Dark theme accent `#00e5a0`, light theme accent `#006e4a`. All three font families are self-hosted from `assets/fonts/`.
 
-Single-view layout (no view toggle) with 5 numbered sections:
-- **Hero** — giant "Willem Bell." Fraunces wordmark, vitals sidebar (Currently / Graduating / Based / Stack today), Resume + GitHub + LinkedIn CTAs
-- **§01 About** — dossier sidebar + three prose paragraphs (currently Lorem, pending real copy)
-- **§02 Selected work** — asymmetric 6-column grid: 1 flagship (stark-translate with ASCII diagram) + 2 halves + 4 small cards
-- **§03 Ledger** — 6 ledger-style experience rows (SpaceX Starfactory, SpaceX earlier internships, Tesla 4680, Pannier Research Lab, Supply Chain Case Competitions, Extracurricular)
-- **§04 Timeline** — horizontal scroll track with 8 chronological cards (2020 SI → Dec 2026 BSE)
-- **§05 Stack** — 3 columns: Mechanical/Controls (10), Software (7), ML/Research (6)
+Single-view layout (no view toggle) with four anchored sections plus a contact footer:
+- **Hero** — giant "Willem Bell." Fraunces wordmark, vitals sidebar (Currently / Graduating / Based / Stack today), Email/Resume/GitHub/LinkedIn CTAs
+- **#about** — dossier sidebar + three prose paragraphs (currently Lorem, pending real copy)
+- **#work** — asymmetric 6-column work grid (`span-6` flagship + `span-4` second + `span-2/3` smaller); each card links to a project subpage in `projects/`
+- **#ledger** — labeled "Experience" — ledger-style rows with `<time datetime>` ISO ranges
+- **#stack** — three proficiency tiers (Daily driver / Familiar / Learning) with color-coded domain pills + filled-dot proficiency indicator
+- **#contact** — site footer with email + social + footer nav (resume / cases / notebook)
+
+Subpages:
+- `resume.html` — print-optimized single-page resume (Cmd+P / "Print / Save PDF")
+- `cases.html` — 2×2 supply chain case competition shell
+- `notebook.html` — dated short-form post feed shell
+- `projects/case-study.css` — shared "engineering log" template stylesheet
+- `projects/{stark-translate,fast-fem,w26-cobot-axis,me440-vibrations,me379-fluids-lab}.html` — five flagship project detail pages (all use `case-study.css`)
 
 Mobile (<900px): desktop nav links hide, a horizontal anchor-chip row below the hero appears for section navigation. No hamburger.
 
 ### Key files
-- `index.html` — the entire site (all HTML, CSS, and JS inline)
+- `index.html` — the main page (all HTML, CSS, and JS inline)
 - `404.html` — custom 404 page with dark/light theme support
-- `robots.txt` + `sitemap.xml` — SEO basics
-- `tests/smoke.spec.ts` — 9 Playwright smoke tests
-- `tests/a11y.spec.ts` — 3 accessibility tests (axe-core WCAG 2.1 AA)
-- `tests/console-errors.spec.ts` — 2 console error detection tests (dark + 404)
+- `resume.html`, `cases.html`, `notebook.html` — top-level subpages (each is self-contained)
+- `projects/` — case-study subpages + the shared `case-study.css`
+- `robots.txt` + `sitemap.xml` — SEO basics (sitemap lists all subpages)
+- `tests/smoke.spec.ts`, `tests/a11y.spec.ts`, `tests/console-errors.spec.ts`, `tests/visual.spec.ts` — **stale post-redesign**, scheduled for rewrite in a follow-up PR; CI tests will fail until then
 - `ROADMAP.md` — categorized backlog with semester milestones
-- `build.js` — minification build script (html-minifier-terser → dist/)
+- `build.js` — minification build script (html-minifier-terser → dist/) — minifies index, 404, resume, cases, notebook, and all five `projects/*.html`
 - `releaseplan.md` — launch plan
 - `ref/` — reference resumes (not deployed)
 
@@ -55,14 +62,14 @@ Before pushing any branch to remote, run these checks locally. CI catches functi
 ```bash
 npx playwright test
 ```
-All tests must pass on all 10 browser projects. Do not push if any fail.
+All tests must pass on all 10 browser projects. **Note:** the existing specs are stale post v2026.5 redesign — they reference the old chrono/section-toggle selectors and will fail until rewritten in a follow-up PR.
 
 ### 2. Visual breakpoint sweep
 Screenshot the hero and a section header at key breakpoints (375, 768, 1024, 1280px) in both Chromium and WebKit. Verify:
 - **375px**: Mobile anchor chips visible, desktop nav links hidden, wordmark legible without clipping, vitals stack to 1 or 2 cols, asymmetric work grid collapses to 1-col
 - **768px**: Mobile chips still visible (breakpoint is 900), hero grid stacked
 - **1024px**: Mobile chips hidden, all desktop nav links visible, asymmetric work grid at full 6-col
-- **1280px**: Full spacing, nothing cramped, timeline track ~1200px wide
+- **1280px**: Full spacing, nothing cramped, work grid centered with breathing room
 
 ### 3. Console errors
 ```bash
@@ -73,7 +80,7 @@ npx playwright test tests/console-errors.spec.ts
 Verify light mode at 768px and 1280px — contrast issues and element overlap often only appear in light mode. WCAG AA requires 4.5:1 for normal text — pay particular attention to `.tag`, `.card .lane`, `.card .meta`, and `.btn.primary`.
 
 ### 5. Visual regression tests
-`tests/visual.spec.ts` was removed in the v2026.5 redesign pending regeneration of Linux-CI baselines. To re-add: author the spec, run `--update-snapshots` on a Linux runner (GitHub Actions or Docker), commit the `-linux.png` baselines, enable the spec in CI.
+`tests/visual.spec.ts` baselines are stale post v2026.5 redesign. Regenerate on a Linux runner (GitHub Actions or Docker) once the spec is rewritten against the new selectors: `npx playwright test tests/visual.spec.ts --update-snapshots`, then commit the new `-linux.png` baselines.
 
 ## Deployment
 

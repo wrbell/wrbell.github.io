@@ -61,12 +61,15 @@ jobs:
       - name: Check links
         uses: lycheeverse/lychee-action@v2
         with:
+          # 502/504 added: GitHub.com returns transient gateway errors during
+          # anonymous profile fetches — not real broken links. 500/501 still
+          # hard-fail. Five retries with 8s backoff smooths over more flake.
           args: >-
-            --accept 200,204,301,302,403,429,503
-            --max-retries 3
-            --retry-wait-time 5
+            --accept 200,204,301,302,403,429,502,503,504
+            --max-retries 5
+            --retry-wait-time 8
             --root-dir .
-            '*.html'
+            '*.html' 'projects/*.html'
           fail: true
 
   playwright:

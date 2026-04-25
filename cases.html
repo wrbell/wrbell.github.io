@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case competitions — Willem Bell</title>
+  <meta name="description" content="Four supply chain case competitions — strategy, modeling, live presentation.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/inter-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/fraunces-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    (function() {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <style>
+    @font-face { font-family: 'Inter'; font-weight: 400 700; font-display: swap; src: url('assets/fonts/inter-latin.v1.woff2') format('woff2'); }
+    @font-face { font-family: 'Fraunces'; font-style: italic; font-weight: 400 900; font-display: optional; src: url('assets/fonts/fraunces-latin.v1.woff2') format('woff2'); }
+    @font-face { font-family: 'JetBrains Mono'; font-weight: 400 700; font-display: swap; src: url('assets/fonts/jetbrains-mono-latin.v1.woff2') format('woff2'); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0b0d; --bg-2: #111316; --surface: #15181c;
+      --border: #22262c; --border-hi: #2d3239;
+      --text: #e8ecef; --text-dim: #b4bac2; --muted: #7a828c;
+      --accent: #00e5a0; --accent-glow: rgba(0,229,160,0.35);
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-display: 'Fraunces', serif;
+    }
+    [data-theme="light"] {
+      --bg: #f7f6f2; --bg-2: #efeeea; --surface: #fff;
+      --border: #d8d6cf; --border-hi: #b8b5ab;
+      --text: #14161a; --text-dim: #3a3e45; --muted: #656b73;
+      --accent: #006e4a; --accent-glow: rgba(0,110,74,0.15);
+    }
+    body { font-family: var(--font-sans); color: var(--text-dim); background: var(--bg); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    em { font-family: var(--font-display); font-style: italic; color: var(--text); }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+    .topbar { border-bottom: 1px solid var(--border); padding: 20px 32px; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 12px; }
+    .back { text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); transition: color .15s; }
+    .back:hover { color: var(--accent); }
+    .crumb { color: var(--muted); text-transform: uppercase; letter-spacing: 0.18em; }
+    .crumb .accent { color: var(--accent); }
+    .hero { padding: 80px 0 48px; border-bottom: 1px solid var(--border); }
+    .eyebrow { display: flex; align-items: center; gap: 14px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; }
+    .eyebrow::before { content:''; width: 40px; height: 1px; background: var(--muted); }
+    .eyebrow .accent { color: var(--accent); }
+    h1 { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: clamp(56px, 9vw, 120px); line-height: 0.95; letter-spacing: -0.03em; color: var(--text); margin-bottom: 24px; }
+    .lede { font-size: 18px; max-width: 60ch; color: var(--text-dim); }
+    .lede .accent { color: var(--accent); }
+    .grid { padding: 56px 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .case { display: block; padding: 28px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2); transition: border-color .2s, transform .2s; position: relative; }
+    .case:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .case .kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; display: flex; justify-content: space-between; }
+    .case .kicker .accent { color: var(--accent); }
+    .case h2 { font-family: var(--font-sans); font-size: 28px; font-weight: 600; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
+    .case .prompt { font-family: var(--font-display); font-style: italic; font-size: 17px; color: var(--text-dim); margin-bottom: 18px; line-height: 1.4; }
+    .case .meta { display: flex; flex-wrap: wrap; gap: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; border-top: 1px dashed var(--border-hi); padding-top: 14px; }
+    .case .meta strong { color: var(--text); font-weight: 500; }
+    .case .pdf-tag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border-hi); padding: 4px 10px; border-radius: 999px; }
+    .case .pdf-tag.ready { color: var(--accent); border-color: var(--accent); }
+    .coming { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; margin-top: 14px; display: block; }
+    footer { padding: 40px 0; border-top: 1px solid var(--border); font-family: var(--font-mono); font-size: 11px; text-align: center; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; }
+    @media (max-width: 780px) {
+      .topbar { padding: 16px 20px; }
+      .container { padding: 0 20px; }
+      .hero { padding: 48px 0 32px; }
+      .grid { grid-template-columns: 1fr; gap: 16px; padding: 36px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="./" class="back">← wrbell.eng</a>
+    <div class="crumb">§<span class="accent">03</span> / ledger / <strong style="color:var(--text-dim)">cases</strong></div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow"><span>Case competitions · 2023 — 2025</span></div>
+      <h1>Four <em>briefs,</em><br>four decks.</h1>
+      <p class="lede">Supply-chain case competitions I led or co-led. Each one — a messy prompt, a hard deadline, a live panel. The deliverables below are the actual presentation decks.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="grid">
+
+      <article class="case">
+        <div class="kicker"><span>Colorado State Rams <span class="accent">· 2024</span></span><span class="pdf-tag">PDF pending</span></div>
+        <h2>Colorado State Rams</h2>
+        <p class="prompt">Reimagine the fan-experience supply chain.</p>
+        <div class="meta"><span>Role: <strong>Lead presenter</strong></span><span>Team of 4</span><span>CSU Rams logistics</span></div>
+        <span class="coming">Deck coming soon →</span>
+      </article>
+
+      <article class="case">
+        <div class="kicker"><span>Kozy Shack <span class="accent">· 2024</span></span><span class="pdf-tag">PDF pending</span></div>
+        <h2>Kozy Shack</h2>
+        <p class="prompt">CPG cold-chain optimization.</p>
+        <div class="meta"><span>Role: <strong>Strategy / modeling</strong></span><span>Team of 4</span><span>Dairy / cold chain</span></div>
+        <span class="coming">Deck coming soon →</span>
+      </article>
+
+      <article class="case">
+        <div class="kicker"><span>3M Fulfillment <span class="accent">· 2025</span></span><span class="pdf-tag">PDF pending</span></div>
+        <h2>3M Fulfillment</h2>
+        <p class="prompt">E-commerce fulfillment network redesign.</p>
+        <div class="meta"><span>Role: <strong>Network modeling</strong></span><span>Team of 4</span><span>3M distribution</span></div>
+        <span class="coming">Deck coming soon →</span>
+      </article>
+
+      <article class="case">
+        <div class="kicker"><span>Quantum Frontiers <span class="accent">· 2025</span></span><span class="pdf-tag">PDF pending</span></div>
+        <h2>Quantum Frontiers</h2>
+        <p class="prompt">Rare-earth sourcing under geopolitical constraint.</p>
+        <div class="meta"><span>Role: <strong>Lead presenter</strong></span><span>Team of 4</span><span>Semiconductor materials</span></div>
+        <span class="coming">Deck coming soon →</span>
+      </article>
+
+    </div>
+  </div>
+
+  <footer><div class="container">© 2026 Willem Bell · wrbell@umich.edu</div></footer>
+</body>
+</html>

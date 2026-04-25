@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>404 — wrbell.eng</title>
+  <title>404 — wrbell</title>
+  <meta name="robots" content="noindex">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/inter-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/fraunces-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
   <!-- SYNC: theme-detection script — identical copy in index.html -->
   <script>
     (function() {
@@ -24,6 +28,13 @@
       src: url('assets/fonts/inter-latin.v1.woff2') format('woff2');
     }
     @font-face {
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-weight: 400 900;
+      font-display: swap;
+      src: url('assets/fonts/fraunces-latin.v1.woff2') format('woff2');
+    }
+    @font-face {
       font-family: 'JetBrains Mono';
       font-style: normal;
       font-weight: 400 700;
@@ -32,127 +43,312 @@
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0a0a12;
-      --surface: #14141f;
-      --border: #1e1e2e;
-      --text: #e0e0e8;
-      --muted: #7878a0;
+      --bg: #0a0b0d;
+      --bg-2: #111316;
+      --surface: #15181c;
+      --border: #22262c;
+      --border-hi: #2d3239;
+      --text: #e8ecef;
+      --text-dim: #b4bac2;
+      --muted: #7a828c;
       --accent: #00e5a0;
-      --accent-dim: rgba(0, 229, 160, 0.1);
+      --accent-glow: rgba(0, 229, 160, 0.35);
       --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-      --radius: 6px;
-      --nav-height: 60px;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+      --font-display: 'Fraunces', 'Times New Roman', serif;
     }
     [data-theme="light"] {
-      --bg: #f5f5f8;
+      --bg: #f7f6f2;
+      --bg-2: #efeeea;
       --surface: #ffffff;
-      --border: #d8d8e0;
-      --text: #1a1a2e;
-      --muted: #5a5a78;
-      --accent: #00b880;
-      --accent-dim: rgba(0, 184, 128, 0.1);
+      --border: #d8d6cf;
+      --border-hi: #b8b5ab;
+      --text: #14161a;
+      --text-dim: #3a3e45;
+      --muted: #656b73;
+      --accent: #006e4a;
+      --accent-glow: rgba(0, 110, 74, 0.15);
     }
+    html, body { height: 100%; }
     body {
       font-family: var(--font-sans);
       color: var(--text);
-      background: radial-gradient(ellipse at 50% 0%, rgba(0, 229, 160, 0.03) 0%, var(--bg) 60%);
-      background-color: var(--bg);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      background: var(--bg);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
-    [data-theme="light"] body {
-      background: radial-gradient(ellipse at 50% 0%, rgba(0, 184, 128, 0.04) 0%, var(--bg) 60%);
-      background-color: var(--bg);
-    }
     a { color: inherit; text-decoration: none; }
-    nav {
-      height: var(--nav-height);
-      display: flex;
-      align-items: center;
-      padding: 0 2rem;
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 32px;
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo {
+    .logo {
       font-family: var(--font-mono);
-      font-size: 1.125rem;
-      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
     }
-    .accent { color: var(--accent); }
-    .content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    .logo .accent { color: var(--accent); }
+    .status {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .status .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent-glow);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-content: center;
+      padding: 48px 32px;
+    }
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 64px;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
     }
-    .code {
+    .eyebrow {
       font-family: var(--font-mono);
-      font-size: clamp(4rem, 15vw, 8rem);
-      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 40px; height: 1px;
+      background: var(--muted);
+    }
+    .eyebrow .accent { color: var(--accent); }
+
+    .headline {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(88px, 14vw, 180px);
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .headline .code {
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.14em;
       color: var(--accent);
+      padding: 6px 10px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      margin-top: 22px;
+      align-self: flex-start;
+      flex-shrink: 0;
       line-height: 1;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 0 60px rgba(0, 229, 160, 0.15);
     }
-    .subtitle {
-      font-family: var(--font-mono);
-      font-size: 1.125rem;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
+    .lede {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text-dim);
+      max-width: 52ch;
+      margin-bottom: 36px;
     }
-    .message {
-      font-family: var(--font-mono);
-      font-size: 0.875rem;
-      color: var(--muted);
-      margin-bottom: 2rem;
+
+    .cta-row {
+      display: flex; flex-wrap: wrap; gap: 12px;
     }
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.625rem 1.25rem;
+      gap: 10px;
+      padding: 13px 20px;
       font-family: var(--font-mono);
-      font-size: 0.8125rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
+      font-size: 12.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      border: 1px solid var(--border-hi);
       color: var(--text);
-      transition: border-color 0.2s, background 0.2s, color 0.2s;
+      transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s;
     }
     .btn:hover {
       border-color: var(--accent);
-      background: var(--accent-dim);
-      box-shadow: 0 0 15px rgba(0, 229, 160, 0.06);
+      color: var(--accent);
+      transform: translateY(-1px);
     }
-    .btn-primary {
+    .btn.primary {
       background: var(--accent);
       color: var(--bg);
       border-color: var(--accent);
       font-weight: 600;
     }
-    [data-theme="light"] .btn-primary {
-      color: var(--text);
-    }
-    .btn-primary:hover {
+    .btn.primary:hover {
       background: transparent;
       color: var(--accent);
+      box-shadow: 0 0 24px var(--accent-glow);
     }
-    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* Telemetry panel */
+    .telemetry {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg-2);
+      padding: 24px 26px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .telemetry-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+      border-bottom: 1px dashed var(--border-hi);
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 10.5px;
+    }
+    .telemetry-head .id { color: var(--accent); }
+    .telemetry-row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 12px;
+      padding: 6px 0;
+      color: var(--text-dim);
+    }
+    .telemetry-row dt {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 10.5px;
+      padding-top: 2px;
+    }
+    .telemetry-row dd {
+      color: var(--text);
+      margin: 0;
+    }
+    .telemetry-row dd .accent { color: var(--accent); }
+    .telemetry-trail {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border-hi);
+      color: var(--muted);
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    footer {
+      padding: 20px 32px;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex; justify-content: space-between;
+    }
+
+    @media (max-width: 780px) {
+      .topbar { padding: 16px 20px; }
+      main { padding: 32px 20px; }
+      .container { grid-template-columns: 1fr; gap: 36px; }
+      .headline { font-size: clamp(72px, 20vw, 120px); }
+      footer { padding: 16px 20px; flex-direction: column; gap: 6px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+    }
   </style>
 </head>
 <body>
-  <nav>
-    <a href="/" class="nav-logo">wrbell<span class="accent">.eng</span></a>
-  </nav>
-  <div class="content">
-    <h1 class="code">404</h1>
-    <p class="subtitle">Page not found</p>
-    <p class="message">This page doesn't exist — but the home page does.</p>
-    <a href="/" class="btn btn-primary">&larr; Back to Home</a>
-  </div>
+  <header class="topbar">
+    <a href="/" class="logo">wrbell<span class="accent">.eng</span></a>
+    <div class="status"><span class="dot"></span><span>Signal lost</span></div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div>
+        <div class="eyebrow"><span>Error <span class="accent">404</span></span><span>· Page not found</span></div>
+        <h1 class="headline">lost.<span class="code">[404]</span></h1>
+        <p class="lede">The URL you followed doesn't resolve — either the page moved, was renamed, or never existed. Nothing broken on your end.</p>
+        <div class="cta-row">
+          <a href="/" class="btn primary">← Back to home</a>
+          <a href="/#work" class="btn">Selected work</a>
+          <a href="mailto:wrbell@umich.edu" class="btn">Email me</a>
+        </div>
+      </div>
+
+      <aside class="telemetry" aria-label="Error telemetry">
+        <div class="telemetry-head">
+          <span>Telemetry</span>
+          <span class="id">FRAME_404</span>
+        </div>
+        <dl>
+          <div class="telemetry-row"><dt>Status</dt><dd><span class="accent">404</span> · Not Found</dd></div>
+          <div class="telemetry-row"><dt>Path</dt><dd id="vec-path">—</dd></div>
+          <div class="telemetry-row"><dt>Referrer</dt><dd id="vec-ref">direct</dd></div>
+          <div class="telemetry-row"><dt>Timestamp</dt><dd id="vec-ts">—</dd></div>
+          <div class="telemetry-row"><dt>Next step</dt><dd>Return to <a href="/" style="color:var(--accent);text-decoration:underline;text-underline-offset:2px">/</a></dd></div>
+        </dl>
+        <div class="telemetry-trail">End of trace ▮</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <span>© 2026 Willem Bell</span>
+    <span>wrbell.github.io</span>
+  </footer>
+
+  <script>
+    (function() {
+      var p = document.getElementById('vec-path');
+      if (p) {
+        var pathStr = location.pathname + (location.search || '');
+        if (pathStr.length > 60) pathStr = pathStr.slice(0, 28) + '…' + pathStr.slice(-28);
+        p.textContent = pathStr;
+      }
+      var r = document.getElementById('vec-ref');
+      if (r && document.referrer) {
+        try { r.textContent = new URL(document.referrer).hostname; } catch(e) {}
+      }
+      var t = document.getElementById('vec-ts');
+      if (t) {
+        var d = new Date();
+        t.textContent = d.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+      }
+    })();
+  </script>
 </body>
 </html>

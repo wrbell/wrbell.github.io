@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>w26 cobot axis — Willem Bell</title>
+  <meta name="description" content="W26 — designing the next axis of motion for a collaborative robot at the SpaceX Starfactory.">
+  <meta property="og:title" content="w26 cobot axis — case study">
+  <meta property="og:description" content="Cobot motion design at SpaceX Starfactory.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://wrbell.github.io/projects/w26-cobot-axis.html">
+  <meta property="og:image" content="https://wrbell.github.io/assets/og-card.png">
+  <meta name="theme-color" content="#0a0a12">
+  <link rel="canonical" href="https://wrbell.github.io/projects/w26-cobot-axis.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+  <script>
+    (function() {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+  <header class="chrome">
+    <div class="lights">
+      <a class="back" href="../#work" aria-label="Back to work index">← wrbell.eng</a>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt live" aria-hidden="true"></span>
+    </div>
+    <div class="path">
+      <span style="color:var(--muted-2)">~/wrbell.eng/</span><b>w26-cobot-axis.case.md</b>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <span class="clock" id="clock">— · — —:—</span>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle color theme">
+        <span id="theme-label">DARK</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="prompt"><b>$</b><span>cat ./projects/w26-cobot-axis/INTENT.md</span></div>
+
+    <div class="title-row">
+      <h1>w26 · <span class="em">cobot axis</span></h1>
+      <span class="badge"><span class="dot" aria-hidden="true"></span>Active · NDA</span>
+    </div>
+
+    <p class="tagline">
+      Designing the next <span class="accent">axis of motion</span> for a collaborative robot on the Starfactory floor — kinematics, integration, safety case.
+    </p>
+
+    <dl class="status" aria-label="Project metadata">
+      <div class="row"><dt class="k">Term</dt><dd class="v">W'26 internship</dd></div>
+      <div class="row"><dt class="k">Site</dt><dd class="v">SpaceX Starfactory</dd></div>
+      <div class="row"><dt class="k">Stack</dt><dd class="v">CAD · controls · safety</dd></div>
+      <div class="row"><dt class="k">Status</dt><dd class="v acc">In progress</dd></div>
+    </dl>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§01 · scope</span>
+      path<br>./scope.md
+      <span class="meta">redacted by intent. methodology stays.</span>
+    </div>
+    <div>
+      <h2>nda_redacted</h2>
+      <p><em>Placeholder.</em> Project specifics — geometry, payload envelope, cell layout, sensor stack — are covered by NDA. This page documents the <strong>methodology</strong> and the engineering posture, not the artifact.</p>
+      <p>If you're a recruiter or hiring manager and need the full story, reach out and we can talk under appropriate cover.</p>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§02 · approach</span>
+      path<br>./approach.md
+      <span class="meta">kinematics → integration → safety case.</span>
+    </div>
+    <div>
+      <h2>three_loops_in_parallel</h2>
+      <p><em>Placeholder.</em> The work runs three loops simultaneously: a <strong>kinematics</strong> loop pinning down reach, payload, and dynamics; an <strong>integration</strong> loop fitting the axis into an existing cell without breaking adjacent operations; a <strong>safety case</strong> loop closing risk-assessment line items so it actually goes live.</p>
+
+      <pre class="ascii" aria-label="Three concurrent design loops"><span class="c">┌────────────┐    ┌────────────┐    ┌────────────┐</span>
+<span class="c">│</span> <span class="a">kinematics</span> <span class="c">│</span>───▶<span class="c">│</span><span class="a">integration</span><span class="c">│</span>───▶<span class="c">│</span><span class="a">safety case</span><span class="c">│</span>
+<span class="c">│</span>  reach     <span class="c">│</span>    <span class="c">│</span>  cell fit  <span class="c">│</span>    <span class="c">│</span>  RA close  <span class="c">│</span>
+<span class="c">│</span>  payload   <span class="c">│</span>    <span class="c">│</span>  adjacent  <span class="c">│</span>    <span class="c">│</span>  go-live   <span class="c">│</span>
+<span class="c">└────────────┘</span>    <span class="c">└────────────┘</span>    <span class="c">└────────────┘</span>
+        ▲                                       │
+        └───────────────────────────────────────┘
+                     iterate</pre>
+
+      <div class="listing" role="list" aria-label="Methods">
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">CAD · CATIA / NX</span><span class="desc">geometry, fit, packaging</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Robot kinematics</span><span class="desc">workspace, singularity check</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Controls integration</span><span class="desc">cell PLC handshake</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Safety analysis</span><span class="desc">ISO/TS 15066 awareness</span><span class="ver">v.dep</span></div>
+      </div>
+
+      <div class="shot" role="img" aria-label="Cell layout sketch — redacted">
+        <span class="placeholder-tag">redacted · cell layout</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§03 · stance</span>
+      path<br>./STANCE.md
+      <span class="meta">how i&apos;m showing up to it.</span>
+    </div>
+    <div>
+      <h2>posture</h2>
+      <ol class="commits">
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>Move at factory cadence.</h3>
+          <p><em>Placeholder.</em> Decisions tied to a real cell on a real factory floor. Get to a defensible answer fast, then iterate. Perfect later.</p>
+        </li>
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>Cobot ≠ robot.</h3>
+          <p><em>Placeholder.</em> Collaborative motion lives or dies on the safety case. Treating it as a kinematics-only problem is the failure mode I&apos;m most watching for.</p>
+        </li>
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>Document the why.</h3>
+          <p><em>Placeholder.</em> Every decision lands in the project log with the alternative considered and the reason it lost. Future-me and future-team need the trail.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§04 · status</span>
+      path<br>./STATE.md
+      <span class="meta">in progress. write-up after.</span>
+    </div>
+    <div>
+      <h2>state_of_play</h2>
+      <p><em>Placeholder.</em> Project is active through Winter '26. A redacted post-mortem will land here once the term closes and approvals clear.</p>
+    </div>
+  </section>
+
+  <section class="nx-wrap">
+    <div class="nx-head">// up <b>next</b></div>
+    <div class="nx-grid">
+      <a class="nx-card" href="./stark-translate.html">
+        <div class="k">F'25 · SpaceX</div>
+        <h3>Stark-Translate →</h3>
+        <p>Mass timing-belt rig analysis. Belts → screws.</p>
+      </a>
+      <a class="nx-card" href="./me440-vibrations.html">
+        <div class="k">ME 440 · W'26</div>
+        <h3>Vibrations final →</h3>
+        <p>MATLAB forced-response solver. Closed-form benchmarks.</p>
+      </a>
+    </div>
+  </section>
+
+  <footer class="ftr">
+    <span>© 2026 wrbell · <a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a></span>
+    <span>NDA · methodology only</span>
+    <span>END OF FILE</span>
+  </footer>
+
+  <script>
+    (function() {
+      var el = document.getElementById('clock');
+      function tick() {
+        var d = new Date();
+        var days = ['sun','mon','tue','wed','thu','fri','sat'];
+        var hh = String(d.getHours()).padStart(2, '0');
+        var mm = String(d.getMinutes()).padStart(2, '0');
+        el.textContent = 'live · ' + days[d.getDay()] + ' ' + hh + ':' + mm;
+      }
+      tick(); setInterval(tick, 30 * 1000);
+    })();
+    (function() {
+      var btn = document.getElementById('theme-toggle');
+      var lbl = document.getElementById('theme-label');
+      function sync() {
+        var t = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        lbl.textContent = t === 'light' ? 'LIGHT' : 'DARK';
+      }
+      sync();
+      btn.addEventListener('click', function() {
+        var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        var next = cur === 'light' ? 'dark' : 'light';
+        if (next === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        else document.documentElement.removeAttribute('data-theme');
+        try { localStorage.setItem('theme', next); } catch(e) {}
+        sync();
+      });
+    })();
+  </script>
+
+</body>
+</html>
