@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>fast-fem — Willem Bell</title>
+  <meta name="description" content="fast-fem — accelerated FEA self-study. Every ANSYS sim validated against analytic hand calculations.">
+  <meta property="og:title" content="fast-fem — case study">
+  <meta property="og:description" content="ANSYS × analytic parity lab. Every simulation validated.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://wrbell.github.io/projects/fast-fem.html">
+  <meta property="og:image" content="https://wrbell.github.io/assets/og-card.png">
+  <meta name="theme-color" content="#0a0a12">
+  <link rel="canonical" href="https://wrbell.github.io/projects/fast-fem.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+  <script>
+    (function() {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+  <header class="chrome">
+    <div class="lights">
+      <a class="back" href="../#work" aria-label="Back to work index">← wrbell.eng</a>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt live" aria-hidden="true"></span>
+    </div>
+    <div class="path">
+      <span style="color:var(--muted-2)">~/wrbell.eng/</span><b>fast-fem.case.md</b>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <span class="clock" id="clock">— · — —:—</span>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle color theme">
+        <span id="theme-label">DARK</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="prompt"><b>$</b><span>cat ./projects/fast-fem/INTENT.md</span></div>
+
+    <div class="title-row">
+      <h1>fast-<span class="em">fem</span></h1>
+      <span class="badge"><span class="dot" aria-hidden="true"></span>Archived · self-study</span>
+    </div>
+
+    <p class="tagline">
+      Accelerated FEA self-study across three concurrent ME courses. Every ANSYS simulation <span class="accent">validated</span> against an analytic hand calculation before it counted.
+    </p>
+
+    <dl class="status" aria-label="Project metadata">
+      <div class="row"><dt class="k">Term</dt><dd class="v">2024 – 2025</dd></div>
+      <div class="row"><dt class="k">Stack</dt><dd class="v">ANSYS · Python</dd></div>
+      <div class="row"><dt class="k">Sims run</dt><dd class="v">~placeholder</dd></div>
+      <div class="row"><dt class="k">Status</dt><dd class="v acc">Archived</dd></div>
+    </dl>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§01 · problem</span>
+      path<br>./problem.md
+      <span class="meta">FEA without intuition is just colorful guessing.</span>
+    </div>
+    <div>
+      <h2>three_courses_one_solver</h2>
+      <p><em>Placeholder.</em> Three concurrent ME courses leaned on the same FEA toolchain, each from a different angle: stress and stiffness, dynamics, heat transfer. Doing the homework was straightforward. <strong>Trusting the answer</strong> meant working out the analytic solution first and treating the simulation as a check.</p>
+      <p>Goal: build the muscle to predict, within a factor, what a sim should report — and to know when the sim is wrong.</p>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§02 · architecture</span>
+      path<br>./parity-lab/
+      <span class="meta">analytic first. then ansys. then mesh study.</span>
+    </div>
+    <div>
+      <h2>analytic_parity_loop</h2>
+      <p><em>Placeholder.</em> Each problem ran the same loop: derive the closed-form (or quasi-closed-form) result, predict the answer, then build the ANSYS model and run a mesh-convergence study until the answer settled. Disagreements got a post-mortem.</p>
+
+      <pre class="ascii" aria-label="fast-fem parity loop diagram"><span class="c">┌──────────────┐    ┌──────────────┐    ┌────────────────┐    ┌────────────┐</span>
+<span class="c">│</span> <span class="a">analytic</span>     <span class="c">│</span>───▶<span class="c">│</span>  <span class="a">ansys sim</span>   <span class="c">│</span>───▶<span class="c">│</span> <span class="a">mesh study</span>     <span class="c">│</span>───▶<span class="c">│</span> <span class="a">postmortem</span><span class="c">│</span>
+<span class="c">│</span> hand-calc    <span class="c">│</span>    <span class="c">│</span>  workbench   <span class="c">│</span>    <span class="c">│</span>  conv plot     <span class="c">│</span>    <span class="c">│</span>  if Δ &gt;1% <span class="c">│</span>
+<span class="c">└──────────────┘</span>    <span class="c">└──────────────┘</span>    <span class="c">└────────────────┘</span>    <span class="c">└────────────┘</span></pre>
+
+      <div class="listing" role="list" aria-label="Stack">
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">ANSYS Workbench</span><span class="desc">primary FEA solver</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Python · NumPy</span><span class="desc">analytic checks · post-processing</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Jupyter</span><span class="desc">notebook log per problem</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">matplotlib</span><span class="desc">convergence plots, parity charts</span><span class="ver">v.dep</span></div>
+      </div>
+
+      <div class="shot" role="img" aria-label="Mesh convergence plot — to come">
+        <span class="placeholder-tag">plot · mesh convergence</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§03 · decisions</span>
+      path<br>./CHANGELOG.md
+      <span class="meta">picked → rejected. each line is a deliberate trade.</span>
+    </div>
+    <div>
+      <h2>tradeoffs_actually_made</h2>
+      <ol class="commits">
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>Analytic first. Always.</h3>
+          <p><em>Placeholder.</em> No simulation result was treated as authoritative without a hand calculation that bracketed it. Slower, but the workflow stops generating colorful nonsense.</p>
+        </li>
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>Mesh-convergence per problem, not per course.</h3>
+          <p><em>Placeholder.</em> Every problem got its own convergence study, even when reusing geometry. A converged mesh for static stress is not a converged mesh for vibration modes.</p>
+        </li>
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>One notebook per problem.</h3>
+          <p><em>Placeholder.</em> Notebooks captured the analytic derivation, the input file, the convergence plot, and a written post-mortem. Reproducible and skimmable months later.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§04 · outcome</span>
+      path<br>./STATE.md
+      <span class="meta">closed out. methodology stays.</span>
+    </div>
+    <div>
+      <h2>what_it_does_now</h2>
+      <p><em>Placeholder.</em> The repository is archived but the workflow stuck. New simulations — at work, at school, anywhere — still get an analytic check before the result is trusted.</p>
+    </div>
+  </section>
+
+  <section class="nx-wrap">
+    <div class="nx-head">// up <b>next</b></div>
+    <div class="nx-grid">
+      <a class="nx-card" href="./me440-vibrations.html">
+        <div class="k">ME 440 · Winter 2026</div>
+        <h3>Vibrations final →</h3>
+        <p>MATLAB forced-response solver. Closed-form benchmarks.</p>
+      </a>
+      <a class="nx-card" href="./me379-fluids-lab.html">
+        <div class="k">ME 379 · Fluids Lab</div>
+        <h3>Fluids Lab →</h3>
+        <p>Experimental fluid mechanics. Pipe flow, drag, DAQ.</p>
+      </a>
+    </div>
+  </section>
+
+  <footer class="ftr">
+    <span>© 2026 wrbell · <a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a></span>
+    <span><a href="https://github.com/wrbell/fast-fem" target="_blank" rel="noopener noreferrer">github ↗</a></span>
+    <span>END OF FILE</span>
+  </footer>
+
+  <script>
+    (function() {
+      var el = document.getElementById('clock');
+      function tick() {
+        var d = new Date();
+        var days = ['sun','mon','tue','wed','thu','fri','sat'];
+        var hh = String(d.getHours()).padStart(2, '0');
+        var mm = String(d.getMinutes()).padStart(2, '0');
+        el.textContent = 'live · ' + days[d.getDay()] + ' ' + hh + ':' + mm;
+      }
+      tick(); setInterval(tick, 30 * 1000);
+    })();
+    (function() {
+      var btn = document.getElementById('theme-toggle');
+      var lbl = document.getElementById('theme-label');
+      function sync() {
+        var t = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        lbl.textContent = t === 'light' ? 'LIGHT' : 'DARK';
+      }
+      sync();
+      btn.addEventListener('click', function() {
+        var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        var next = cur === 'light' ? 'dark' : 'light';
+        if (next === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        else document.documentElement.removeAttribute('data-theme');
+        try { localStorage.setItem('theme', next); } catch(e) {}
+        sync();
+      });
+    })();
+  </script>
+
+</body>
+</html>

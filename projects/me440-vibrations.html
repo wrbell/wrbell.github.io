@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ME 440 vibrations final — Willem Bell</title>
+  <meta name="description" content="ME 440 — MATLAB forced-response solver for damped MDOF systems, validated against closed-form benchmarks.">
+  <meta property="og:title" content="ME 440 vibrations final — case study">
+  <meta property="og:description" content="MATLAB forced-response solver. Closed-form benchmarks.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://wrbell.github.io/projects/me440-vibrations.html">
+  <meta property="og:image" content="https://wrbell.github.io/assets/og-card.png">
+  <meta name="theme-color" content="#0a0a12">
+  <link rel="canonical" href="https://wrbell.github.io/projects/me440-vibrations.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+  <script>
+    (function() {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+  <header class="chrome">
+    <div class="lights">
+      <a class="back" href="../#work" aria-label="Back to work index">← wrbell.eng</a>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt live" aria-hidden="true"></span>
+    </div>
+    <div class="path">
+      <span style="color:var(--muted-2)">~/wrbell.eng/</span><b>me440-vibrations.case.md</b>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <span class="clock" id="clock">— · — —:—</span>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle color theme">
+        <span id="theme-label">DARK</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="prompt"><b>$</b><span>cat ./projects/me440-vibrations/INTENT.md</span></div>
+
+    <div class="title-row">
+      <h1>me440 · <span class="em">vibrations final</span></h1>
+      <span class="badge"><span class="dot" aria-hidden="true"></span>Active · W&apos;26</span>
+    </div>
+
+    <p class="tagline">
+      A general-purpose <span class="accent">forced-response solver</span> for damped MDOF systems in MATLAB, validated against closed-form benchmarks before it gets used in anger.
+    </p>
+
+    <dl class="status" aria-label="Project metadata">
+      <div class="row"><dt class="k">Course</dt><dd class="v">ME 440 · Winter 2026</dd></div>
+      <div class="row"><dt class="k">Stack</dt><dd class="v">MATLAB</dd></div>
+      <div class="row"><dt class="k">Scope</dt><dd class="v">MDOF · forced response</dd></div>
+      <div class="row"><dt class="k">Status</dt><dd class="v acc">In progress</dd></div>
+    </dl>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§01 · problem</span>
+      path<br>./problem.md
+      <span class="meta">closed-form is fine. until it isn&apos;t.</span>
+    </div>
+    <div>
+      <h2>past_two_dof</h2>
+      <p><em>Placeholder.</em> Closed-form forced-response is tractable for one or two degrees of freedom. Past that — anything resembling a real system — the algebra gets unmanageable and the intuition leaves with it. The final project is to build a numerical solver that handles the general case while staying honest with the textbook.</p>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§02 · approach</span>
+      path<br>./solver/
+      <span class="meta">modal decomposition. then a benchmark gauntlet.</span>
+    </div>
+    <div>
+      <h2>solver_then_benchmarks</h2>
+      <p><em>Placeholder.</em> Approach: assemble M, C, K matrices, solve the eigenproblem, decouple via modal decomposition, integrate each modal coordinate under arbitrary forcing, recombine. Then validate the whole pipeline against closed-form cases — single-DOF harmonic, two-DOF beating, undamped vs. proportionally damped — before trusting it on anything novel.</p>
+
+      <pre class="ascii" aria-label="Solver pipeline"><span class="c">┌─────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐</span>
+<span class="c">│</span> <span class="a">assemble</span>    <span class="c">│</span>───▶<span class="c">│</span> <span class="a">eigen +</span>      <span class="c">│</span>───▶<span class="c">│</span> <span class="a">modal</span>        <span class="c">│</span>───▶<span class="c">│</span> <span class="a">recombine</span>    <span class="c">│</span>
+<span class="c">│</span> M, C, K     <span class="c">│</span>    <span class="c">│</span> normalize    <span class="c">│</span>    <span class="c">│</span> integrate    <span class="c">│</span>    <span class="c">│</span> physical x   <span class="c">│</span>
+<span class="c">└─────────────┘</span>    <span class="c">└──────────────┘</span>    <span class="c">└──────────────┘</span>    <span class="c">└──────────────┘</span>
+                              │
+                              ▼
+                       <span class="c">┌──────────────┐</span>
+                       <span class="c">│</span> <span class="a">benchmarks</span>   <span class="c">│</span>
+                       <span class="c">│</span> 1-DOF, 2-DOF <span class="c">│</span>
+                       <span class="c">│</span> proportional <span class="c">│</span>
+                       <span class="c">└──────────────┘</span></pre>
+
+      <div class="listing" role="list" aria-label="Stack">
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">MATLAB</span><span class="desc">solver, post-processing, plotting</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Modal decomposition</span><span class="desc">eigenproblem · normalize · decouple</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">ode45 · Newmark-β</span><span class="desc">integration choices, accuracy vs. cost</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Benchmark suite</span><span class="desc">closed-form parity tests</span><span class="ver">v.dep</span></div>
+      </div>
+
+      <div class="shot" role="img" aria-label="Forced-response plot — to come">
+        <span class="placeholder-tag">plot · forced response</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§03 · decisions</span>
+      path<br>./CHANGELOG.md
+      <span class="meta">picked → rejected. each line is a deliberate trade.</span>
+    </div>
+    <div>
+      <h2>tradeoffs_actually_made</h2>
+      <ol class="commits">
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>Modal decomposition over direct integration.</h3>
+          <p><em>Placeholder.</em> Decoupling first lets each modal coordinate use the cheapest stable integrator that still resolves it. Direct integration of the full system would be simpler to write and worse to trust.</p>
+        </li>
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>Benchmarks gate every commit.</h3>
+          <p><em>Placeholder.</em> The single-DOF harmonic and two-DOF beating cases are the regression suite. If a refactor breaks them, the refactor is wrong.</p>
+        </li>
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>Plot the answer before reading the number.</h3>
+          <p><em>Placeholder.</em> A response that looks wrong on a plot is wrong. Numbers can be wrong without looking it; plots usually can&apos;t.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§04 · state</span>
+      path<br>./STATE.md
+      <span class="meta">in progress · final due W&apos;26.</span>
+    </div>
+    <div>
+      <h2>where_it_is</h2>
+      <p><em>Placeholder.</em> In progress through Winter 2026. Final write-up — solver, benchmarks, novel application — lands here when the project closes out.</p>
+    </div>
+  </section>
+
+  <section class="nx-wrap">
+    <div class="nx-head">// up <b>next</b></div>
+    <div class="nx-grid">
+      <a class="nx-card" href="./fast-fem.html">
+        <div class="k">2024 – 2025</div>
+        <h3>fast-fem →</h3>
+        <p>ANSYS × analytic parity lab. Every sim validated.</p>
+      </a>
+      <a class="nx-card" href="./stark-translate.html">
+        <div class="k">F'25 · SpaceX</div>
+        <h3>Stark-Translate →</h3>
+        <p>Mass timing-belt rig analysis. Belts → screws.</p>
+      </a>
+    </div>
+  </section>
+
+  <footer class="ftr">
+    <span>© 2026 wrbell · <a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a></span>
+    <span>ME 440 · Winter 2026</span>
+    <span>END OF FILE</span>
+  </footer>
+
+  <script>
+    (function() {
+      var el = document.getElementById('clock');
+      function tick() {
+        var d = new Date();
+        var days = ['sun','mon','tue','wed','thu','fri','sat'];
+        var hh = String(d.getHours()).padStart(2, '0');
+        var mm = String(d.getMinutes()).padStart(2, '0');
+        el.textContent = 'live · ' + days[d.getDay()] + ' ' + hh + ':' + mm;
+      }
+      tick(); setInterval(tick, 30 * 1000);
+    })();
+    (function() {
+      var btn = document.getElementById('theme-toggle');
+      var lbl = document.getElementById('theme-label');
+      function sync() {
+        var t = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        lbl.textContent = t === 'light' ? 'LIGHT' : 'DARK';
+      }
+      sync();
+      btn.addEventListener('click', function() {
+        var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        var next = cur === 'light' ? 'dark' : 'light';
+        if (next === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        else document.documentElement.removeAttribute('data-theme');
+        try { localStorage.setItem('theme', next); } catch(e) {}
+        sync();
+      });
+    })();
+  </script>
+
+</body>
+</html>

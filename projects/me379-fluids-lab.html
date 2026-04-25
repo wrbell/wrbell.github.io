@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ME 379 fluids lab — Willem Bell</title>
+  <meta name="description" content="ME 379 — experimental fluid mechanics lab sequence. Pipe flow, drag, pressure measurement, instrumented experiments.">
+  <meta property="og:title" content="ME 379 fluids lab — case study">
+  <meta property="og:description" content="Experimental fluid mechanics. Pipe flow, drag, DAQ.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://wrbell.github.io/projects/me379-fluids-lab.html">
+  <meta property="og:image" content="https://wrbell.github.io/assets/og-card.png">
+  <meta name="theme-color" content="#0a0a12">
+  <link rel="canonical" href="https://wrbell.github.io/projects/me379-fluids-lab.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+  <script>
+    (function() {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+  <header class="chrome">
+    <div class="lights">
+      <a class="back" href="../#work" aria-label="Back to work index">← wrbell.eng</a>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt live" aria-hidden="true"></span>
+    </div>
+    <div class="path">
+      <span style="color:var(--muted-2)">~/wrbell.eng/</span><b>me379-fluids-lab.case.md</b>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <span class="clock" id="clock">— · — —:—</span>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle color theme">
+        <span id="theme-label">DARK</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="prompt"><b>$</b><span>cat ./projects/me379-fluids-lab/INTENT.md</span></div>
+
+    <div class="title-row">
+      <h1>me379 · <span class="em">fluids lab</span></h1>
+      <span class="badge"><span class="dot" aria-hidden="true"></span>In course · placeholder term</span>
+    </div>
+
+    <p class="tagline">
+      Experimental fluid mechanics — pipe flow, drag, pressure measurement, instrumented experiments. Theory <span class="accent">meets the test stand</span>.
+    </p>
+
+    <dl class="status" aria-label="Project metadata">
+      <div class="row"><dt class="k">Course</dt><dd class="v">ME 379</dd></div>
+      <div class="row"><dt class="k">Term</dt><dd class="v">placeholder</dd></div>
+      <div class="row"><dt class="k">Stack</dt><dd class="v">DAQ · Python · LaTeX</dd></div>
+      <div class="row"><dt class="k">Status</dt><dd class="v acc">In course</dd></div>
+    </dl>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§01 · scope</span>
+      path<br>./scope.md
+      <span class="meta">theory + bench. closing the loop.</span>
+    </div>
+    <div>
+      <h2>theory_to_bench</h2>
+      <p><em>Placeholder.</em> Lab sequence pairs the fluids-class theory with a working test stand each week. Goal: build the muscle to design an experiment, take honest data, reduce it, and write up the disagreement when reality argues with the textbook.</p>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§02 · experiments</span>
+      path<br>./experiments/
+      <span class="meta">pipe flow → drag → pressure → DAQ.</span>
+    </div>
+    <div>
+      <h2>the_lab_sequence</h2>
+      <p><em>Placeholder.</em> Topic arc covers internal pipe flow (friction factor, transition), external aerodynamics (drag on bluff bodies), pressure measurement (manometers, transducers, calibration), and instrumented experiments through a DAQ pipeline.</p>
+
+      <pre class="ascii" aria-label="Lab arc"><span class="c">┌────────────┐    ┌────────────┐    ┌──────────────┐    ┌────────────┐</span>
+<span class="c">│</span> <span class="a">pipe flow</span>  <span class="c">│</span>───▶<span class="c">│</span> <span class="a">drag</span>       <span class="c">│</span>───▶<span class="c">│</span> <span class="a">pressure</span>     <span class="c">│</span>───▶<span class="c">│</span> <span class="a">DAQ</span>        <span class="c">│</span>
+<span class="c">│</span> friction   <span class="c">│</span>    <span class="c">│</span> bluff body <span class="c">│</span>    <span class="c">│</span> calibration  <span class="c">│</span>    <span class="c">│</span> reduction  <span class="c">│</span>
+<span class="c">│</span> transition <span class="c">│</span>    <span class="c">│</span> coefficient<span class="c">│</span>    <span class="c">│</span> uncertainty  <span class="c">│</span>    <span class="c">│</span> writeup    <span class="c">│</span>
+<span class="c">└────────────┘</span>    <span class="c">└────────────┘</span>    <span class="c">└──────────────┘</span>    <span class="c">└────────────┘</span></pre>
+
+      <div class="listing" role="list" aria-label="Stack">
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">DAQ hardware</span><span class="desc">transducers, pitot, manometers</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Python · NumPy · pandas</span><span class="desc">data reduction, fitting</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">matplotlib</span><span class="desc">log-log fits, residual plots</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">LaTeX</span><span class="desc">lab reports, error propagation</span><span class="ver">v.dep</span></div>
+      </div>
+
+      <div class="shot" role="img" aria-label="Friction-factor plot — to come">
+        <span class="placeholder-tag">plot · friction factor vs. Re</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§03 · stance</span>
+      path<br>./STANCE.md
+      <span class="meta">honest data &gt; clean plots.</span>
+    </div>
+    <div>
+      <h2>how_i_run_a_lab</h2>
+      <ol class="commits">
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>Predict before measuring.</h3>
+          <p><em>Placeholder.</em> Hand-calc the expected result before turning on the rig. A measurement that surprises me is interesting; a measurement that surprises me without a prediction is noise.</p>
+        </li>
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>Uncertainty is non-optional.</h3>
+          <p><em>Placeholder.</em> Every reported number gets an uncertainty band. Plots without error bars are decoration.</p>
+        </li>
+        <li>
+          <div class="sha">— · placeholder</div>
+          <h3>Disagreement is the deliverable.</h3>
+          <p><em>Placeholder.</em> When data disagrees with theory, the report is about <em>why</em> — not about hiding it. Reynolds-number range, calibration drift, geometry assumptions: that&apos;s the writeup.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§04 · state</span>
+      path<br>./STATE.md
+      <span class="meta">in course. writeups land as labs close.</span>
+    </div>
+    <div>
+      <h2>where_it_is</h2>
+      <p><em>Placeholder.</em> Course in progress. Reduced data, plots, and writeups will land here as each lab closes.</p>
+    </div>
+  </section>
+
+  <section class="nx-wrap">
+    <div class="nx-head">// up <b>next</b></div>
+    <div class="nx-grid">
+      <a class="nx-card" href="./fast-fem.html">
+        <div class="k">2024 – 2025</div>
+        <h3>fast-fem →</h3>
+        <p>ANSYS × analytic parity lab. Every sim validated.</p>
+      </a>
+      <a class="nx-card" href="./me440-vibrations.html">
+        <div class="k">ME 440 · W'26</div>
+        <h3>Vibrations final →</h3>
+        <p>MATLAB forced-response solver. Closed-form benchmarks.</p>
+      </a>
+    </div>
+  </section>
+
+  <footer class="ftr">
+    <span>© 2026 wrbell · <a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a></span>
+    <span>ME 379 · fluids lab</span>
+    <span>END OF FILE</span>
+  </footer>
+
+  <script>
+    (function() {
+      var el = document.getElementById('clock');
+      function tick() {
+        var d = new Date();
+        var days = ['sun','mon','tue','wed','thu','fri','sat'];
+        var hh = String(d.getHours()).padStart(2, '0');
+        var mm = String(d.getMinutes()).padStart(2, '0');
+        el.textContent = 'live · ' + days[d.getDay()] + ' ' + hh + ':' + mm;
+      }
+      tick(); setInterval(tick, 30 * 1000);
+    })();
+    (function() {
+      var btn = document.getElementById('theme-toggle');
+      var lbl = document.getElementById('theme-label');
+      function sync() {
+        var t = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        lbl.textContent = t === 'light' ? 'LIGHT' : 'DARK';
+      }
+      sync();
+      btn.addEventListener('click', function() {
+        var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        var next = cur === 'light' ? 'dark' : 'light';
+        if (next === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        else document.documentElement.removeAttribute('data-theme');
+        try { localStorage.setItem('theme', next); } catch(e) {}
+        sync();
+      });
+    })();
+  </script>
+
+</body>
+</html>

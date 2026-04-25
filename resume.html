@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Willem Bell — Resume</title>
+  <meta name="description" content="Willem Bell — ME + CS, UM-Dearborn. Resume (printable).">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url('assets/fonts/inter-latin.v1.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-weight: 400 900;
+      font-display: swap;
+      src: url('assets/fonts/fraunces-latin.v1.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url('assets/fonts/jetbrains-mono-latin.v1.woff2') format('woff2');
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0e1114;
+      --ink-dim: #3a3e45;
+      --muted: #6b6f77;
+      --line: #d8d6cf;
+      --line-hi: #a8a69d;
+      --accent: #006e4a;
+      --paper: #ffffff;
+      --paper-2: #fafaf7;
+
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+      --font-display: 'Fraunces', 'Times New Roman', serif;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--ink);
+      background: #eeeee8;
+      padding: 32px 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 8.5in;
+      min-height: 11in;
+      background: var(--paper);
+      padding: 0.55in 0.6in 0.5in;
+      font-size: 10pt;
+      line-height: 1.45;
+      color: var(--ink-dim);
+      box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    strong { color: var(--ink); font-weight: 600; }
+    em { font-family: var(--font-display); font-style: italic; color: var(--ink); font-weight: 400; }
+
+    /* === Header === */
+    .header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 1.5px solid var(--ink);
+    }
+    .name {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 44pt;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .name .dot { color: var(--accent); }
+    .tagline {
+      font-family: var(--font-mono);
+      font-size: 9pt;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .tagline .accent { color: var(--accent); }
+
+    .contact {
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      line-height: 1.7;
+      color: var(--ink-dim);
+      text-align: right;
+    }
+    .contact a { border-bottom: 1px dotted var(--line-hi); }
+    .contact .accent { color: var(--accent); }
+
+    /* === Section === */
+    .section {
+      margin-bottom: 18px;
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 14px;
+      align-items: baseline;
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--line);
+    }
+    .section-num {
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .section-num .accent { color: var(--accent); }
+    .section-title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 18pt;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    /* === Entries === */
+    .entry {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 14px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    .entry:last-child { border-bottom: none; }
+    .entry-when {
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .entry-when .loc {
+      display: block;
+      color: var(--ink-dim);
+      text-transform: none;
+      letter-spacing: 0;
+      margin-top: 2px;
+      font-size: 8pt;
+    }
+    .entry-body h3 {
+      font-family: var(--font-sans);
+      font-size: 11pt;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .entry-body .role {
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      color: var(--muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+    .entry-body .role .accent { color: var(--accent); }
+    .entry-body ul {
+      list-style: none;
+      padding: 0;
+    }
+    .entry-body li {
+      position: relative;
+      padding-left: 14px;
+      margin-bottom: 3px;
+    }
+    .entry-body li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--line-hi);
+    }
+    .entry-body li.nda {
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .entry-body li.nda::before { content: '▮'; color: var(--accent); }
+
+    /* === Stack === */
+    .stack {
+      display: grid;
+      grid-template-columns: 110px 1fr 1fr 1fr;
+      gap: 14px;
+      padding-top: 4px;
+    }
+    .stack-col h4 {
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--line);
+    }
+    .stack-col ul { list-style: none; font-size: 9pt; line-height: 1.6; }
+    .stack-col li { color: var(--ink); }
+    .stack-col li .lvl {
+      font-family: var(--font-mono);
+      font-size: 7.5pt;
+      color: var(--muted);
+      margin-left: 4px;
+    }
+
+    /* === Education & Projects === */
+    .project {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 14px;
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    .project:last-child { border-bottom: none; }
+    .project .lane {
+      font-family: var(--font-mono);
+      font-size: 8.5pt;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .project h3 {
+      font-family: var(--font-sans);
+      font-size: 10.5pt;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .project h3 .url {
+      font-family: var(--font-mono);
+      font-size: 8pt;
+      font-weight: 400;
+      color: var(--accent);
+      margin-left: 8px;
+      letter-spacing: 0.04em;
+    }
+    .project p {
+      font-size: 9pt;
+      color: var(--ink-dim);
+    }
+
+    /* === Footer === */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      font-family: var(--font-mono);
+      font-size: 7.5pt;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* === Print controls === */
+    .print-bar {
+      position: fixed;
+      top: 20px; right: 20px;
+      display: flex; gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      z-index: 10;
+    }
+    .print-bar a, .print-bar button {
+      padding: 8px 14px;
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid var(--line-hi);
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .print-bar a:hover, .print-bar button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* === Print styles === */
+    @media print {
+      @page { size: letter; margin: 0.4in 0.45in; }
+      body {
+        background: white;
+        padding: 0;
+      }
+      .page {
+        box-shadow: none;
+        width: 100%;
+        min-height: auto;
+        padding: 0;
+      }
+      .print-bar { display: none; }
+      a { color: inherit; }
+      /* tighten a little for print */
+      .section { margin-bottom: 14px; }
+      .entry { padding: 6px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="print-bar">
+    <a href="/">← Site</a>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </nav>
+
+  <main class="page">
+
+    <header class="header">
+      <div>
+        <h1 class="name">Willem Bell<span class="dot">.</span></h1>
+        <div class="tagline">Mechanical Engineer <span class="accent">×</span> Software · ME + CS, UM‑Dearborn (Dec 2026)</div>
+      </div>
+      <div class="contact">
+        <div><a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a></div>
+        <div><a href="https://wrbell.github.io" target="_blank" rel="noopener">wrbell.github.io</a></div>
+        <div><a href="https://github.com/wrbell" target="_blank" rel="noopener">github.com/wrbell</a></div>
+        <div><a href="https://linkedin.com/in/willembell" target="_blank" rel="noopener">linkedin.com/in/willembell</a></div>
+        <div>Dearborn, MI · <span class="accent">he/him</span></div>
+      </div>
+    </header>
+
+    <!-- Education -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-num">§<span class="accent">01</span> · Education</span>
+        <h2 class="section-title">School.</h2>
+      </div>
+      <div class="entry">
+        <div class="entry-when">Sep 2022 – Dec 2026<span class="loc">Dearborn, MI</span></div>
+        <div class="entry-body">
+          <h3>University of Michigan — Dearborn</h3>
+          <div class="role"><span class="accent">BSE</span> Mechanical Engineering + CS minor</div>
+          <ul>
+            <li>Accelerated coursework across controls, FEA, manufacturing processes, and software systems.</li>
+            <li>Relevant: Dynamic Systems &amp; Controls, FEA (ANSYS), Manufacturing Processes, Data Structures, ML.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-num">§<span class="accent">02</span> · Experience</span>
+        <h2 class="section-title">Where I've <em>shown up</em>.</h2>
+      </div>
+
+      <div class="entry">
+        <div class="entry-when">Jan – Jul 2025<span class="loc">Starbase, TX</span></div>
+        <div class="entry-body">
+          <h3>SpaceX — Starfactory</h3>
+          <div class="role">Automation &amp; Controls Intern <span class="accent">· Siemens S7 · S120 · KUKA · EPLAN · NX</span></div>
+          <ul>
+            <li>Owned controls design, FAT, and commissioning across multiple Starfactory stations on the Starship production line.</li>
+            <li class="nda">Specific station scopes and outcomes redacted under NDA.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-when">May – Aug 2024<span class="loc">Redmond, WA</span></div>
+        <div class="entry-body">
+          <h3>SpaceX — Space Lasers</h3>
+          <div class="role">I&amp;T Intern <span class="accent">· NX · ANSYS · vibration test</span></div>
+          <ul>
+            <li>NX &amp; ANSYS — vibration analysis and test for space laser integration &amp; test campaigns.</li>
+            <li>Coordinated lab build, fixturing, and test readiness across I&amp;T and structures.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-when">Sep 2023 – Apr 2024<span class="loc">Austin, TX</span></div>
+        <div class="entry-body">
+          <h3>Tesla — 4680 Cell Manufacturing</h3>
+          <div class="role">Controls Development Intern <span class="accent">· DeltaV · TwinCAT · VFD</span></div>
+          <ul>
+            <li>Controls development for 4680 cell manufacturing — hands-on DeltaV, TwinCAT, and VFD work.</li>
+            <li class="nda">Specific station scopes and outcomes redacted under NDA.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-when">Jul 2021 – Present<span class="loc">UM-Dearborn</span></div>
+        <div class="entry-body">
+          <h3>Pannier Research Lab — Dynamic Systems &amp; Controls</h3>
+          <div class="role">Undergraduate Researcher → Research Assistant</div>
+          <ul>
+            <li>Multi-stint appointment (2021–23, 2024–25, 2025–present) supporting Dr. Pannier's controls research.</li>
+            <li class="nda">Project details available on request.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-when">2023 – 2025</div>
+        <div class="entry-body">
+          <h3>Supply Chain Case Competitions</h3>
+          <div class="role">Team lead / presenter <span class="accent">· 4 competitions</span></div>
+          <ul>
+            <li>Colorado State Rams, Kozy Shack, 3M Fulfillment, Quantum Frontiers — strategy, modeling, live presentation.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-num">§<span class="accent">03</span> · Selected projects</span>
+        <h2 class="section-title">Things I've <em>built</em>.</h2>
+      </div>
+
+      <div class="project">
+        <div class="lane">Personal · 2025</div>
+        <div>
+          <h3>stark-translate <span class="url">github.com/wrbell/stark-translate</span></h3>
+          <p>Live bilingual EN/ES speech-to-text for church outreach. Whisper ASR + MarianMT / TranslateGemma translation, streamed to audience displays via WebSocket. Python, MLX.</p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="lane">ME 472 · W26</div>
+        <div>
+          <h3>W26-Cobot-Axis <span class="url">github.com/wrbell/W26-Cobot-Axis</span></h3>
+          <p>UR30 7th axis for metal paste dispensing. RTDE bridge translating cobot commands to Klipper G-code on a Raspberry Pi driving a stepper via BigTreeTech SKR Pico (RP2040).</p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="lane">Self-study · 2024–25</div>
+        <div>
+          <h3>fast-fem <span class="url">github.com/wrbell/fast-fem</span></h3>
+          <p>Accelerated FEA self-study across 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calcs. Mesh convergence studies, post-mortems, reproducible methodology.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stack -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-num">§<span class="accent">04</span> · Stack</span>
+        <h2 class="section-title">What I <em>reach for</em>.</h2>
+      </div>
+      <div class="stack">
+        <div></div>
+        <div class="stack-col">
+          <h4>Mechanical / Controls</h4>
+          <ul>
+            <li>Siemens S7 / TIA <span class="lvl">daily</span></li>
+            <li>S120 drives <span class="lvl">daily</span></li>
+            <li>DeltaV <span class="lvl">used</span></li>
+            <li>KUKA <span class="lvl">used</span></li>
+            <li>EPLAN <span class="lvl">daily</span></li>
+            <li>NX <span class="lvl">daily</span></li>
+            <li>ANSYS <span class="lvl">proficient</span></li>
+            <li>TwinCAT <span class="lvl">used</span></li>
+            <li>Klipper / RTDE <span class="lvl">building</span></li>
+            <li>VFDs <span class="lvl">proficient</span></li>
+          </ul>
+        </div>
+        <div class="stack-col">
+          <h4>Software</h4>
+          <ul>
+            <li>Python <span class="lvl">daily</span></li>
+            <li>JavaScript / TS <span class="lvl">proficient</span></li>
+            <li>C / C++ <span class="lvl">used</span></li>
+            <li>Git <span class="lvl">daily</span></li>
+            <li>Linux <span class="lvl">daily</span></li>
+            <li>WebSocket / RTDE <span class="lvl">building</span></li>
+            <li>RP2040 / embedded <span class="lvl">building</span></li>
+          </ul>
+        </div>
+        <div class="stack-col">
+          <h4>ML / Research</h4>
+          <ul>
+            <li>Whisper ASR <span class="lvl">shipped</span></li>
+            <li>MarianMT <span class="lvl">shipped</span></li>
+            <li>TranslateGemma <span class="lvl">shipped</span></li>
+            <li>MLX <span class="lvl">building</span></li>
+            <li>Jupyter <span class="lvl">daily</span></li>
+            <li>FEA methodology <span class="lvl">proficient</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Willem Bell · wrbell@umich.edu</span>
+      <span>Available — New Grad Q1 2027</span>
+    </footer>
+
+  </main>
+
+</body>
+</html>

@@ -18,11 +18,25 @@ async function build() {
   fs.rmSync(DIST, { recursive: true, force: true });
   fs.mkdirSync(DIST, { recursive: true });
 
-  // Minify HTML files
-  for (const file of ["index.html", "404.html"]) {
+  // Minify HTML files (root pages + project subpages)
+  const htmlFiles = [
+    "index.html",
+    "404.html",
+    "resume.html",
+    "cases.html",
+    "notebook.html",
+    "projects/stark-translate.html",
+    "projects/fast-fem.html",
+    "projects/w26-cobot-axis.html",
+    "projects/me440-vibrations.html",
+    "projects/me379-fluids-lab.html",
+  ];
+  for (const file of htmlFiles) {
     const src = fs.readFileSync(path.join(__dirname, file), "utf8");
     const out = await minify(src, minifyOpts);
-    fs.writeFileSync(path.join(DIST, file), out);
+    const dest = path.join(DIST, file);
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.writeFileSync(dest, out);
     const pct = ((1 - out.length / src.length) * 100).toFixed(1);
     console.log(`${file}: ${src.length} → ${out.length} bytes (${pct}% reduction)`);
   }
@@ -31,6 +45,12 @@ async function build() {
   for (const dir of ["assets"]) {
     copyDir(path.join(__dirname, dir), path.join(DIST, dir));
   }
+  // Copy shared project stylesheet
+  fs.mkdirSync(path.join(DIST, "projects"), { recursive: true });
+  fs.copyFileSync(
+    path.join(__dirname, "projects/case-study.css"),
+    path.join(DIST, "projects/case-study.css")
+  );
   for (const file of ["robots.txt", "sitemap.xml"]) {
     const src = path.join(__dirname, file);
     if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, file));

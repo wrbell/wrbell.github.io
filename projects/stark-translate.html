@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>stark-translate — Willem Bell</title>
+  <meta name="description" content="stark-translate — live bilingual EN/ES speech-to-text for church outreach. On-device Whisper ASR + MarianMT, streamed via WebSocket. No cloud.">
+  <meta property="og:title" content="stark-translate — case study">
+  <meta property="og:description" content="Live bilingual EN/ES speech-to-text. On-device Whisper + MarianMT. No cloud.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://wrbell.github.io/projects/stark-translate.html">
+  <meta property="og:image" content="https://wrbell.github.io/assets/og-card.png">
+  <meta name="theme-color" content="#0a0a12">
+  <link rel="canonical" href="https://wrbell.github.io/projects/stark-translate.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+  <script>
+    (function() {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+  <!-- ─── Window-chrome bar ─── -->
+  <header class="chrome">
+    <div class="lights">
+      <a class="back" href="../#work" aria-label="Back to work index">← wrbell.eng</a>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt live" aria-hidden="true"></span>
+    </div>
+    <div class="path">
+      <span style="color:var(--muted-2)">~/wrbell.eng/</span><b>stark-translate.case.md</b>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <span class="clock" id="clock">— · — —:—</span>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle color theme">
+        <span id="theme-label">DARK</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ─── Hero ─── -->
+  <section class="hero">
+    <div class="prompt"><b>$</b><span>cat ./projects/stark-translate/INTENT.md</span></div>
+
+    <div class="title-row">
+      <h1>stark-<span class="em">translate</span></h1>
+      <span class="badge"><span class="dot" aria-hidden="true"></span>Deployed weekly</span>
+    </div>
+
+    <p class="tagline">
+      Live bilingual <span class="accent">EN/ES</span> speech-to-text, built so a Spanish-speaking congregation could follow along with an English sermon in real time — on a laptop, no cloud.
+    </p>
+
+    <dl class="status" aria-label="Project metadata">
+      <div class="row"><dt class="k">Role</dt><dd class="v">Builder</dd></div>
+      <div class="row"><dt class="k">Stack</dt><dd class="v">Python</dd></div>
+      <div class="row"><dt class="k">Latency</dt><dd class="v">~1.2 s</dd></div>
+      <div class="row"><dt class="k">Status</dt><dd class="v acc">Deployed</dd></div>
+    </dl>
+  </section>
+
+  <!-- ─── §01 Problem ─── -->
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§01 · problem</span>
+      path<br>./problem.md
+      <span class="meta">why does this exist? who benefits? what would happen if it didn't?</span>
+    </div>
+    <div>
+      <h2>congregation_split_by_language</h2>
+      <p>A local church holds English services with a growing number of Spanish-speaking attendees. Hiring a human interpreter every week wasn't practical, and commercial live-translation tools either required constant cloud connectivity, a monthly SaaS bill, or both — plus handed off sensitive pastoral audio to a third party.</p>
+      <p>What they needed: <strong>real-time EN → ES captions</strong> displayed at the back of the sanctuary, running on whatever laptop was already at the sound desk, with no outbound traffic after the weights are downloaded.</p>
+    </div>
+  </section>
+
+  <!-- ─── §02 Architecture ─── -->
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§02 · architecture</span>
+      path<br>./pipeline.py
+      <span class="meta">single process, 4 stages, in-memory queues, ws fan-out.</span>
+    </div>
+    <div>
+      <h2>four_stages_one_pipe</h2>
+      <p>The system is a single Python process with four stages wired together by in-memory queues, then fanned out to the display over WebSocket so the projector laptop can be anywhere on the LAN.</p>
+
+      <pre class="ascii" aria-label="stark-translate pipeline diagram"><span class="c">┌─────────────┐    ┌─────────────────┐    ┌─────────────────────┐    ┌────────────┐</span>
+<span class="c">│</span>  <span class="a">mic input</span>  <span class="c">│</span>───▶<span class="c">│</span>   <span class="a">whisper asr</span>   <span class="c">│</span>───▶<span class="c">│</span>     <span class="a">marian-mt</span>       <span class="c">│</span>───▶<span class="c">│</span>  <span class="a">websocket</span> <span class="c">│</span>
+<span class="c">│</span>  audio · vad <span class="c">│</span>    <span class="c">│</span>  en text · MLX  <span class="c">│</span>    <span class="c">│</span>  en→es · gemma fb   <span class="c">│</span>    <span class="c">│</span>  display   <span class="c">│</span>
+<span class="c">└─────────────┘    └─────────────────┘    └─────────────────────┘    └────────────┘</span></pre>
+
+      <div class="listing" role="list" aria-label="Stack">
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Python 3.11</span><span class="desc">host runtime · single process</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Whisper</span><span class="desc">ASR · whisper-small · on-device</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">MarianMT</span><span class="desc">NMT · en-es · ~80 MB</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">TranslateGemma</span><span class="desc">NMT fallback · prose-quality, heavier</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">WebSocket</span><span class="desc">fan-out · LAN-only display path</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">MLX</span><span class="desc">Apple silicon backend</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">sounddevice</span><span class="desc">capture · CoreAudio bindings</span><span class="ver">v.dep</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── §03 Decisions ─── -->
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§03 · decisions</span>
+      path<br>./CHANGELOG.md
+      <span class="meta">picked → rejected. each line is a deliberate trade.</span>
+    </div>
+    <div>
+      <h2>tradeoffs_actually_made</h2>
+      <ol class="commits">
+        <li>
+          <div class="sha">a3f1c92 · +34 −12</div>
+          <h3>On-device, not cloud.</h3>
+          <p>Whisper-small runs at &gt;1× realtime on an M-series Mac. Cloud ASR would have been faster and more accurate, but <em>no internet</em> was a hard requirement. Accuracy tuning happens via domain-specific prompts, not model size.</p>
+        </li>
+        <li>
+          <div class="sha">b1ee047 · +78 −03</div>
+          <h3>Chunked streaming, not true continuous.</h3>
+          <p>Audio is chunked on ~2 s voice-activity boundaries and transcribed one chunk at a time. This costs end-to-end latency (~1.2 s median) but keeps the implementation simple and resilient to dropped chunks.</p>
+        </li>
+        <li>
+          <div class="sha">4d8c3a1 · +22 −41</div>
+          <h3>MarianMT for EN→ES, with TranslateGemma as a quality fallback.</h3>
+          <p>MarianMT's EN-ES pair is tiny and fast; TranslateGemma produces better prose but is heavier. A runtime flag swaps between them depending on host hardware.</p>
+        </li>
+        <li>
+          <div class="sha">9f02e44 · +12 −08</div>
+          <h3>WebSocket display, not a rendered overlay.</h3>
+          <p>The projector laptop just opens a URL. No screen-sharing, no OBS scene — any browser on the LAN becomes a caption screen. Trivial to restart, trivial to fail over.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ─── §04 Outcome ─── -->
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§04 · outcome</span>
+      path<br>./STATE.md
+      <span class="meta">running. weekly. quiet sundays.</span>
+    </div>
+    <div>
+      <h2>what_it_does_now</h2>
+      <p>Runs weekly at services on a single MacBook. Spanish-speaking attendees can follow the sermon in real time without needing a human interpreter or a cloud connection. Median latency is around a second; worst-case spikes are bounded by the chunk size.</p>
+      <p>Next up: <strong>speaker adaptation</strong> (prime Whisper with the pastor's voice), <strong>glossary pinning</strong> for religious terminology, and a <strong>second display path</strong> for individual phone screens over the same WebSocket.</p>
+
+      <div class="shot" role="img" aria-label="stark-translate caption display — photo to come">
+        <span class="placeholder-tag">photo · sanctuary display</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Up next ─── -->
+  <section class="nx-wrap">
+    <div class="nx-head">// up <b>next</b></div>
+    <div class="nx-grid">
+      <a class="nx-card" href="./w26-cobot-axis.html">
+        <div class="k">ME 472 · Winter 2026</div>
+        <h3>W26-Cobot-Axis →</h3>
+        <p>UR30 7th axis. RTDE ↔ Klipper bridge on an RP2040.</p>
+      </a>
+      <a class="nx-card" href="./fast-fem.html">
+        <div class="k">Self-study · 2024–25</div>
+        <h3>fast-fem →</h3>
+        <p>ANSYS × analytic parity lab. Every sim validated.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── Footer ─── -->
+  <footer class="ftr">
+    <span>© 2026 wrbell · <a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a></span>
+    <span><a href="https://github.com/wrbell/stark-translate" target="_blank" rel="noopener noreferrer">github ↗</a></span>
+    <span>END OF FILE</span>
+  </footer>
+
+  <script>
+    // Live clock — local time, ticks once a minute.
+    (function() {
+      var el = document.getElementById('clock');
+      function tick() {
+        var d = new Date();
+        var days = ['sun','mon','tue','wed','thu','fri','sat'];
+        var hh = String(d.getHours()).padStart(2, '0');
+        var mm = String(d.getMinutes()).padStart(2, '0');
+        el.textContent = 'live · ' + days[d.getDay()] + ' ' + hh + ':' + mm;
+      }
+      tick();
+      setInterval(tick, 30 * 1000);
+    })();
+
+    // Theme toggle.
+    (function() {
+      var btn = document.getElementById('theme-toggle');
+      var lbl = document.getElementById('theme-label');
+      function sync() {
+        var t = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        lbl.textContent = t === 'light' ? 'LIGHT' : 'DARK';
+      }
+      sync();
+      btn.addEventListener('click', function() {
+        var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        var next = cur === 'light' ? 'dark' : 'light';
+        if (next === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        else document.documentElement.removeAttribute('data-theme');
+        try { localStorage.setItem('theme', next); } catch(e) {}
+        sync();
+      });
+    })();
+  </script>
+
+</body>
+</html>

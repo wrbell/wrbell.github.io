@@ -9,11 +9,16 @@
   <meta property="og:description" content="Portfolio of Willem Bell. Mechanical engineering & computer science at UM-Dearborn. SpaceX and Tesla internships.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://wrbell.github.io/">
+  <meta property="og:image" content="https://wrbell.github.io/assets/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Willem Bell — Mechanical engineering × software. BSE, Dec 2026.">
   <meta property="og:locale" content="en_US">
   <meta name="theme-color" content="#0a0a12">
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Willem Bell — ME × CS">
   <meta name="twitter:description" content="Portfolio of Willem Bell. Mechanical engineering & computer science at UM-Dearborn. SpaceX and Tesla internships.">
+  <meta name="twitter:image" content="https://wrbell.github.io/assets/og-card.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -133,10 +138,6 @@
       --accent-2:    #004d33;
       --accent-dim:  rgba(0, 110, 74, 0.08);
       --accent-glow: rgba(0, 110, 74, 0.12);
-      --lane-industry:   #1a56b0;
-      --lane-research:   #6028b8;
-      --lane-coursework: #8a4a00;
-      --lane-campus:     #006e4a;
       --shadow-card: 0 2px 12px rgba(0,0,0,0.06);
       --shadow-hi:   0 8px 28px rgba(0,0,0,0.10);
     }
@@ -202,6 +203,8 @@
       transition: background .2s, border-color .2s, color .2s;
     }
     .tag:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+    [data-theme="light"] .tag { color: var(--text-dim); border-color: #8a8a80; }
+    [data-theme="light"] .tag:hover { color: var(--accent); border-color: var(--accent); }
     .underline-hover { position: relative; }
     .underline-hover::after {
       content: '';
@@ -307,29 +310,27 @@
     .hero h1 {
       font-family: var(--font-display);
       font-weight: 400;
-      font-size: clamp(56px, 11vw, 160px);
-      line-height: 0.88;
-      letter-spacing: -0.045em;
-      margin-bottom: 36px;
+      font-style: normal;
+      font-size: clamp(52px, 7.5vw, 96px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
       color: var(--text);
     }
     .hero h1 em { font-style: italic; font-weight: 400; color: var(--accent); }
     .hero h1 .dot { color: var(--accent); font-style: normal; }
-    .hero h1 .tag-line {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: clamp(12px, 1.1vw, 14px);
-      font-style: normal;
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-style: italic;
       font-weight: 400;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 28px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      max-width: 32ch;
+      font-size: clamp(26px, 3.6vw, 42px);
+      line-height: 1.2;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+      max-width: 18ch;
     }
-    .hero h1 .tag-line .accent { color: var(--accent); }
+    .hero-tagline .accent { color: var(--accent); }
     .hero-lede {
       font-size: 19px;
       line-height: 1.6;
@@ -451,7 +452,8 @@
     .about-grid {
       display: grid;
       grid-template-columns: 240px 1fr;
-      gap: 48px;
+      gap: 64px;
+      align-items: start;
     }
     .about-sidebar {
       font-family: var(--font-mono);
@@ -532,10 +534,10 @@
     .card .tags {
       display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto;
     }
-    .card.feat  { grid-column: span 4; min-height: 420px; }
-    .card.side  { grid-column: span 2; }
-    .card.half  { grid-column: span 3; }
-    .card.third { grid-column: span 2; }
+    .card.span-6  { grid-column: span 4; min-height: 420px; }
+    .card.span-4  { grid-column: span 2; }
+    .card.span-3  { grid-column: span 3; }
+    .card.span-2 { grid-column: span 2; }
     .card-cta {
       display: inline-flex; align-items: center; gap: 6px;
       font-family: var(--font-mono);
@@ -547,22 +549,63 @@
       transition: border-color .2s;
     }
     .card-cta:hover { border-bottom-color: var(--accent); }
+    .card-cta-row {
+      display: flex; flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 8px;
+      margin-bottom: 12px;
+    }
+    .card-cta-row .card-cta { margin-top: 0; margin-bottom: 0; }
+    .card-cta.muted { color: var(--text-dim); }
+    .card-cta.muted:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
-    .ascii {
+    /* === Card image slot === */
+    .card .shot {
+      aspect-ratio: 16 / 9;
+      margin: -4px -4px 20px;
+      background:
+        repeating-linear-gradient(45deg,
+          color-mix(in srgb, var(--muted) 10%, transparent) 0 2px,
+          transparent 2px 14px),
+        var(--bg-2);
+      border: 1px dashed var(--border-hi);
+      border-radius: var(--r-md);
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      position: relative;
+    }
+    .card.span-6 .shot, .card.span-4 .shot { aspect-ratio: 16 / 7; }
+    .card .shot::after {
+      content: 'Image — to come';
+    }
+    .card .shot img, .card .shot video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: var(--r-md);
+    }
+    .card .shot:has(img)::after,
+    .card .shot:has(video)::after { display: none; }
+
+    /* === NDA note (simple) === */
+    .card .nda-note {
       font-family: var(--font-mono);
       font-size: 11px;
-      line-height: 1.55;
+      letter-spacing: 0.08em;
       color: var(--muted);
-      background: var(--bg-2);
-      border: 1px solid var(--border);
-      border-radius: var(--r-md);
-      padding: 18px;
-      white-space: pre;
-      overflow-x: auto;
-      margin-bottom: 20px;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.25);
+      padding: 10px 12px;
+      border-left: 2px solid var(--accent);
+      background: color-mix(in srgb, var(--accent) 5%, transparent);
+      border-radius: 0 var(--r-sm) var(--r-sm) 0;
+      margin-bottom: 16px;
     }
-    .ascii .a { color: var(--accent); }
+    .card .nda-note strong { color: var(--text); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 10px; display: block; margin-bottom: 3px; }
+
 
     /* === Ledger === */
     .ledger { border-top: 1px solid var(--border); }
@@ -733,141 +776,6 @@
     .skills-row .dom.s  { color: var(--accent);           border-color: color-mix(in srgb, var(--accent) 50%, var(--border-hi)); }
     .skills-row .dom.r  { color: var(--lane-research);   border-color: color-mix(in srgb, var(--lane-research) 40%, var(--border-hi)); }
 
-    /* === Timeline === */
-    .timeline { overflow: hidden; position: relative; }
-    .timeline-track {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: 340px;
-      gap: 0;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding: 16px 48px 32px;
-      scrollbar-width: thin;
-      scrollbar-color: var(--border-hi) transparent;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .timeline-track::-webkit-scrollbar { height: 6px; }
-    .timeline-track::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 3px; }
-    .tcard {
-      scroll-snap-align: start;
-      padding: 32px 28px;
-      border-right: 1px solid var(--border);
-      position: relative;
-    }
-    .tcard:first-child { border-left: 1px solid var(--border); }
-    .tcard::before {
-      content: '';
-      position: absolute;
-      left: -6px; top: 36px;
-      width: 11px; height: 11px;
-      background: var(--bg);
-      border: 2px solid var(--accent);
-      border-radius: 50%;
-    }
-    .tcard .date {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--accent);
-      margin-bottom: 16px;
-    }
-    .tcard h3 {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: 30px;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-    .tcard h3 em { font-style: italic; color: var(--accent); font-weight: 400; }
-    .tcard .role {
-      font-family: var(--font-mono);
-      font-size: 11.5px;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
-    .tcard p {
-      font-size: 14px;
-      color: var(--text-dim);
-      line-height: 1.6;
-    }
-    /* Today marker — a slim vertical pillar that lives inside the scroll track */
-    .tnow {
-      scroll-snap-align: center;
-      width: 72px;
-      padding: 32px 0;
-      position: relative;
-      display: grid;
-      place-items: center;
-      border-right: 1px solid var(--border);
-    }
-    .tnow::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 0; bottom: 0;
-      width: 2px;
-      transform: translateX(-50%);
-      background: linear-gradient(180deg, transparent 0%, var(--accent) 20%, var(--accent) 80%, transparent 100%);
-      box-shadow: 0 0 16px var(--accent-glow);
-    }
-    .tnow::after {
-      content: '';
-      position: absolute;
-      left: 50%; top: 36px;
-      width: 13px; height: 13px;
-      transform: translateX(-50%);
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--accent), 0 0 24px var(--accent-glow);
-      animation: now-pulse 2.4s ease-in-out infinite;
-    }
-    @keyframes now-pulse {
-      0%,100% { box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--accent), 0 0 24px var(--accent-glow); }
-      50%     { box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--accent), 0 0 40px var(--accent); }
-    }
-    .tnow-label {
-      position: relative;
-      z-index: 1;
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: var(--bg);
-      padding: 14px 4px;
-      margin-top: 72px;
-    }
-    .tnow-label strong { font-weight: 700; }
-    .tnow-label .sub {
-      font-weight: 400;
-      color: var(--muted);
-      letter-spacing: 0.18em;
-    }
-
-    .timeline-hint {
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      display: inline-flex; align-items: center; gap: 10px;
-    }
-    .timeline-hint::after {
-      content: '→'; color: var(--accent);
-      animation: drift 1.8s ease-in-out infinite;
-    }
-    @keyframes drift {
-      0%,100% { transform: translateX(0); opacity: .4; }
-      50%     { transform: translateX(6px); opacity: 1; }
-    }
-
     /* === Footer === */
     .site-footer {
       border-top: 1px solid var(--border);
@@ -935,8 +843,8 @@
       .hero h1 { font-size: clamp(64px, 16vw, 120px); }
       .vitals {
         border-left: none; padding-left: 0;
-        padding-top: 28px; border-top: 1px solid var(--border);
-        display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+        padding-top: 24px; border-top: 1px solid var(--border);
+        display: grid; grid-template-columns: 1fr 1fr; gap: 20px 28px;
       }
       .hero-cta { flex-wrap: wrap; }
       .hero-cta .btn { flex: 1 1 auto; justify-content: center; }
@@ -946,7 +854,7 @@
       .about-grid { grid-template-columns: 1fr; gap: 32px; }
       .about-sidebar { order: 2; }
       .work-grid { grid-template-columns: 1fr; gap: 16px; }
-      .card.feat, .card.side, .card.half, .card.third { grid-column: span 1; min-height: 0; }
+      .card.span-6, .card.span-4, .card.span-3, .card.span-2 { grid-column: span 1; min-height: 0; }
       .card { padding: 24px; }
       .entry { grid-template-columns: 1fr; gap: 10px; padding: 28px 0; }
       .entry-date { padding-top: 0; }
@@ -962,21 +870,29 @@
       .site-footer { padding: 72px 0 32px; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
       .footer-copy { flex-direction: column; gap: 8px; align-items: flex-start; }
-      .timeline-track { padding: 16px 20px 24px; grid-auto-columns: 280px; }
-      .tnow { width: 56px; padding: 24px 0; }
-      .tnow-label { letter-spacing: 0.22em; font-size: 10px; }
-      .ascii { font-size: 9.5px; padding: 14px; }
     }
     @media (max-width: 480px) {
-      .vitals { grid-template-columns: 1fr; }
+      .vitals { grid-template-columns: 1fr; gap: 16px; }
       .footer-grid { grid-template-columns: 1fr; }
-      .hero h1 .tag-line { font-size: 11px; }
     }
 
+    /* === Scroll-reveal === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .35s cubic-bezier(.2,.7,.2,1), transform .35s cubic-bezier(.2,.7,.2,1);
+      will-change: opacity, transform;
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal.stagger-1, .reveal.stagger-2, .reveal.stagger-3 { transition-delay: 0s; }
     /* === Reduced motion === */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-      .hero-eyebrow .dot, .timeline-hint::after, .tnow::after { animation: none !important; }
+      .hero-eyebrow .dot { animation: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
     }
   </style>
 </head>
@@ -984,15 +900,14 @@
 
 <a href="#main" class="skip-link">Skip to main content</a>
 
-<nav class="site-nav" aria-label="Primary">
-  <a href="#" class="site-logo"><span class="site-logo-mark" aria-hidden="true">W</span>wrbell<span class="accent">.eng</span></a>
+<nav id="top" class="site-nav" aria-label="Primary">
+  <a href="#top" class="site-logo" aria-label="Home — top of page"><span class="site-logo-mark" aria-hidden="true">W</span>wrbell<span class="accent">.eng</span></a>
   <div class="site-nav-links">
     <a href="#about" class="underline-hover">About</a>
     <a href="#work" class="underline-hover">Work</a>
     <a href="#ledger" class="underline-hover">Experience</a>
-    <a href="#timeline" class="underline-hover">Timeline</a>
-    <a href="#skills" class="underline-hover">Stack</a>
-    <a href="#contact" class="site-nav-cta">Resume →</a>
+    <a href="#stack" class="underline-hover">Stack</a>
+    <a href="mailto:wrbell@umich.edu" class="site-nav-cta">Email →</a>
     <button type="button" class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
       <svg class="icon-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
       <svg class="icon-dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
@@ -1010,10 +925,12 @@
             <span class="dot" aria-hidden="true"></span>
             <span class="eyebrow">Available — new grad, Q1 2027</span>
           </div>
-          <h1>Will<em>e</em>m<br>Bell<span class="dot">.</span><span class="tag-line">Builds things that <span class="accent">move.</span> ME × CS, UM‑Dearborn.</span></h1>
+          <h1><span class="w1">Willem <span class="dot">Bell.</span></span></h1>
+          <p class="hero-tagline">Mechanical engineer <span class="accent">×</span> software. Builds things that <em class="italic">move.</em></p>
           <p class="hero-lede">ME × CS at UM‑Dearborn. Internships across <span class="accent">SpaceX</span> Starship, Starfactory, and Space Lasers, <span class="accent">Tesla 4680</span>, and <span class="accent">DTE Fermi</span>. Most useful at the seam between a Siemens panel and a PyTorch notebook.</p>
           <div class="hero-cta">
-            <a href="assets/willem-bell-resume.pdf" class="btn primary" target="_blank" rel="noopener noreferrer">Resume <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 3h6v6M3 9L9 3"/></svg></a>
+            <a href="mailto:wrbell@umich.edu" class="btn primary">Email me <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 3h6v6M3 9L9 3"/></svg></a>
+            <a href="resume.html" class="btn" target="_blank" rel="noopener noreferrer">Resume</a>
             <a href="https://github.com/wrbell" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://linkedin.com/in/willembell/" class="btn" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </div>
@@ -1044,16 +961,15 @@
     <a href="#about">About</a>
     <a href="#work">Work</a>
     <a href="#ledger">Experience</a>
-    <a href="#timeline">Timeline</a>
-    <a href="#skills">Stack</a>
-    <a href="#contact">Contact</a>
+    <a href="#stack">Stack</a>
+    <a href="mailto:wrbell@umich.edu">Email</a>
   </nav>
 
   <section id="about" class="section" aria-labelledby="about-heading">
     <div class="container">
       <div class="section-head">
-        <div class="section-num">§<span class="accent">01</span> / About</div>
-        <h2 id="about-heading" class="section-title">An engineer who <em class="italic">ships,</em><br>in both senses.</h2>
+        <div class="section-num">About</div>
+        <h2 id="about-heading" class="section-title">An engineer who ships, in both senses.</h2>
       </div>
       <div class="about-grid">
         <div class="about-sidebar">
@@ -1065,9 +981,7 @@
           <div class="row"><span>Based</span><strong>Dearborn, MI</strong></div>
         </div>
         <div class="about-copy">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error.</p>
-          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</p>
+          <p class="about-todo" aria-label="Placeholder copy">About copy — to come. Three paragraphs: the mechanical-engineering origin story, the software detour, and what I'm reaching for after graduation in December 2026.</p>
         </div>
       </div>
     </div>
@@ -1076,22 +990,21 @@
   <section id="work" class="section" aria-labelledby="work-heading">
     <div class="container">
       <div class="section-head">
-        <div class="section-num">§<span class="accent">02</span> / Selected work</div>
+        <div class="section-num">Work</div>
         <h2 id="work-heading" class="section-title">Things I've built<br>or made <em class="italic">better.</em></h2>
       </div>
       <div class="work-grid">
 
-        <article class="card feat">
-          <div class="lane research">Personal · flagship</div>
+        <article class="card span-6">
+          <div class="lane research">Personal · 2024–present</div>
           <h3>stark-translate</h3>
-          <div class="meta">Python · live bilingual speech-to-text</div>
-          <div class="ascii" aria-label="stark-translate pipeline diagram" tabindex="0"> ┌─────────────┐    ┌────────────────┐    ┌─────────────────────┐    ┌────────────┐
- │  <span class="a">Mic Input</span>  │───▶│  <span class="a">Whisper ASR</span>   │───▶│  <span class="a">MarianMT /</span>         │───▶│  <span class="a">WebSocket</span> │
- │  (Audio)    │    │  (EN text)     │    │  TranslateGemma     │    │  Display   │
- └─────────────┘    └────────────────┘    │  (EN → ES)          │    └────────────┘
-                                          └─────────────────────┘</div>
+          <div class="meta">Live bilingual speech-to-text · Python · Whisper · MLX</div>
+          <div class="shot" role="img" aria-label="stark-translate screenshot — to come"></div>
           <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
-          <a href="https://github.com/wrbell/stark-translate" class="card-cta" target="_blank" rel="noopener noreferrer">View code →</a>
+          <div class="card-cta-row">
+            <a href="projects/stark-translate.html" class="card-cta">Case study →</a>
+            <a href="https://github.com/wrbell/stark-translate" class="card-cta muted" target="_blank" rel="noopener noreferrer">Code ↗</a>
+          </div>
           <div class="tags">
             <span class="tag">Python</span>
             <span class="tag">Whisper</span>
@@ -1102,12 +1015,32 @@
           </div>
         </article>
 
-        <article class="card side">
+        <article class="card span-4">
+          <div class="lane course">ME 379 · placeholder term</div>
+          <h3>Fluids Lab</h3>
+          <div class="meta">Coursework · experimental fluid mechanics</div>
+          <div class="shot" role="img" aria-label="Fluids Lab — to come"></div>
+          <p>Placeholder. Lab sequence covering pipe flow, drag, pressure measurement, and instrumented experiments. Writeups, reduced data, and methodology to be added once the course wraps.</p>
+          <div class="card-cta-row">
+            <a href="projects/me379-fluids-lab.html" class="card-cta">Case study →</a>
+          </div>
+          <div class="tags">
+            <span class="tag">Fluid Mechanics</span>
+            <span class="tag">Lab</span>
+            <span class="tag">DAQ</span>
+            <span class="tag">MATLAB</span>
+          </div>
+        </article>
+
+        <article class="card span-2">
           <div class="lane research">ME 472 · Winter 2026</div>
           <h3>W26-Cobot-Axis</h3>
-          <div class="meta">Cobot / Klipper bridge</div>
-          <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on a Raspberry Pi driving a stepper motor via BigTreeTech SKR Pico (RP2040).</p>
-          <a href="https://github.com/wrbell/W26-Cobot-Axis" class="card-cta" target="_blank" rel="noopener noreferrer">View code →</a>
+          <div class="meta">UR30 7th axis · Klipper bridge</div>
+          <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on an RP2040.</p>
+          <div class="card-cta-row">
+            <a href="projects/w26-cobot-axis.html" class="card-cta">Case study →</a>
+            <a href="https://github.com/wrbell/W26-Cobot-Axis" class="card-cta muted" target="_blank" rel="noopener noreferrer">Code ↗</a>
+          </div>
           <div class="tags">
             <span class="tag">Python</span>
             <span class="tag">RTDE</span>
@@ -1116,12 +1049,15 @@
           </div>
         </article>
 
-        <article class="card half">
-          <div class="lane course">Self-study · 2024–25</div>
+        <article class="card span-3">
+          <div class="lane course">Self-study · 2024–2025</div>
           <h3>fast-fem</h3>
           <div class="meta">ANSYS × analytic parity lab</div>
           <p>Accelerated FEA self-study for 3 concurrent ME courses. Every ANSYS simulation validated against analytical hand calculations. Mesh convergence studies, post-mortems, and reproducible methodology.</p>
-          <a href="https://github.com/wrbell/fast-fem" class="card-cta" target="_blank" rel="noopener noreferrer">View code →</a>
+          <div class="card-cta-row">
+            <a href="projects/fast-fem.html" class="card-cta">Case study →</a>
+            <a href="https://github.com/wrbell/fast-fem" class="card-cta muted" target="_blank" rel="noopener noreferrer">Code ↗</a>
+          </div>
           <div class="tags">
             <span class="tag">ANSYS</span>
             <span class="tag">Python</span>
@@ -1130,11 +1066,12 @@
           </div>
         </article>
 
-        <article class="card half">
+        <article class="card span-3">
           <div class="lane industry">SpaceX · Jan–Jul 2025</div>
           <h3>Starfactory automation</h3>
-          <div class="meta">Automation &amp; controls intern</div>
-          <p>Station-side automation and controls work. Under NDA.</p>
+          <div class="meta">Automation &amp; controls intern · Starbase, TX</div>
+          <p>Owned controls design, FAT, and commissioning across multiple Starfactory stations on the Starship production line.</p>
+          <div class="nda-note"><strong>Under NDA</strong>Specifics available in interview conversation.</div>
           <div class="tags">
             <span class="tag">EPLAN</span>
             <span class="tag">Siemens PLCs</span>
@@ -1144,11 +1081,12 @@
           </div>
         </article>
 
-        <article class="card third">
+        <article class="card span-2">
           <div class="lane industry">Tesla · Sep 2023–Apr 2024</div>
           <h3>Tesla 4680</h3>
-          <div class="meta">Controls development intern</div>
-          <p>Controls development for battery cell manufacturing. Under NDA.</p>
+          <div class="meta">Controls development intern · Austin, TX</div>
+          <p>Controls development for 4680 battery cell manufacturing — hands-on DeltaV, TwinCAT, and VFD work.</p>
+          <div class="nda-note"><strong>Under NDA</strong>Specifics available in interview conversation.</div>
           <div class="tags">
             <span class="tag">DeltaV</span>
             <span class="tag">TwinCAT</span>
@@ -1157,11 +1095,11 @@
           </div>
         </article>
 
-        <article class="card third">
-          <div class="lane research">Pannier Lab · 2021–25</div>
+        <article class="card span-2">
+          <div class="lane research">Pannier Lab · 2021–2025</div>
           <h3>Pannier Research Lab</h3>
-          <div class="meta">Three consecutive terms</div>
-          <p>Undergraduate researcher across three terms; handed off to the next cohort.</p>
+          <div class="meta">UM-Dearborn · three terms</div>
+          <p>Undergraduate researcher across three consecutive terms; toolchanger automation and G-code workflows. Handed off to the next cohort.</p>
           <div class="tags">
             <span class="tag">MATLAB</span>
             <span class="tag">G-Code</span>
@@ -1170,11 +1108,14 @@
           </div>
         </article>
 
-        <article class="card third">
+        <article class="card span-2">
           <div class="lane course">ME 440 · Winter 2026</div>
           <h3>Vibrations final</h3>
           <div class="meta">MATLAB forced-response solver</div>
           <p>Modal decomposition and Duhamel integral toolbox graded against closed-form benchmarks.</p>
+          <div class="card-cta-row">
+            <a href="projects/me440-vibrations.html" class="card-cta">Case study →</a>
+          </div>
           <div class="tags">
             <span class="tag">MATLAB</span>
             <span class="tag">Vibration Analysis</span>
@@ -1188,20 +1129,20 @@
   <section id="ledger" class="section" aria-labelledby="ledger-heading">
     <div class="container">
       <div class="section-head">
-        <div class="section-num">§<span class="accent">03</span> / Ledger</div>
-        <h2 id="ledger-heading" class="section-title">Where I've <span class="italic">shown up</span>.</h2>
+        <div class="section-num">Experience</div>
+        <h2 id="ledger-heading" class="section-title">Where I've shown up.</h2>
       </div>
       <div class="ledger">
 
         <article class="entry">
-          <div class="entry-date">Jan — Jul 2025</div>
+          <time class="entry-date" datetime="2025-01/2025-07">Jan — Jul 2025</time>
           <div class="entry-body">
             <h3>SpaceX</h3>
             <div class="role">Starfactory Automation &amp; Controls Intern</div>
             <div class="loc">Starbase, TX</div>
             <ul>
-              <li>Station-side automation and controls work across multiple factory stations.</li>
-              <li>Under NDA.</li>
+              <li>Owned controls design, FAT, and commissioning across multiple Starfactory stations.</li>
+              <li>Specific station scopes and outcomes redacted under NDA.</li>
             </ul>
           </div>
           <div class="entry-tags">
@@ -1210,7 +1151,7 @@
         </article>
 
         <article class="entry">
-          <div class="entry-date">May 2022 — Aug 2024</div>
+          <time class="entry-date" datetime="2022-05/2024-08">May 2022 — Aug 2024</time>
           <div class="entry-body">
             <h3>SpaceX <span style="color: var(--muted);">· three earlier internships</span></h3>
             <div class="role">Starship, Launch, Space Lasers</div>
@@ -1227,13 +1168,14 @@
         </article>
 
         <article class="entry">
-          <div class="entry-date">Sep 2023 — Apr 2024</div>
+          <time class="entry-date" datetime="2023-09/2024-04">Sep 2023 — Apr 2024</time>
           <div class="entry-body">
             <h3>Tesla 4680</h3>
             <div class="role">Controls Development Intern</div>
             <div class="loc">Austin, TX</div>
             <ul>
-              <li>Controls development for battery cell manufacturing. Under NDA.</li>
+              <li>Controls development for 4680 cell manufacturing — hands-on DeltaV, TwinCAT, and VFD work.</li>
+              <li>Specific station scopes and outcomes redacted under NDA.</li>
             </ul>
           </div>
           <div class="entry-tags">
@@ -1242,7 +1184,7 @@
         </article>
 
         <article class="entry">
-          <div class="entry-date">Jul 2021 — <span class="current">Present</span></div>
+          <time class="entry-date" datetime="2021-07">Jul 2021 — <span class="current">Present</span></time>
           <div class="entry-body">
             <h3>Pannier Research Lab · UM-Dearborn</h3>
             <div class="role">Research Assistant (three terms)</div>
@@ -1259,7 +1201,7 @@
         </article>
 
         <article class="entry">
-          <div class="entry-date">Nov 2025 — Feb 2026</div>
+          <time class="entry-date" datetime="2025-11/2026-02">Nov 2025 — Feb 2026</time>
           <div class="entry-body">
             <h3>Supply Chain Case Competitions</h3>
             <div class="role">UM-Dearborn team · four cases</div>
@@ -1277,7 +1219,7 @@
         </article>
 
         <article class="entry">
-          <div class="entry-date">Sep 2021 — Present</div>
+          <time class="entry-date" datetime="2021-09">Sep 2021 — <span class="current">Present</span></time>
           <div class="entry-body">
             <h3>Extracurricular</h3>
             <div class="role">Teams &amp; leadership</div>
@@ -1298,76 +1240,11 @@
     </div>
   </section>
 
-  <section id="timeline" class="section" aria-labelledby="timeline-heading">
+  <section id="stack" class="section" aria-labelledby="stack-heading">
     <div class="container">
       <div class="section-head">
-        <div class="section-num">§<span class="accent">04</span> / Timeline</div>
-        <h2 id="timeline-heading" class="section-title">Five <em class="italic">years,</em><br>scrolled sideways.</h2>
-      </div>
-    </div>
-    <div class="timeline">
-      <div class="timeline-track" role="list" aria-label="Chronological timeline" tabindex="0">
-        <div class="tcard" role="listitem">
-          <div class="date">Jun 2020 — Sep 2023</div>
-          <h3>UM-Dearborn <em>SI</em></h3>
-          <div class="role">SI Leader → Assistant Supervisor</div>
-          <p>Three years in the Supplemental Instruction program — from leader to assistant supervisor.</p>
-        </div>
-        <div class="tcard" role="listitem">
-          <div class="date">May 2021 — Feb 2022</div>
-          <h3>DTE <em>Fermi</em></h3>
-          <div class="role">Student Co-Op · nuclear</div>
-          <p>Design documentation and regulatory compliance work at the Fermi nuclear power plant.</p>
-        </div>
-        <div class="tcard" role="listitem">
-          <div class="date">May — Aug 2022</div>
-          <h3>SpaceX <em>Starship</em></h3>
-          <div class="role">Automation &amp; Controls Intern</div>
-          <p>Cryogenic systems, instrumentation, VFD work at Starbase.</p>
-        </div>
-        <div class="tcard" role="listitem">
-          <div class="date">May — Aug 2023</div>
-          <h3>Starship <em>Launch</em></h3>
-          <div class="role">Launch Intern · Starbase</div>
-          <p>Controls hardware, commissioning, and system integration.</p>
-        </div>
-        <div class="tcard" role="listitem">
-          <div class="date">Sep 2023 — Apr 2024</div>
-          <h3>Tesla <em>4680</em></h3>
-          <div class="role">Controls Development · Austin</div>
-          <p>DeltaV, TwinCAT, controls FAT, VFD — battery cell manufacturing.</p>
-        </div>
-        <div class="tcard" role="listitem">
-          <div class="date">May — Aug 2024</div>
-          <h3>Space <em>Lasers</em></h3>
-          <div class="role">I&amp;T Intern · Redmond</div>
-          <p>NX, ANSYS, vibration testing for space laser integration and test.</p>
-        </div>
-        <div class="tcard" role="listitem">
-          <div class="date">Jan — Jul 2025</div>
-          <h3>SpaceX <em>Starfactory</em></h3>
-          <div class="role">Automation &amp; Controls · Starbase</div>
-          <p>Siemens, KUKA, EPLAN, NX — station-side automation across multiple factory cells.</p>
-        </div>
-        <div class="tnow" role="listitem" aria-label="Today">
-          <div class="tnow-label"><strong>NOW</strong> <span class="sub">· Apr 2026</span></div>
-        </div>
-        <div class="tcard" role="listitem">
-          <div class="date">Dec 2026</div>
-          <h3>BSE <em>ME + CS</em></h3>
-          <div class="role">UM-Dearborn · expected</div>
-          <p>Dual degree in mechanical engineering and computer science.</p>
-        </div>
-      </div>
-      <div class="container" style="margin-top: 8px;"><div class="timeline-hint">Drag or scroll</div></div>
-    </div>
-  </section>
-
-  <section id="skills" class="section" aria-labelledby="skills-heading">
-    <div class="container">
-      <div class="section-head">
-        <div class="section-num">§<span class="accent">05</span> / Stack</div>
-        <h2 id="skills-heading" class="section-title">What I <span class="italic">reach for</span>,<br>in rough order of recency.</h2>
+        <div class="section-num">Stack</div>
+        <h2 id="stack-heading" class="section-title">What I reach for, <em class="italic">in rough order of recency.</em></h2>
       </div>
       <div class="skills-legend" aria-label="How to read this section">
         <span class="leg"><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d on"></span></span><strong>Daily</strong></span>
@@ -1441,7 +1318,9 @@
       <div class="footer-col">
         <h3>Direct</h3>
         <a href="mailto:wrbell@umich.edu" class="underline-hover">wrbell@umich.edu</a>
-        <a href="assets/willem-bell-resume.pdf" class="underline-hover" target="_blank" rel="noopener noreferrer">resume.pdf →</a>
+        <a href="resume.html" class="underline-hover" target="_blank" rel="noopener noreferrer">resume →</a>
+        <a href="cases.html" class="underline-hover">case competitions →</a>
+        <a href="notebook.html" class="underline-hover">lab notebook →</a>
       </div>
       <div class="footer-col">
         <h3>Online</h3>
@@ -1501,6 +1380,36 @@
   if (dep) {
     dep.textContent = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   }
+
+  // Scroll-reveal
+  (function() {
+    // Auto-tag section headers, work cards, ledger entries, and skills tiers
+    var autoTargets = [
+      '.section-head',
+      '.card',
+      '.entry',
+      '.skills-tier',
+      '.footer-cta'
+    ];
+    autoTargets.forEach(function(sel) {
+      document.querySelectorAll(sel).forEach(function(el) { el.classList.add('reveal'); });
+    });
+
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+  })();
+
 </script>
 </body>
 </html>
