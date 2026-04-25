@@ -82,6 +82,14 @@ t_html() {
 }
 
 t_lighthouse() {
+  # On WSL2, lhci's auto-detected system Chrome (Windows) can't be reached
+  # over loopback. Force lhci to use Playwright's bundled chromium-linux64
+  # binary if present — it's downloaded on `npx playwright install`.
+  local pw_chrome
+  pw_chrome=$(ls -d "$HOME"/.cache/ms-playwright/chromium-*/chrome-linux64/chrome 2>/dev/null | head -1)
+  if [ -n "$pw_chrome" ] && [ -x "$pw_chrome" ]; then
+    export CHROME_PATH="$pw_chrome"
+  fi
   npx -y -p @lhci/cli@latest lhci autorun --config=./lighthouserc.json &&
   npx -y -p @lhci/cli@latest lhci autorun --config=./lighthouserc-desktop.json
 }

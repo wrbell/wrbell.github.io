@@ -85,6 +85,24 @@ a { color: inherit; text-decoration: none; }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 .accent { color: var(--accent); }
 
+/* ─── reading-progress bar ─── */
+.reading-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  z-index: 100;
+  pointer-events: none;
+  transition: transform 0.08s linear;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reading-progress { transition: none; }
+}
+
 /* ─── window-chrome bar ─── */
 .chrome {
   display: flex; align-items: center; justify-content: space-between;
@@ -393,6 +411,88 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
   background: var(--bg);
 }
 
+/* ─── generative shot variants ───
+   When .shot also has .viz, suppress the checkered overlay and let the inline
+   <svg> + caption tag carry the visual. This is the "intentional placeholder" —
+   not a real photo, but a project-specific diagram that earns its place. */
+.shot.viz { background: var(--surface); padding: 0; }
+.shot.viz::before { display: none; }
+.shot.viz svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.shot.viz .placeholder-tag {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 2;
+}
+.shot.viz .viz-legend {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  padding: 4px 8px;
+  border: 1px solid var(--border-hi);
+  background: var(--bg);
+  display: flex; align-items: center; gap: 8px;
+}
+.shot.viz .viz-legend .swatch {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  display: inline-block;
+}
+
+/* SVG element styling — driven by CSS so light-theme tokens flow through. */
+.shot.viz .grid-line { stroke: var(--border); stroke-width: 1; }
+.shot.viz .axis      { stroke: var(--border-hi); stroke-width: 1.25; }
+.shot.viz .accent-stroke { stroke: var(--accent); fill: none; }
+.shot.viz .accent-fill   { fill: var(--accent); }
+.shot.viz .dim-stroke    { stroke: var(--muted-2); fill: none; }
+.shot.viz .text-mono {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  fill: var(--muted-2);
+}
+.shot.viz .text-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--text);
+  font-weight: 500;
+}
+.shot.viz .text-accent {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--accent);
+  font-weight: 500;
+}
+.shot.viz .surface-fill { fill: var(--bg-2); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .shot.viz .pulse {
+    animation: viz-pulse 3.4s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes viz-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+  .shot.viz .stream {
+    stroke-dasharray: 4 6;
+    animation: viz-stream 1.2s linear infinite;
+  }
+  @keyframes viz-stream {
+    to { stroke-dashoffset: -10; }
+  }
+}
+
 /* ─── next-up cards ─── */
 .nx-wrap {
   padding: 56px 64px;
@@ -478,9 +578,109 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
 
 /* ─── print ─── */
 @media print {
-  body { background: #fff; color: #000; }
-  .chrome, .nx-wrap, .ftr { display: none; }
-  .hero, .sect { padding: 24px 0; border-color: #ccc; }
-  .badge { border-color: #000; color: #000; background: transparent; }
-  .badge .dot { background: #000; box-shadow: none; }
+  @page { margin: 0.6in 0.5in; }
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  body { font-family: 'Inter', system-ui, sans-serif; }
+
+  .chrome,
+  .nx-wrap,
+  .ftr,
+  .reading-progress,
+  .theme-toggle,
+  .badge .dot { display: none !important; }
+
+  a { color: #000 !important; text-decoration: none; }
+  .sect a[href^="http"]::after {
+    content: ' (' attr(href) ')';
+    font-size: 9pt;
+    color: #555;
+    word-break: break-all;
+  }
+
+  .hero, .sect {
+    padding: 16pt 0 !important;
+    border-color: #bbb !important;
+    page-break-inside: avoid;
+  }
+  .sect { grid-template-columns: 130pt 1fr; gap: 18pt; }
+  .sect .gutter { font-size: 8.5pt; }
+  .sect .gutter .head { color: #000 !important; }
+  .sect .gutter .meta { color: #555 !important; }
+  .sect h2 {
+    font-size: 16pt;
+    color: #000 !important;
+    page-break-after: avoid;
+  }
+  .sect h2::before { color: #000 !important; }
+  .sect p { color: #000 !important; max-width: none; font-size: 10.5pt; }
+  .sect p strong { color: #000 !important; }
+  .sect p em { color: #000 !important; }
+  .sect p code {
+    color: #000 !important;
+    background: #f0f0f0 !important;
+    border: 1px solid #ddd;
+  }
+  .accent, .em { color: #000 !important; }
+
+  .hero h1 { font-size: 24pt; color: #000 !important; }
+  .hero .tagline { font-size: 11.5pt; color: #000 !important; max-width: none; }
+  .badge {
+    border: 1px solid #000 !important;
+    color: #000 !important;
+    background: transparent !important;
+  }
+
+  .status {
+    border: 1px solid #999 !important;
+    border-left-width: 2px !important;
+    background: #f7f7f7 !important;
+    page-break-inside: avoid;
+  }
+  .status .row .k { color: #555 !important; }
+  .status .row .v,
+  .status .row .v.acc { color: #000 !important; }
+
+  .ascii {
+    background: #fafafa !important;
+    border-color: #bbb !important;
+    color: #000 !important;
+    font-size: 8.5pt;
+    page-break-inside: avoid;
+  }
+  .ascii .a, .ascii .c { color: #000 !important; }
+
+  .listing {
+    border-color: #bbb !important;
+    background: #fff !important;
+    page-break-inside: avoid;
+  }
+  .listing .row { border-color: #ddd !important; }
+  .listing .row .ico { color: #000 !important; }
+  .listing .row .name { color: #000 !important; }
+  .listing .row .desc { color: #333 !important; }
+  .listing .row .ver { color: #777 !important; }
+
+  .commits li { page-break-inside: avoid; border-color: #ccc !important; }
+  .commits li::before { color: #000 !important; }
+  .commits .sha { color: #555 !important; }
+  .commits h3 { color: #000 !important; }
+  .commits p { color: #000 !important; }
+
+  .shot {
+    border-color: #ccc !important;
+    background: #fafafa !important;
+    aspect-ratio: 16 / 9;
+    page-break-inside: avoid;
+  }
+  .shot::before { display: none; }
+  .shot .placeholder-tag {
+    color: #555 !important;
+    border-color: #bbb !important;
+    background: #fff !important;
+  }
 }

@@ -277,6 +277,36 @@
       display: flex; justify-content: space-between;
     }
 
+    .known-paths {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border-hi);
+    }
+    .known-paths .kp-head {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .known-paths ul {
+      list-style: none;
+      display: flex; flex-wrap: wrap; gap: 8px 18px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .known-paths li::before {
+      content: '› ';
+      color: var(--accent);
+    }
+    .known-paths a {
+      color: var(--text-dim);
+      transition: color 0.15s;
+    }
+    .known-paths a:hover { color: var(--accent); }
+
     @media (max-width: 780px) {
       .topbar { padding: 16px 20px; }
       main { padding: 32px 20px; }
@@ -305,7 +335,18 @@
         <div class="cta-row">
           <a href="/" class="btn primary">← Back to home</a>
           <a href="/#work" class="btn">Selected work</a>
+          <a href="/resume.html" class="btn">Resume</a>
           <a href="mailto:wrbell@umich.edu" class="btn">Email me</a>
+        </div>
+        <div class="known-paths" aria-label="Known case studies">
+          <span class="kp-head">Or jump to a case study —</span>
+          <ul>
+            <li><a href="/projects/stark-translate.html">stark-translate</a></li>
+            <li><a href="/projects/w26-cobot-axis.html">w26-cobot-axis</a></li>
+            <li><a href="/projects/fast-fem.html">fast-fem</a></li>
+            <li><a href="/projects/me440-vibrations.html">me440-vibrations</a></li>
+            <li><a href="/projects/me379-fluids-lab.html">me379-fluids-lab</a></li>
+          </ul>
         </div>
       </div>
 

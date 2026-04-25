@@ -24,8 +24,11 @@
     })();
   </script>
   <link rel="stylesheet" href="case-study.css">
+  <script src="case-study.js" defer></script>
 </head>
-<body>
+<body data-slug="w26-cobot-axis">
+
+  <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
 
   <header class="chrome">
     <div class="lights">
@@ -104,8 +107,128 @@
         <div class="row" role="listitem"><span class="ico">›</span><span class="name">Safety analysis</span><span class="desc">ISO/TS 15066 awareness</span><span class="ver">v.dep</span></div>
       </div>
 
-      <div class="shot" role="img" aria-label="Cell layout sketch — redacted">
-        <span class="placeholder-tag">redacted · cell layout</span>
+      <div class="shot viz" role="img" aria-label="UR30 cobot mounted on a linear 7th axis — top-down kinematic layout, RTDE bridge to a Klipper-driven rail.">
+        <div class="viz-legend"><span class="swatch" aria-hidden="true"></span>kinematic · top view</div>
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <!-- light grid -->
+          <g opacity="0.45">
+            <line class="grid-line" x1="0" y1="225" x2="1600" y2="225"></line>
+            <line class="grid-line" x1="0" y1="450" x2="1600" y2="450"></line>
+            <line class="grid-line" x1="0" y1="675" x2="1600" y2="675"></line>
+            <line class="grid-line" x1="400"  y1="0" x2="400"  y2="900"></line>
+            <line class="grid-line" x1="800"  y1="0" x2="800"  y2="900"></line>
+            <line class="grid-line" x1="1200" y1="0" x2="1200" y2="900"></line>
+          </g>
+
+          <!-- Datum corner -->
+          <g transform="translate(80, 80)">
+            <line class="accent-stroke" x1="0" y1="0" x2="60" y2="0" stroke-width="2"></line>
+            <line class="accent-stroke" x1="0" y1="0" x2="0"  y2="60" stroke-width="2"></line>
+            <text class="text-accent" x="6" y="80">DATUM · A0</text>
+          </g>
+
+          <!-- ─── Linear rail (the 7th axis) ─── -->
+          <g transform="translate(140, 440)">
+            <!-- rail bed -->
+            <rect class="surface-fill" x="0" y="-30" width="1320" height="60" stroke="var(--border-hi)" stroke-width="1.25"></rect>
+            <!-- rail tops (twin linear guides) -->
+            <line class="dim-stroke" x1="0" y1="-18" x2="1320" y2="-18" stroke-width="1.5"></line>
+            <line class="dim-stroke" x1="0" y1="18"  x2="1320" y2="18"  stroke-width="1.5"></line>
+            <!-- belt-drive ticks (rolled servo) -->
+            <g class="dim-stroke" stroke-width="0.75" opacity="0.7">
+              <line x1="40"   y1="-30" x2="40"   y2="30"></line>
+              <line x1="120"  y1="-30" x2="120"  y2="30"></line>
+              <line x1="200"  y1="-30" x2="200"  y2="30"></line>
+              <line x1="280"  y1="-30" x2="280"  y2="30"></line>
+              <line x1="360"  y1="-30" x2="360"  y2="30"></line>
+              <line x1="440"  y1="-30" x2="440"  y2="30"></line>
+              <line x1="520"  y1="-30" x2="520"  y2="30"></line>
+              <line x1="600"  y1="-30" x2="600"  y2="30"></line>
+              <line x1="680"  y1="-30" x2="680"  y2="30"></line>
+              <line x1="760"  y1="-30" x2="760"  y2="30"></line>
+              <line x1="840"  y1="-30" x2="840"  y2="30"></line>
+              <line x1="920"  y1="-30" x2="920"  y2="30"></line>
+              <line x1="1000" y1="-30" x2="1000" y2="30"></line>
+              <line x1="1080" y1="-30" x2="1080" y2="30"></line>
+              <line x1="1160" y1="-30" x2="1160" y2="30"></line>
+              <line x1="1240" y1="-30" x2="1240" y2="30"></line>
+            </g>
+
+            <!-- end stops -->
+            <rect class="accent-fill" x="-8" y="-46" width="8" height="92" opacity="0.85"></rect>
+            <rect class="accent-fill" x="1320" y="-46" width="8" height="92" opacity="0.85"></rect>
+
+            <!-- Travel dim arrows -->
+            <line class="accent-stroke" x1="0" y1="80" x2="1320" y2="80" stroke-width="1.5"></line>
+            <path class="accent-fill" d="M 0 80 L 12 74 L 12 86 Z"></path>
+            <path class="accent-fill" d="M 1320 80 L 1308 74 L 1308 86 Z"></path>
+            <text class="text-accent" x="660" y="74" text-anchor="middle">TRAVEL · 1.20 m</text>
+          </g>
+
+          <!-- ─── UR30 base plate on the carriage ─── -->
+          <g transform="translate(800, 440)">
+            <!-- carriage -->
+            <rect class="surface-fill" x="-90" y="-50" width="180" height="100" stroke="var(--accent)" stroke-width="1.5"></rect>
+            <text class="text-accent" x="0" y="-60" text-anchor="middle">CARRIAGE</text>
+            <!-- UR30 base outline (top-down circle) -->
+            <circle class="accent-stroke pulse" cx="0" cy="0" r="38" stroke-width="2"></circle>
+            <circle class="accent-fill" cx="0" cy="0" r="6" opacity="0.9"></circle>
+            <!-- Reach envelope dashed -->
+            <circle class="dim-stroke" cx="0" cy="0" r="170" stroke-dasharray="6 6" stroke-width="1" opacity="0.6"></circle>
+            <text class="text-mono" x="0" y="-180" text-anchor="middle">UR30 · 1300 mm reach</text>
+          </g>
+
+          <!-- ─── Workpiece zones (left + right) ─── -->
+          <g transform="translate(220, 250)">
+            <rect class="surface-fill" x="0" y="0" width="220" height="120" stroke="var(--border-hi)" stroke-width="1.25" stroke-dasharray="5 5"></rect>
+            <text class="text-mono" x="110" y="60" text-anchor="middle">WORK-CELL · A</text>
+            <text class="text-mono" x="110" y="78" text-anchor="middle" opacity="0.7">load station</text>
+          </g>
+          <g transform="translate(1160, 250)">
+            <rect class="surface-fill" x="0" y="0" width="220" height="120" stroke="var(--border-hi)" stroke-width="1.25" stroke-dasharray="5 5"></rect>
+            <text class="text-mono" x="110" y="60" text-anchor="middle">WORK-CELL · B</text>
+            <text class="text-mono" x="110" y="78" text-anchor="middle" opacity="0.7">teach + verify</text>
+          </g>
+
+          <!-- ─── Control bridge callout ─── -->
+          <g transform="translate(140, 660)">
+            <rect class="surface-fill" x="0" y="0" width="380" height="170" stroke="var(--accent)" stroke-width="1.25"></rect>
+            <text class="text-mono" x="14" y="22">CONTROL BRIDGE</text>
+
+            <!-- ur side -->
+            <text class="text-label" x="14" y="56">UR30 · RTDE @ 500 Hz</text>
+            <line class="accent-stroke stream" x1="14" y1="68" x2="180" y2="68" stroke-width="1.5"></line>
+            <path class="accent-stroke" d="M 176 64 L 184 68 L 176 72" stroke-width="1.5"></path>
+
+            <!-- rp2040 -->
+            <rect class="accent-fill" x="190" y="58" width="60" height="20"></rect>
+            <text class="text-mono" x="220" y="74" text-anchor="middle" fill="var(--bg)">RP2040</text>
+
+            <!-- klipper side -->
+            <line class="accent-stroke stream" x1="252" y1="68" x2="370" y2="68" stroke-width="1.5"></line>
+            <path class="accent-stroke" d="M 366 64 L 374 68 L 366 72" stroke-width="1.5"></path>
+            <text class="text-label" x="14" y="120">Klipper · servo + step gen</text>
+            <text class="text-mono" x="14" y="142" opacity="0.7">deterministic motion · soft-realtime host</text>
+          </g>
+
+          <!-- ─── Safety + spec stack (right) ─── -->
+          <g transform="translate(1080, 660)">
+            <rect class="surface-fill" x="0" y="0" width="380" height="170" stroke="var(--border-hi)" stroke-width="1.25"></rect>
+            <text class="text-mono" x="14" y="22">SAFETY CASE</text>
+            <text class="text-label" x="14" y="50">· dual-channel E-stop on rail</text>
+            <text class="text-label" x="14" y="74">· cobot velocity-limited at endstops</text>
+            <text class="text-label" x="14" y="98">· soft-zone matching UR safety map</text>
+            <text class="text-label" x="14" y="122">· ISO/TS 15066 power+force compliant</text>
+            <text class="text-mono" x="14" y="150" opacity="0.7">methodology only · NDA</text>
+          </g>
+
+          <!-- ─── Title strip ─── -->
+          <g transform="translate(700, 100)">
+            <text class="text-mono" x="0" y="0">SECTION · 7th-axis kinematic layout</text>
+            <text class="text-accent" x="0" y="22" font-size="16" font-weight="700">ME 472 · W'26</text>
+          </g>
+        </svg>
+        <span class="placeholder-tag">diagram · 7th axis</span>
       </div>
     </div>
   </section>
@@ -150,21 +273,7 @@
     </div>
   </section>
 
-  <section class="nx-wrap">
-    <div class="nx-head">// up <b>next</b></div>
-    <div class="nx-grid">
-      <a class="nx-card" href="./stark-translate.html">
-        <div class="k">F'25 · SpaceX</div>
-        <h3>Stark-Translate →</h3>
-        <p>Mass timing-belt rig analysis. Belts → screws.</p>
-      </a>
-      <a class="nx-card" href="./me440-vibrations.html">
-        <div class="k">ME 440 · W'26</div>
-        <h3>Vibrations final →</h3>
-        <p>MATLAB forced-response solver. Closed-form benchmarks.</p>
-      </a>
-    </div>
-  </section>
+  <section class="nx-wrap" data-up-next aria-label="Up next"></section>
 
   <footer class="ftr">
     <span>© 2026 wrbell · <a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a></span>

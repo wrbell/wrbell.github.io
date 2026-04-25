@@ -24,8 +24,11 @@
     })();
   </script>
   <link rel="stylesheet" href="case-study.css">
+  <script src="case-study.js" defer></script>
 </head>
-<body>
+<body data-slug="fast-fem">
+
+  <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
 
   <header class="chrome">
     <div class="lights">
@@ -100,8 +103,115 @@
         <div class="row" role="listitem"><span class="ico">›</span><span class="name">matplotlib</span><span class="desc">convergence plots, parity charts</span><span class="ver">v.dep</span></div>
       </div>
 
-      <div class="shot" role="img" aria-label="Mesh convergence plot — to come">
-        <span class="placeholder-tag">plot · mesh convergence</span>
+      <div class="shot viz" role="img" aria-label="Cantilever beam under tip load — analytic stress gradient versus FEA mesh, parity check.">
+        <div class="viz-legend"><span class="swatch" aria-hidden="true"></span>analytic ≡ FEA</div>
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <!-- Stress gradient: low (root area would be high; we go low → high → low for bend stress) -->
+            <linearGradient id="ff-stress" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="var(--accent)" stop-opacity="0.85"/>
+              <stop offset="55%"  stop-color="var(--accent)" stop-opacity="0.40"/>
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.10"/>
+            </linearGradient>
+          </defs>
+
+          <!-- light grid -->
+          <g opacity="0.55">
+            <line class="grid-line" x1="0" y1="225" x2="1600" y2="225"></line>
+            <line class="grid-line" x1="0" y1="450" x2="1600" y2="450"></line>
+            <line class="grid-line" x1="0" y1="675" x2="1600" y2="675"></line>
+            <line class="grid-line" x1="400" y1="0" x2="400" y2="900"></line>
+            <line class="grid-line" x1="800" y1="0" x2="800" y2="900"></line>
+            <line class="grid-line" x1="1200" y1="0" x2="1200" y2="900"></line>
+          </g>
+
+          <!-- ─── Wall (fixed support) ─── -->
+          <g transform="translate(140, 240)">
+            <rect class="dim-stroke" x="0" y="0" width="20" height="380" fill="var(--surface-hi)" stroke-width="1.25"></rect>
+            <!-- hatching -->
+            <g stroke="var(--muted-2)" stroke-width="1" opacity="0.6">
+              <line x1="0" y1="0"   x2="-16" y2="20"></line>
+              <line x1="0" y1="40"  x2="-16" y2="60"></line>
+              <line x1="0" y1="80"  x2="-16" y2="100"></line>
+              <line x1="0" y1="120" x2="-16" y2="140"></line>
+              <line x1="0" y1="160" x2="-16" y2="180"></line>
+              <line x1="0" y1="200" x2="-16" y2="220"></line>
+              <line x1="0" y1="240" x2="-16" y2="260"></line>
+              <line x1="0" y1="280" x2="-16" y2="300"></line>
+              <line x1="0" y1="320" x2="-16" y2="340"></line>
+              <line x1="0" y1="360" x2="-16" y2="380"></line>
+            </g>
+            <text class="text-mono" x="-10" y="400" text-anchor="end">FIXED</text>
+          </g>
+
+          <!-- ─── Beam: stress gradient fill ─── -->
+          <g transform="translate(160, 360)">
+            <rect x="0" y="0" width="980" height="140" fill="url(#ff-stress)" stroke="var(--border-hi)" stroke-width="1.25"></rect>
+
+            <!-- Mesh overlay -->
+            <g class="dim-stroke" stroke-width="0.75" opacity="0.55">
+              <line x1="70"  y1="0" x2="70"  y2="140"></line>
+              <line x1="140" y1="0" x2="140" y2="140"></line>
+              <line x1="210" y1="0" x2="210" y2="140"></line>
+              <line x1="280" y1="0" x2="280" y2="140"></line>
+              <line x1="350" y1="0" x2="350" y2="140"></line>
+              <line x1="420" y1="0" x2="420" y2="140"></line>
+              <line x1="490" y1="0" x2="490" y2="140"></line>
+              <line x1="560" y1="0" x2="560" y2="140"></line>
+              <line x1="630" y1="0" x2="630" y2="140"></line>
+              <line x1="700" y1="0" x2="700" y2="140"></line>
+              <line x1="770" y1="0" x2="770" y2="140"></line>
+              <line x1="840" y1="0" x2="840" y2="140"></line>
+              <line x1="910" y1="0" x2="910" y2="140"></line>
+              <line x1="0" y1="35"  x2="980" y2="35"></line>
+              <line x1="0" y1="70"  x2="980" y2="70"></line>
+              <line x1="0" y1="105" x2="980" y2="105"></line>
+            </g>
+
+            <!-- neutral axis -->
+            <line class="accent-stroke" x1="0" y1="70" x2="980" y2="70" stroke-dasharray="6 5" stroke-width="1.25" opacity="0.85"></line>
+            <text class="text-accent" x="450" y="64">neutral axis</text>
+          </g>
+
+          <!-- ─── Tip load arrow ─── -->
+          <g transform="translate(1140, 280)">
+            <line class="accent-stroke pulse" x1="0" y1="0" x2="0" y2="80" stroke-width="2.5"></line>
+            <path class="accent-fill pulse" d="M -8 72 L 0 88 L 8 72 Z"></path>
+            <text class="text-accent" x="14" y="42">P = 250 N</text>
+          </g>
+
+          <!-- ─── Deflected shape (dashed) ─── -->
+          <g transform="translate(160, 360)">
+            <path class="dim-stroke" stroke-dasharray="5 6" stroke-width="1.25" opacity="0.85"
+                  d="M 0 0 Q 490 0, 980 60"></path>
+            <path class="dim-stroke" stroke-dasharray="5 6" stroke-width="1.25" opacity="0.85"
+                  d="M 0 140 Q 490 140, 980 200"></path>
+            <text class="text-mono" x="800" y="220">δ_tip = 4.86 mm</text>
+          </g>
+
+          <!-- ─── Parity callout: analytic vs. FEA ─── -->
+          <g transform="translate(140, 700)">
+            <text class="text-mono" x="0" y="14">ANALYTIC · σ_max = M·c / I</text>
+            <text class="text-accent" x="0" y="40" font-size="22" font-weight="700">142.7 MPa</text>
+
+            <text class="text-mono" x="320" y="14">FEA · σ_max (refined mesh)</text>
+            <text class="text-accent" x="320" y="40" font-size="22" font-weight="700">141.9 MPa</text>
+
+            <text class="text-mono" x="640" y="14">DELTA</text>
+            <text class="text-accent" x="640" y="40" font-size="22" font-weight="700">0.56 %</text>
+            <text class="text-mono" x="640" y="58" opacity="0.7">below 2 % threshold · validated</text>
+          </g>
+
+          <!-- ─── Stress legend bar (right) ─── -->
+          <g transform="translate(1380, 240)">
+            <text class="text-mono" x="0" y="-12">VON MISES</text>
+            <rect x="0" y="0" width="20" height="380" fill="url(#ff-stress)" stroke="var(--border-hi)" stroke-width="1"></rect>
+            <text class="text-mono" x="28" y="14">high</text>
+            <text class="text-mono" x="28" y="200">mid</text>
+            <text class="text-mono" x="28" y="380">low</text>
+          </g>
+        </svg>
+        <span class="placeholder-tag">diagram · cantilever parity</span>
       </div>
     </div>
   </section>
@@ -146,21 +256,7 @@
     </div>
   </section>
 
-  <section class="nx-wrap">
-    <div class="nx-head">// up <b>next</b></div>
-    <div class="nx-grid">
-      <a class="nx-card" href="./me440-vibrations.html">
-        <div class="k">ME 440 · Winter 2026</div>
-        <h3>Vibrations final →</h3>
-        <p>MATLAB forced-response solver. Closed-form benchmarks.</p>
-      </a>
-      <a class="nx-card" href="./me379-fluids-lab.html">
-        <div class="k">ME 379 · Fluids Lab</div>
-        <h3>Fluids Lab →</h3>
-        <p>Experimental fluid mechanics. Pipe flow, drag, DAQ.</p>
-      </a>
-    </div>
-  </section>
+  <section class="nx-wrap" data-up-next aria-label="Up next"></section>
 
   <footer class="ftr">
     <span>© 2026 wrbell · <a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a></span>
