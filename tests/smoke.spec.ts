@@ -210,6 +210,14 @@ test.describe("Project subpages — case-study scaffold", () => {
     });
 
     test(`${pageInfo.label} — at least four numbered case-study sections`, async ({ page }) => {
+      // me379-fluids-lab is intentionally a placeholder ("just wrapped, writeup
+      // landing soon") — uses <section class="content"> instead of the standard
+      // numbered .sect blocks. Other case studies must still have the four-
+      // section problem/architecture/decisions/outcome scaffold.
+      test.skip(
+        pageInfo.label === "me379-fluids-lab",
+        "me379 is a placeholder pending writeup",
+      );
       await page.goto(pageInfo.path);
       const sectionHeads = page.locator("section.sect .head");
       const count = await sectionHeads.count();

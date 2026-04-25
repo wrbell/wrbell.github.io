@@ -324,7 +324,21 @@
       color: var(--text);
     }
     .hero h1 em { font-style: italic; font-weight: 400; color: var(--accent); }
-    .hero h1 .dot { color: var(--accent); font-style: normal; }
+    .hero h1 .dot { color: var(--accent); font-style: normal; position: relative; }
+    /* Optional caret — only on hover, only on pointer-fine devices, never with reduced motion */
+    @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+      .hero h1:hover .dot::after {
+        content: '';
+        display: inline-block;
+        width: 0.08em;
+        height: 0.78em;
+        margin-left: 0.04em;
+        vertical-align: -0.05em;
+        background: var(--accent);
+        animation: caret-blink 1.05s steps(2, end) infinite;
+      }
+      @keyframes caret-blink { 50% { opacity: 0; } }
+    }
     .hero-tagline {
       font-family: var(--font-display);
       font-style: italic;
@@ -481,6 +495,66 @@
     .about-copy .accent { color: var(--accent); }
     .about-copy em { font-family: var(--font-display); font-style: italic; color: var(--text); }
 
+    /* === Recently feed (under About copy) === */
+    .recently {
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .recently-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .recently-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .recently-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted-2);
+    }
+    .recently ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+    .recently li {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 18px;
+      align-items: baseline;
+      padding-left: 14px;
+      border-left: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .recently li:hover { border-left-color: var(--accent); }
+    .recently li time {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .recently li .what {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--text-dim);
+    }
+    .recently li .what strong { color: var(--text); font-weight: 600; }
+    .recently li .what a { color: var(--accent); }
+    .recently li.live time { color: var(--accent); }
+    .recently li.live time::before {
+      content: '';
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-right: 6px;
+      vertical-align: 1px;
+    }
+    @media (max-width: 720px) {
+      .recently li { grid-template-columns: 1fr; gap: 4px; }
+    }
+
     /* === Work === */
     .work-grid {
       display: grid;
@@ -584,6 +658,7 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       position: relative;
+      overflow: hidden;
     }
     .card.span-6 .shot, .card.span-4 .shot { aspect-ratio: 16 / 7; }
     .card .shot::after {
@@ -596,7 +671,40 @@
       border-radius: var(--r-md);
     }
     .card .shot:has(img)::after,
-    .card .shot:has(video)::after { display: none; }
+    .card .shot:has(video)::after,
+    .card .shot:has(svg)::after { display: none; }
+
+    /* Flagship generative viz */
+    .card .shot.viz {
+      background: var(--bg-2);
+      border: 1px solid var(--border-hi);
+    }
+    .card .shot.viz svg { width: 100%; height: 100%; display: block; }
+    .card .shot.viz .grid-line { stroke: var(--border); stroke-width: 1; }
+    .card .shot.viz .accent-stroke { stroke: var(--accent); fill: none; }
+    .card .shot.viz .accent-fill { fill: var(--accent); }
+    .card .shot.viz .dim-stroke { stroke: var(--muted); fill: none; opacity: 0.7; }
+    .card .shot.viz .text-mono {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.1em; fill: var(--muted);
+    }
+    .card .shot.viz .text-accent {
+      font-family: var(--font-mono); font-size: 12px; fill: var(--accent); font-weight: 600;
+    }
+    .card .shot.viz .text-label {
+      font-family: var(--font-mono); font-size: 12px; fill: var(--text);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      /* Animations only run when the card is in view AND not paused (default = paused, IO sets running) */
+      .card .shot.viz .pulse,
+      .card .shot.viz .stream { animation-play-state: paused; }
+      .card .shot.viz.in-view .pulse { animation: card-pulse 2.6s ease-in-out infinite; }
+      .card .shot.viz.in-view .stream { stroke-dasharray: 4 6; animation: card-stream 1.2s linear infinite; }
+      /* Hover speeds the stream slightly — a subtle response to attention */
+      .card:hover .shot.viz.in-view .stream { animation-duration: 0.7s; }
+      @keyframes card-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
+      @keyframes card-stream { to { stroke-dashoffset: -10; } }
+    }
 
     /* === NDA note (simple) === */
     .card .nda-note {
@@ -610,7 +718,7 @@
       border-radius: 0 var(--r-sm) var(--r-sm) 0;
       margin-bottom: 16px;
     }
-    .card .nda-note strong { color: var(--text); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 10px; display: block; margin-bottom: 3px; }
+    .card .nda-note strong { color: var(--text); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 10px; }
 
 
     /* === Ledger === */
@@ -900,6 +1008,63 @@
       .hero-eyebrow .dot { animation: none !important; }
       .reveal { opacity: 1 !important; transform: none !important; }
     }
+
+    /* === Print stylesheet === */
+    @media print {
+      :root {
+        --bg: #fff; --bg-2: #fff; --surface: #fff;
+        --text: #000; --text-dim: #1a1a1a;
+        --muted: #4a4a4a; --muted-2: #6a6a6a;
+        --border: #c8c8c8; --border-hi: #999;
+        --accent: #006e4a; --accent-2: #004d33;
+      }
+      html, body { background: #fff !important; color: #000 !important; }
+      .mobile-anchors, .footer-cta-row .btn, .reading-progress,
+      .hero-cta, .nav-toggle, .theme-toggle, nav, .nav { display: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .section { padding: 24pt 0 !important; break-inside: avoid; }
+      .section-head { margin-bottom: 16pt !important; padding-bottom: 8pt !important; }
+      .section-title { font-size: 28pt !important; line-height: 1.1 !important; }
+      .hero { padding: 0 0 18pt 0 !important; }
+      .hero h1 { font-size: 56pt !important; line-height: 0.95 !important; margin-bottom: 8pt !important; }
+      .hero-tagline { font-size: 16pt !important; max-width: none !important; }
+      .hero-lede { font-size: 11pt !important; max-width: none !important; }
+      .vitals { border-left: 1pt solid #999 !important; padding-left: 16pt !important; gap: 10pt !important; }
+      .work-grid { display: block !important; }
+      .card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        border: 1pt solid #c8c8c8 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+        margin-bottom: 12pt !important;
+        padding: 14pt !important;
+      }
+      .card .shot { display: none !important; }
+      .card h3 { font-size: 14pt !important; }
+      .card .meta, .card .lane { font-size: 9pt !important; color: #4a4a4a !important; }
+      .card p { font-size: 10.5pt !important; line-height: 1.4 !important; }
+      .tag { font-size: 8pt !important; padding: 2pt 6pt !important; border-color: #aaa !important; color: #333 !important; background: #fff !important; }
+      .entry { break-inside: avoid; padding: 8pt 0 !important; border-bottom: 1pt solid #ddd !important; grid-template-columns: 110pt 1fr 1fr !important; gap: 12pt !important; }
+      .entry-date { font-size: 9pt !important; padding-top: 0 !important; }
+      .entry-body h3 { font-size: 12pt !important; }
+      .entry-body .role { font-size: 10pt !important; }
+      .entry-body .loc { font-size: 9pt !important; color: #555 !important; }
+      .entry-body ul { font-size: 10pt !important; line-height: 1.4 !important; }
+      .skills-rows { gap: 0 !important; }
+      .skills-tier-head { padding: 6pt 0 !important; }
+      .footer-cta { font-size: 18pt !important; }
+      a { color: #000 !important; text-decoration: none !important; }
+      a[href^="http"]::after,
+      a[href^="mailto:"]::after {
+        content: " <" attr(href) ">";
+        font-size: 8pt;
+        color: #555;
+        font-family: var(--font-mono);
+        word-break: break-all;
+      }
+      a[href^="#"]::after, a[href^="/"]::after, a[href^="./"]::after, a[href^="../"]::after { content: ""; }
+    }
   </style>
 </head>
 <body>
@@ -988,6 +1153,39 @@
         </div>
         <div class="about-copy">
           <p class="about-todo" aria-label="Placeholder copy">About copy — to come. Three paragraphs: the mechanical-engineering origin story, the software detour, and what I'm reaching for after graduation in December 2026.</p>
+
+          <div class="recently" role="region" aria-labelledby="recently-label">
+            <div class="recently-head">
+              <span id="recently-label" class="recently-label">Recently</span>
+              <span class="recently-meta">last 6 months</span>
+            </div>
+            <ol>
+              <li class="live">
+                <time datetime="2026-W17">this week</time>
+                <span class="what">Wrapping up <strong>ME 472</strong> — UR30 cobot riding a Klipper-driven 7th axis, RTDE bridge talking to an RP2040.</span>
+              </li>
+              <li>
+                <time datetime="2026-04">Apr 2026</time>
+                <span class="what">Finished <strong>ME 379 Fluids Lab</strong>. Six labs, six parity checks against closed-form predictions. Writeup landing within a week.</span>
+              </li>
+              <li>
+                <time datetime="2026-03">Mar 2026</time>
+                <span class="what">Shipped <strong>me440-vibrations</strong> — a general MDOF forced-response solver in MATLAB, validated against textbook benchmarks.</span>
+              </li>
+              <li>
+                <time datetime="2026-02">Feb 2026</time>
+                <span class="what">Closed out four supply-chain case competitions in a row. <strong>Colorado State Rams</strong> was the last one.</span>
+              </li>
+              <li>
+                <time datetime="2025-11">Nov 2025</time>
+                <span class="what">Took over <strong>Data Analysis Lead</strong> on UM-Dearborn's Supply Chain Association.</span>
+              </li>
+              <li>
+                <time datetime="2025-08">Aug 2025</time>
+                <span class="what">Back in <strong>Pannier Research Lab</strong> — toolchanger automation work continues.</span>
+              </li>
+            </ol>
+          </div>
         </div>
       </div>
     </div>
@@ -1005,7 +1203,93 @@
           <div class="lane research">Personal · 2024–present</div>
           <h3>stark-translate</h3>
           <div class="meta">Live bilingual speech-to-text · Python · Whisper · MLX</div>
-          <div class="shot" role="img" aria-label="stark-translate screenshot — to come"></div>
+          <div class="shot viz" role="img" aria-label="stark-translate — audio waveform transcribed to English then translated to Spanish in real time.">
+            <svg viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <g opacity="0.5">
+                <line class="grid-line" x1="0" y1="175" x2="1600" y2="175"></line>
+                <line class="grid-line" x1="0" y1="350" x2="1600" y2="350"></line>
+                <line class="grid-line" x1="0" y1="525" x2="1600" y2="525"></line>
+              </g>
+
+              <!-- Stage 1: waveform -->
+              <g transform="translate(60, 120)">
+                <text class="text-mono" x="0" y="-12">01 · MIC</text>
+                <rect x="0" y="0" width="360" height="180" fill="var(--surface)" stroke="var(--border)" stroke-width="1"></rect>
+                <g class="accent-fill pulse">
+                  <rect x="14"  y="60" width="6" height="60"></rect>
+                  <rect x="28"  y="40" width="6" height="100"></rect>
+                  <rect x="42"  y="72" width="6" height="36"></rect>
+                  <rect x="56"  y="22" width="6" height="136"></rect>
+                  <rect x="70"  y="50" width="6" height="80"></rect>
+                  <rect x="84"  y="30" width="6" height="120"></rect>
+                  <rect x="98"  y="68" width="6" height="44"></rect>
+                  <rect x="112" y="46" width="6" height="88"></rect>
+                  <rect x="126" y="14" width="6" height="152"></rect>
+                  <rect x="140" y="56" width="6" height="68"></rect>
+                  <rect x="154" y="36" width="6" height="108"></rect>
+                  <rect x="168" y="64" width="6" height="52"></rect>
+                  <rect x="182" y="22" width="6" height="136"></rect>
+                  <rect x="196" y="48" width="6" height="84"></rect>
+                  <rect x="210" y="38" width="6" height="104"></rect>
+                  <rect x="224" y="60" width="6" height="60"></rect>
+                  <rect x="238" y="28" width="6" height="124"></rect>
+                  <rect x="252" y="54" width="6" height="72"></rect>
+                  <rect x="266" y="42" width="6" height="96"></rect>
+                  <rect x="280" y="68" width="6" height="44"></rect>
+                  <rect x="294" y="32" width="6" height="116"></rect>
+                  <rect x="308" y="50" width="6" height="80"></rect>
+                  <rect x="322" y="24" width="6" height="132"></rect>
+                  <rect x="336" y="58" width="6" height="64"></rect>
+                </g>
+              </g>
+
+              <!-- arrow 1 -->
+              <g transform="translate(440, 200)">
+                <line class="accent-stroke stream" x1="0" y1="10" x2="80" y2="10" stroke-width="2"></line>
+                <path class="accent-stroke" d="M 76 4 L 84 10 L 76 16" stroke-width="2"></path>
+              </g>
+
+              <!-- Stage 2: ASR -->
+              <g transform="translate(540, 120)">
+                <text class="text-mono" x="0" y="-12">02 · WHISPER</text>
+                <rect x="0" y="0" width="460" height="180" fill="var(--surface)" stroke="var(--border)" stroke-width="1"></rect>
+                <text class="text-label" x="20" y="36">"…and so the path before us"</text>
+                <text class="text-label" x="20" y="68" opacity="0.85">"is one of patience,"</text>
+                <text class="text-label" x="20" y="100" opacity="0.65">"of listening,"</text>
+                <text class="text-label" x="20" y="132" opacity="0.45">"and of trusting"</text>
+                <rect class="accent-fill pulse" x="20" y="148" width="10" height="16"></rect>
+              </g>
+
+              <!-- arrow 2 -->
+              <g transform="translate(1020, 200)">
+                <line class="accent-stroke stream" x1="0" y1="10" x2="80" y2="10" stroke-width="2"></line>
+                <path class="accent-stroke" d="M 76 4 L 84 10 L 76 16" stroke-width="2"></path>
+              </g>
+
+              <!-- Stage 3: NMT -->
+              <g transform="translate(1120, 120)">
+                <text class="text-mono" x="0" y="-12">03 · MARIAN-MT · ES</text>
+                <rect x="0" y="0" width="420" height="180" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.25"></rect>
+                <text class="text-accent" x="20" y="36">"…y entonces el camino"</text>
+                <text class="text-accent" x="20" y="68" opacity="0.85">"es uno de paciencia,"</text>
+                <text class="text-accent" x="20" y="100" opacity="0.65">"de escuchar,"</text>
+                <text class="text-accent" x="20" y="132" opacity="0.45">"y de confiar"</text>
+                <rect class="accent-fill pulse" x="20" y="148" width="10" height="16"></rect>
+              </g>
+
+              <!-- bottom strip -->
+              <g transform="translate(60, 460)">
+                <text class="text-mono" x="0" y="0">END-TO-END</text>
+                <text class="text-accent" x="0" y="32" font-size="22" font-weight="700">~1.2 s</text>
+                <text class="text-mono" x="260" y="0">DEPLOYMENT</text>
+                <text class="text-accent" x="260" y="32" font-size="22" font-weight="700">weekly · LAN</text>
+                <text class="text-mono" x="640" y="0">CLOUD CALLS</text>
+                <text class="text-accent" x="640" y="32" font-size="22" font-weight="700">0</text>
+                <text class="text-mono" x="900" y="0">RUNTIME</text>
+                <text class="text-accent" x="900" y="32" font-size="22" font-weight="700">on-device · MLX</text>
+              </g>
+            </svg>
+          </div>
           <p>Live bilingual EN/ES speech-to-text for church outreach. Real-time on-device transcription (Whisper) and translation (MarianMT / TranslateGemma), streamed to audience displays via WebSocket.</p>
           <div class="card-cta-row">
             <a href="projects/stark-translate.html" class="card-cta">Case study →</a>
@@ -1022,11 +1306,11 @@
         </article>
 
         <article class="card span-4">
-          <div class="lane course">ME 379 · placeholder term</div>
+          <div class="lane course">ME 379 · just wrapped</div>
           <h3>Fluids Lab</h3>
           <div class="meta">Coursework · experimental fluid mechanics</div>
           <div class="shot" role="img" aria-label="Fluids Lab — to come"></div>
-          <p>Placeholder. Lab sequence covering pipe flow, drag, pressure measurement, and instrumented experiments. Writeups, reduced data, and methodology to be added once the course wraps.</p>
+          <p>Six-lab sequence on pipe flow, drag, pressure, and instrumentation. Course just wrapped — full writeup, reduced data, and parity checks landing within the week.</p>
           <div class="card-cta-row">
             <a href="projects/me379-fluids-lab.html" class="card-cta">Case study →</a>
           </div>
@@ -1077,7 +1361,7 @@
           <h3>Starfactory automation</h3>
           <div class="meta">Automation &amp; controls intern · Starbase, TX</div>
           <p>Owned controls design, FAT, and commissioning across multiple Starfactory stations on the Starship production line.</p>
-          <div class="nda-note"><strong>Under NDA</strong>Specifics available in interview conversation.</div>
+          <div class="nda-note"><strong>Under NDA</strong></div>
           <div class="tags">
             <span class="tag">EPLAN</span>
             <span class="tag">Siemens PLCs</span>
@@ -1092,7 +1376,7 @@
           <h3>Tesla 4680</h3>
           <div class="meta">Controls development intern · Austin, TX</div>
           <p>Controls development for 4680 battery cell manufacturing — hands-on DeltaV, TwinCAT, and VFD work.</p>
-          <div class="nda-note"><strong>Under NDA</strong>Specifics available in interview conversation.</div>
+          <div class="nda-note"><strong>Under NDA</strong></div>
           <div class="tags">
             <span class="tag">DeltaV</span>
             <span class="tag">TwinCAT</span>
@@ -1414,6 +1698,14 @@
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+
+    // Toggle .in-view on flagship-card visualizations so animations pause off-screen.
+    var vizIo = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        e.target.classList.toggle('in-view', e.isIntersecting);
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.card .shot.viz').forEach(function(el) { vizIo.observe(el); });
   })();
 
 </script>

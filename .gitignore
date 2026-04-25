@@ -11,3 +11,7 @@ dist/
 test-results/
 playwright-report/
 .ci-tools/
+.lighthouseci/
+# WSL lhci spew: when @lhci/cli auto-detects a Windows Chrome, it scribbles
+# user-data-dirs whose names start with the literal Windows path "C:\Users\..."
+C:\\Users\\*
