@@ -45,7 +45,7 @@
   --text-2:       #e6e6ee;
   --text-dim:     #b8b8cc;
   --muted:        #9090b8;
-  --muted-2:      #6a6a8a;
+  --muted-2:      #8585a8;
   --accent:       #00e5a0;
   --accent-glow:  rgba(0, 229, 160, 0.20);
 
@@ -64,7 +64,7 @@
   --text-2:      #2a2a3c;
   --text-dim:    #2a2a3c;
   --muted:       #555566;
-  --muted-2:     #707080;
+  --muted-2:     #5e6066;
   --accent:      #006e4a;
   --accent-glow: rgba(0, 110, 74, 0.12);
 }
