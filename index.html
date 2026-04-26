@@ -550,7 +550,14 @@
       color: var(--text-dim);
     }
     .recently li .what strong { color: var(--text); font-weight: 600; }
-    .recently li .what a { color: var(--accent); }
+    .recently li .what a {
+      color: var(--accent);
+      /* Underline keeps the link distinguishable from surrounding text on
+         either theme (axe link-in-text-block); accent alone is below 3:1
+         vs --text-dim. */
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
     .recently li.live time { color: var(--accent); }
     .recently li.live time::before {
       content: '';
@@ -1015,6 +1022,41 @@
       margin-top: auto;
       padding-top: 6px;
     }
+    .tl-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .tl-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color .15s;
+    }
+    .tl-links a::after {
+      content: "↗";
+      font-size: 10px;
+      opacity: .7;
+      transition: transform .15s, opacity .15s;
+    }
+    .tl-links a:hover {
+      color: var(--lane-color, var(--accent));
+    }
+    .tl-links a:hover::after {
+      transform: translate(1px, -1px);
+      opacity: 1;
+    }
+    /* Card lifts a touch more when it has links, signaling interactivity */
+    .tl-card:has(.tl-links):hover {
+      transform: translateY(-3px);
+    }
 
     /* Right-edge fade to hint scrollability */
     .timeline-fade {
@@ -1346,6 +1388,10 @@
                 <span class="what">Wrapping up <strong>ME 472</strong> — UR30 cobot riding a Klipper-driven 7th axis, RTDE bridge talking to an RP2040.</span>
               </li>
               <li>
+                <time datetime="2026-04">Apr 2026</time>
+                <span class="what">Took <strong>Honorable Mention</strong> and <strong>Best Use of AMD</strong> at <a href="https://devpost.com/software/ai-battery-assembler" target="_blank" rel="noopener">StarkHacks</a> at Purdue.</span>
+              </li>
+              <li>
                 <time datetime="2026-03">Mar 2026</time>
                 <span class="what">Finished <strong>ME 379 Fluids Lab</strong>. Six labs, six parity checks against closed-form predictions.</span>
               </li>
@@ -1360,10 +1406,6 @@
               <li>
                 <time datetime="2025-11">Nov 2025</time>
                 <span class="what">Stepped in as <strong>Data Analysis Lead</strong> on UM‑Dearborn's Supply Chain Association.</span>
-              </li>
-              <li>
-                <time datetime="2025-08">Aug 2025</time>
-                <span class="what">Back in <strong>Pannier Research Lab</strong> on toolchanger automation.</span>
               </li>
             </ol>
           </div>
@@ -1798,6 +1840,17 @@
           <div class="tl-org">Colorado State Rams</div>
           <div class="tl-role">Case competition · 1-week sprint</div>
           <div class="tl-loc">UM-Dearborn team</div>
+        </article>
+
+        <article class="tl-card tl--project">
+          <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026-04">Apr 2026</time></div>
+          <div class="tl-org">StarkHacks · Purdue</div>
+          <div class="tl-role">Honorable Mention · Best Use of AMD</div>
+          <div class="tl-loc">36-hour hackathon · West Lafayette, IN</div>
+          <div class="tl-links">
+            <a href="https://devpost.com/software/ai-battery-assembler" target="_blank" rel="noopener">Devpost</a>
+            <a href="https://github.com/Garrett-R16/SH26_MindFlayer" target="_blank" rel="noopener">GitHub</a>
+          </div>
         </article>
 
       </div>
