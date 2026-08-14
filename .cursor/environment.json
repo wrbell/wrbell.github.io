@@ -1,0 +1,17 @@
+{
+  "name": "wrbell.github.io",
+  "install": "npm ci && npx playwright install --with-deps chromium webkit firefox",
+  "terminals": [
+    {
+      "name": "dev-server",
+      "command": "npx serve . -l 3000 --no-clipboard",
+      "description": "Static dev server at http://localhost:3000 serving the portfolio site. Also used as the Playwright baseURL. Run `npx playwright test` in another terminal, or `npm run build` to produce the minified dist/."
+    }
+  ],
+  "ports": [
+    {
+      "name": "dev-server",
+      "port": 3000
+    }
+  ]
+}
