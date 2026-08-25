@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3M Fulfillment — case competition</title>
+  <meta name="description" content="3M US fulfillment network redesign — PuLP MILP, K=8 DCs, 95.2% 1-day coverage, $16.5M Year 1 operating cost.">
+  <meta property="og:title" content="3M Fulfillment — supply chain case">
+  <meta property="og:description" content="E-commerce fulfillment network redesign — 95.2% next-day coverage with eight DCs.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://wrbell.github.io/cases/3m-fulfillment.html">
+  <meta property="og:image" content="https://wrbell.github.io/assets/cases/3m/executive_dashboard.png">
+  <link rel="canonical" href="https://wrbell.github.io/cases/3m-fulfillment.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/inter-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    (function() {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="case-competition.css">
+  <script src="case-competition.js" defer></script>
+</head>
+<body data-slug="3m-fulfillment">
+
+  <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a href="../cases.html" class="back">← All cases</a>
+    <div class="crumb">§<span class="accent">03</span> / cases / <strong style="color:var(--text-dim)">3m</strong></div>
+    <div class="topbar-actions">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle color theme">Light</button>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="eyebrow"><span>3M Fulfillment <span class="accent">· Dec 2025</span></span></div>
+      <h1>3M <em>Fulfillment.</em></h1>
+      <p class="prompt-line">E-commerce fulfillment network redesign — how many DCs, where, and at what cost to hit next-day delivery expectations?</p>
+      <dl class="meta-grid">
+        <div><dt>Role</dt><dd>Network modeling</dd></div>
+        <div><dt>Team</dt><dd>4 · UM-Dearborn SCM</dd></div>
+        <div><dt>Stack</dt><dd>PuLP · Streamlit · Folium</dd></div>
+        <div><dt>Outcome</dt><dd class="acc">95.2% 1-day coverage</dd></div>
+      </dl>
+      <div class="hero-actions">
+        <a href="../assets/cases/3m/3m-fulfillment-deck.pdf" class="btn primary" target="_blank" rel="noopener">Download deck PDF</a>
+        <a href="https://github.com/wrbell/supply-chain-data-3m" class="btn" target="_blank" rel="noopener">GitHub repo ↗</a>
+        <a href="../cases.html" class="btn">All cases</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="sect" aria-labelledby="s1">
+      <div class="sect-label">
+        <span class="num">§01 · brief</span>
+        <span class="hint">HBS 2019 case — customers expect next-day, but every new DC adds fixed cost.</span>
+      </div>
+      <div class="sect-body" id="s1">
+        <h2>The next-day delivery tension</h2>
+        <p>3M’s US network covered only <strong>45% of demand</strong> within one-day trucking distance. E-commerce buyers increasingly expect next-day service — but expanding the DC footprint raises admin, space, inventory carrying, and transport spend.</p>
+        <p>The brief asked us to redesign the network to hit <strong>85–95% next-day coverage</strong> while grounding every dollar in the case’s cost assumptions:</p>
+        <ul>
+          <li>Tiered transport: $0.05/lb (&lt;100 mi), $0.17/lb (100–500 mi), $0.22/lb (&gt;500 mi)</li>
+          <li>$1M admin per DC per year · $8/sqft space · 20% inventory carrying</li>
+          <li>5% annual demand growth (CAGR) · square-root law for safety stock</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="sect" aria-labelledby="s2">
+      <div class="sect-label">
+        <span class="num">§02 · model</span>
+        <span class="hint">PuLP MILP + K-sweep across candidate DC counts and locations.</span>
+      </div>
+      <div class="sect-body" id="s2">
+        <h2>Optimization pipeline</h2>
+        <p>We built a mixed-integer location–allocation model in <strong>PuLP</strong> — assign each customer demand zone to a DC, choose how many facilities to open (K), and minimize total network cost subject to the 500-mile / 1-day coverage target.</p>
+        <p>The repo (<code>supply-chain-data-3m</code>) packages the full workflow: <code>GeminiAttempt1.py</code> CLI engine, an 86-cell Jupyter notebook, pytest coverage on the MILP constraints, and a <strong>Streamlit</strong> dashboard for interactive K and growth-parameter sweeps. Folium maps visualize demand heat, DC coverage, and iterative cluster solutions.</p>
+        <figure class="figure">
+          <img src="../assets/cases/3m/viz_coverage_progression.png" width="1200" height="675" alt="Chart showing 1-day coverage increasing as K grows from 4 to 10 DCs." loading="lazy" decoding="async">
+          <figcaption>Coverage progression vs. number of DCs (K) — plateau near K=8.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="sect" aria-labelledby="s3">
+      <div class="sect-label">
+        <span class="num">§03 · recommendation</span>
+        <span class="hint">K=8 trade-off — +$1.6M/year vs K=6 for near-complete coverage.</span>
+      </div>
+      <div class="sect-body" id="s3">
+        <h2>Eight DCs, not six</h2>
+        <p>Recommended network: <strong>K=8</strong> DCs in Dallas, Atlanta, Los Angeles, Allentown, Kansas City, Denver, Minneapolis, and Columbus. This lifts 1-day coverage from 45% to <strong>95.2%</strong> — inside the case’s 85–95% target band.</p>
+        <p>Incremental operating cost vs a K=6 baseline is about <strong>+$1.6M/year</strong> ($17.1M → $18.7M in the case’s operating model). That is a strategic service investment, not a cost-cut project: customers already expect next-day, and the legacy six-site network could not deliver it.</p>
+        <figure class="figure">
+          <img src="../assets/cases/3m/viz_cost_coverage_tradeoff.png" width="1200" height="675" alt="Cost vs coverage trade-off curve for different K values." loading="lazy" decoding="async">
+          <figcaption>Cost–coverage trade-off — diminishing returns after K=8.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="../assets/cases/3m/viz_summary_table.png" width="1200" height="675" alt="Summary table of K=8 network metrics and DC locations." loading="lazy" decoding="async">
+          <figcaption>K=8 summary — locations, coverage, and grounded Year 1 cost components.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="sect" aria-labelledby="s4">
+      <div class="sect-label">
+        <span class="num">§04 · outcome</span>
+        <span class="hint">Executive framing for a live panel — service level as competitive necessity.</span>
+      </div>
+      <div class="sect-body" id="s4">
+        <h2>Headline metrics</h2>
+        <p>Grounded Year 1 total operating cost: <strong>$16.5M</strong> — transport $6.72M, admin $8.0M, space $0.9M, inventory carrying $0.9M. Against ~$26B annualized revenue, network cost is <strong>0.06% of revenue</strong>.</p>
+        <p>Our deck framed the recommendation as a <em>service investment</em>: the $1.6M incremental spend vs K=6 is 0.006% of revenue — minimal for a network that closes the next-day gap competitors already fill.</p>
+        <figure class="figure">
+          <img src="../assets/cases/3m/executive_dashboard.png" width="1200" height="675" alt="Executive dashboard summarizing 3M fulfillment network recommendation." loading="lazy" decoding="async">
+          <figcaption>Executive dashboard — single-page visual summary from the analysis repo.</figcaption>
+        </figure>
+        <div class="hero-actions" style="margin-top:24px">
+          <a href="../assets/cases/3m/3m-fulfillment-deck.pdf" class="btn primary" target="_blank" rel="noopener">Presentation PDF</a>
+          <a href="https://github.com/wrbell/supply-chain-data-3m" class="btn" target="_blank" rel="noopener">Full analysis repo ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="nav-footer" data-case-nav></div>
+  </div>
+
+  <footer class="site-footer"><div class="container">© 2026 Willem Bell · wrbell@umich.edu</div></footer>
+</body>
+</html>

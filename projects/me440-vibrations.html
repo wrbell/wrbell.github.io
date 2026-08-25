@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ME 440 vibrations final — Willem Bell</title>
-  <meta name="description" content="ME 440 — MATLAB forced-response solver for damped MDOF systems, validated against closed-form benchmarks.">
-  <meta property="og:title" content="ME 440 vibrations final — case study">
-  <meta property="og:description" content="MATLAB forced-response solver. Closed-form benchmarks.">
+  <title>ME 440 phone drop FEA — Willem Bell</title>
+  <meta name="description" content="ME 440 — LS-DYNA phone-drop FEA. Fracture bracketed at ~8.3 ft drop height on chemically-strengthened glass.">
+  <meta property="og:title" content="ME 440 phone drop FEA — case study">
+  <meta property="og:description" content="LS-DYNA explicit dynamics — glass panel drop study with MAT_280 element deletion.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://wrbell.github.io/projects/me440-vibrations.html">
   <meta property="og:image" content="https://wrbell.github.io/assets/og-card.png">
@@ -52,19 +52,19 @@
     <div class="prompt"><b>$</b><span>cat ./projects/me440-vibrations/INTENT.md</span></div>
 
     <div class="title-row">
-      <h1>me440 · <span class="em">vibrations final</span></h1>
-      <span class="badge"><span class="dot" aria-hidden="true"></span>Active · W&apos;26</span>
+      <h1>me440 · <span class="em">phone drop</span></h1>
+      <span class="badge"><span class="dot" aria-hidden="true"></span>Wrapped · Winter &apos;26</span>
     </div>
 
     <p class="tagline">
-      A general-purpose <span class="accent">forced-response solver</span> for damped MDOF systems in MATLAB, validated against closed-form benchmarks before it gets used in anger.
+      LS-DYNA explicit dynamics on a <span class="accent">chemically-strengthened glass panel</span> — map where a phone fractures versus drop height and tilt angle.
     </p>
 
     <dl class="status" aria-label="Project metadata">
       <div class="row"><dt class="k">Course</dt><dd class="v">ME 440 · Winter 2026</dd></div>
-      <div class="row"><dt class="k">Stack</dt><dd class="v">MATLAB</dd></div>
-      <div class="row"><dt class="k">Scope</dt><dd class="v">MDOF · forced response</dd></div>
-      <div class="row"><dt class="k">Status</dt><dd class="v acc">In progress</dd></div>
+      <div class="row"><dt class="k">Stack</dt><dd class="v">LS-DYNA · Python · lasso-python</dd></div>
+      <div class="row"><dt class="k">Team</dt><dd class="v">Anthony &amp; Willem</dd></div>
+      <div class="row"><dt class="k">Status</dt><dd class="v acc">Complete</dd></div>
     </dl>
   </section>
 
@@ -75,8 +75,9 @@
       <span class="meta">closed-form is fine. until it isn&apos;t.</span>
     </div>
     <div>
-      <h2>past_two_dof</h2>
-      <p><em>Placeholder.</em> Closed-form forced-response is tractable for one or two degrees of freedom. Past that — anything resembling a real system — the algebra gets unmanageable and the intuition leaves with it. The final project is to build a numerical solver that handles the general case while staying honest with the textbook.</p>
+      <h2>fracture_cliff</h2>
+      <p>Final project: a 160 × 77 × 0.85 mm soda-lime glass panel dropped onto a rigid floor at flat-face and tilted orientations. Goal — build a <strong>fracture map</strong> (σ<sub>max</sub> vs. angle θ and impact velocity v) and bracket the drop height where the panel fails against FT = 220 MPa tensile strength.</p>
+      <p>Headline result: fracture between <strong>v = 7.0–7.1 m/s</strong> — a free-fall height of <strong>~8.31 ft</strong> (median), worst case at θ = 0°. Any tilt ≥ 15° drops peak σ₁ by 5–10× and stays below FT across the full velocity sweep.</p>
     </div>
   </section>
 
@@ -87,8 +88,8 @@
       <span class="meta">modal decomposition. then a benchmark gauntlet.</span>
     </div>
     <div>
-      <h2>solver_then_benchmarks</h2>
-      <p><em>Placeholder.</em> Approach: assemble M, C, K matrices, solve the eigenproblem, decouple via modal decomposition, integrate each modal coordinate under arbitrary forcing, recombine. Then validate the whole pipeline against closed-form cases — single-DOF harmonic, two-DOF beating, undamped vs. proportionally damped — before trusting it on anything novel.</p>
+      <h2>lsdyna_pipeline</h2>
+      <p>Python orchestration in <code>postprocess/sweep.py</code>: clone deck → patch velocity/angle → run LS-DYNA via WSL → extract σ₁<sub>max</sub>(t) from d3plot with <code>lasso-python</code> → audit against <code>summary.json</code>. A 4×5 grid sweep over θ ∈ {0, 15, 30, 45}° and v ∈ 5000–8000 mm/s, plus implicit modal analysis (NEIG=20 Lanczos) for flexural modes.</p>
 
       <pre class="ascii" aria-label="Solver pipeline"><span class="c">┌─────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐</span>
 <span class="c">│</span> <span class="a">assemble</span>    <span class="c">│</span>───▶<span class="c">│</span> <span class="a">eigen +</span>      <span class="c">│</span>───▶<span class="c">│</span> <span class="a">modal</span>        <span class="c">│</span>───▶<span class="c">│</span> <span class="a">recombine</span>    <span class="c">│</span>
@@ -103,10 +104,10 @@
                        <span class="c">└──────────────┘</span></pre>
 
       <div class="listing" role="list" aria-label="Stack">
-        <div class="row" role="listitem"><span class="ico">›</span><span class="name">MATLAB</span><span class="desc">solver, post-processing, plotting</span><span class="ver">v.dep</span></div>
-        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Modal decomposition</span><span class="desc">eigenproblem · normalize · decouple</span><span class="ver">v.dep</span></div>
-        <div class="row" role="listitem"><span class="ico">›</span><span class="name">ode45 · Newmark-β</span><span class="desc">integration choices, accuracy vs. cost</span><span class="ver">v.dep</span></div>
-        <div class="row" role="listitem"><span class="ico">›</span><span class="name">Benchmark suite</span><span class="desc">closed-form parity tests</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">LS-DYNA R14.1</span><span class="desc">explicit transient + implicit modal</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">lasso-python 2.0</span><span class="desc">d3plot extraction</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">MAT_280 + ELFORM 16</span><span class="desc">element deletion fracture observable</span><span class="ver">v.dep</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">HyperMesh</span><span class="desc">deck prep · unit system A</span><span class="ver">v.dep</span></div>
       </div>
 
       <div class="shot viz" role="img" aria-label="Damped MDOF forced response — time-domain decay envelope plus magnitude versus frequency, both validated against closed-form benchmarks.">
@@ -239,19 +240,19 @@
       <h2>tradeoffs_actually_made</h2>
       <ol class="commits">
         <li>
-          <div class="sha">— · placeholder</div>
-          <h3>Modal decomposition over direct integration.</h3>
-          <p><em>Placeholder.</em> Decoupling first lets each modal coordinate use the cheapest stable integrator that still resolves it. Direct integration of the full system would be simpler to write and worse to trust.</p>
+          <div class="sha">elform · 16</div>
+          <h3>ELFORM 16 over ELFORM 2.</h3>
+          <p>Belytschko-Tsay (ELFORM 2) showed 46% hourglass energy and inflated peak σ₁ to 218 MPa. Full integration (ELFORM 16) drove hourglass to 0% and the true peak to 119 MPa for the same 4 ft drop.</p>
         </li>
         <li>
-          <div class="sha">— · placeholder</div>
-          <h3>Benchmarks gate every commit.</h3>
-          <p><em>Placeholder.</em> The single-DOF harmonic and two-DOF beating cases are the regression suite. If a refactor breaks them, the refactor is wrong.</p>
+          <div class="sha">dt · 1µs</div>
+          <h3>DT = 1×10⁻⁶ s required.</h3>
+          <p>DT = 1×10⁻⁵ s aliased the sub-microsecond impact peak by ~7%. Refining to 1 µs costs ~16 GB d3plot per run but is necessary for stress-magnitude work.</p>
         </li>
         <li>
-          <div class="sha">— · placeholder</div>
-          <h3>Plot the answer before reading the number.</h3>
-          <p><em>Placeholder.</em> A response that looks wrong on a plot is wrong. Numbers can be wrong without looking it; plots usually can&apos;t.</p>
+          <div class="sha">mat · 280</div>
+          <h3>Element deletion as fracture observable.</h3>
+          <p>σ-vs-v curves saturate near FT = 220 MPa without crossing cleanly; MAT_280 element deletion jumps from 0 → 18 elements between v = 7000 and 8000 mm/s, tightening the bracket to ±1.4 inches of drop height.</p>
         </li>
       </ol>
     </div>
@@ -264,8 +265,8 @@
       <span class="meta">in progress · final due W&apos;26.</span>
     </div>
     <div>
-      <h2>where_it_is</h2>
-      <p><em>Placeholder.</em> In progress through Winter 2026. Final write-up — solver, benchmarks, novel application — lands here when the project closes out.</p>
+      <h2>where_it_landed</h2>
+      <p>Fracture map and modal analysis delivered for ME 440 Spring 2026. First flexural mode at <strong>181.08 Hz</strong> (14 elastic modes, Lanczos eigenvalue). Full pipeline, figures, and audit scripts live in <a href="https://github.com/wrbell/vibes-project" target="_blank" rel="noopener noreferrer">vibes-project</a> on GitHub.</p>
     </div>
   </section>
 

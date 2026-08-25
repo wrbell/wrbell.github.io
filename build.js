@@ -25,6 +25,10 @@ async function build() {
     "resume.html",
     "cases.html",
     "notebook.html",
+    "cases/3m-fulfillment.html",
+    "cases/colorado-state-rams.html",
+    "cases/kozy-shack.html",
+    "cases/quantum-frontiers.html",
     "projects/stark-translate.html",
     "projects/fast-fem.html",
     "projects/w26-cobot-axis.html",
@@ -50,6 +54,15 @@ async function build() {
   fs.copyFileSync(
     path.join(__dirname, "projects/case-study.css"),
     path.join(DIST, "projects/case-study.css")
+  );
+  fs.mkdirSync(path.join(DIST, "cases"), { recursive: true });
+  fs.copyFileSync(
+    path.join(__dirname, "cases/case-competition.css"),
+    path.join(DIST, "cases/case-competition.css")
+  );
+  fs.copyFileSync(
+    path.join(__dirname, "cases/case-competition.js"),
+    path.join(DIST, "cases/case-competition.js")
   );
   for (const file of ["robots.txt", "sitemap.xml"]) {
     const src = path.join(__dirname, file);

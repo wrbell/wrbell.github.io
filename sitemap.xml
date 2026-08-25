@@ -16,6 +16,26 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://wrbell.github.io/cases/3m-fulfillment.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://wrbell.github.io/cases/colorado-state-rams.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://wrbell.github.io/cases/kozy-shack.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://wrbell.github.io/cases/quantum-frontiers.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://wrbell.github.io/notebook.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

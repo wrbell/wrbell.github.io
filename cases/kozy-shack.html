@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kozy Shack — case competition</title>
+  <meta name="description" content="Land O'Lakes Kozy Shack case — CPG cold-chain optimization across refrigerated lanes and DC placement.">
+  <meta property="og:title" content="Kozy Shack — supply chain case">
+  <meta property="og:url" content="https://wrbell.github.io/cases/kozy-shack.html">
+  <link rel="canonical" href="https://wrbell.github.io/cases/kozy-shack.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <script>
+    (function() {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="case-competition.css">
+  <script src="case-competition.js" defer></script>
+</head>
+<body data-slug="kozy-shack">
+
+  <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a href="../cases.html" class="back">← All cases</a>
+    <div class="crumb">§<span class="accent">03</span> / cases / <strong style="color:var(--text-dim)">kozy</strong></div>
+    <div class="topbar-actions">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle color theme">Light</button>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="eyebrow"><span>Kozy Shack <span class="accent">· Jan 2026</span></span></div>
+      <h1>Kozy <em>Shack.</em></h1>
+      <p class="prompt-line">CPG cold-chain optimization — pudding distribution under refrigerated lane costs and retailer service levels.</p>
+      <dl class="meta-grid">
+        <div><dt>Role</dt><dd>Strategy / modeling</dd></div>
+        <div><dt>Team</dt><dd>4 · UM-Dearborn SCM</dd></div>
+        <div><dt>Format</dt><dd>24-hour sprint</dd></div>
+        <div><dt>Deck</dt><dd class="acc">PDF pending</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="sect">
+      <div class="sect-label"><span class="num">§01 · brief</span></div>
+      <div class="sect-body">
+        <h2>Cold chain under margin pressure</h2>
+        <p>24-hour Land O'Lakes case on Kozy Shack pudding distribution — balancing refrigerated lane costs, DC placement, and retailer service levels. Refrigerated freight and spoilage risk dominate the cost structure; the brief required explicit margin guardrails on any network change.</p>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="sect-label"><span class="num">§02 · model</span></div>
+      <div class="sect-body">
+        <h2>Network and cost model</h2>
+        <p>I owned the network model — lane costs by temperature class, DC-to-retailer assignment, and inventory days-on-hand assumptions. We stress-tested scenarios where consolidated DCs lowered fixed cost but lengthened average transit time in the refrigerated lane.</p>
+        <p class="pending-note">Model workbook and maps — deck pending publication</p>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="sect-label"><span class="num">§03 · recommendation</span></div>
+      <div class="sect-body">
+        <h2>Phased cold-chain redesign</h2>
+        <p>The team pitched a <strong>phased cold-chain redesign</strong> — regional consolidation where lane economics clear a margin hurdle, paired with dedicated reefers on the highest-volume lanes. We flagged SKUs where service level could not be maintained without violating the case’s margin floor.</p>
+        <p class="pending-note">Full recommendation slides — deck pending</p>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="sect-label"><span class="num">§04 · outcome</span></div>
+      <div class="sect-body">
+        <h2>24-hour deliverable</h2>
+        <p>Delivered a complete deck and live pitch within the 24-hour window — network map, cost bridge, and implementation phases with explicit ROI gates before each consolidation step.</p>
+        <p class="pending-note">Presentation PDF coming when deck is uploaded</p>
+      </div>
+    </section>
+
+    <div class="nav-footer" data-case-nav></div>
+  </div>
+
+  <footer class="site-footer"><div class="container">© 2026 Willem Bell · wrbell@umich.edu</div></footer>
+</body>
+</html>

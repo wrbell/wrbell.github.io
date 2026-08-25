@@ -69,7 +69,7 @@ jobs:
             --max-retries 5
             --retry-wait-time 8
             --root-dir .
-            '*.html' 'projects/*.html'
+            '*.html' 'projects/*.html' 'cases/*.html'
           fail: true
 
   playwright:
