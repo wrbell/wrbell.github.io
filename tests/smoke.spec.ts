@@ -254,7 +254,7 @@ test.describe("Cases", () => {
   test("renders four case-competition articles", async ({ page }) => {
     await page.goto("/cases.html");
     await page.locator(".hero h1").waitFor({ state: "visible" });
-    await expect(page.locator(".grid > a.case")).toHaveCount(4);
+    await expect(page.locator(".grid article.case")).toHaveCount(4);
   });
 
   test("case cards link to detail pages", async ({ page }) => {
@@ -266,17 +266,17 @@ test.describe("Cases", () => {
       "cases/quantum-frontiers.html",
     ]);
     const actual = new Set<string>();
-    for (const href of await page.locator(".grid > a.case").evaluateAll((els) =>
+    for (const href of await page.locator(".grid article.case .case-cta").evaluateAll((els) =>
       els.map((e) => e.getAttribute("href") ?? ""),
     )) {
-      actual.add(href);
+      if (href.startsWith("cases/")) actual.add(href);
     }
     expect(actual).toEqual(expected);
   });
 
   test("3M index card shows PDF ready", async ({ page }) => {
     await page.goto("/cases.html");
-    const card = page.locator("a.case", { hasText: "3M Fulfillment" });
+    const card = page.locator("article.case", { hasText: "3M Fulfillment" });
     await expect(card.locator(".pdf-tag.ready")).toBeVisible();
   });
 
