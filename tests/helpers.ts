@@ -19,6 +19,10 @@ export const PAGES: PageInfo[] = [
   { path: "/",                                   label: "index",            hasThemeToggle: true,  hero: "main h1" },
   { path: "/resume.html",                        label: "resume",           hasThemeToggle: false, hero: "h1.name" },
   { path: "/cases.html",                         label: "cases",            hasThemeToggle: false, hero: ".hero h1" },
+  { path: "/cases/3m-fulfillment.html",           label: "3m-fulfillment",   hasThemeToggle: true,  hero: ".page-hero h1" },
+  { path: "/cases/colorado-state-rams.html",      label: "colorado-state-rams", hasThemeToggle: true, hero: ".page-hero h1" },
+  { path: "/cases/kozy-shack.html",              label: "kozy-shack",       hasThemeToggle: true,  hero: ".page-hero h1" },
+  { path: "/cases/quantum-frontiers.html",       label: "quantum-frontiers", hasThemeToggle: true, hero: ".page-hero h1" },
   { path: "/notebook.html",                      label: "notebook",         hasThemeToggle: false, hero: ".hero h1" },
   { path: "/404.html",                           label: "404",              hasThemeToggle: false, hero: "h1.headline" },
   { path: "/projects/stark-translate.html",      label: "stark-translate",  hasThemeToggle: true,  hero: ".hero h1" },
@@ -33,6 +37,9 @@ export const INDEX_ANCHORS = ["about", "work", "ledger", "stack"];
 
 /** Project subpage paths only, for parametrised case-study assertions. */
 export const PROJECT_PAGES = PAGES.filter((p) => p.path.startsWith("/projects/"));
+
+/** Supply-chain case competition detail pages. */
+export const CASE_PAGES = PAGES.filter((p) => p.path.startsWith("/cases/"));
 
 /** Browser projects that own platform-specific snapshot baselines. */
 export const VISUAL_PROJECTS = ["chromium-desktop", "iphone-safari"];

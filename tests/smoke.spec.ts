@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import {
   PAGES,
   PROJECT_PAGES,
+  CASE_PAGES,
   INDEX_ANCHORS,
   presetTheme,
 } from "./helpers";
@@ -253,7 +254,39 @@ test.describe("Cases", () => {
   test("renders four case-competition articles", async ({ page }) => {
     await page.goto("/cases.html");
     await page.locator(".hero h1").waitFor({ state: "visible" });
-    await expect(page.locator(".grid article.case")).toHaveCount(4);
+    await expect(page.locator(".grid > a.case")).toHaveCount(4);
+  });
+
+  test("case cards link to detail pages", async ({ page }) => {
+    await page.goto("/cases.html");
+    const expected = new Set([
+      "cases/colorado-state-rams.html",
+      "cases/kozy-shack.html",
+      "cases/3m-fulfillment.html",
+      "cases/quantum-frontiers.html",
+    ]);
+    const actual = new Set<string>();
+    for (const href of await page.locator(".grid > a.case").evaluateAll((els) =>
+      els.map((e) => e.getAttribute("href") ?? ""),
+    )) {
+      actual.add(href);
+    }
+    expect(actual).toEqual(expected);
+  });
+
+  test("3M index card shows PDF ready", async ({ page }) => {
+    await page.goto("/cases.html");
+    const card = page.locator("a.case", { hasText: "3M Fulfillment" });
+    await expect(card.locator(".pdf-tag.ready")).toBeVisible();
+  });
+
+  test("3M detail page deck PDF resolves", async ({ page }) => {
+    await page.goto("/cases/3m-fulfillment.html");
+    await page.locator(".page-hero h1").waitFor({ state: "visible" });
+    const pdf = page.locator("a[href='../assets/cases/3m/3m-fulfillment-deck.pdf']").first();
+    await expect(pdf).toBeVisible();
+    const response = await page.request.get("/assets/cases/3m/3m-fulfillment-deck.pdf");
+    expect(response.status()).toBe(200);
   });
 
   test("back link returns home", async ({ page }) => {
@@ -263,6 +296,25 @@ test.describe("Cases", () => {
     const href = await back.getAttribute("href");
     expect(href, "back href should resolve to root").toMatch(/^(\.?\/|\/)$/);
   });
+});
+
+test.describe("Case competition subpages — scaffold", () => {
+  for (const pageInfo of CASE_PAGES) {
+    test(`${pageInfo.label} — four supply-chain sections`, async ({ page }) => {
+      await page.goto(pageInfo.path);
+      await page.locator(pageInfo.hero).waitFor({ state: "visible" });
+      const sections = page.locator("section.sect");
+      await expect(sections).toHaveCount(4);
+      const firstLabel = (await sections.first().locator(".sect-label .num").textContent()) ?? "";
+      expect(firstLabel.toLowerCase()).toContain("§01");
+    });
+
+    test(`${pageInfo.label} — prev/next nav footer populated`, async ({ page }) => {
+      await page.goto(pageInfo.path);
+      await page.locator("[data-case-nav] .nav-card").first().waitFor({ state: "visible" });
+      await expect(page.locator("[data-case-nav] .nav-card")).toHaveCount(2);
+    });
+  }
 });
 
 test.describe("Notebook", () => {
