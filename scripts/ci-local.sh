@@ -78,7 +78,7 @@ t_html() {
   java -jar "$VNU" --skip-non-html --errors-only \
     --filterpattern '.*CSS.*' \
     --filterpattern '.*The .aria-label. attribute must not be specified.*' \
-    index.html 404.html resume.html cases.html notebook.html projects/*.html
+    index.html 404.html resume.html cases.html notebook.html projects/*.html cases/*.html
 }
 
 t_lighthouse() {
@@ -97,7 +97,7 @@ t_lighthouse() {
 t_links() {
   "$LYCHEE" --accept "200,204,301,302,403,429,502,503,504" \
     --max-retries 5 --retry-wait-time 8 --root-dir . \
-    '*.html' 'projects/*.html'
+    '*.html' 'projects/*.html' 'cases/*.html'
 }
 
 t_playwright() {
