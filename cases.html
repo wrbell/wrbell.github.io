@@ -56,9 +56,12 @@
     .lede { font-size: 18px; max-width: 60ch; color: var(--text-dim); }
     .lede .accent { color: var(--accent); }
     .grid { padding: 56px 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .case { display: block; padding: 28px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2); transition: border-color .2s, transform .2s; position: relative; }
+    .case {
+      display: block; padding: 28px; border: 1px solid var(--border); border-radius: 12px;
+      background: var(--bg-2); transition: border-color .2s, transform .2s; position: relative;
+    }
     .case:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .case .kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; display: flex; justify-content: space-between; }
+    .case .kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; display: flex; justify-content: space-between; gap: 12px; }
     .case .kicker .accent { color: var(--accent); }
     .case h2 { font-family: var(--font-sans); font-size: 28px; font-weight: 600; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
     .case .prompt { font-family: var(--font-display); font-style: italic; font-size: 17px; color: var(--text-dim); margin-bottom: 14px; line-height: 1.4; }
@@ -66,15 +69,11 @@
     .case .meta { display: flex; flex-wrap: wrap; gap: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; border-top: 1px dashed var(--border-hi); padding-top: 14px; }
     .case .meta strong { color: var(--text); font-weight: 500; }
     .case .meta a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
-    .case .pdf-tag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border-hi); padding: 4px 10px; border-radius: 999px; }
+    .case .pdf-tag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border-hi); padding: 4px 10px; border-radius: 999px; flex-shrink: 0; }
     .case .pdf-tag.ready { color: var(--accent); border-color: var(--accent); }
-    .coming { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; margin-top: 14px; display: block; }
-    footer { padding: 40px 0; border-top: 1px solid var(--border); font-family: var(--font-mono); font-size: 11px; text-align: center; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; }
-    @media (max-width: 780px) {
-      .topbar { padding: 16px 20px; }
-      .container { padding: 0 20px; }
-      .hero { padding: 48px 0 32px; }
-      .grid { grid-template-columns: 1fr; gap: 16px; padding: 36px 0; }
+    .case-cta {
+      font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); margin-top: 14px; display: block;
     }
   </style>
 </head>
@@ -86,54 +85,54 @@
 
   <section class="hero">
     <div class="container">
-      <div class="eyebrow"><span>Case competitions · 2023 — 2025</span></div>
+      <div class="eyebrow"><span>Case competitions · Nov 2025 — Feb 2026</span></div>
       <h1>Four <em>briefs,</em><br>four decks.</h1>
-      <p class="lede">Supply-chain case competitions I led or co-led. Each one — a messy prompt, a hard deadline, a live panel. The deliverables below are the actual presentation decks.</p>
+      <p class="lede">Supply-chain case competitions I led or co-led. Each one — a messy prompt, a hard deadline, a live panel. Click a card for the full case writeup; decks and repos where available.</p>
     </div>
   </section>
 
   <div class="container">
     <div class="grid">
 
-      <article class="case">
+      <a href="cases/colorado-state-rams.html" class="case">
         <div class="kicker"><span>Colorado State Rams <span class="accent">· Feb 2026</span></span><span class="pdf-tag">PDF pending</span></div>
         <h2>Colorado State Rams</h2>
         <p class="prompt">Reimagine the fan-experience supply chain.</p>
         <p class="body">One-week sprint on CSU Athletics logistics — mapping concession, retail, and in-stadium flows under game-day demand spikes. Our deck reframed fan experience as a supply-chain problem: inventory placement, replenishment cadence, and vendor coordination across a 40,000-seat venue.</p>
         <div class="meta"><span>Role: <strong>Lead presenter</strong></span><span>Team of 4</span><span>1-week sprint</span></div>
-        <span class="coming">Deck coming soon →</span>
-      </article>
+        <span class="case-cta">Case writeup →</span>
+      </a>
 
-      <article class="case">
+      <a href="cases/kozy-shack.html" class="case">
         <div class="kicker"><span>Kozy Shack <span class="accent">· Jan 2026</span></span><span class="pdf-tag">PDF pending</span></div>
         <h2>Kozy Shack</h2>
         <p class="prompt">CPG cold-chain optimization.</p>
         <p class="body">24-hour Land O'Lakes case on Kozy Shack pudding distribution — balancing refrigerated lane costs, DC placement, and retailer service levels. I owned the network model and cost trade-offs; the team pitched a phased cold-chain redesign with explicit margin guardrails.</p>
         <div class="meta"><span>Role: <strong>Strategy / modeling</strong></span><span>Team of 4</span><span>24-hour sprint</span></div>
-        <span class="coming">Deck coming soon →</span>
-      </article>
+        <span class="case-cta">Case writeup →</span>
+      </a>
 
-      <article class="case">
-        <div class="kicker"><span>3M Fulfillment <span class="accent">· Dec 2025</span></span><span class="pdf-tag">PDF pending</span></div>
+      <a href="cases/3m-fulfillment.html" class="case">
+        <div class="kicker"><span>3M Fulfillment <span class="accent">· Dec 2025</span></span><span class="pdf-tag ready">PDF ready</span></div>
         <h2>3M Fulfillment</h2>
         <p class="prompt">E-commerce fulfillment network redesign.</p>
         <p class="body">HBS-style 3M case — PuLP MILP and distance-tier transport model to expand from 45% to <strong>95.2% 1-day coverage</strong> with <strong>K=8 DCs</strong> (Dallas, Atlanta, LA, Allentown, KC, Denver, Minneapolis, Columbus). Grounded Year 1 operating cost <strong>$16.5M</strong> (~0.06% of revenue) — a strategic service investment, not a cost-cut.</p>
         <div class="meta"><span>Role: <strong>Network modeling</strong></span><span>Team of 4</span><span>PuLP · Streamlit maps</span><span>Repo: <a href="https://github.com/wrbell/supply-chain-data-3m" target="_blank" rel="noopener"><strong>supply-chain-data-3m</strong></a></span></div>
-        <span class="coming">Deck coming soon →</span>
-      </article>
+        <span class="case-cta">Case writeup + deck →</span>
+      </a>
 
-      <article class="case">
+      <a href="cases/quantum-frontiers.html" class="case">
         <div class="kicker"><span>Quantum Frontiers <span class="accent">· Nov 2025</span></span><span class="pdf-tag">PDF pending</span></div>
         <h2>Quantum Frontiers</h2>
         <p class="prompt">Rare-earth sourcing under geopolitical constraint.</p>
         <p class="body">Two-week case on semiconductor-grade rare-earth supply — mapping extraction, refining, and fab demand under export controls and price volatility. I led the live presentation on dual-sourcing strategy, inventory buffers, and long-lead contract structures for critical materials.</p>
         <div class="meta"><span>Role: <strong>Lead presenter</strong></span><span>Team of 4</span><span>2-week sprint</span></div>
-        <span class="coming">Deck coming soon →</span>
-      </article>
+        <span class="case-cta">Case writeup →</span>
+      </a>
 
     </div>
   </div>
 
-  <footer><div class="container">© 2026 Willem Bell · wrbell@umich.edu</div></footer>
+  <footer style="padding:40px 0;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:11px;text-align:center;color:var(--muted);letter-spacing:0.18em;text-transform:uppercase;"><div class="container">© 2026 Willem Bell · wrbell@umich.edu</div></footer>
 </body>
 </html>

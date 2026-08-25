@@ -11,6 +11,7 @@ https://www.linkedin.com/.*
 # site updates. Skipping them is safe; the same pages are also linked
 # relatively from index.html and the link-checker covers those.
 https://wrbell.github.io/projects/.*
+https://wrbell.github.io/cases/.*
 https://wrbell.github.io/resume.html
 https://wrbell.github.io/cases.html
 https://wrbell.github.io/notebook.html
