@@ -63,10 +63,10 @@
       slug: 'me379-fluids-lab',
       title: 'me379-fluids-lab',
       kicker: 'ME 379 \u00b7 Fluids Lab',
-      blurb: 'Pipe flow, drag, pressure. Theory meets the test stand.',
-      tagline: 'Experimental fluid mechanics \u2014 pipe flow, drag, pressure measurement, instrumented experiments.',
-      datePublished: '2025-04-01',
-      keywords: ['fluid-mechanics', 'experimental', 'instrumentation']
+      blurb: 'NACA 0015 VG study. Sting balance + 168-test pipeline.',
+      tagline: 'Delta vortex generators on a NACA 0015 — custom sting balance DAQ, 59-run matrix, CL–α polars vs. Tebbiche (2015).',
+      datePublished: '2026-04-01',
+      keywords: ['fluid-mechanics', 'aerodynamics', 'daq', 'python', 'experimental']
     },
 
   ];

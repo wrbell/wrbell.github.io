@@ -63,7 +63,7 @@
     <dl class="status" aria-label="Project metadata">
       <div class="row"><dt class="k">Term</dt><dd class="v">2024 – 2025</dd></div>
       <div class="row"><dt class="k">Stack</dt><dd class="v">ANSYS · Python</dd></div>
-      <div class="row"><dt class="k">Sims run</dt><dd class="v">~placeholder</dd></div>
+      <div class="row"><dt class="k">Sims run</dt><dd class="v">9-week · 3 courses</dd></div>
       <div class="row"><dt class="k">Status</dt><dd class="v acc">Archived</dd></div>
     </dl>
   </section>
@@ -76,8 +76,8 @@
     </div>
     <div>
       <h2>three_courses_one_solver</h2>
-      <p><em>Placeholder.</em> Three concurrent ME courses leaned on the same FEA toolchain, each from a different angle: stress and stiffness, dynamics, heat transfer. Doing the homework was straightforward. <strong>Trusting the answer</strong> meant working out the analytic solution first and treating the simulation as a check.</p>
-      <p>Goal: build the muscle to predict, within a factor, what a sim should report — and to know when the sim is wrong.</p>
+      <p>Winter 2026 stacked <strong>ME 3601</strong> (machine elements), <strong>ME 440</strong> (vibrations/modal), and <strong>ME 379</strong> (thermal-fluid) — all leaning on the same ANSYS toolchain from different angles. Doing the homework was straightforward. <strong>Trusting the answer</strong> meant deriving the analytic solution first and treating the simulation as a check.</p>
+      <p>Goal: nine weeks from zero ANSYS experience to portfolio-quality FEA with documented mesh convergence, parity plots, and post-mortems when theory and solver disagreed.</p>
     </div>
   </section>
 
@@ -89,7 +89,7 @@
     </div>
     <div>
       <h2>analytic_parity_loop</h2>
-      <p><em>Placeholder.</em> Each problem ran the same loop: derive the closed-form (or quasi-closed-form) result, predict the answer, then build the ANSYS model and run a mesh-convergence study until the answer settled. Disagreements got a post-mortem.</p>
+      <p>Each problem ran the same loop: derive the closed-form (or quasi-closed-form) result in Jupyter, predict the answer, build the ANSYS model, then run a mesh-convergence study until the error settled below the threshold in <code>reference/methodology.md</code>. Disagreements triggered a written post-mortem — wrong BC, wrong element, or wrong assumption.</p>
 
       <pre class="ascii" aria-label="fast-fem parity loop diagram"><span class="c">┌──────────────┐    ┌──────────────┐    ┌────────────────┐    ┌────────────┐</span>
 <span class="c">│</span> <span class="a">analytic</span>     <span class="c">│</span>───▶<span class="c">│</span>  <span class="a">ansys sim</span>   <span class="c">│</span>───▶<span class="c">│</span> <span class="a">mesh study</span>     <span class="c">│</span>───▶<span class="c">│</span> <span class="a">postmortem</span><span class="c">│</span>
@@ -226,19 +226,19 @@
       <h2>tradeoffs_actually_made</h2>
       <ol class="commits">
         <li>
-          <div class="sha">— · placeholder</div>
+          <div class="sha">v&v · analytic</div>
           <h3>Analytic first. Always.</h3>
-          <p><em>Placeholder.</em> No simulation result was treated as authoritative without a hand calculation that bracketed it. Slower, but the workflow stops generating colorful nonsense.</p>
+          <p>No simulation result was treated as authoritative without a hand calculation that bracketed it. Slower than clicking Solve, but the workflow stops generating colorful nonsense.</p>
         </li>
         <li>
-          <div class="sha">— · placeholder</div>
+          <div class="sha">mesh · per-problem</div>
           <h3>Mesh-convergence per problem, not per course.</h3>
-          <p><em>Placeholder.</em> Every problem got its own convergence study, even when reusing geometry. A converged mesh for static stress is not a converged mesh for vibration modes.</p>
+          <p>Every problem got its own convergence study via <code>scripts/mesh_convergence.py</code>, even when reusing geometry. A converged mesh for static stress is not a converged mesh for vibration modes or thermal gradients.</p>
         </li>
         <li>
-          <div class="sha">— · placeholder</div>
+          <div class="sha">log · notebook</div>
           <h3>One notebook per problem.</h3>
-          <p><em>Placeholder.</em> Notebooks captured the analytic derivation, the input file, the convergence plot, and a written post-mortem. Reproducible and skimmable months later.</p>
+          <p>Notebooks in <code>notebooks/</code> captured the analytic derivation, ANSYS inputs, convergence plot, and post-mortem. Reproducible and skimmable months later — the portfolio site lives in <code>docs/</code> on GitHub Pages.</p>
         </li>
       </ol>
     </div>
@@ -252,7 +252,7 @@
     </div>
     <div>
       <h2>what_it_does_now</h2>
-      <p><em>Placeholder.</em> The repository is archived but the workflow stuck. New simulations — at work, at school, anywhere — still get an analytic check before the result is trusted.</p>
+      <p>Archived after Winter '26 coursework closed. The repo is a reference lab — methodology docs, validation formulas, notebook templates, and week-by-week sim logs in <code>results/</code>. New simulations at work or school still follow the same analytic-first loop on a Dell Precision 5860 (Xeon W3-2425, 64 GB RAM, RTX 2000 Ada).</p>
     </div>
   </section>
 
