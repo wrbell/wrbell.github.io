@@ -9,7 +9,7 @@
   <meta property="og:description" content="ME + CS at UM-Dearborn. SpaceX, Tesla, DTE Fermi internships. Building things that move.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://wrbell.github.io/">
-  <meta property="og:image" content="https://wrbell.github.io/assets/og-card.png">
+  <meta property="og:image" content="https://wrbell.github.io/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Willem Bell — Mechanical engineering × software. BSE, Dec 2026.">
@@ -495,6 +495,15 @@
     .about-sidebar .row { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--border); }
     .about-sidebar .row:last-child { border-bottom: none; }
     .about-sidebar a { color: var(--accent); }
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+      display: block;
+    }
     .about-copy {
       font-size: 17px;
       line-height: 1.7;
@@ -1016,6 +1025,12 @@
       color: var(--text-dim);
       line-height: 1.3;
     }
+    .tl-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+      margin-top: 8px;
+    }
     .tl-loc {
       font-family: var(--font-mono);
       font-size: 11px;
@@ -1369,6 +1384,7 @@
       </div>
       <div class="about-grid">
         <div class="about-sidebar">
+          <img class="about-photo" src="assets/headshot.jpg" width="240" height="240" alt="Willem Bell — headshot" loading="lazy" decoding="async">
           <div class="row"><span>Degree</span><strong>BSE ME + CS</strong></div>
           <div class="row"><span>School</span><strong>UM‑Dearborn</strong></div>
           <div class="row"><span>Expected</span><strong>Dec 2026</strong></div>
@@ -1377,7 +1393,9 @@
           <div class="row"><span>Based</span><strong>Dearborn, MI</strong></div>
         </div>
         <div class="about-copy">
-          <p class="about-todo" aria-label="Placeholder copy">About copy — to come. Three paragraphs: the mechanical-engineering origin story, the software detour, and what I'm reaching for after graduation in December 2026.</p>
+          <p>I came into mechanical engineering because I wanted to understand how things break before they ship — torque specs, weld quality, sensor drift on a plant floor. My first internship at DTE Fermi was instrumentation and controls; Dearborn Electric Racing and UMD Racing turned that into chassis data pipelines and frame design. Those years taught me that good engineering is mostly listening to what the hardware is already telling you.</p>
+          <p>The CS minor wasn't a career pivot — it was catching up to the tools I was already using. Python pipelines for FEA studies, an RTDE bridge into Klipper, a bilingual speech stack running Whisper on-device at church every week. I don't treat software as a separate craft from controls design; it's how I close the loop between a Siemens panel and a validation notebook.</p>
+          <p>I'm graduating in <span class="accent">December 2026</span> and looking for new-grad roles where hardware still matters — automation, robotics, manufacturing, test. Four SpaceX internships and a Tesla controls term left me with high standards and a healthy respect for NDAs; I'd rather show you the ME 472 cobot axis or <em>stark-translate</em> repo than talk vaguely about impact. I want to work on systems that move, with people who ship.</p>
 
           <div class="recently" role="region" aria-labelledby="recently-label">
             <div class="recently-head">
@@ -1752,6 +1770,7 @@
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2021-05">May 2021 — Feb 2022</time></div>
           <div class="tl-org">DTE Fermi</div>
           <div class="tl-role">Instrumentation &amp; Controls Intern</div>
+          <p class="tl-note">PDF flattening tooling and I&amp;C support on the Fermi 2 nuclear floor.</p>
           <div class="tl-loc">Newport, MI</div>
         </article>
 
@@ -1759,6 +1778,7 @@
           <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2021-07">Jul 2021 — May 2023</time></div>
           <div class="tl-org">Pannier Research Lab</div>
           <div class="tl-role">Undergraduate Researcher</div>
+          <p class="tl-note">Materials characterization and lab instrumentation in the Pannier group.</p>
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
@@ -1766,6 +1786,7 @@
           <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2021-09">Sep 2021 — Aug 2022</time></div>
           <div class="tl-org">Dearborn Electric Racing</div>
           <div class="tl-role">Data Acquisition Lead</div>
+          <p class="tl-note">Built and maintained the electric race car's sensor and DAQ stack.</p>
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
@@ -1773,6 +1794,7 @@
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2022-05">May — Aug 2022</time></div>
           <div class="tl-org">SpaceX · Starship</div>
           <div class="tl-role">Automation &amp; Controls Intern</div>
+          <p class="tl-note">First SpaceX term — automation and controls on Starship production.</p>
           <div class="tl-loc">Starbase, TX</div>
         </article>
 
@@ -1780,6 +1802,7 @@
           <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2022-11">Nov 2022 — Jun 2023</time></div>
           <div class="tl-org">UMD Racing</div>
           <div class="tl-role">Frame Lead</div>
+          <p class="tl-note">Led frame design and fabrication for the formula-style race build.</p>
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
@@ -1787,6 +1810,7 @@
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2023-05">May — Aug 2023</time></div>
           <div class="tl-org">SpaceX · Starship</div>
           <div class="tl-role">Launch Intern</div>
+          <p class="tl-note">Launch pad systems and ground-support equipment at Starbase.</p>
           <div class="tl-loc">Starbase, TX</div>
         </article>
 
@@ -1794,6 +1818,7 @@
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2023-09">Sep 2023 — Apr 2024</time></div>
           <div class="tl-org">Tesla 4680</div>
           <div class="tl-role">Controls Development Intern</div>
+          <p class="tl-note">Controls development on 4680 cell manufacturing lines in Austin.</p>
           <div class="tl-loc">Austin, TX</div>
         </article>
 
@@ -1801,6 +1826,7 @@
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2024-05">May — Aug 2024</time></div>
           <div class="tl-org">SpaceX · Space Lasers</div>
           <div class="tl-role">Integration &amp; Test Intern</div>
+          <p class="tl-note">NX, ANSYS vibration analysis, and I&amp;T for space laser hardware.</p>
           <div class="tl-loc">Redmond, WA</div>
         </article>
 
@@ -1808,6 +1834,7 @@
           <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2024-09">Sep 2024 — Jan 2025</time></div>
           <div class="tl-org">Dearborn Electric Racing</div>
           <div class="tl-role">Project Manager</div>
+          <p class="tl-note">Returned to DER as PM — schedules, budgets, and cross-team integration.</p>
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
@@ -1815,6 +1842,7 @@
           <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2024-09">Sep 2024 — Jan 2025</time></div>
           <div class="tl-org">Pannier Research Lab</div>
           <div class="tl-role">Research Assistant</div>
+          <p class="tl-note">Continued lab instrumentation and materials research with the Pannier group.</p>
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
@@ -1822,6 +1850,7 @@
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2025-01">Jan — Jul 2025</time></div>
           <div class="tl-org">SpaceX · Starfactory</div>
           <div class="tl-role">Automation &amp; Controls Intern</div>
+          <p class="tl-note">Controls design, FAT, and commissioning across Starfactory stations.</p>
           <div class="tl-loc">Starbase, TX</div>
         </article>
 
@@ -1829,6 +1858,7 @@
           <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2025">2025</time> — <span class="current">Present</span></div>
           <div class="tl-org">fast-fem</div>
           <div class="tl-role">Personal project</div>
+          <p class="tl-note">Cross-course FEA mesh convergence and validation workflow (ME 360/440/379).</p>
           <div class="tl-loc">Open source</div>
         </article>
 
@@ -1836,6 +1866,7 @@
           <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2025-08">Aug 2025</time> — <span class="current">Present</span></div>
           <div class="tl-org">Pannier Research Lab</div>
           <div class="tl-role">Research Assistant</div>
+          <p class="tl-note">Ongoing research term — instrumentation and materials characterization.</p>
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
@@ -1843,6 +1874,7 @@
           <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2025-10">Oct 2025</time> — <span class="current">Present</span></div>
           <div class="tl-org">Supply Chain Association</div>
           <div class="tl-role">Data Lead · Finance Co-Lead</div>
+          <p class="tl-note">Case competition data pipelines and club finances for SCM Association.</p>
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
@@ -1850,6 +1882,7 @@
           <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2025-11">Nov 2025</time></div>
           <div class="tl-org">Quantum Frontiers</div>
           <div class="tl-role">Case competition · 2-week sprint</div>
+          <p class="tl-note">Rare-earth sourcing under export controls — led the live panel presentation.</p>
           <div class="tl-loc">UM-Dearborn team</div>
         </article>
 
@@ -1857,6 +1890,7 @@
           <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2025-12">Dec 2025</time></div>
           <div class="tl-org">3M Fulfillment Network</div>
           <div class="tl-role">Case competition · 2-week sprint</div>
+          <p class="tl-note">K=8 DC MILP model — 95.2% 1-day coverage at $16.5M Year 1 cost.</p>
           <div class="tl-loc">UM-Dearborn team</div>
         </article>
 
@@ -1864,6 +1898,7 @@
           <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026">2026</time> — <span class="current">Present</span></div>
           <div class="tl-org">stark-translate</div>
           <div class="tl-role">Personal project</div>
+          <p class="tl-note">On-device bilingual speech — weekly LAN deployment at Stark Road Gospel Hall.</p>
           <div class="tl-loc">macOS · MLX</div>
         </article>
 
@@ -1871,6 +1906,7 @@
           <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2026-01">Jan 2026</time></div>
           <div class="tl-org">Land O'Lakes / Kozy Shack</div>
           <div class="tl-role">Case competition · 24-hour sprint</div>
+          <p class="tl-note">24-hour cold-chain optimization — network model and margin guardrails.</p>
           <div class="tl-loc">UM-Dearborn team</div>
         </article>
 
@@ -1878,6 +1914,7 @@
           <div class="tl-meta"><span class="tl-lane">Extracurricular</span><time class="tl-date" datetime="2026-02">Feb 2026</time></div>
           <div class="tl-org">Colorado State Rams</div>
           <div class="tl-role">Case competition · 1-week sprint</div>
+          <p class="tl-note">Fan-experience logistics — lead presenter on in-stadium supply flows.</p>
           <div class="tl-loc">UM-Dearborn team</div>
         </article>
 
@@ -1885,6 +1922,7 @@
           <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
           <div class="tl-org">ME 4671 · Senior Design</div>
           <div class="tl-role">Capstone · team project</div>
+          <p class="tl-note">Final-semester team design from requirements through build, test, and docs.</p>
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
@@ -1892,6 +1930,7 @@
           <div class="tl-meta"><span class="tl-lane">Coursework</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
           <div class="tl-org">ME 4301 · CFD</div>
           <div class="tl-role">Final project · ANSYS Fluent</div>
+          <p class="tl-note">CFD capstone — mesh, solve, and validate with documented convergence.</p>
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
@@ -1899,6 +1938,7 @@
           <div class="tl-meta"><span class="tl-lane">Coursework</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
           <div class="tl-org">Design for Manufacturing</div>
           <div class="tl-role">Python · CAD automation</div>
+          <p class="tl-note">Design for manufacturing — CAD automation and process-aware design rules.</p>
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
@@ -1906,6 +1946,7 @@
           <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026-04">Apr 2026</time></div>
           <div class="tl-org">ME 472 · Cobot Axis</div>
           <div class="tl-role">UR30 7th axis · Klipper bridge</div>
+          <p class="tl-note">~5–20 ms E2E — RTDE into Klipper on SKR Pico for paste dispensing.</p>
           <div class="tl-loc">UM-Dearborn</div>
           <div class="tl-links">
             <a href="projects/w26-cobot-axis.html">Case study</a>
@@ -1917,6 +1958,7 @@
           <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026-04">Apr 2026</time></div>
           <div class="tl-org">ME 440 · Phone Drop FEA</div>
           <div class="tl-role">LS-DYNA explicit dynamics</div>
+          <p class="tl-note">Phone-drop fracture bracketed at ~8.3 ft — ELFORM 16 vs 2, DT=1 µs.</p>
           <div class="tl-loc">UM-Dearborn</div>
           <div class="tl-links">
             <a href="projects/me440-vibrations.html">Case study</a>
@@ -1928,6 +1970,7 @@
           <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026-04">Apr 2026</time></div>
           <div class="tl-org">ME 379 · Fluids Lab</div>
           <div class="tl-role">NACA 0015 · sting balance DAQ</div>
+          <p class="tl-note">Delta VG stall-delay study — CL(10°)≈0.82, custom HX711 sting balance.</p>
           <div class="tl-loc">UM-Dearborn</div>
           <div class="tl-links">
             <a href="projects/me379-fluids-lab.html">Case study</a>
@@ -1939,6 +1982,7 @@
           <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026-04">Apr 2026</time></div>
           <div class="tl-org">StarkHacks · Purdue</div>
           <div class="tl-role">Honorable Mention · Best Use of AMD</div>
+          <p class="tl-note">36-hour Purdue hackathon — AI battery assembly concept with AMD stack.</p>
           <div class="tl-loc">36-hour hackathon · West Lafayette, IN</div>
           <div class="tl-links">
             <a href="https://devpost.com/software/ai-battery-assembler" target="_blank" rel="noopener">Devpost</a>
@@ -2042,6 +2086,7 @@
         <h3>Direct</h3>
         <a href="mailto:wrbell@umich.edu" class="underline-hover">wrbell@umich.edu</a>
         <a href="resume.html" class="underline-hover" target="_blank" rel="noopener noreferrer">resume →</a>
+        <a href="assets/willem-bell-resume.pdf" class="underline-hover" target="_blank" rel="noopener noreferrer">resume PDF →</a>
         <a href="#work" class="underline-hover">work →</a>
       </div>
       <div class="footer-col">
