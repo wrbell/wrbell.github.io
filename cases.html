@@ -61,9 +61,11 @@
     .case .kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; display: flex; justify-content: space-between; }
     .case .kicker .accent { color: var(--accent); }
     .case h2 { font-family: var(--font-sans); font-size: 28px; font-weight: 600; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
-    .case .prompt { font-family: var(--font-display); font-style: italic; font-size: 17px; color: var(--text-dim); margin-bottom: 18px; line-height: 1.4; }
+    .case .prompt { font-family: var(--font-display); font-style: italic; font-size: 17px; color: var(--text-dim); margin-bottom: 14px; line-height: 1.4; }
+    .case .body { font-size: 15px; color: var(--text-dim); line-height: 1.55; margin-bottom: 18px; max-width: 52ch; }
     .case .meta { display: flex; flex-wrap: wrap; gap: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; border-top: 1px dashed var(--border-hi); padding-top: 14px; }
     .case .meta strong { color: var(--text); font-weight: 500; }
+    .case .meta a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
     .case .pdf-tag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border-hi); padding: 4px 10px; border-radius: 999px; }
     .case .pdf-tag.ready { color: var(--accent); border-color: var(--accent); }
     .coming { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; margin-top: 14px; display: block; }
@@ -94,34 +96,38 @@
     <div class="grid">
 
       <article class="case">
-        <div class="kicker"><span>Colorado State Rams <span class="accent">· 2024</span></span><span class="pdf-tag">PDF pending</span></div>
+        <div class="kicker"><span>Colorado State Rams <span class="accent">· Feb 2026</span></span><span class="pdf-tag">PDF pending</span></div>
         <h2>Colorado State Rams</h2>
         <p class="prompt">Reimagine the fan-experience supply chain.</p>
-        <div class="meta"><span>Role: <strong>Lead presenter</strong></span><span>Team of 4</span><span>CSU Rams logistics</span></div>
+        <p class="body">One-week sprint on CSU Athletics logistics — mapping concession, retail, and in-stadium flows under game-day demand spikes. Our deck reframed fan experience as a supply-chain problem: inventory placement, replenishment cadence, and vendor coordination across a 40,000-seat venue.</p>
+        <div class="meta"><span>Role: <strong>Lead presenter</strong></span><span>Team of 4</span><span>1-week sprint</span></div>
         <span class="coming">Deck coming soon →</span>
       </article>
 
       <article class="case">
-        <div class="kicker"><span>Kozy Shack <span class="accent">· 2024</span></span><span class="pdf-tag">PDF pending</span></div>
+        <div class="kicker"><span>Kozy Shack <span class="accent">· Jan 2026</span></span><span class="pdf-tag">PDF pending</span></div>
         <h2>Kozy Shack</h2>
         <p class="prompt">CPG cold-chain optimization.</p>
-        <div class="meta"><span>Role: <strong>Strategy / modeling</strong></span><span>Team of 4</span><span>Dairy / cold chain</span></div>
+        <p class="body">24-hour Land O'Lakes case on Kozy Shack pudding distribution — balancing refrigerated lane costs, DC placement, and retailer service levels. I owned the network model and cost trade-offs; the team pitched a phased cold-chain redesign with explicit margin guardrails.</p>
+        <div class="meta"><span>Role: <strong>Strategy / modeling</strong></span><span>Team of 4</span><span>24-hour sprint</span></div>
         <span class="coming">Deck coming soon →</span>
       </article>
 
       <article class="case">
-        <div class="kicker"><span>3M Fulfillment <span class="accent">· 2025</span></span><span class="pdf-tag">PDF pending</span></div>
+        <div class="kicker"><span>3M Fulfillment <span class="accent">· Dec 2025</span></span><span class="pdf-tag">PDF pending</span></div>
         <h2>3M Fulfillment</h2>
         <p class="prompt">E-commerce fulfillment network redesign.</p>
-        <div class="meta"><span>Role: <strong>Network modeling</strong></span><span>Team of 4</span><span>3M distribution</span></div>
+        <p class="body">HBS-style 3M case — PuLP MILP and distance-tier transport model to expand from 45% to <strong>95.2% 1-day coverage</strong> with <strong>K=8 DCs</strong> (Dallas, Atlanta, LA, Allentown, KC, Denver, Minneapolis, Columbus). Grounded Year 1 operating cost <strong>$16.5M</strong> (~0.06% of revenue) — a strategic service investment, not a cost-cut.</p>
+        <div class="meta"><span>Role: <strong>Network modeling</strong></span><span>Team of 4</span><span>PuLP · Streamlit maps</span><span>Repo: <a href="https://github.com/wrbell/supply-chain-data-3m" target="_blank" rel="noopener"><strong>supply-chain-data-3m</strong></a></span></div>
         <span class="coming">Deck coming soon →</span>
       </article>
 
       <article class="case">
-        <div class="kicker"><span>Quantum Frontiers <span class="accent">· 2025</span></span><span class="pdf-tag">PDF pending</span></div>
+        <div class="kicker"><span>Quantum Frontiers <span class="accent">· Nov 2025</span></span><span class="pdf-tag">PDF pending</span></div>
         <h2>Quantum Frontiers</h2>
         <p class="prompt">Rare-earth sourcing under geopolitical constraint.</p>
-        <div class="meta"><span>Role: <strong>Lead presenter</strong></span><span>Team of 4</span><span>Semiconductor materials</span></div>
+        <p class="body">Two-week case on semiconductor-grade rare-earth supply — mapping extraction, refining, and fab demand under export controls and price volatility. I led the live presentation on dual-sourcing strategy, inventory buffers, and long-lead contract structures for critical materials.</p>
+        <div class="meta"><span>Role: <strong>Lead presenter</strong></span><span>Team of 4</span><span>2-week sprint</span></div>
         <span class="coming">Deck coming soon →</span>
       </article>
 
