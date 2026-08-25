@@ -979,6 +979,7 @@
     .tl-card.tl--industry   { --lane-color: var(--tl-industry); }
     .tl-card.tl--research   { --lane-color: var(--tl-research); }
     .tl-card.tl--project    { --lane-color: var(--tl-project); }
+    .tl-card.tl--course     { --lane-color: var(--lane-coursework); }
     .tl-card.tl--extra      { --lane-color: var(--tl-extra); }
     .tl-card.tl--milestone  {
       --lane-color: var(--tl-milestone);
@@ -1088,6 +1089,7 @@
     .legend-dot[data-lane="industry"]   { background: var(--tl-industry); }
     .legend-dot[data-lane="research"]   { background: var(--tl-research); }
     .legend-dot[data-lane="project"]    { background: var(--tl-project); }
+    .legend-dot[data-lane="coursework"] { background: var(--lane-coursework); }
     .legend-dot[data-lane="extra"]      { background: var(--tl-extra); }
     .legend-dot[data-lane="milestone"]  { background: var(--tl-milestone); }
 
@@ -1331,7 +1333,7 @@
         <aside class="vitals" aria-label="At-a-glance">
           <div>
             <div class="vital-label">Currently</div>
-            <div class="vital-value">ME 472 — UR30 7th axis for metal paste dispensing</div>
+            <div class="vital-value">ME 4671 Senior Design + ME 4301 CFD — final semester</div>
           </div>
           <div>
             <div class="vital-label">Graduating</div>
@@ -1343,7 +1345,7 @@
           </div>
           <div>
             <div class="vital-label">Stack today</div>
-            <div class="vital-value">Python · ANSYS · Siemens S7 · RTDE · PyTorch</div>
+            <div class="vital-value">Python · ANSYS Fluent · NX · Senior Design</div>
           </div>
         </aside>
       </div>
@@ -1384,28 +1386,28 @@
             </div>
             <ol>
               <li class="live">
-                <time datetime="2026-04">Apr 2026</time>
-                <span class="what">Wrapping up <strong>ME 472</strong> — UR30 cobot riding a Klipper-driven 7th axis, RTDE bridge talking to an RP2040.</span>
+                <time datetime="2026-09">Sep 2026</time>
+                <span class="what">Starting <strong>Fall '26</strong> — <strong>ME 4671 Senior Design</strong>, <strong>ME 4301 CFD</strong>, and <strong>Design for Manufacturing</strong>.</span>
+              </li>
+              <li>
+                <time datetime="2026-08">Aug 2026</time>
+                <span class="what">Wrapped <strong>Winter '26</strong> — ME 472 cobot axis, ME 440 phone-drop FEA, and ME 379 fluids lab writeups.</span>
               </li>
               <li>
                 <time datetime="2026-04">Apr 2026</time>
                 <span class="what">Took <strong>Honorable Mention</strong> and <strong>Best Use of AMD</strong> at <a href="https://devpost.com/software/ai-battery-assembler" target="_blank" rel="noopener">StarkHacks</a> at Purdue.</span>
               </li>
               <li>
+                <time datetime="2026-04">Apr 2026</time>
+                <span class="what">Closed <strong>ME 472</strong> — UR30 7th axis with RTDE → Klipper → RP2040 stepper bridge.</span>
+              </li>
+              <li>
                 <time datetime="2026-03">Mar 2026</time>
-                <span class="what">Finished <strong>ME 379 Fluids Lab</strong>. Six labs, six parity checks against closed-form predictions.</span>
+                <span class="what">Finished <strong>ME 379 Fluids Lab</strong> — NACA 0015 VG study with custom sting balance DAQ.</span>
               </li>
               <li>
                 <time datetime="2026-02">Feb 2026</time>
-                <span class="what">Shipped <strong>me440-vibrations</strong> — a general MDOF forced-response solver in MATLAB, validated against textbook benchmarks.</span>
-              </li>
-              <li>
-                <time datetime="2026-02">Feb 2026</time>
-                <span class="what">Closed out four supply-chain case competitions in a row. <strong>Colorado State Rams</strong> was the last one.</span>
-              </li>
-              <li>
-                <time datetime="2025-11">Nov 2025</time>
-                <span class="what">Stepped in as <strong>Data Analysis Lead</strong> on UM‑Dearborn's Supply Chain Association.</span>
+                <span class="what">Shipped <strong>ME 440</strong> phone-drop LS-DYNA study — fracture bracketed at ~8.3 ft drop height.</span>
               </li>
             </ol>
           </div>
@@ -1526,22 +1528,59 @@
         </article>
 
         <article class="card span-4">
-          <div class="lane course">ME 379 · Winter 2026</div>
+          <div class="lane course">ME 4671 · Fall 2026</div>
+          <h3>Senior Design</h3>
+          <div class="meta">Capstone · mechanical engineering</div>
+          <div class="shot" role="img" aria-label="Senior Design — capstone project, Fall 2026"></div>
+          <p>Final-semester capstone — team-based design from requirements through build, test, and documentation. Scope and deliverables land here as the project firms up in September.</p>
+          <div class="tags">
+            <span class="tag">Capstone</span>
+            <span class="tag">Systems Design</span>
+            <span class="tag">CAD</span>
+          </div>
+        </article>
+
+        <article class="card span-2">
+          <div class="lane course">ME 4301 · Fall 2026</div>
+          <h3>CFD final</h3>
+          <div class="meta">ANSYS Fluent · computational fluid dynamics</div>
+          <p>Fall CFD capstone — mesh, solve, and validate a flow problem in ANSYS Fluent with documented convergence and physical sanity checks.</p>
+          <div class="tags">
+            <span class="tag">CFD</span>
+            <span class="tag">ANSYS Fluent</span>
+          </div>
+        </article>
+
+        <article class="card span-2">
+          <div class="lane course">Fall 2026</div>
+          <h3>Design for Manufacturing</h3>
+          <div class="meta">Python · CAD automation</div>
+          <p>Design-for-manufacturing coursework — CAD workflows, tolerance thinking, and Python automation for production-ready mechanical design.</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">CAD</span>
+            <span class="tag">DFM</span>
+          </div>
+        </article>
+
+        <article class="card span-4">
+          <div class="lane course">ME 379 · Winter '26</div>
           <h3>Fluids Lab</h3>
           <div class="meta">Coursework · experimental fluid mechanics</div>
-          <div class="shot" role="img" aria-label="Fluids Lab — to come"></div>
-          <p>Six-lab sequence on pipe flow, drag, pressure, and instrumentation. Course just wrapped — full writeup, reduced data, and parity checks landing within the week.</p>
+          <div class="shot" role="img" aria-label="Fluids Lab — NACA 0015 airfoil with vortex generators"></div>
+          <p>NACA 0015 airfoil study with delta-wing vortex generators — custom sting balance, 59-run matrix, CL–α polars validated against Tebbiche (2015).</p>
           <div class="card-cta-row">
             <a href="projects/me379-fluids-lab.html" class="card-cta">Case study →</a>
           </div>
           <div class="tags">
             <span class="tag">Fluid Mechanics</span>
-            <span class="tag">MATLAB</span>
+            <span class="tag">DAQ</span>
+            <span class="tag">Python</span>
           </div>
         </article>
 
         <article class="card span-2">
-          <div class="lane research">ME 472 · Winter 2026</div>
+          <div class="lane research">ME 472 · Winter '26</div>
           <h3>W26-Cobot-Axis</h3>
           <div class="meta">UR30 7th axis · Klipper bridge</div>
           <p>UR30 7th axis for metal paste dispensing. RTDE bridge translates cobot commands to Klipper G-code on an RP2040.</p>
@@ -1617,10 +1656,10 @@
         </article>
 
         <article class="card span-2">
-          <div class="lane course">ME 440 · Winter 2026</div>
+          <div class="lane course">ME 440 · Winter '26</div>
           <h3>Vibrations final</h3>
-          <div class="meta">MATLAB forced-response solver</div>
-          <p>Modal decomposition and Duhamel integral toolbox graded against closed-form benchmarks.</p>
+          <div class="meta">LS-DYNA phone-drop FEA</div>
+          <p>Glass panel drop study in LS-DYNA — fracture bracketed at 7.0–7.1 m/s (~8.3 ft), ELFORM 16 + 1 µs timestep, modal at 181 Hz.</p>
           <div class="card-cta-row">
             <a href="projects/me440-vibrations.html" class="card-cta">Case study →</a>
           </div>
@@ -1842,6 +1881,60 @@
           <div class="tl-loc">UM-Dearborn team</div>
         </article>
 
+        <article class="tl-card tl--research">
+          <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
+          <div class="tl-org">ME 4671 · Senior Design</div>
+          <div class="tl-role">Capstone · team project</div>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--course">
+          <div class="tl-meta"><span class="tl-lane">Coursework</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
+          <div class="tl-org">ME 4301 · CFD</div>
+          <div class="tl-role">Final project · ANSYS Fluent</div>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--course">
+          <div class="tl-meta"><span class="tl-lane">Coursework</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
+          <div class="tl-org">Design for Manufacturing</div>
+          <div class="tl-role">Python · CAD automation</div>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--project">
+          <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026-04">Apr 2026</time></div>
+          <div class="tl-org">ME 472 · Cobot Axis</div>
+          <div class="tl-role">UR30 7th axis · Klipper bridge</div>
+          <div class="tl-loc">UM-Dearborn</div>
+          <div class="tl-links">
+            <a href="projects/w26-cobot-axis.html">Case study</a>
+            <a href="https://github.com/wrbell/W26-Cobot-Axis" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+        <article class="tl-card tl--project">
+          <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026-04">Apr 2026</time></div>
+          <div class="tl-org">ME 440 · Phone Drop FEA</div>
+          <div class="tl-role">LS-DYNA explicit dynamics</div>
+          <div class="tl-loc">UM-Dearborn</div>
+          <div class="tl-links">
+            <a href="projects/me440-vibrations.html">Case study</a>
+            <a href="https://github.com/wrbell/vibes-project" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+        <article class="tl-card tl--project">
+          <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026-04">Apr 2026</time></div>
+          <div class="tl-org">ME 379 · Fluids Lab</div>
+          <div class="tl-role">NACA 0015 · sting balance DAQ</div>
+          <div class="tl-loc">UM-Dearborn</div>
+          <div class="tl-links">
+            <a href="projects/me379-fluids-lab.html">Case study</a>
+            <a href="https://github.com/wrbell/ME379" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
         <article class="tl-card tl--project">
           <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026-04">Apr 2026</time></div>
           <div class="tl-org">StarkHacks · Purdue</div>
@@ -1862,6 +1955,7 @@
         <span class="legend-item"><span class="legend-dot" data-lane="industry"></span>Industry</span>
         <span class="legend-item"><span class="legend-dot" data-lane="research"></span>Research</span>
         <span class="legend-item"><span class="legend-dot" data-lane="project"></span>Project</span>
+        <span class="legend-item"><span class="legend-dot" data-lane="coursework"></span>Coursework</span>
         <span class="legend-item"><span class="legend-dot" data-lane="extra"></span>Extracurricular</span>
       </div>
     </div>
@@ -1903,9 +1997,10 @@
         <div class="skills-tier-head">
           <div class="skills-tier-name">Familiar.</div>
           <div class="skills-tier-blurb">Used on real projects — give me an afternoon to warm up and I'm productive again.</div>
-          <div class="skills-tier-count">9 tools</div>
+          <div class="skills-tier-count">10 tools</div>
         </div>
         <div class="skills-rows">
+          <div class="skills-row"><span class="name">ANSYS Fluent · CFD</span><span class="dom m">Mech</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
           <div class="skills-row"><span class="name">KUKA robots · KRL</span><span class="dom c">Controls</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
           <div class="skills-row"><span class="name">TwinCAT · DeltaV</span><span class="dom c">Controls</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
           <div class="skills-row"><span class="name">C / C++</span><span class="dom s">Soft</span><span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span></div>
@@ -1922,7 +2017,7 @@
         <div class="skills-tier-head">
           <div class="skills-tier-name">Learning.</div>
           <div class="skills-tier-blurb">Actively working through — in coursework, side projects, or a specific problem on my bench.</div>
-          <div class="skills-tier-count">5 tools</div>
+          <div class="skills-tier-count">6 tools</div>
         </div>
         <div class="skills-rows">
           <div class="skills-row"><span class="name">MarianMT · TranslateGemma</span><span class="dom r">Research</span><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span></div>
@@ -1930,6 +2025,7 @@
           <div class="skills-row"><span class="name">Rust</span><span class="dom s">Soft</span><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span></div>
           <div class="skills-row"><span class="name">Docker</span><span class="dom s">Soft</span><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span></div>
           <div class="skills-row"><span class="name">PuLP · network optimization</span><span class="dom r">Research</span><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span></div>
+          <div class="skills-row"><span class="name">LS-DYNA · explicit dynamics</span><span class="dom m">Mech</span><span class="dots"><span class="d on"></span><span class="d"></span><span class="d"></span></span></div>
         </div>
       </div>
     </div>

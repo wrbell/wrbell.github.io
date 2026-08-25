@@ -37,7 +37,7 @@
       title: 'w26-cobot-axis',
       kicker: 'ME 472 · W\u201926',
       blurb: 'UR30 7th axis. RTDE \u2194 Klipper bridge on an RP2040.',
-      tagline: 'Designing the next axis of motion for a UR30 cobot \u2014 kinematics, integration, safety case.',
+      tagline: 'UR30 7th axis for metal paste dispensing — RTDE bridge to Klipper on SKR Pico (RP2040).',
       datePublished: '2026-01-01',
       keywords: ['cobot', 'ur30', 'rtde', 'klipper', 'rp2040', 'mechatronics']
     },
@@ -54,8 +54,8 @@
       slug: 'me440-vibrations',
       title: 'me440-vibrations',
       kicker: 'ME 440 \u00b7 W\u201926',
-      blurb: 'MATLAB forced-response solver. Closed-form benchmarks.',
-      tagline: 'A general-purpose forced-response solver for damped MDOF systems in MATLAB.',
+      blurb: 'LS-DYNA phone-drop FEA. Fracture at ~8.3 ft.',
+      tagline: 'Chemically-strengthened glass panel drop study — LS-DYNA explicit dynamics with MAT_280 element deletion.',
       datePublished: '2026-03-01',
       keywords: ['vibrations', 'matlab', 'mdof', 'forced-response']
     },
