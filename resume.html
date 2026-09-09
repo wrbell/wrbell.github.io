@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Willem Bell — Resume</title>
-  <meta name="description" content="Willem Bell — ME + CS, UM-Dearborn. Resume (printable).">
+  <meta name="description" content="Willem Bell — BSME, UM-Dearborn. Resume (printable).">
   <meta name="robots" content="noindex">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/inter-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
@@ -63,9 +63,9 @@
       width: 8.5in;
       min-height: 11in;
       background: var(--paper);
-      padding: 0.55in 0.6in 0.5in;
-      font-size: 10pt;
-      line-height: 1.45;
+      padding: 0.4in 0.5in 0.35in;
+      font-size: 9.5pt;
+      line-height: 1.4;
       color: var(--ink-dim);
       box-shadow: 0 2px 14px rgba(0,0,0,0.08);
     }
@@ -87,7 +87,7 @@
       font-family: var(--font-display);
       font-style: italic;
       font-weight: 400;
-      font-size: 44pt;
+      font-size: 36pt;
       line-height: 0.95;
       letter-spacing: -0.02em;
       color: var(--ink);
@@ -126,7 +126,7 @@
 
     /* === Section === */
     .section {
-      margin-bottom: 18px;
+      margin-bottom: 12px;
     }
     .section-head {
       display: grid;
@@ -160,7 +160,7 @@
       display: grid;
       grid-template-columns: 110px 1fr;
       gap: 14px;
-      padding: 8px 0;
+      padding: 5px 0;
       border-bottom: 1px dashed var(--line);
     }
     .entry:last-child { border-bottom: none; }
@@ -210,14 +210,6 @@
       left: 0;
       color: var(--line-hi);
     }
-    .entry-body li.nda {
-      font-family: var(--font-mono);
-      font-size: 8.5pt;
-      color: var(--muted);
-      font-style: italic;
-    }
-    .entry-body li.nda::before { content: '▮'; color: var(--accent); }
-
     /* === Stack === */
     .stack {
       display: grid;
@@ -355,7 +347,7 @@
     <header class="header">
       <div>
         <h1 class="name">Willem Bell<span class="dot">.</span></h1>
-        <div class="tagline">Mechanical Engineer <span class="accent">×</span> Software · ME + CS, UM‑Dearborn (Dec 2026)</div>
+        <div class="tagline">Mechanical Engineer <span class="accent">×</span> Software · BSME, UM‑Dearborn (Dec 2026)</div>
       </div>
       <div class="contact">
         <div><a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a></div>
@@ -376,7 +368,7 @@
         <div class="entry-when">Sep 2022 – Dec 2026<span class="loc">Dearborn, MI</span></div>
         <div class="entry-body">
           <h3>University of Michigan — Dearborn</h3>
-          <div class="role"><span class="accent">BSE</span> Mechanical Engineering + CS minor</div>
+          <div class="role"><span class="accent">BSME</span> Mechanical Engineering</div>
           <ul>
             <li>Accelerated coursework across controls, FEA, manufacturing processes, and software systems.</li>
             <li>Relevant: Dynamic Systems &amp; Controls, FEA (ANSYS), Manufacturing Processes, Data Structures, ML.</li>
@@ -398,8 +390,9 @@
           <h3>SpaceX — Starfactory</h3>
           <div class="role">Automation &amp; Controls Intern <span class="accent">· Siemens S7 · S120 · KUKA · EPLAN · NX</span></div>
           <ul>
-            <li>Owned controls design, FAT, and commissioning across multiple Starfactory stations on the Starship production line.</li>
-            <li class="nda">Specific station scopes and outcomes redacted under NDA.</li>
+            <li>Designed, released, and procured full EPLAN packet of cell with NX drawings to support field install.</li>
+            <li>Commissioned Siemens PLCs, cell networks, and KUKA robots to drive welding &amp; production processes.</li>
+            <li>Commissioned and troubleshot Siemens S120 drives to support additional production tables.</li>
           </ul>
         </div>
       </div>
@@ -410,8 +403,7 @@
           <h3>SpaceX — Space Lasers</h3>
           <div class="role">I&amp;T Intern <span class="accent">· NX · ANSYS · vibration test</span></div>
           <ul>
-            <li>NX &amp; ANSYS — vibration analysis and test for space laser integration &amp; test campaigns.</li>
-            <li>Coordinated lab build, fixturing, and test readiness across I&amp;T and structures.</li>
+            <li>Designed, commissioned, and handed off to production a vibration testing system and enclosure for satellite components.</li>
           </ul>
         </div>
       </div>
@@ -422,20 +414,58 @@
           <h3>Tesla — 4680 Cell Manufacturing</h3>
           <div class="role">Controls Development Intern <span class="accent">· DeltaV · TwinCAT · VFD</span></div>
           <ul>
-            <li>Controls development for 4680 cell manufacturing — hands-on DeltaV, TwinCAT, and VFD work.</li>
-            <li class="nda">Specific station scopes and outcomes redacted under NDA.</li>
+            <li>Traveled independently to multiple vendor sites and performed controls factory acceptance testing of production equipment.</li>
+            <li>Scheduled, managed, and owned the outcome of two production outages for 4680 cell production. Completed and handed off equipment to production team. Troubleshot Emerson DeltaV and TwinCAT HMIs, hardware, and logic in the field to ensure success.</li>
+            <li>Led RFQ and onboarding process for a new vendor at Tesla for controls VFD, low voltage distribution, and remote IO panels. Owned schedule and meetings with vendor to ensure Tesla and vendor were aligned on design changes and implementation.</li>
           </ul>
         </div>
       </div>
 
       <div class="entry">
-        <div class="entry-when">Jul 2021 – Present<span class="loc">UM-Dearborn</span></div>
+        <div class="entry-when">May – Aug 2023<span class="loc">Starbase, TX</span></div>
+        <div class="entry-body">
+          <h3>SpaceX — Starship Launch</h3>
+          <div class="role">Launch Intern <span class="accent">· controls hardware · commissioning</span></div>
+          <ul>
+            <li>Owned Starship flame deflector controls hardware. Scheduled and managed a two-shift crew of contractors and internal technicians to meet deadlines for system build and commissioning.</li>
+            <li>Wrote detailed work orders for field work to complete build and checkouts; coordinated with inventory teams to get parts to the line as work progressed.</li>
+            <li>Worked with civil, fluids, software, and structures teams to communicate and support rapid design iteration during the build process as well as activations of the subsystems during overall system build.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-when">May – Aug 2022<span class="loc">Starbase, TX</span></div>
+        <div class="entry-body">
+          <h3>SpaceX — Starship Automation</h3>
+          <div class="role">Automation &amp; Controls Intern <span class="accent">· cryogenic systems · instrumentation</span></div>
+          <ul>
+            <li>Built and commissioned control panels for new cryogenic LOX systems using instrumentation such as valves, pressure transducers, RTDs, strain gages, and IO for pump motor VFDs.</li>
+            <li>Managed schedule and priorities for a team of 7 technicians during build and repair efforts between tests.</li>
+            <li>Worked with fluids engineers to consolidate software configuration changes, reducing software releases and downtime for software changes.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-when">Jul 2021 – May 2023<span class="loc">UM-Dearborn</span></div>
         <div class="entry-body">
           <h3>Pannier Research Lab — Dynamic Systems &amp; Controls</h3>
-          <div class="role">Undergraduate Researcher → Research Assistant</div>
+          <div class="role">Undergraduate Researcher</div>
           <ul>
-            <li>Multi-stint appointment (2021–23, 2024–25, 2025–present) supporting Dr. Pannier's controls research.</li>
-            <li class="nda">Project details available on request.</li>
+            <li>Designed, manufactured, and maintained automated Toolchanger &amp; Geocator scanning tool.</li>
+            <li>Wrote MATLAB code to determine G-code paths for automated Toolchangers for response to steps in extrusion.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-when">May 2021 – Feb 2022<span class="loc">Newport, MI</span></div>
+        <div class="entry-body">
+          <h3>DTE Fermi</h3>
+          <div class="role">Instrumentation &amp; Controls Intern</div>
+          <ul>
+            <li>Assisted with updates to plant component design documentation to ensure regulatory compliance.</li>
           </ul>
         </div>
       </div>

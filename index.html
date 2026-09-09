@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Willem Bell — ME + CS</title>
-  <meta name="description" content="Willem Bell — Mechanical engineering & computer science at UM-Dearborn. SpaceX and Tesla internships. BSE ME + CS, December 2026.">
-  <meta property="og:title" content="Willem Bell — ME + CS">
-  <meta property="og:description" content="ME + CS at UM-Dearborn. SpaceX, Tesla, DTE Fermi internships. Building things that move.">
+  <title>Willem Bell — Mechanical Engineer</title>
+  <meta name="description" content="Willem Bell — BSME at UM-Dearborn. SpaceX and Tesla internships. Graduating December 2026.">
+  <meta property="og:title" content="Willem Bell — Mechanical Engineer">
+  <meta property="og:description" content="BSME at UM-Dearborn. SpaceX, Tesla, DTE Fermi internships. Building things that move.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://wrbell.github.io/">
   <meta property="og:image" content="https://wrbell.github.io/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Willem Bell — Mechanical engineering × software. BSE, Dec 2026.">
+  <meta property="og:image:alt" content="Willem Bell — Mechanical engineering × software. BSME, Dec 2026.">
   <meta property="og:locale" content="en_US">
   <meta name="theme-color" content="#0a0a12">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Willem Bell — ME + CS">
-  <meta name="twitter:description" content="ME + CS at UM-Dearborn. SpaceX, Tesla, DTE Fermi internships. Building things that move.">
+  <meta name="twitter:title" content="Willem Bell — Mechanical Engineer">
+  <meta name="twitter:description" content="BSME at UM-Dearborn. SpaceX, Tesla, DTE Fermi internships. Building things that move.">
   <meta name="twitter:image" content="https://wrbell.github.io/assets/og-card.png">
   <script type="application/ld+json">
   {
@@ -602,12 +602,6 @@
       box-shadow: var(--shadow-hi), 0 0 32px var(--accent-glow);
       transform: translateY(-3px);
     }
-    /* Locked cards: no clickable CTA, so no hover lift / glow / accent border. */
-    .card.card--locked:hover {
-      border-color: var(--border);
-      box-shadow: none;
-      transform: none;
-    }
     .card .lane {
       font-family: var(--font-mono);
       font-size: 10.5px;
@@ -738,20 +732,24 @@
       @keyframes card-stream { to { stroke-dashoffset: -10; } }
     }
 
-    /* === NDA note (simple) === */
-    .card .nda-note {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      padding: 10px 12px;
-      border-left: 2px solid var(--accent);
-      background: color-mix(in srgb, var(--accent) 5%, transparent);
-      border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    .card > ul {
+      list-style: none;
+      font-size: 14.5px;
+      color: var(--text-dim);
+      line-height: 1.55;
       margin-bottom: 16px;
     }
-    .card .nda-note strong { color: var(--text); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 10px; }
-
+    .card > ul li {
+      padding-left: 16px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .card > ul li::before {
+      content: '›';
+      position: absolute; left: 0;
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
 
     /* === Ledger === */
     .ledger { border-top: 1px solid var(--border); }
@@ -1337,7 +1335,7 @@
           </div>
           <h1><span class="w1">Willem <span class="dot">Bell.</span></span></h1>
           <p class="hero-tagline">Mechanical engineer <span class="accent">×</span> software. Builds things that <em class="italic">move</em>.</p>
-          <p class="hero-lede">ME × CS at UM‑Dearborn. Internships across <span class="accent">SpaceX</span> Starship, Starfactory, and Space Lasers, and <span class="accent">Tesla 4680</span>. I work the seam between a Siemens panel and a PyTorch notebook.</p>
+          <p class="hero-lede">BSME at UM‑Dearborn. Internships across <span class="accent">SpaceX</span> Starship, Starfactory, and Space Lasers, and <span class="accent">Tesla 4680</span>. I work the seam between a Siemens panel and a PyTorch notebook.</p>
           <div class="hero-cta">
             <a href="mailto:wrbell@umich.edu" class="btn primary">Email <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 3h6v6M3 9L9 3"/></svg></a>
             <a href="resume.html" class="btn" target="_blank" rel="noopener noreferrer">Resume</a>
@@ -1348,11 +1346,11 @@
         <aside class="vitals" aria-label="At-a-glance">
           <div>
             <div class="vital-label">Currently</div>
-            <div class="vital-value">ME 4671 Senior Design + ME 4301 CFD — final semester</div>
+            <div class="vital-value">Fall 2026 · UM-Dearborn</div>
           </div>
           <div>
             <div class="vital-label">Graduating</div>
-            <div class="vital-value">BSE (ME + CS) · <span class="accent">Dec 2026</span></div>
+            <div class="vital-value"><span class="accent">Dec 2026</span> · BSME</div>
           </div>
           <div>
             <div class="vital-label">Based</div>
@@ -1385,7 +1383,7 @@
       <div class="about-grid">
         <div class="about-sidebar">
           <img class="about-photo" src="assets/headshot.jpg" width="240" height="240" alt="Willem Bell — headshot" loading="lazy" decoding="async">
-          <div class="row"><span>Degree</span><strong>BSE ME + CS</strong></div>
+          <div class="row"><span>Degree</span><strong>BSME</strong></div>
           <div class="row"><span>School</span><strong>UM‑Dearborn</strong></div>
           <div class="row"><span>Expected</span><strong>Dec 2026</strong></div>
           <div class="row"><span>Pronouns</span><strong>he/him</strong></div>
@@ -1394,8 +1392,7 @@
         </div>
         <div class="about-copy">
           <p>I came into mechanical engineering because I wanted to understand how things break before they ship — torque specs, weld quality, sensor drift on a plant floor. My first internship at DTE Fermi was instrumentation and controls; Dearborn Electric Racing and UMD Racing turned that into chassis data pipelines and frame design. Those years taught me that good engineering is mostly listening to what the hardware is already telling you.</p>
-          <p>The CS minor wasn't a career pivot — it was catching up to the tools I was already using. Python pipelines for FEA studies, an RTDE bridge into Klipper, a bilingual speech stack running Whisper on-device at church every week. I don't treat software as a separate craft from controls design; it's how I close the loop between a Siemens panel and a validation notebook.</p>
-          <p>I'm graduating in <span class="accent">December 2026</span> and looking for new-grad roles where hardware still matters — automation, robotics, manufacturing, test. Four SpaceX internships and a Tesla controls term left me with high standards and a healthy respect for NDAs; I'd rather show you the ME 472 cobot axis or <em>stark-translate</em> repo than talk vaguely about impact. I want to work on systems that move, with people who ship.</p>
+          <p>I'm graduating in <span class="accent">December 2026</span> and looking for new-grad hardware roles — automation, robotics, manufacturing, test. Four SpaceX internships and a Tesla controls term are under Experience, sourced bullets only. Public writeups — the ME 472 cobot axis and <em>stark-translate</em> — are the software and controls receipts. I want to work on systems that move, with people who ship.</p>
 
           <div class="recently" role="region" aria-labelledby="recently-label">
             <div class="recently-head">
@@ -1405,7 +1402,7 @@
             <ol>
               <li class="live">
                 <time datetime="2026-09">Sep 2026</time>
-                <span class="what">Starting <strong>Fall '26</strong> — <strong>ME 4671 Senior Design</strong>, <strong>ME 4301 CFD</strong>, and <strong>Design for Manufacturing</strong>.</span>
+                <span class="what">Starting <strong>Fall '26</strong> — <strong>ME 364</strong> Kim, <strong>ME 4301 CFD</strong> Zikanov, <strong>ME 4550</strong> Ruiz Garcia, <strong>ME 460</strong> Dilley, <strong>ME 4671 Senior Design</strong> Argento.</span>
               </li>
               <li>
                 <time datetime="2026-08">Aug 2026</time>
@@ -1548,21 +1545,19 @@
         <article class="card span-4">
           <div class="lane course">ME 4671 · Fall 2026</div>
           <h3>Senior Design</h3>
-          <div class="meta">Capstone · mechanical engineering</div>
-          <div class="shot" role="img" aria-label="Senior Design — capstone project, Fall 2026"></div>
-          <p>Final-semester capstone — team-based design from requirements through build, test, and documentation. Scope and deliverables land here as the project firms up in September.</p>
+          <div class="meta">Argento · proposal / in progress</div>
+          <p>ME 4671 Fall 2026 (proposal / in progress) — APSX athletic-class quadrotor; Level-1 control architecture = INDI with commanded motor kill on Pixhawk 6C Mini.</p>
           <div class="tags">
-            <span class="tag">Capstone</span>
-            <span class="tag">Systems Design</span>
-            <span class="tag">CAD</span>
+            <span class="tag">INDI</span>
+            <span class="tag">Pixhawk 6C Mini</span>
           </div>
         </article>
 
         <article class="card span-2">
           <div class="lane course">ME 4301 · Fall 2026</div>
-          <h3>CFD final</h3>
-          <div class="meta">ANSYS Fluent · computational fluid dynamics</div>
-          <p>Fall CFD capstone — mesh, solve, and validate a flow problem in ANSYS Fluent with documented convergence and physical sanity checks.</p>
+          <h3>CFD</h3>
+          <div class="meta">Zikanov · ANSYS Fluent</div>
+          <p>ME 4301 · Zikanov.</p>
           <div class="tags">
             <span class="tag">CFD</span>
             <span class="tag">ANSYS Fluent</span>
@@ -1571,14 +1566,9 @@
 
         <article class="card span-2">
           <div class="lane course">Fall 2026</div>
-          <h3>Design for Manufacturing</h3>
-          <div class="meta">Python · CAD automation</div>
-          <p>Design-for-manufacturing coursework — CAD workflows, tolerance thinking, and Python automation for production-ready mechanical design.</p>
-          <div class="tags">
-            <span class="tag">Python</span>
-            <span class="tag">CAD</span>
-            <span class="tag">DFM</span>
-          </div>
+          <h3>Current courses</h3>
+          <div class="meta">UM‑Dearborn</div>
+          <p>ME 364 · Kim. ME 4550 · Ruiz Garcia. ME 460 · Dilley.</p>
         </article>
 
         <article class="card span-4">
@@ -1631,12 +1621,15 @@
           </div>
         </article>
 
-        <article class="card span-3 card--locked">
+        <article class="card span-3">
           <div class="lane industry">SpaceX · Jan–Jul 2025</div>
           <h3>Starfactory automation</h3>
           <div class="meta">Automation &amp; controls intern · Starbase, TX</div>
-          <p>Owned controls design, FAT, and commissioning across multiple Starfactory stations on the Starship production line.</p>
-          <div class="nda-note"><strong>Under NDA</strong></div>
+          <ul>
+            <li>Designed, released, and procured full EPLAN packet of cell with NX drawings to support field install.</li>
+            <li>Commissioned Siemens PLCs, cell networks, and KUKA robots to drive welding &amp; production processes.</li>
+            <li>Commissioned and troubleshot Siemens S120 drives to support additional production tables.</li>
+          </ul>
           <div class="tags">
             <span class="tag">EPLAN</span>
             <span class="tag">Siemens PLCs</span>
@@ -1646,12 +1639,15 @@
           </div>
         </article>
 
-        <article class="card span-2 card--locked">
+        <article class="card span-2">
           <div class="lane industry">Tesla · Sep 2023–Apr 2024</div>
           <h3>Tesla 4680</h3>
           <div class="meta">Controls development intern · Austin, TX</div>
-          <p>Controls development for 4680 battery cell manufacturing — hands-on DeltaV, TwinCAT, and VFD work.</p>
-          <div class="nda-note"><strong>Under NDA</strong></div>
+          <ul>
+            <li>Traveled independently to multiple vendor sites and performed controls factory acceptance testing of production equipment.</li>
+            <li>Scheduled, managed, and owned the outcome of two production outages for 4680 cell production. Completed and handed off equipment to production team. Troubleshot Emerson DeltaV and TwinCAT HMIs, hardware, and logic in the field to ensure success.</li>
+            <li>Led RFQ and onboarding process for a new vendor at Tesla for controls VFD, low voltage distribution, and remote IO panels. Owned schedule and meetings with vendor to ensure Tesla and vendor were aligned on design changes and implementation.</li>
+          </ul>
           <div class="tags">
             <span class="tag">DeltaV</span>
             <span class="tag">TwinCAT</span>
@@ -1660,11 +1656,14 @@
           </div>
         </article>
 
-        <article class="card span-2 card--locked">
-          <div class="lane research">Pannier Lab · 2021–present</div>
+        <article class="card span-2">
+          <div class="lane research">Pannier Lab · Jul 2021–May 2023</div>
           <h3>Pannier Research Lab</h3>
-          <div class="meta">UM‑Dearborn · three terms</div>
-          <p>Undergraduate researcher across three terms; toolchanger automation and G-code workflows. Returned for a fourth term in Aug 2025.</p>
+          <div class="meta">UM‑Dearborn</div>
+          <ul>
+            <li>Designed, manufactured, and maintained automated Toolchanger &amp; Geocator scanning tool.</li>
+            <li>Wrote MATLAB code to determine G-code paths for automated Toolchangers for response to steps in extrusion.</li>
+          </ul>
           <div class="tags">
             <span class="tag">MATLAB</span>
             <span class="tag">G-Code</span>
@@ -1706,8 +1705,9 @@
             <div class="role">Starfactory Automation &amp; Controls Intern</div>
             <div class="loc">Starbase, TX</div>
             <ul>
-              <li>Owned controls design, FAT, and commissioning across multiple Starfactory stations.</li>
-              <li>Specific station scopes and outcomes redacted under NDA.</li>
+              <li>Designed, released, and procured full EPLAN packet of cell with NX drawings to support field install.</li>
+              <li>Commissioned Siemens PLCs, cell networks, and KUKA robots to drive welding &amp; production processes.</li>
+              <li>Commissioned and troubleshot Siemens S120 drives to support additional production tables.</li>
             </ul>
           </div>
           <div class="entry-tags">
@@ -1716,19 +1716,17 @@
         </article>
 
         <article class="entry">
-          <time class="entry-date" datetime="2022-05">May 2022 — Aug 2024</time>
+          <time class="entry-date" datetime="2024-05">May — Aug 2024</time>
           <div class="entry-body">
-            <h3>SpaceX <span style="color: var(--muted);">· previous internships</span></h3>
-            <div class="role">Starship, Launch, Space Lasers</div>
-            <div class="loc">Starbase, TX · Redmond, WA</div>
+            <h3>SpaceX</h3>
+            <div class="role">Space Lasers Integration &amp; Test Intern</div>
+            <div class="loc">Redmond, WA</div>
             <ul>
-              <li>Space Lasers Integration &amp; Test Intern — Redmond, WA — May–Aug 2024.</li>
-              <li>Starship Launch Intern — Starbase, TX — May–Aug 2023.</li>
-              <li>Starship Automation &amp; Controls Intern — Starbase, TX — May–Aug 2022.</li>
+              <li>Designed, commissioned, and handed off to production a vibration testing system and enclosure for satellite components.</li>
             </ul>
           </div>
           <div class="entry-tags">
-            <span class="tag">NX</span><span class="tag">ANSYS</span><span class="tag">Controls Hardware</span><span class="tag">Commissioning</span><span class="tag">Cryogenic Systems</span><span class="tag">Instrumentation</span>
+            <span class="tag">NX</span><span class="tag">ANSYS</span><span class="tag">Vibration Test</span>
           </div>
         </article>
 
@@ -1739,8 +1737,9 @@
             <div class="role">Controls Development Intern</div>
             <div class="loc">Austin, TX</div>
             <ul>
-              <li>Controls development for 4680 cell manufacturing — hands-on DeltaV, TwinCAT, and VFD work.</li>
-              <li>Specific station scopes and outcomes redacted under NDA.</li>
+              <li>Traveled independently to multiple vendor sites and performed controls factory acceptance testing of production equipment.</li>
+              <li>Scheduled, managed, and owned the outcome of two production outages for 4680 cell production. Completed and handed off equipment to production team. Troubleshot Emerson DeltaV and TwinCAT HMIs, hardware, and logic in the field to ensure success.</li>
+              <li>Led RFQ and onboarding process for a new vendor at Tesla for controls VFD, low voltage distribution, and remote IO panels. Owned schedule and meetings with vendor to ensure Tesla and vendor were aligned on design changes and implementation.</li>
             </ul>
           </div>
           <div class="entry-tags">
@@ -1748,7 +1747,72 @@
           </div>
         </article>
 
-        <p class="ledger-foot">For everything else — prior internships, research terms, case competitions, and student leadership — see the <a href="#timeline">timeline</a> below.</p>
+        <article class="entry">
+          <time class="entry-date" datetime="2023-05">May — Aug 2023</time>
+          <div class="entry-body">
+            <h3>SpaceX</h3>
+            <div class="role">Starship Launch Intern</div>
+            <div class="loc">Starbase, TX</div>
+            <ul>
+              <li>Owned Starship flame deflector controls hardware. Scheduled and managed a two-shift crew of contractors and internal technicians to meet deadlines for system build and commissioning.</li>
+              <li>Wrote detailed work orders for field work to complete build and checkouts; coordinated with inventory teams to get parts to the line as work progressed.</li>
+              <li>Worked with civil, fluids, software, and structures teams to communicate and support rapid design iteration during the build process as well as activations of the subsystems during overall system build.</li>
+            </ul>
+          </div>
+          <div class="entry-tags">
+            <span class="tag">Controls Hardware</span><span class="tag">Commissioning</span>
+          </div>
+        </article>
+
+        <article class="entry">
+          <time class="entry-date" datetime="2022-05">May — Aug 2022</time>
+          <div class="entry-body">
+            <h3>SpaceX</h3>
+            <div class="role">Starship Automation &amp; Controls Intern</div>
+            <div class="loc">Starbase, TX</div>
+            <ul>
+              <li>Built and commissioned control panels for new cryogenic LOX systems using instrumentation such as valves, pressure transducers, RTDs, strain gages, and IO for pump motor VFDs.</li>
+              <li>Managed schedule and priorities for a team of 7 technicians during build and repair efforts between tests.</li>
+              <li>Worked with fluids engineers to consolidate software configuration changes, reducing software releases and downtime for software changes.</li>
+            </ul>
+          </div>
+          <div class="entry-tags">
+            <span class="tag">Cryogenic Systems</span><span class="tag">Instrumentation</span><span class="tag">VFDs</span>
+          </div>
+        </article>
+
+        <article class="entry">
+          <time class="entry-date" datetime="2021-07">Jul 2021 — May 2023</time>
+          <div class="entry-body">
+            <h3>Pannier Research Lab</h3>
+            <div class="role">Undergraduate Researcher</div>
+            <div class="loc">UM-Dearborn</div>
+            <ul>
+              <li>Designed, manufactured, and maintained automated Toolchanger &amp; Geocator scanning tool.</li>
+              <li>Wrote MATLAB code to determine G-code paths for automated Toolchangers for response to steps in extrusion.</li>
+            </ul>
+          </div>
+          <div class="entry-tags">
+            <span class="tag">MATLAB</span><span class="tag">G-Code</span><span class="tag">Toolchanger</span>
+          </div>
+        </article>
+
+        <article class="entry">
+          <time class="entry-date" datetime="2021-05">May 2021 — Feb 2022</time>
+          <div class="entry-body">
+            <h3>DTE Fermi</h3>
+            <div class="role">Instrumentation &amp; Controls Intern</div>
+            <div class="loc">Newport, MI</div>
+            <ul>
+              <li>Assisted with updates to plant component design documentation to ensure regulatory compliance.</li>
+            </ul>
+          </div>
+          <div class="entry-tags">
+            <span class="tag">I&amp;C</span><span class="tag">Documentation</span>
+          </div>
+        </article>
+
+        <p class="ledger-foot">For racing, case competitions, and student leadership — see the <a href="#timeline">timeline</a> below.</p>
 
       </div>
     </div>
@@ -1770,7 +1834,7 @@
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2021-05">May 2021 — Feb 2022</time></div>
           <div class="tl-org">DTE Fermi</div>
           <div class="tl-role">Instrumentation &amp; Controls Intern</div>
-          <p class="tl-note">PDF flattening tooling and I&amp;C support on the Fermi 2 nuclear floor.</p>
+          <p class="tl-note">Assisted with updates to plant component design documentation to ensure regulatory compliance.</p>
           <div class="tl-loc">Newport, MI</div>
         </article>
 
@@ -1778,7 +1842,7 @@
           <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2021-07">Jul 2021 — May 2023</time></div>
           <div class="tl-org">Pannier Research Lab</div>
           <div class="tl-role">Undergraduate Researcher</div>
-          <p class="tl-note">Materials characterization and lab instrumentation in the Pannier group.</p>
+          <p class="tl-note">Designed, manufactured, and maintained automated Toolchanger &amp; Geocator scanning tool. Wrote MATLAB code to determine G-code paths for automated Toolchangers for response to steps in extrusion.</p>
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
@@ -1794,7 +1858,7 @@
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2022-05">May — Aug 2022</time></div>
           <div class="tl-org">SpaceX · Starship</div>
           <div class="tl-role">Automation &amp; Controls Intern</div>
-          <p class="tl-note">First SpaceX term — automation and controls on Starship production.</p>
+          <p class="tl-note">Built and commissioned control panels for new cryogenic LOX systems using instrumentation such as valves, pressure transducers, RTDs, strain gages, and IO for pump motor VFDs.</p>
           <div class="tl-loc">Starbase, TX</div>
         </article>
 
@@ -1810,7 +1874,7 @@
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2023-05">May — Aug 2023</time></div>
           <div class="tl-org">SpaceX · Starship</div>
           <div class="tl-role">Launch Intern</div>
-          <p class="tl-note">Launch pad systems and ground-support equipment at Starbase.</p>
+          <p class="tl-note">Owned Starship flame deflector controls hardware. Scheduled and managed a two-shift crew of contractors and internal technicians to meet deadlines for system build and commissioning.</p>
           <div class="tl-loc">Starbase, TX</div>
         </article>
 
@@ -1818,7 +1882,7 @@
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2023-09">Sep 2023 — Apr 2024</time></div>
           <div class="tl-org">Tesla 4680</div>
           <div class="tl-role">Controls Development Intern</div>
-          <p class="tl-note">Controls development on 4680 cell manufacturing lines in Austin.</p>
+          <p class="tl-note">Traveled independently to multiple vendor sites and performed controls factory acceptance testing of production equipment.</p>
           <div class="tl-loc">Austin, TX</div>
         </article>
 
@@ -1826,7 +1890,7 @@
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2024-05">May — Aug 2024</time></div>
           <div class="tl-org">SpaceX · Space Lasers</div>
           <div class="tl-role">Integration &amp; Test Intern</div>
-          <p class="tl-note">NX, ANSYS vibration analysis, and I&amp;T for space laser hardware.</p>
+          <p class="tl-note">Designed, commissioned, and handed off to production a vibration testing system and enclosure for satellite components.</p>
           <div class="tl-loc">Redmond, WA</div>
         </article>
 
@@ -1838,19 +1902,11 @@
           <div class="tl-loc">UM-Dearborn</div>
         </article>
 
-        <article class="tl-card tl--research">
-          <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2024-09">Sep 2024 — Jan 2025</time></div>
-          <div class="tl-org">Pannier Research Lab</div>
-          <div class="tl-role">Research Assistant</div>
-          <p class="tl-note">Continued lab instrumentation and materials research with the Pannier group.</p>
-          <div class="tl-loc">UM-Dearborn</div>
-        </article>
-
         <article class="tl-card tl--industry">
           <div class="tl-meta"><span class="tl-lane">Industry</span><time class="tl-date" datetime="2025-01">Jan — Jul 2025</time></div>
           <div class="tl-org">SpaceX · Starfactory</div>
           <div class="tl-role">Automation &amp; Controls Intern</div>
-          <p class="tl-note">Controls design, FAT, and commissioning across Starfactory stations.</p>
+          <p class="tl-note">Designed, released, and procured full EPLAN packet of cell with NX drawings to support field install.</p>
           <div class="tl-loc">Starbase, TX</div>
         </article>
 
@@ -1860,14 +1916,6 @@
           <div class="tl-role">Personal project</div>
           <p class="tl-note">Cross-course FEA mesh convergence and validation workflow (ME 360/440/379).</p>
           <div class="tl-loc">Open source</div>
-        </article>
-
-        <article class="tl-card tl--research">
-          <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2025-08">Aug 2025</time> — <span class="current">Present</span></div>
-          <div class="tl-org">Pannier Research Lab</div>
-          <div class="tl-role">Research Assistant</div>
-          <p class="tl-note">Ongoing research term — instrumentation and materials characterization.</p>
-          <div class="tl-loc">UM-Dearborn</div>
         </article>
 
         <article class="tl-card tl--extra">
@@ -1918,30 +1966,6 @@
           <div class="tl-loc">UM-Dearborn team</div>
         </article>
 
-        <article class="tl-card tl--research">
-          <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
-          <div class="tl-org">ME 4671 · Senior Design</div>
-          <div class="tl-role">Capstone · team project</div>
-          <p class="tl-note">Final-semester team design from requirements through build, test, and docs.</p>
-          <div class="tl-loc">UM-Dearborn</div>
-        </article>
-
-        <article class="tl-card tl--course">
-          <div class="tl-meta"><span class="tl-lane">Coursework</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
-          <div class="tl-org">ME 4301 · CFD</div>
-          <div class="tl-role">Final project · ANSYS Fluent</div>
-          <p class="tl-note">CFD capstone — mesh, solve, and validate with documented convergence.</p>
-          <div class="tl-loc">UM-Dearborn</div>
-        </article>
-
-        <article class="tl-card tl--course">
-          <div class="tl-meta"><span class="tl-lane">Coursework</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
-          <div class="tl-org">Design for Manufacturing</div>
-          <div class="tl-role">Python · CAD automation</div>
-          <p class="tl-note">Design for manufacturing — CAD automation and process-aware design rules.</p>
-          <div class="tl-loc">UM-Dearborn</div>
-        </article>
-
         <article class="tl-card tl--project">
           <div class="tl-meta"><span class="tl-lane">Project</span><time class="tl-date" datetime="2026-04">Apr 2026</time></div>
           <div class="tl-org">ME 472 · Cobot Axis</div>
@@ -1988,6 +2012,30 @@
             <a href="https://devpost.com/software/ai-battery-assembler" target="_blank" rel="noopener">Devpost</a>
             <a href="https://github.com/Garrett-R16/SH26_MindFlayer" target="_blank" rel="noopener">GitHub</a>
           </div>
+        </article>
+
+        <article class="tl-card tl--research">
+          <div class="tl-meta"><span class="tl-lane">Research</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
+          <div class="tl-org">ME 4671 · Senior Design</div>
+          <div class="tl-role">Argento · proposal / in progress</div>
+          <p class="tl-note">ME 4671 Fall 2026 (proposal / in progress) — APSX athletic-class quadrotor; Level-1 control architecture = INDI with commanded motor kill on Pixhawk 6C Mini.</p>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--course">
+          <div class="tl-meta"><span class="tl-lane">Coursework</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
+          <div class="tl-org">ME 4301 · CFD</div>
+          <div class="tl-role">Zikanov · ANSYS Fluent</div>
+          <p class="tl-note">ME 4301 · Zikanov.</p>
+          <div class="tl-loc">UM-Dearborn</div>
+        </article>
+
+        <article class="tl-card tl--course">
+          <div class="tl-meta"><span class="tl-lane">Coursework</span><time class="tl-date" datetime="2026-09">Sep 2026</time> — <span class="current">Present</span></div>
+          <div class="tl-org">Fall 2026 courses</div>
+          <div class="tl-role">UM-Dearborn</div>
+          <p class="tl-note">ME 364 · Kim. ME 4550 · Ruiz Garcia. ME 460 · Dilley.</p>
+          <div class="tl-loc">UM-Dearborn</div>
         </article>
 
       </div>
