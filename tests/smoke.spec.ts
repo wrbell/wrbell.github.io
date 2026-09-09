@@ -318,11 +318,11 @@ test.describe("Case competition subpages — scaffold", () => {
 });
 
 test.describe("Notebook", () => {
-  test("renders at least one entry article", async ({ page }) => {
+  test("renders honest empty state with no sample entries", async ({ page }) => {
     await page.goto("/notebook.html");
     await page.locator(".hero h1").waitFor({ state: "visible" });
-    const entries = page.locator("article.entry");
-    expect(await entries.count()).toBeGreaterThanOrEqual(1);
+    await expect(page.locator("article.entry")).toHaveCount(0);
+    await expect(page.locator(".empty")).toBeVisible();
   });
 });
 

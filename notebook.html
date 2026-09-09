@@ -97,24 +97,6 @@
     }
     .entry-body .tag-row .accent { color: var(--accent); }
     .entry-body p { font-size: 16px; color: var(--text-dim); margin-bottom: 12px; }
-    .entry-body .photo {
-      aspect-ratio: 3 / 2;
-      background: repeating-linear-gradient(45deg, var(--bg-2) 0 2px, transparent 2px 18px), var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      margin: 16px 0;
-      position: relative;
-    }
-    .entry-body .photo::after {
-      content: 'IMG_PLACEHOLDER';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.24em;
-      color: var(--muted);
-    }
 
     .empty {
       padding: 80px 0;
@@ -153,18 +135,6 @@
   </section>
 
   <div class="container feed">
-    <!-- Example entry shape — remove when real entries exist -->
-    <article class="entry">
-      <div class="entry-date"><span>Sample</span><span class="y">YYYY</span><span class="id">NB_000</span></div>
-      <div class="entry-body">
-        <h2>Entry title goes here.</h2>
-        <div class="tag-row">Tag <span class="accent">·</span> Tag <span class="accent">·</span> Tag</div>
-        <p>Two or three sentences about what you did, what broke, what you learned. Keep it short.</p>
-        <div class="photo" role="img" aria-label="Placeholder image"></div>
-        <p>Optional follow-up sentence.</p>
-      </div>
-    </article>
-
     <div class="empty">
       <div>No entries yet <span class="accent">·</span> come back later</div>
     </div>
