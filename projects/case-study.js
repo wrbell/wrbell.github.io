@@ -68,6 +68,15 @@
       datePublished: '2026-04-01',
       keywords: ['fluid-mechanics', 'aerodynamics', 'daq', 'python', 'experimental']
     },
+    {
+      slug: 'me4301-cfd',
+      title: 'me4301-cfd',
+      kicker: 'ME 4301 · CFD',
+      blurb: '1-D nonlinear PDE solver in Fortran 90. 7-grid convergence study.',
+      tagline: 'Nonlinear convection–diffusion solver in Fortran 90 — MacCormack predictor–corrector, second order measured on a smooth window, 25 runs across 7 nested grids.',
+      datePublished: '2026-09-18',
+      keywords: ['cfd', 'fortran', 'maccormack', 'grid-convergence', 'numerical-methods', 'python']
+    },
 
   ];
 
@@ -203,6 +212,67 @@
     update();
   }
 
+  // ─── 5 · play looping figure videos while they are on screen ──
+  // Motion is opt-out at the OS level: nothing autoplays unless the user has
+  // explicitly expressed *no* preference against motion.
+  //
+  // Native controls are the pause mechanism (WCAG 2.2.2) and they are attached
+  // the moment a clip can move — on first play, when autoplay is refused, or
+  // straight away when reduced motion means starting by hand is the only way to
+  // see it. They are not in the markup because a parse-time `controls`
+  // attribute makes WebKit preload media-control artwork that headless builds
+  // ship without, which floods the console with load errors on every
+  // high-DPI viewport.
+  function armControls(video) {
+    if (!video.controls) video.controls = true;
+  }
+
+  function bindVideoAutoplay() {
+    var videos = document.querySelectorAll('video[data-autoplay]');
+    if (!videos.length) return;
+
+    var motionOk = false;
+    try {
+      motionOk = !!(window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: no-preference)').matches);
+    } catch (e) {
+      motionOk = false;
+    }
+
+    var i;
+    if (!motionOk || typeof window.IntersectionObserver !== 'function') {
+      for (i = 0; i < videos.length; i++) armControls(videos[i]);
+      return;
+    }
+
+    for (i = 0; i < videos.length; i++) {
+      videos[i].addEventListener('play', function () { armControls(this); });
+    }
+
+    function resume(el) {
+      var played = el.play();
+      // Safari/Firefox reject when playback is blocked; swallow it so the page
+      // never logs an unhandled rejection, and hand the user the controls
+      // instead so the clip is still reachable.
+      if (played && typeof played.catch === 'function') {
+        played.catch(function () { armControls(el); });
+      }
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      for (var k = 0; k < entries.length; k++) {
+        var entry = entries[k];
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          resume(entry.target);
+        } else if (!entry.target.paused) {
+          entry.target.pause();
+        }
+      }
+    }, { threshold: [0, 0.5] });
+
+    for (i = 0; i < videos.length; i++) io.observe(videos[i]);
+  }
+
   // ─── boot ────────────────────────────────────────────────
   function bindKeyboardNav(slug) {
     var i = indexOfSlug(slug);
@@ -232,6 +302,7 @@
     renderUpNext(slug);
     bindProgress();
     bindKeyboardNav(slug);
+    bindVideoAutoplay();
   }
 
   if (document.readyState === 'loading') {

@@ -1,0 +1,363 @@
+[
+  {
+    "section": "outcome",
+    "kind": "image",
+    "file": "hero.webp",
+    "width": 1600,
+    "height": 1080,
+    "caption": "six-panel summary: space-time, snapshots, probes, convergence, front.",
+    "alt": "Six-panel summary sheet: a u(x,t) space-time map, profile snapshots, probe histories, a log-log convergence plot and the front trajectory, all from the same set of runs.",
+    "wide": true
+  },
+  {
+    "section": "outcome",
+    "kind": "image",
+    "file": "u_x_final.webp",
+    "width": 979,
+    "height": 574,
+    "caption": "u(x) at the seven required times on the selected grid.",
+    "alt": "Seven overlaid u(x) curves. The initial Gaussian pulse steepens into a sharp front that sweeps left to right across the domain and leaves a flat plateau at u = 1 behind it."
+  },
+  {
+    "section": "outcome",
+    "kind": "image",
+    "file": "u_t_probes.webp",
+    "width": 979,
+    "height": 574,
+    "caption": "u(t) at the four required probe stations on the selected grid.",
+    "alt": "Four time histories taken at fixed x. Each one sits near zero, jumps through u = 0.5 as the front arrives, and then flattens out at one; stations further right switch later."
+  },
+  {
+    "section": "grid-study",
+    "kind": "image",
+    "file": "grid_convergence.webp",
+    "width": 1350,
+    "height": 585,
+    "caption": "L2 and Linf against Δx at each snapshot time, with a slope-2 guide.",
+    "alt": "Log-log error against grid spacing. One line per output time, each falling in a straight run roughly parallel to the dashed slope-2 reference line."
+  },
+  {
+    "section": "grid-study",
+    "kind": "image",
+    "file": "observed_order_vs_time.webp",
+    "width": 1600,
+    "height": 634,
+    "caption": "observed order p(t) between successive grids, both norms.",
+    "alt": "Observed order of accuracy plotted against time for each pair of neighbouring grids. The curves dip while the front is steepening and otherwise sit close to two."
+  },
+  {
+    "section": "grid-study",
+    "kind": "image",
+    "file": "error_norms_vs_time.webp",
+    "width": 1600,
+    "height": 966,
+    "caption": "L2(t) and Linf(t) against the finest dump at all 1501 frames.",
+    "alt": "Two log-scale panels tracking every grid's error against the reference run for the whole march. Each curve peaks while the front is crossing the domain, then drops by orders of magnitude once the field goes quiet.",
+    "wide": true
+  },
+  {
+    "section": "grid-study",
+    "kind": "image",
+    "file": "snapshots_by_grid.webp",
+    "width": 1600,
+    "height": 626,
+    "caption": "u(x) at each required time, every spatial grid, with a steepest-gradient zoom.",
+    "alt": "A row of profile panels, one per output time, each holding a curve for every grid plus an inset that magnifies the steepest part of the profile.",
+    "wide": true
+  },
+  {
+    "section": "grid-study",
+    "kind": "image",
+    "file": "u_x_front_overlay.webp",
+    "width": 1575,
+    "height": 570,
+    "caption": "every spatial grid through the front at t = 0.5, 1 and 2.",
+    "alt": "Three panels zoomed on the moving front. The coarse grids round the corner off and lag in position while the finer grids collapse onto a single curve.",
+    "wide": true
+  },
+  {
+    "section": "grid-study",
+    "kind": "image",
+    "file": "u_x_t15_overlay.webp",
+    "width": 930,
+    "height": 570,
+    "caption": "every spatial grid at t = 15, staggered markers.",
+    "alt": "Late-time profiles from every grid drawn together with staggered markers so the curves can be told apart; at this scale they are indistinguishable."
+  },
+  {
+    "section": "grid-study",
+    "kind": "image",
+    "file": "front_anatomy.webp",
+    "width": 1140,
+    "height": 690,
+    "caption": "the front at t = 1 on every dump grid, one marker per node.",
+    "alt": "The front drawn with one marker per grid node, so the number of cells that sit across the rise can be counted directly on each grid."
+  },
+  {
+    "section": "grid-study",
+    "kind": "image",
+    "file": "probes_by_grid.webp",
+    "width": 1600,
+    "height": 982,
+    "caption": "probe histories by grid, zoomed on the arrival transient.",
+    "alt": "Probe traces coloured by grid with an inset on the arrival ramp; the coarse grids reach the station slightly early and the fine ones sit on top of each other."
+  },
+  {
+    "section": "grid-study",
+    "kind": "image",
+    "file": "temporal_study.webp",
+    "width": 1395,
+    "height": 810,
+    "caption": "difference from the Δt/4 run at fixed grid, per snapshot time.",
+    "alt": "Log-log plot of how far the solution moves when the time step is halved and quartered at fixed grid spacing, with one line per output time."
+  },
+  {
+    "section": "grid-study",
+    "kind": "image",
+    "file": "temporal_overlay.webp",
+    "width": 1600,
+    "height": 1075,
+    "caption": "Δt, Δt/2 and Δt/4 at the front, and their difference from Δt/4.",
+    "alt": "Front profiles at three time steps drawn on top of each other, with their difference from the smallest step plotted underneath on a magnified axis.",
+    "wide": true
+  },
+  {
+    "section": "space-time",
+    "kind": "image",
+    "file": "spacetime_u.webp",
+    "width": 1301,
+    "height": 728,
+    "caption": "u(x,t) image of the finest dump, full march and front window.",
+    "alt": "Two heat maps of u over position and time. A dark wedge of untouched fluid shrinks as a bright boundary sweeps diagonally across the panel; behind it the field is uniformly high.",
+    "wide": true
+  },
+  {
+    "section": "space-time",
+    "kind": "image",
+    "file": "spacetime_error.webp",
+    "width": 1600,
+    "height": 910,
+    "caption": "difference from the finest dump in (x,t), one column per grid.",
+    "alt": "A row of difference maps, one per grid, showing where each solution departs from the reference. The signal is a thin bright ribbon that traces the front and fades as the grid is refined.",
+    "wide": true
+  },
+  {
+    "section": "space-time",
+    "kind": "image",
+    "file": "ridgeline_u.webp",
+    "width": 954,
+    "height": 858,
+    "caption": "stacked profiles from t = 0 to 2.5, offset by time.",
+    "alt": "Profiles stacked and offset by time so the sheet reads as a ridgeline: a bump at the bottom that grows into a travelling step climbing up the page."
+  },
+  {
+    "section": "space-time",
+    "kind": "image",
+    "file": "surface_3d.webp",
+    "width": 919,
+    "height": 820,
+    "caption": "u(x,t) as a 3-D surface for t ≤ 2.5.",
+    "alt": "The solution drawn as a three-dimensional surface over position and time — a flat low plain, a steep ridge that runs diagonally, and a high plateau behind it."
+  },
+  {
+    "section": "space-time",
+    "kind": "image",
+    "file": "spacetime_gradient.webp",
+    "width": 1360,
+    "height": 810,
+    "caption": "|u_x| in (x,t) on a log colour scale — numerical schlieren.",
+    "alt": "Magnitude of the spatial slope over position and time on a logarithmic colour scale, so the front shows up as a single bright thread against a dark field."
+  },
+  {
+    "section": "space-time",
+    "kind": "image",
+    "file": "characteristics.webp",
+    "width": 1410,
+    "height": 899,
+    "caption": "characteristics of dx/dt = u drawn over the u(x,t) image.",
+    "alt": "Straight characteristic lines drawn over the space-time map. They fan apart behind the front and converge into it, which is where the profile steepens."
+  },
+  {
+    "section": "space-time",
+    "kind": "image",
+    "file": "spacetime_terms.webp",
+    "width": 1600,
+    "height": 1085,
+    "caption": "convection, diffusion, source and u_t as (x,t) maps.",
+    "alt": "Four space-time maps side by side — convection, diffusion, source and the time derivative. Convection and diffusion are concentrated in the front; the source fills the whole transition band.",
+    "wide": true
+  },
+  {
+    "section": "space-time",
+    "kind": "image",
+    "file": "term_balance_t1.webp",
+    "width": 1600,
+    "height": 625,
+    "caption": "each PDE term at t = 1, full domain and front window.",
+    "alt": "Each term of the equation plotted against position at a single instant, full domain on the left and a zoom on the front on the right, where convection and diffusion nearly cancel."
+  },
+  {
+    "section": "space-time",
+    "kind": "image",
+    "file": "phase_portrait.webp",
+    "width": 1600,
+    "height": 705,
+    "caption": "(u, u_x) phase plane of the finest dump at several times.",
+    "alt": "The solution plotted as slope against value. Each time forms a closed loop that leaves the origin, bulges to a steepest point and returns."
+  },
+  {
+    "section": "space-time",
+    "kind": "image",
+    "file": "front_kinematics.webp",
+    "width": 1600,
+    "height": 960,
+    "caption": "front position, its grid-to-grid spread, speed and 10–90% width.",
+    "alt": "Four panels: front position against time, its spread between grids, the instantaneous speed about a flat mean, and the front width on a log axis with each grid's cell size marked."
+  },
+  {
+    "section": "space-time",
+    "kind": "image",
+    "file": "integral_budget.webp",
+    "width": 1600,
+    "height": 929,
+    "caption": "∫u dx, its rate, the boundary fluxes, the source and the residual.",
+    "alt": "The domain integral of u, its time derivative, the boundary fluxes, the source contribution and the leftover residual, all against time; the residual stays at round-off."
+  },
+  {
+    "section": "animations",
+    "kind": "video",
+    "file": "u_evolution.mp4",
+    "poster": "u_evolution_poster.webp",
+    "width": 528,
+    "height": 296,
+    "caption": "u(x) marching in time on three grids.",
+    "alt": "Animation: the profile marching in time on three grids at once. The pulse steepens into a front and sweeps across the domain, with the coarse grid visibly ahead of the fine ones."
+  },
+  {
+    "section": "animations",
+    "kind": "video",
+    "file": "front_tracking_zoom.mp4",
+    "poster": "front_tracking_zoom_poster.webp",
+    "width": 728,
+    "height": 422,
+    "caption": "co-moving window on the front; markers are grid nodes.",
+    "alt": "Animation: a window that travels with the front, holding it still in frame while grid-node markers stream through it."
+  },
+  {
+    "section": "animations",
+    "kind": "video",
+    "file": "dashboard.mp4",
+    "poster": "dashboard_poster.webp",
+    "width": 1112,
+    "height": 614,
+    "caption": "profile, space-time reveal, probe traces and a numeric readout in step.",
+    "alt": "Animation: a four-pane console — the live profile, the space-time map filling in row by row, the probe traces being written, and a numeric readout ticking with the clock.",
+    "wide": true
+  },
+  {
+    "section": "animations",
+    "kind": "video",
+    "file": "error_evolution.mp4",
+    "poster": "error_evolution_poster.webp",
+    "width": 768,
+    "height": 422,
+    "caption": "|u − u(finest)|(x) on a log axis, animated in time.",
+    "alt": "Animation: the pointwise difference from the reference run on a log axis. A spike rides along with the front and collapses once the front leaves the domain."
+  },
+  {
+    "section": "animations",
+    "kind": "video",
+    "file": "term_balance_evolution.mp4",
+    "poster": "term_balance_evolution_poster.webp",
+    "width": 768,
+    "height": 440,
+    "caption": "the PDE terms in the co-moving front window.",
+    "alt": "Animation: the equation's terms inside the co-moving front window, trading places as the front forms, settles and runs out of the domain."
+  },
+  {
+    "section": "animations",
+    "kind": "video",
+    "file": "grid_race.mp4",
+    "poster": "grid_race_poster.webp",
+    "width": 768,
+    "height": 594,
+    "caption": "all dump grids marching together, with an inset that follows the front.",
+    "alt": "Animation: every grid marching together with an inset that follows the front, so the coarse curves can be watched drifting away from the fine ones and back."
+  },
+  {
+    "section": "animations",
+    "kind": "video",
+    "file": "convergence_in_time.mp4",
+    "poster": "convergence_in_time_poster.webp",
+    "width": 652,
+    "height": 480,
+    "caption": "error against Δx re-drawn at each frame, with the current orders.",
+    "alt": "Animation: the error-versus-spacing plot redrawn at every frame, with the observed orders updating in place as the march goes on."
+  },
+  {
+    "section": "animations",
+    "kind": "video",
+    "file": "phase_portrait.mp4",
+    "poster": "phase_portrait_poster.webp",
+    "width": 652,
+    "height": 480,
+    "caption": "the (u, u_x) curve evolving, with faded earlier frames.",
+    "alt": "Animation: the slope-against-value curve evolving, with earlier frames left behind as faded ghosts so the trajectory of the loop is visible."
+  },
+  {
+    "section": "animations",
+    "kind": "video",
+    "file": "ridgeline_build.mp4",
+    "poster": "ridgeline_build_poster.webp",
+    "width": 632,
+    "height": 556,
+    "caption": "the ridgeline stack accumulating one profile at a time.",
+    "alt": "Animation: the ridgeline stack accumulating one profile at a time, from a single bump to the full travelling step."
+  },
+  {
+    "section": "animations",
+    "kind": "video",
+    "file": "surface_orbit.mp4",
+    "poster": "surface_orbit_poster.webp",
+    "width": 528,
+    "height": 416,
+    "caption": "the u(x,t) surface under a slow camera orbit.",
+    "alt": "Animation: the three-dimensional solution surface under a slow camera orbit, showing the ridge and plateau from several angles."
+  },
+  {
+    "section": "checks",
+    "kind": "image",
+    "file": "stability_map.webp",
+    "width": 1600,
+    "height": 1048,
+    "caption": "outcome and max |u| over an Nx × σ grid of extra runs.",
+    "alt": "A grid of coloured cells over mesh size and time-step factor. The lower band is marked stable and the upper band blown up, with the boundary moving up as the mesh is refined."
+  },
+  {
+    "section": "checks",
+    "kind": "image",
+    "file": "extrema_vs_time.webp",
+    "width": 1560,
+    "height": 1050,
+    "caption": "max u and min u per grid over the march: over- and undershoot.",
+    "alt": "Running maximum and minimum of the field for each grid. The coarse grids overshoot above one and dip below zero early on; the fine grids stay inside the physical range."
+  },
+  {
+    "section": "checks",
+    "kind": "image",
+    "file": "steady_approach.webp",
+    "width": 1600,
+    "height": 651,
+    "caption": "frame-to-frame change of the field and the late-profile differences.",
+    "alt": "Frame-to-frame change of the whole field on a log axis, falling away to nothing once the front has left, beside a panel comparing the late profiles."
+  },
+  {
+    "section": "checks",
+    "kind": "image",
+    "file": "cost_vs_accuracy.webp",
+    "width": 1600,
+    "height": 662,
+    "caption": "wall-clock seconds against the worst snapshot error, log-log.",
+    "alt": "Log-log scatter of solver wall-clock time against worst-case error, one point per grid, forming a straight run down and to the right."
+  }
+]

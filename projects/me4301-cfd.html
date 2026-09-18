@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ME 4301 CFD solver — Willem Bell</title>
+  <meta name="description" content="ME 4301 — 1-D nonlinear convection–diffusion solver in Fortran 90. MacCormack predictor–corrector, 2nd-order verified on a smooth window, a 7-grid convergence study that selects Nx = 1601.">
+  <meta property="og:title" content="ME 4301 CFD solver — case study">
+  <meta property="og:description" content="Fortran 90 PDE solver — MacCormack, nested grid convergence study, space-time error maps and animations.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://wrbell.github.io/projects/me4301-cfd.html">
+  <meta property="og:image" content="https://wrbell.github.io/assets/og-card.png">
+  <meta name="theme-color" content="#0a0a12">
+  <link rel="canonical" href="https://wrbell.github.io/projects/me4301-cfd.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+  <link rel="preload" href="../assets/fonts/jetbrains-mono-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/inter-latin.v1.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    (function() {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch(e) {}
+      if (theme === 'light' || (!theme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="case-study.css">
+  <script src="case-study.js" defer></script>
+</head>
+<body data-slug="me4301-cfd">
+
+  <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
+
+  <header class="chrome">
+    <div class="lights">
+      <a class="back" href="../#work" aria-label="Back to work index">← wrbell.eng</a>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt" aria-hidden="true"></span>
+      <span class="lt live" aria-hidden="true"></span>
+    </div>
+    <div class="path">
+      <span style="color:var(--muted-2)">~/wrbell.eng/</span><b>me4301-cfd.case.md</b>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <span class="clock" id="clock">— · — —:—</span>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle color theme">
+        <span id="theme-label">DARK</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="prompt"><b>$</b><span>cat ./projects/me4301-cfd/INTENT.md</span></div>
+
+    <div class="title-row">
+      <h1>me4301 · <span class="em">cfd solver</span></h1>
+      <span class="badge"><span class="dot" aria-hidden="true"></span>In progress · Fall &apos;26</span>
+    </div>
+
+    <p class="tagline">
+      1-D nonlinear convection–diffusion in <span class="accent">Fortran 90</span> — MacCormack, second order measured not assumed, and a grid study that picks the mesh.
+    </p>
+
+    <dl class="status" aria-label="Project metadata">
+      <div class="row"><dt class="k">Course</dt><dd class="v">ME 4301 · Fall 2026</dd></div>
+      <div class="row"><dt class="k">Stack</dt><dd class="v">Fortran 90 · Python · matplotlib</dd></div>
+      <div class="row"><dt class="k">Runs</dt><dd class="v">25 · 7 grids</dd></div>
+      <div class="row"><dt class="k">Status</dt><dd class="v acc">In progress</dd></div>
+    </dl>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§01 · problem</span>
+      path<br>./problem.md
+      <span class="meta">one scalar pde; the whole difficulty is a thin moving front.</span>
+    </div>
+    <div>
+      <h2>nonlinear_convection_diffusion</h2>
+      <p>One field <code>u(x,t)</code> on the unit interval, marched to t = 15. Transport is the Burgers term, so the profile steepens on itself. Diffusion is nonlinear and self-limiting, shutting down where <code>u</code> is large. A logistic source pumps the field toward <code>u = 1</code> wherever it is already non-zero. Inlet at zero, outlet zero-gradient, Gaussian pulse to start.</p>
+
+      <pre class="ascii" tabindex="0" aria-label="Governing equation and constants">  <span class="a">u_t + u u_x  =  d/dx[ D(u) u_x ]  +  S(u)</span>
+
+  D(u) = nu / (1 + b u^2)      nu = <span class="a">0.001</span>    b = <span class="a">2</span>
+  S(u) = a u (1 - u)           a  = <span class="a">1.5</span>
+
+  u(0,t) = 0     u_x(1,t) = 0     u(x,0) = Gaussian pulse
+  0 &lt;= x &lt;= 1    0 &lt;= t &lt;= 15</pre>
+
+      <p>The three terms fight each other. Convection sharpens the profile, diffusion is weakest precisely where the sharpening is worst, and the source fills in behind. What comes out is a thin travelling front — and that front is the only hard thing in the problem, so it is what sets the mesh.</p>
+      <p>So the real question was never whether it runs. It was <strong>how fine the grid has to be before the answer stops moving</strong> — and I answered that with a nested refinement study instead of by eye.</p>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§02 · method</span>
+      path<br>./pipeline/
+      <span class="meta">fortran marches; python reads the manifest and draws.</span>
+    </div>
+    <div>
+      <h2>maccormack_and_the_pipeline</h2>
+      <p>The kernel is a <strong>MacCormack predictor–corrector</strong>: a forward-difference predictor, a backward-difference corrector, and the average of the two. The diffusion term is written conservatively — <code>D</code> is evaluated at the cell faces and the flux is differenced across them, so the discrete operator telescopes instead of leaking mass at the front.</p>
+      <p>Time step comes from one rule at every grid, <code>dt = σ·Δx²/(Δx + 2ν)</code> with <code>σ = 0.5</code>. That is an empirical limit for this scheme, not a proof — so I measured it (§08) rather than trusting it.</p>
+
+      <pre class="ascii" tabindex="0" aria-label="Solver and post-processing pipeline">src/p1_solver.f90 ──▶ ./p1 --nx --dt --tmax ──▶ <span class="c">runs/&lt;case&gt;/</span>
+                                                     │
+     run_sweep.py ◀──────────────────────────────────┘
+          │
+          ▼
+     <span class="c">runs/manifest.json</span>
+          │
+          ├──▶ plot_p1.py      report figures + CSV tables
+          ├──▶ viz_p1.py       space-time views
+          ├──▶ gallery_p1.py   the wider static gallery
+          └──▶ anim_p1.py      mp4 animations
+                                   │
+                                   ▼
+                              <span class="c">runs/figures/</span>
+                                   │
+                                   ▼
+                          <span class="a">export_web_p1.py</span> ──▶ this page</pre>
+
+      <p>Every Python script reads run data that already exists on disk; none of them re-solve anything. The solver writes <code>meta.txt</code>, probe histories, the final profile, and — when asked — a raw dump of <code>u</code> at a fixed stride, which is what the space-time images and the animations are built from.</p>
+
+      <div class="listing" role="list" aria-label="Stack">
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">src/p1_solver.f90</span><span class="desc">MacCormack + conservative interface diffusion</span><span class="ver">f90</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">scripts/run_sweep.py</span><span class="desc">owns the run manifest; nests the grids</span><span class="ver">py</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">scripts/plot_p1.py</span><span class="desc">report figures + the CSV tables behind them</span><span class="ver">py</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">scripts/anim_p1.py</span><span class="desc">the animation set, mp4 via ffmpeg</span><span class="ver">py</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">ruff</span><span class="desc">lint gate over every script in the folder</span><span class="ver">ci</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§03 · decisions</span>
+      path<br>./CHANGELOG.md
+      <span class="meta">nested grids · one Δt rule · 6401 as the reference.</span>
+    </div>
+    <div>
+      <h2>tradeoffs_actually_made</h2>
+      <ol class="commits">
+        <li>
+          <div class="sha">grid · nested</div>
+          <h3>Nested grids, not arbitrary ones.</h3>
+          <p>Nx = 101, 201, 401, 801, 1601, 3201, 6401 — every coarse node is also a node of every finer grid. Norms are taken at coincident points with no interpolation, so the number I report is discretisation error and not interpolation error wearing its coat.</p>
+        </li>
+        <li>
+          <div class="sha">dt · sigma</div>
+          <h3>One time-step rule, with margin.</h3>
+          <p>Δt = σ·Δx²/(Δx + 2ν) at σ = 0.5 everywhere. The stability sweep says Nx = 101 still finishes at σ = 1.25 and blows up at σ = 1.5, so the baseline keeps a factor of about 2.5 in hand — cheap insurance on a run that costs seconds.</p>
+        </li>
+        <li>
+          <div class="sha">ref · 6401</div>
+          <h3>Nx = 6401 as the error reference.</h3>
+          <p>With 3201 as the reference the finest grid pair misses the tol/4 self-consistency gate in L<sub>∞</sub>. Moving the reference one level finer costs 79 s of wall clock — every other run in the sweep is under 10 — and the gate then passes at 6.86e-4 against 2.5e-3.</p>
+        </li>
+        <li>
+          <div class="sha">order · smooth</div>
+          <h3>Order measured before the front exists.</h3>
+          <p>Observed order is taken at t = 0.05, while the field is still smooth: 1.89 → 1.96 → 2.00 → 2.07 across successive refinements. Measured through the front it reads lower, which is honest — the scheme is second order on smooth data, not on a discontinuity.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§04 · outcome</span>
+      path<br>./STATE.md
+      <span class="meta">selected grid Nx = 1601 at tol 1e-2.</span>
+    </div>
+    <div>
+      <h2>key_numbers</h2>
+      <p>25 runs, Nx = 101 through 6401, every one exits clean. At a tolerance of 1e-2 against the reference, the coarsest grid that holds in L<sub>∞</sub> is <strong>Nx = 1601</strong> — worst-case 3.39e-3, which occurs at t = 0.5 while the front is still forming. In L<sub>2</sub> the same tolerance is met at Nx = 201 (9.89e-3), so L<sub>∞</sub> is the binding constraint and 1601 is the grid I report on.</p>
+
+      <div class="listing" role="list" aria-label="Key measured results">
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">observed order</span><span class="desc">1.89 → 1.96 → 2.00 → 2.07 on the smooth window</span><span class="ver">2nd</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">min grid · L∞</span><span class="desc">worst 3.39e-3 at t = 0.5, tolerance 1e-2</span><span class="ver">1601</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">min grid · L2</span><span class="desc">worst 9.89e-3 at t = 0.5, same tolerance</span><span class="ver">201</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">front speed</span><span class="desc">least-squares fit while the front crosses</span><span class="ver">0.413</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">front exit</span><span class="desc">u = 0.5 reaches x = 1 on the reference grid</span><span class="ver">t 1.686</span></div>
+        <div class="row" role="listitem"><span class="ico">›</span><span class="name">sweep</span><span class="desc">Nx = 101 … 6401, 25 runs, no blow-ups</span><span class="ver">25 ok</span></div>
+      </div>
+
+      <!-- gallery: outcome — final solution -->
+      <div class="fig-grid">
+        <figure class="figure figure--wide">
+          <a href="../assets/projects/me4301-cfd/hero.webp">
+            <img src="../assets/projects/me4301-cfd/hero.webp" width="1600" height="1080" alt="Six-panel summary sheet: a u(x,t) space-time map, profile snapshots, probe histories, a log-log convergence plot and the front trajectory, all from the same set of runs." loading="lazy" decoding="async">
+          </a>
+          <figcaption>six-panel summary: space-time, snapshots, probes, convergence, front.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/u_x_final.webp">
+            <img src="../assets/projects/me4301-cfd/u_x_final.webp" width="979" height="574" alt="Seven overlaid u(x) curves. The initial Gaussian pulse steepens into a sharp front that sweeps left to right across the domain and leaves a flat plateau at u = 1 behind it." loading="lazy" decoding="async">
+          </a>
+          <figcaption>u(x) at the seven required times on the selected grid.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/u_t_probes.webp">
+            <img src="../assets/projects/me4301-cfd/u_t_probes.webp" width="979" height="574" alt="Four time histories taken at fixed x. Each one sits near zero, jumps through u = 0.5 as the front arrives, and then flattens out at one; stations further right switch later." loading="lazy" decoding="async">
+          </a>
+          <figcaption>u(t) at the four required probe stations on the selected grid.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§05 · grid study</span>
+      path<br>./figures/grid/
+      <span class="meta">7 grids, 2 gates, both passed.</span>
+    </div>
+    <div>
+      <h2>grid_and_time_step_study</h2>
+      <p>Two gates decide whether the study is trustworthy before any grid gets selected. The reference gate compares the two finest grids, 3201 against 6401: 6.86e-4 in L<sub>∞</sub> against a budget of 2.5e-3. The temporal gate halves Δt at the selected grid and asks how far the answer moves: 2.12e-4 against 1e-3. Both clear, so the spatial error I quote is not quietly contaminated by the reference or by the time step.</p>
+      <p>Refinement bites hardest early. The worst L<sub>∞</sub> difference at Nx = 1601 is 2.38e-3 at t = 1 and 2.73e-5 at t = 15 — about 87× smaller once the front has left the domain and the field has settled. That is the whole shape of this problem in one ratio: the grid is paying for the front, not for the steady state.</p>
+
+      <!-- gallery: grid-study — grid and time-step study -->
+      <div class="fig-grid">
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/grid_convergence.webp">
+            <img src="../assets/projects/me4301-cfd/grid_convergence.webp" width="1350" height="585" alt="Log-log error against grid spacing. One line per output time, each falling in a straight run roughly parallel to the dashed slope-2 reference line." loading="lazy" decoding="async">
+          </a>
+          <figcaption>L2 and Linf against Δx at each snapshot time, with a slope-2 guide.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/observed_order_vs_time.webp">
+            <img src="../assets/projects/me4301-cfd/observed_order_vs_time.webp" width="1600" height="634" alt="Observed order of accuracy plotted against time for each pair of neighbouring grids. The curves dip while the front is steepening and otherwise sit close to two." loading="lazy" decoding="async">
+          </a>
+          <figcaption>observed order p(t) between successive grids, both norms.</figcaption>
+        </figure>
+        <figure class="figure figure--wide">
+          <a href="../assets/projects/me4301-cfd/error_norms_vs_time.webp">
+            <img src="../assets/projects/me4301-cfd/error_norms_vs_time.webp" width="1600" height="966" alt="Two log-scale panels tracking every grid&#x27;s error against the reference run for the whole march. Each curve peaks while the front is crossing the domain, then drops by orders of magnitude once the field goes quiet." loading="lazy" decoding="async">
+          </a>
+          <figcaption>L2(t) and Linf(t) against the finest dump at all 1501 frames.</figcaption>
+        </figure>
+        <figure class="figure figure--wide">
+          <a href="../assets/projects/me4301-cfd/snapshots_by_grid.webp">
+            <img src="../assets/projects/me4301-cfd/snapshots_by_grid.webp" width="1600" height="626" alt="A row of profile panels, one per output time, each holding a curve for every grid plus an inset that magnifies the steepest part of the profile." loading="lazy" decoding="async">
+          </a>
+          <figcaption>u(x) at each required time, every spatial grid, with a steepest-gradient zoom.</figcaption>
+        </figure>
+        <figure class="figure figure--wide">
+          <a href="../assets/projects/me4301-cfd/u_x_front_overlay.webp">
+            <img src="../assets/projects/me4301-cfd/u_x_front_overlay.webp" width="1575" height="570" alt="Three panels zoomed on the moving front. The coarse grids round the corner off and lag in position while the finer grids collapse onto a single curve." loading="lazy" decoding="async">
+          </a>
+          <figcaption>every spatial grid through the front at t = 0.5, 1 and 2.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/u_x_t15_overlay.webp">
+            <img src="../assets/projects/me4301-cfd/u_x_t15_overlay.webp" width="930" height="570" alt="Late-time profiles from every grid drawn together with staggered markers so the curves can be told apart; at this scale they are indistinguishable." loading="lazy" decoding="async">
+          </a>
+          <figcaption>every spatial grid at t = 15, staggered markers.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/front_anatomy.webp">
+            <img src="../assets/projects/me4301-cfd/front_anatomy.webp" width="1140" height="690" alt="The front drawn with one marker per grid node, so the number of cells that sit across the rise can be counted directly on each grid." loading="lazy" decoding="async">
+          </a>
+          <figcaption>the front at t = 1 on every dump grid, one marker per node.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/probes_by_grid.webp">
+            <img src="../assets/projects/me4301-cfd/probes_by_grid.webp" width="1600" height="982" alt="Probe traces coloured by grid with an inset on the arrival ramp; the coarse grids reach the station slightly early and the fine ones sit on top of each other." loading="lazy" decoding="async">
+          </a>
+          <figcaption>probe histories by grid, zoomed on the arrival transient.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/temporal_study.webp">
+            <img src="../assets/projects/me4301-cfd/temporal_study.webp" width="1395" height="810" alt="Log-log plot of how far the solution moves when the time step is halved and quartered at fixed grid spacing, with one line per output time." loading="lazy" decoding="async">
+          </a>
+          <figcaption>difference from the Δt/4 run at fixed grid, per snapshot time.</figcaption>
+        </figure>
+        <figure class="figure figure--wide">
+          <a href="../assets/projects/me4301-cfd/temporal_overlay.webp">
+            <img src="../assets/projects/me4301-cfd/temporal_overlay.webp" width="1600" height="1075" alt="Front profiles at three time steps drawn on top of each other, with their difference from the smallest step plotted underneath on a magnified axis." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Δt, Δt/2 and Δt/4 at the front, and their difference from Δt/4.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§06 · space-time</span>
+      path<br>./figures/viz/
+      <span class="meta">where the error actually lives: a ribbon on the front.</span>
+    </div>
+    <div>
+      <h2>space_time_and_physics</h2>
+      <p>Plotting <code>u</code> over (x, t) is the fastest way to see why the grid study came out the way it did. The front averages a speed of 0.413 and reaches the outlet at t ≈ 1.686; at t = 1 its 10–90% rise is about 8.6e-3 wide, which is under two cells at Nx = 201 and roughly 28 at Nx = 3201. That single number explains the whole convergence table.</p>
+      <p>The error maps make the same point from the other side: the difference from the reference is not spread over the domain, it is a thin ribbon that traces the front and fades a level at a time as the grid refines. Everything else — characteristics, term balance, the integral budget — is there to check that the physics behind that ribbon is the physics I meant to solve.</p>
+
+      <!-- gallery: space-time — space-time and physics -->
+      <div class="fig-grid">
+        <figure class="figure figure--wide">
+          <a href="../assets/projects/me4301-cfd/spacetime_u.webp">
+            <img src="../assets/projects/me4301-cfd/spacetime_u.webp" width="1301" height="728" alt="Two heat maps of u over position and time. A dark wedge of untouched fluid shrinks as a bright boundary sweeps diagonally across the panel; behind it the field is uniformly high." loading="lazy" decoding="async">
+          </a>
+          <figcaption>u(x,t) image of the finest dump, full march and front window.</figcaption>
+        </figure>
+        <figure class="figure figure--wide">
+          <a href="../assets/projects/me4301-cfd/spacetime_error.webp">
+            <img src="../assets/projects/me4301-cfd/spacetime_error.webp" width="1600" height="910" alt="A row of difference maps, one per grid, showing where each solution departs from the reference. The signal is a thin bright ribbon that traces the front and fades as the grid is refined." loading="lazy" decoding="async">
+          </a>
+          <figcaption>difference from the finest dump in (x,t), one column per grid.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/ridgeline_u.webp">
+            <img src="../assets/projects/me4301-cfd/ridgeline_u.webp" width="954" height="858" alt="Profiles stacked and offset by time so the sheet reads as a ridgeline: a bump at the bottom that grows into a travelling step climbing up the page." loading="lazy" decoding="async">
+          </a>
+          <figcaption>stacked profiles from t = 0 to 2.5, offset by time.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/surface_3d.webp">
+            <img src="../assets/projects/me4301-cfd/surface_3d.webp" width="919" height="820" alt="The solution drawn as a three-dimensional surface over position and time — a flat low plain, a steep ridge that runs diagonally, and a high plateau behind it." loading="lazy" decoding="async">
+          </a>
+          <figcaption>u(x,t) as a 3-D surface for t ≤ 2.5.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/spacetime_gradient.webp">
+            <img src="../assets/projects/me4301-cfd/spacetime_gradient.webp" width="1360" height="810" alt="Magnitude of the spatial slope over position and time on a logarithmic colour scale, so the front shows up as a single bright thread against a dark field." loading="lazy" decoding="async">
+          </a>
+          <figcaption>|u_x| in (x,t) on a log colour scale — numerical schlieren.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/characteristics.webp">
+            <img src="../assets/projects/me4301-cfd/characteristics.webp" width="1410" height="899" alt="Straight characteristic lines drawn over the space-time map. They fan apart behind the front and converge into it, which is where the profile steepens." loading="lazy" decoding="async">
+          </a>
+          <figcaption>characteristics of dx/dt = u drawn over the u(x,t) image.</figcaption>
+        </figure>
+        <figure class="figure figure--wide">
+          <a href="../assets/projects/me4301-cfd/spacetime_terms.webp">
+            <img src="../assets/projects/me4301-cfd/spacetime_terms.webp" width="1600" height="1085" alt="Four space-time maps side by side — convection, diffusion, source and the time derivative. Convection and diffusion are concentrated in the front; the source fills the whole transition band." loading="lazy" decoding="async">
+          </a>
+          <figcaption>convection, diffusion, source and u_t as (x,t) maps.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/term_balance_t1.webp">
+            <img src="../assets/projects/me4301-cfd/term_balance_t1.webp" width="1600" height="625" alt="Each term of the equation plotted against position at a single instant, full domain on the left and a zoom on the front on the right, where convection and diffusion nearly cancel." loading="lazy" decoding="async">
+          </a>
+          <figcaption>each PDE term at t = 1, full domain and front window.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/phase_portrait.webp">
+            <img src="../assets/projects/me4301-cfd/phase_portrait.webp" width="1600" height="705" alt="The solution plotted as slope against value. Each time forms a closed loop that leaves the origin, bulges to a steepest point and returns." loading="lazy" decoding="async">
+          </a>
+          <figcaption>(u, u_x) phase plane of the finest dump at several times.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/front_kinematics.webp">
+            <img src="../assets/projects/me4301-cfd/front_kinematics.webp" width="1600" height="960" alt="Four panels: front position against time, its spread between grids, the instantaneous speed about a flat mean, and the front width on a log axis with each grid&#x27;s cell size marked." loading="lazy" decoding="async">
+          </a>
+          <figcaption>front position, its grid-to-grid spread, speed and 10–90% width.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/integral_budget.webp">
+            <img src="../assets/projects/me4301-cfd/integral_budget.webp" width="1600" height="929" alt="The domain integral of u, its time derivative, the boundary fluxes, the source contribution and the leftover residual, all against time; the residual stays at round-off." loading="lazy" decoding="async">
+          </a>
+          <figcaption>∫u dx, its rate, the boundary fluxes, the source and the residual.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§07 · animations</span>
+      path<br>./figures/anim/
+      <span class="meta">ten clips, muted loops, play on scroll.</span>
+    </div>
+    <div>
+      <h2>animations</h2>
+      <p>Static frames hide the part that matters — how fast the coarse grids drift away from the fine ones and then quietly come back once the front leaves. These are the same runs, re-drawn frame by frame. They start when they scroll into view — unless you have asked your system for reduced motion, in which case nothing moves until you say so — and each one hands you its controls the moment it can play, so it can always be stopped.</p>
+
+      <!-- gallery: animations — animations -->
+      <div class="fig-grid">
+        <figure class="figure">
+          <video data-autoplay muted loop playsinline preload="none" poster="../assets/projects/me4301-cfd/u_evolution_poster.webp" width="528" height="296" aria-label="Animation: the profile marching in time on three grids at once. The pulse steepens into a front and sweeps across the domain, with the coarse grid visibly ahead of the fine ones.">
+            <source src="../assets/projects/me4301-cfd/u_evolution.mp4" type="video/mp4">
+          </video>
+          <figcaption>u(x) marching in time on three grids.</figcaption>
+        </figure>
+        <figure class="figure">
+          <video data-autoplay muted loop playsinline preload="none" poster="../assets/projects/me4301-cfd/front_tracking_zoom_poster.webp" width="728" height="422" aria-label="Animation: a window that travels with the front, holding it still in frame while grid-node markers stream through it.">
+            <source src="../assets/projects/me4301-cfd/front_tracking_zoom.mp4" type="video/mp4">
+          </video>
+          <figcaption>co-moving window on the front; markers are grid nodes.</figcaption>
+        </figure>
+        <figure class="figure figure--wide">
+          <video data-autoplay muted loop playsinline preload="none" poster="../assets/projects/me4301-cfd/dashboard_poster.webp" width="1112" height="614" aria-label="Animation: a four-pane console — the live profile, the space-time map filling in row by row, the probe traces being written, and a numeric readout ticking with the clock.">
+            <source src="../assets/projects/me4301-cfd/dashboard.mp4" type="video/mp4">
+          </video>
+          <figcaption>profile, space-time reveal, probe traces and a numeric readout in step.</figcaption>
+        </figure>
+        <figure class="figure">
+          <video data-autoplay muted loop playsinline preload="none" poster="../assets/projects/me4301-cfd/error_evolution_poster.webp" width="768" height="422" aria-label="Animation: the pointwise difference from the reference run on a log axis. A spike rides along with the front and collapses once the front leaves the domain.">
+            <source src="../assets/projects/me4301-cfd/error_evolution.mp4" type="video/mp4">
+          </video>
+          <figcaption>|u − u(finest)|(x) on a log axis, animated in time.</figcaption>
+        </figure>
+        <figure class="figure">
+          <video data-autoplay muted loop playsinline preload="none" poster="../assets/projects/me4301-cfd/term_balance_evolution_poster.webp" width="768" height="440" aria-label="Animation: the equation&#x27;s terms inside the co-moving front window, trading places as the front forms, settles and runs out of the domain.">
+            <source src="../assets/projects/me4301-cfd/term_balance_evolution.mp4" type="video/mp4">
+          </video>
+          <figcaption>the PDE terms in the co-moving front window.</figcaption>
+        </figure>
+        <figure class="figure">
+          <video data-autoplay muted loop playsinline preload="none" poster="../assets/projects/me4301-cfd/grid_race_poster.webp" width="768" height="594" aria-label="Animation: every grid marching together with an inset that follows the front, so the coarse curves can be watched drifting away from the fine ones and back.">
+            <source src="../assets/projects/me4301-cfd/grid_race.mp4" type="video/mp4">
+          </video>
+          <figcaption>all dump grids marching together, with an inset that follows the front.</figcaption>
+        </figure>
+        <figure class="figure">
+          <video data-autoplay muted loop playsinline preload="none" poster="../assets/projects/me4301-cfd/convergence_in_time_poster.webp" width="652" height="480" aria-label="Animation: the error-versus-spacing plot redrawn at every frame, with the observed orders updating in place as the march goes on.">
+            <source src="../assets/projects/me4301-cfd/convergence_in_time.mp4" type="video/mp4">
+          </video>
+          <figcaption>error against Δx re-drawn at each frame, with the current orders.</figcaption>
+        </figure>
+        <figure class="figure">
+          <video data-autoplay muted loop playsinline preload="none" poster="../assets/projects/me4301-cfd/phase_portrait_poster.webp" width="652" height="480" aria-label="Animation: the slope-against-value curve evolving, with earlier frames left behind as faded ghosts so the trajectory of the loop is visible.">
+            <source src="../assets/projects/me4301-cfd/phase_portrait.mp4" type="video/mp4">
+          </video>
+          <figcaption>the (u, u_x) curve evolving, with faded earlier frames.</figcaption>
+        </figure>
+        <figure class="figure">
+          <video data-autoplay muted loop playsinline preload="none" poster="../assets/projects/me4301-cfd/ridgeline_build_poster.webp" width="632" height="556" aria-label="Animation: the ridgeline stack accumulating one profile at a time, from a single bump to the full travelling step.">
+            <source src="../assets/projects/me4301-cfd/ridgeline_build.mp4" type="video/mp4">
+          </video>
+          <figcaption>the ridgeline stack accumulating one profile at a time.</figcaption>
+        </figure>
+        <figure class="figure">
+          <video data-autoplay muted loop playsinline preload="none" poster="../assets/projects/me4301-cfd/surface_orbit_poster.webp" width="528" height="416" aria-label="Animation: the three-dimensional solution surface under a slow camera orbit, showing the ridge and plateau from several angles.">
+            <source src="../assets/projects/me4301-cfd/surface_orbit.mp4" type="video/mp4">
+          </video>
+          <figcaption>the u(x,t) surface under a slow camera orbit.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <div class="gutter">
+      <span class="head">§08 · checks</span>
+      path<br>./figures/checks/
+      <span class="meta">stability sweep · extrema · budget · cost.</span>
+    </div>
+    <div>
+      <h2>checks_and_cost</h2>
+      <p>The time-step rule is empirical, so I mapped it. A separate opt-in sweep of 24 runs over Nx × σ says Nx = 101 survives σ = 1.25 and blows up at σ = 1.5; refining the mesh pushes that boundary up. Running everything at σ = 0.5 therefore sits well inside the stable region on every grid in the study.</p>
+      <p>Two more things I watch rather than assume. The coarse grids overshoot — Nx = 101 peaks at u = 1.083 and dips to −0.058, both outside the physical range — while Nx = 1601 and finer stay inside [0, 1] to six figures. And the integral budget closes: d/dt ∫u dx tracks the boundary fluxes plus the source with a median residual of 7.5e-6 against a peak rate of 2.9e-1, the exception being the few frames where the front crosses the outlet and the centred time difference sees a kink.</p>
+      <p>Cost is the reason to stop. Wall clock runs 1.4 s at Nx = 1601, 9.8 s at 3201 and 78.9 s at 6401 — roughly 8× per refinement, because halving Δx also quarters Δt. Paying 56× the run time to move a 3.39e-3 error inside a 1e-2 budget is not a trade I need to make.</p>
+
+      <!-- gallery: checks — checks and cost -->
+      <div class="fig-grid">
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/stability_map.webp">
+            <img src="../assets/projects/me4301-cfd/stability_map.webp" width="1600" height="1048" alt="A grid of coloured cells over mesh size and time-step factor. The lower band is marked stable and the upper band blown up, with the boundary moving up as the mesh is refined." loading="lazy" decoding="async">
+          </a>
+          <figcaption>outcome and max |u| over an Nx × σ grid of extra runs.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/extrema_vs_time.webp">
+            <img src="../assets/projects/me4301-cfd/extrema_vs_time.webp" width="1560" height="1050" alt="Running maximum and minimum of the field for each grid. The coarse grids overshoot above one and dip below zero early on; the fine grids stay inside the physical range." loading="lazy" decoding="async">
+          </a>
+          <figcaption>max u and min u per grid over the march: over- and undershoot.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/steady_approach.webp">
+            <img src="../assets/projects/me4301-cfd/steady_approach.webp" width="1600" height="651" alt="Frame-to-frame change of the whole field on a log axis, falling away to nothing once the front has left, beside a panel comparing the late profiles." loading="lazy" decoding="async">
+          </a>
+          <figcaption>frame-to-frame change of the field and the late-profile differences.</figcaption>
+        </figure>
+        <figure class="figure">
+          <a href="../assets/projects/me4301-cfd/cost_vs_accuracy.webp">
+            <img src="../assets/projects/me4301-cfd/cost_vs_accuracy.webp" width="1600" height="662" alt="Log-log scatter of solver wall-clock time against worst-case error, one point per grid, forming a straight run down and to the right." loading="lazy" decoding="async">
+          </a>
+          <figcaption>wall-clock seconds against the worst snapshot error, log-log.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="nx-wrap" data-up-next aria-label="Up next"></section>
+
+  <footer class="ftr">
+    <span>© 2026 wrbell · <a href="mailto:wrbell@umich.edu">wrbell@umich.edu</a></span>
+    <span>END OF FILE</span>
+  </footer>
+
+  <script>
+    (function() {
+      var el = document.getElementById('clock');
+      function tick() {
+        var d = new Date();
+        var days = ['sun','mon','tue','wed','thu','fri','sat'];
+        var hh = String(d.getHours()).padStart(2, '0');
+        var mm = String(d.getMinutes()).padStart(2, '0');
+        el.textContent = 'live · ' + days[d.getDay()] + ' ' + hh + ':' + mm;
+      }
+      tick(); setInterval(tick, 30 * 1000);
+    })();
+    (function() {
+      var btn = document.getElementById('theme-toggle');
+      var lbl = document.getElementById('theme-label');
+      function sync() {
+        var t = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        lbl.textContent = t === 'light' ? 'LIGHT' : 'DARK';
+      }
+      sync();
+      btn.addEventListener('click', function() {
+        var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        var next = cur === 'light' ? 'dark' : 'light';
+        if (next === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        else document.documentElement.removeAttribute('data-theme');
+        try { localStorage.setItem('theme', next); } catch(e) {}
+        sync();
+      });
+    })();
+  </script>
+
+</body>
+</html>

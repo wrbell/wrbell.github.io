@@ -23,7 +23,7 @@ Subpages:
 - `cases.html` — 2×2 supply chain case competition shell
 - `notebook.html` — dated short-form post feed shell
 - `projects/case-study.css` — shared "engineering log" template stylesheet
-- `projects/{stark-translate,fast-fem,w26-cobot-axis,me440-vibrations,me379-fluids-lab}.html` — five flagship project detail pages (all use `case-study.css`)
+- `projects/{stark-translate,fast-fem,w26-cobot-axis,me440-vibrations,me379-fluids-lab,me4301-cfd}.html` — six flagship project detail pages (all use `case-study.css`)
 
 Mobile (<900px): desktop nav links hide, a horizontal anchor-chip row below the hero appears for section navigation. No hamburger.
 
@@ -35,7 +35,7 @@ Mobile (<900px): desktop nav links hide, a horizontal anchor-chip row below the 
 - `robots.txt` + `sitemap.xml` — SEO basics (sitemap lists all subpages)
 - `tests/smoke.spec.ts`, `tests/a11y.spec.ts`, `tests/console-errors.spec.ts`, `tests/visual.spec.ts` — **stale post-redesign**, scheduled for rewrite in a follow-up PR; CI tests will fail until then
 - `ROADMAP.md` — categorized backlog with semester milestones
-- `build.js` — minification build script (html-minifier-terser → dist/) — minifies index, 404, resume, cases, notebook, and all five `projects/*.html`
+- `build.js` — minification build script (html-minifier-terser → dist/) — minifies index, 404, resume, cases, notebook, and all six `projects/*.html`
 - `releaseplan.md` — launch plan
 - `ref/` — reference resumes (not deployed)
 

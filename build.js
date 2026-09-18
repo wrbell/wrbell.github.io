@@ -34,6 +34,7 @@ async function build() {
     "projects/w26-cobot-axis.html",
     "projects/me440-vibrations.html",
     "projects/me379-fluids-lab.html",
+    "projects/me4301-cfd.html",
   ];
   for (const file of htmlFiles) {
     const src = fs.readFileSync(path.join(__dirname, file), "utf8");

@@ -86,11 +86,11 @@ test.describe("Index — structure and CTAs", () => {
     await expect(resume).toHaveAttribute("target", "_blank");
   });
 
-  test("five work cards link to project subpages", async ({ page }) => {
+  test("six work cards link to project subpages", async ({ page }) => {
     // .card-cta also covers the "Code ↗" GitHub links (.muted variant) — filter
     // those out so we count only the case-study CTAs.
     const ctas = page.locator(".work-grid .card-cta:not(.muted)");
-    await expect(ctas).toHaveCount(5);
+    await expect(ctas).toHaveCount(6);
     const expected = new Set(PROJECT_PAGES.map((p) => p.path.replace(/^\//, "")));
     const actual = new Set<string>();
     for (const href of await ctas.evaluateAll((els) => els.map((e) => e.getAttribute("href") ?? ""))) {
