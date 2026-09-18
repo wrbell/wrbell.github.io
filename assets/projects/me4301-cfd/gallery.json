@@ -100,7 +100,7 @@
     "width": 1600,
     "height": 982,
     "caption": "probe histories by grid, zoomed on the arrival transient.",
-    "alt": "Probe traces coloured by grid with an inset on the arrival ramp; the coarse grids reach the station slightly early and the fine ones sit on top of each other."
+    "alt": "Probe traces coloured by grid with an inset on the arrival ramp; the coarse grids arrive slightly off — late at x = 0.5 and 0.75, early at x = 1 — and the fine ones sit on top of each other."
   },
   {
     "section": "grid-study",
@@ -221,7 +221,7 @@
     "width": 1600,
     "height": 929,
     "caption": "∫u dx, its rate, the boundary fluxes, the source and the residual.",
-    "alt": "The domain integral of u, its time derivative, the boundary fluxes, the source contribution and the leftover residual, all against time; the residual stays at round-off."
+    "alt": "The domain integral of u, its time derivative, the boundary fluxes, the source contribution and the leftover residual, all against time; the residual stays several orders of magnitude below the budget terms."
   },
   {
     "section": "animations",

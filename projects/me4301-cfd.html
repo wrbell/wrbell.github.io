@@ -146,7 +146,7 @@
         <li>
           <div class="sha">grid · nested</div>
           <h3>Nested grids, not arbitrary ones.</h3>
-          <p>Nx = 101, 201, 401, 801, 1601, 3201, 6401 — every coarse node is also a node of every finer grid. Norms are taken at coincident points with no interpolation, so the number I report is discretisation error and not interpolation error wearing its coat.</p>
+          <p>Nx = 101, 201, 401, 801, 1601, 3201, 6401 — every coarse node is also a node of every finer grid. Norms are taken at coincident points with no interpolation, so the number I report is a grid-to-grid difference with no interpolation error mixed in — an estimate of discretisation error, not the error against an exact solution.</p>
         </li>
         <li>
           <div class="sha">dt · sigma</div>
@@ -219,7 +219,7 @@
     <div>
       <h2>grid_and_time_step_study</h2>
       <p>Two gates decide whether the study is trustworthy before any grid gets selected. The reference gate compares the two finest grids, 3201 against 6401: 6.86e-4 in L<sub>∞</sub> against a budget of 2.5e-3. The temporal gate halves Δt at the selected grid and asks how far the answer moves: 2.12e-4 against 1e-3. Both clear, so the spatial error I quote is not quietly contaminated by the reference or by the time step.</p>
-      <p>Refinement bites hardest early. The worst L<sub>∞</sub> difference at Nx = 1601 is 2.38e-3 at t = 1 and 2.73e-5 at t = 15 — about 87× smaller once the front has left the domain and the field has settled. That is the whole shape of this problem in one ratio: the grid is paying for the front, not for the steady state.</p>
+      <p>Refinement bites hardest early. The L<sub>∞</sub> difference at Nx = 1601 is 2.38e-3 at t = 1 and 2.73e-5 at t = 15 — about 87× smaller once the front has left the domain and the field has settled. That is the whole shape of this problem in one ratio: the grid is paying for the front, not for the steady state.</p>
 
       <!-- gallery: grid-study — grid and time-step study -->
       <div class="fig-grid">
@@ -267,7 +267,7 @@
         </figure>
         <figure class="figure">
           <a href="../assets/projects/me4301-cfd/probes_by_grid.webp">
-            <img src="../assets/projects/me4301-cfd/probes_by_grid.webp" width="1600" height="982" alt="Probe traces coloured by grid with an inset on the arrival ramp; the coarse grids reach the station slightly early and the fine ones sit on top of each other." loading="lazy" decoding="async">
+            <img src="../assets/projects/me4301-cfd/probes_by_grid.webp" width="1600" height="982" alt="Probe traces coloured by grid with an inset on the arrival ramp; the coarse grids arrive slightly off — late at x = 0.5 and 0.75, early at x = 1 — and the fine ones sit on top of each other." loading="lazy" decoding="async">
           </a>
           <figcaption>probe histories by grid, zoomed on the arrival transient.</figcaption>
         </figure>
@@ -362,7 +362,7 @@
         </figure>
         <figure class="figure">
           <a href="../assets/projects/me4301-cfd/integral_budget.webp">
-            <img src="../assets/projects/me4301-cfd/integral_budget.webp" width="1600" height="929" alt="The domain integral of u, its time derivative, the boundary fluxes, the source contribution and the leftover residual, all against time; the residual stays at round-off." loading="lazy" decoding="async">
+            <img src="../assets/projects/me4301-cfd/integral_budget.webp" width="1600" height="929" alt="The domain integral of u, its time derivative, the boundary fluxes, the source contribution and the leftover residual, all against time; the residual stays several orders of magnitude below the budget terms." loading="lazy" decoding="async">
           </a>
           <figcaption>∫u dx, its rate, the boundary fluxes, the source and the residual.</figcaption>
         </figure>
