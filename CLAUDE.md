@@ -42,7 +42,7 @@ Mobile (<900px): desktop nav links hide, a horizontal anchor-chip row below the 
 ### CI checks (branch protection)
 Six required status checks run on every PR:
 - **HTML Validation** — validates `index.html` markup (CSS errors ignored — vnu.jar grammar is outdated)
-- **Lighthouse CI** — 3 runs each for mobile + desktop; performance/a11y/best-practices/SEO + CWV assertions (LCP, CLS, TBT)
+- **Lighthouse CI** — 3 runs each for mobile + desktop; performance/a11y/best-practices/SEO + CWV assertions (LCP, CLS, TBT). Only root-level pages are audited (`index`, `404`, `cases`, `notebook`, `resume`) — `projects/*.html` and `cases/*.html` are not. The desktop config sets Lighthouse's full desktop throttling preset (`rttMs 40`, `throughputKbps 10240`, `cpuSlowdownMultiplier 1`); setting only the CPU multiplier leaves the network at the default slow-4G mobile profile, which held `index.html` at exactly 0.90 with no headroom. LHCI asserts on the best of the 3 runs, so a PR can pass and `main` still fail on a borderline score.
 - **Link Check** — verifies all links resolve
 - **Playwright** — 10 browser projects: chromium-desktop, chromium-wide, webkit-desktop, firefox-desktop, iphone-safari, iphone-landscape, ipad-safari, ipad-landscape, chromium-half, android-chrome
 - **Security Audit** — `npm audit --audit-level=high`

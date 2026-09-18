@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { PAGES, VISUAL_PROJECTS, presetTheme, freezeAnimations } from "./helpers";
+import { PAGES, VISUAL_PROJECTS, presetTheme, freezeAnimations, loadLazyImages } from "./helpers";
 
 /**
  * Visual regression baselines. Limited to chromium-desktop + iphone-safari
@@ -41,6 +41,7 @@ test.describe("Visual regression", () => {
     await page.evaluate(() => {
       document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
     });
+    await loadLazyImages(page);
     await page.waitForLoadState("networkidle");
     await expect(page).toHaveScreenshot("index-full-dark.png", {
       fullPage: true,
@@ -57,6 +58,7 @@ test.describe("Visual regression", () => {
     await page.evaluate(() => {
       document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
     });
+    await loadLazyImages(page);
     await page.waitForLoadState("networkidle");
     await expect(page).toHaveScreenshot("index-full-light.png", {
       fullPage: true,
