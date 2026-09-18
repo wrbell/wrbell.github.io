@@ -30,6 +30,7 @@ export const PAGES: PageInfo[] = [
   { path: "/projects/w26-cobot-axis.html",       label: "w26-cobot-axis",   hasThemeToggle: true,  hero: ".hero h1" },
   { path: "/projects/me440-vibrations.html",     label: "me440-vibrations", hasThemeToggle: true,  hero: ".hero h1" },
   { path: "/projects/me379-fluids-lab.html",     label: "me379-fluids-lab", hasThemeToggle: true,  hero: ".hero h1" },
+  { path: "/projects/me4301-cfd.html",           label: "me4301-cfd",       hasThemeToggle: true,  hero: ".hero h1" },
 ];
 
 /** Section anchors rendered by index.html (header `id`s). */

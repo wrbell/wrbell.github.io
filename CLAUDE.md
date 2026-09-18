@@ -23,7 +23,7 @@ Subpages:
 - `cases.html` — 2×2 supply chain case competition shell
 - `notebook.html` — dated short-form post feed shell
 - `projects/case-study.css` — shared "engineering log" template stylesheet
-- `projects/{stark-translate,fast-fem,w26-cobot-axis,me440-vibrations,me379-fluids-lab}.html` — five flagship project detail pages (all use `case-study.css`)
+- `projects/{stark-translate,fast-fem,w26-cobot-axis,me440-vibrations,me379-fluids-lab,me4301-cfd}.html` — six flagship project detail pages (all use `case-study.css`)
 
 Mobile (<900px): desktop nav links hide, a horizontal anchor-chip row below the hero appears for section navigation. No hamburger.
 
@@ -35,7 +35,7 @@ Mobile (<900px): desktop nav links hide, a horizontal anchor-chip row below the 
 - `robots.txt` + `sitemap.xml` — SEO basics (sitemap lists all subpages)
 - `tests/smoke.spec.ts`, `tests/a11y.spec.ts`, `tests/console-errors.spec.ts`, `tests/visual.spec.ts` — **stale post-redesign**, scheduled for rewrite in a follow-up PR; CI tests will fail until then
 - `ROADMAP.md` — categorized backlog with semester milestones
-- `build.js` — minification build script (html-minifier-terser → dist/) — minifies index, 404, resume, cases, notebook, and all five `projects/*.html`
+- `build.js` — minification build script (html-minifier-terser → dist/) — minifies index, 404, resume, cases, notebook, and all six `projects/*.html`
 - `releaseplan.md` — launch plan
 - `ref/` — reference resumes (not deployed)
 
@@ -80,7 +80,15 @@ npx playwright test tests/console-errors.spec.ts
 Verify light mode at 768px and 1280px — contrast issues and element overlap often only appear in light mode. WCAG AA requires 4.5:1 for normal text — pay particular attention to `.tag`, `.card .lane`, `.card .meta`, and `.btn.primary`.
 
 ### 5. Visual regression tests
-`tests/visual.spec.ts` baselines are stale post v2026.5 redesign. Regenerate on a Linux runner (GitHub Actions or Docker) once the spec is rewritten against the new selectors: `npx playwright test tests/visual.spec.ts --update-snapshots`, then commit the new `-linux.png` baselines.
+`tests/visual.spec.ts` baselines are Linux renders (`*-linux.png`), so they cannot be regenerated on macOS or Windows, and the spec fails locally off Linux — delete any `*-darwin.png` it writes. Any change to `index.html` layout changes the four `index-full-*` baselines; a new page needs two new `<label>-hero-dark-*` baselines. To regenerate, push the branch, then:
+
+```bash
+gh workflow run update-snapshots.yml --ref <branch>
+gh run watch                      # then, with the run id:
+gh run download <run-id> -n visual-snapshots -D /tmp/snaps
+```
+
+Copy only the PNGs that differ into `tests/visual.spec.ts-snapshots/` and commit them. The workflow (`.github/workflows/update-snapshots.yml`) uses the same browser install as the Playwright job in `ci.yml`. Keep animated content out of the hero viewport — it is what gets snapshotted.
 
 ## Deployment
 

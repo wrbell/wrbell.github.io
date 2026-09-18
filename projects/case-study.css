@@ -52,6 +52,10 @@
   --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+
+  /* Paper the plot figures are drawn on. Fixed in both themes on purpose —
+     see the .figure block below. */
+  --plate:        #fcfbfc;
 }
 [data-theme="light"] {
   --bg:          #f4f4f0;
@@ -315,6 +319,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
   white-space: pre;
   overflow-x: auto;
 }
+.ascii:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .ascii .a { color: var(--accent); font-weight: 500; }
 .ascii .c { color: var(--muted-2); }
 
@@ -491,6 +496,65 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
   @keyframes viz-stream {
     to { stroke-dashoffset: -10; }
   }
+}
+
+/* A grid item defaults to min-width:auto, so a `white-space: pre` block inside
+   .sect can push the content column wider than the viewport — the page then
+   relies on body{overflow-x:hidden} and clips its own headings. Letting the
+   column shrink hands that job back to .ascii's own overflow-x. Scoped to this
+   page so the other case studies keep the layout their baselines were taken
+   against; lift the scope when those are regenerated. */
+body[data-slug="me4301-cfd"] .sect > div { min-width: 0; }
+
+/* ─── figure gallery ───
+   The plots are light-background matplotlib exports. They sit on a fixed light
+   plate in BOTH themes: a CSS filter would invert the colour maps and falsify
+   the data, so the mat is matched to the figure's own paper instead and the
+   surrounding chrome carries the theme. */
+.fig-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;      /* size each figure to its own plot, no stretched cards */
+  gap: 18px;
+  margin: 28px 0 0;
+  max-width: 1120px;       /* the section column is uncapped; the plots are not */
+}
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+  transition: border-color .15s;
+}
+.figure:hover,
+.figure:focus-within { border-color: var(--border-hi); }
+.figure > a,
+.figure > video {
+  display: block;
+  padding: 10px;
+  background: var(--plate);
+  border-bottom: 1px solid var(--border);
+}
+.figure > a:focus-visible { outline-offset: -4px; border-radius: 0; }
+.figure img,
+.figure video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.figure figcaption {
+  padding: 11px 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  color: var(--text-dim);
+}
+@media (min-width: 900px) {
+  .fig-grid { grid-template-columns: 1fr 1fr; }
+  .figure--wide { grid-column: 1 / -1; }
 }
 
 /* ─── next-up cards ─── */
@@ -670,6 +734,20 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
   .commits .sha { color: #555 !important; }
   .commits h3 { color: #000 !important; }
   .commits p { color: #000 !important; }
+
+  .fig-grid { grid-template-columns: 1fr 1fr; gap: 10pt; margin-top: 14pt; }
+  .figure {
+    border-color: #ccc !important;
+    background: #fff !important;
+    page-break-inside: avoid;
+  }
+  .figure > a,
+  .figure > video {
+    background: #fff !important;
+    border-color: #ddd !important;
+    padding: 3pt;
+  }
+  .figure figcaption { color: #333 !important; font-size: 8pt; padding: 6pt 8pt; }
 
   .shot {
     border-color: #ccc !important;

@@ -1,0 +1,45 @@
+name: Update visual snapshots
+
+# Visual baselines in tests/visual.spec.ts-snapshots/ are Linux renders
+# (*-linux.png), so they cannot be regenerated on macOS / Windows.
+# Run this from the Actions tab (or `gh workflow run update-snapshots.yml
+# --ref <branch>`), download the `visual-snapshots` artifact, and commit the
+# changed PNGs to the branch.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  snapshots:
+    name: Regenerate Linux baselines
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Same browser install as the Playwright job in ci.yml, so fonts and
+      # system libraries match what the baselines are compared against.
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium webkit firefox
+
+      - name: Regenerate baselines
+        run: >-
+          npx playwright test tests/visual.spec.ts
+          --project=chromium-desktop --project=iphone-safari
+          --update-snapshots
+
+      - name: Upload snapshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-snapshots
+          path: tests/visual.spec.ts-snapshots/
+          if-no-files-found: error

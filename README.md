@@ -4,7 +4,7 @@ Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.gi
 
 ## Current Features
 
-- Single-page portfolio with five subpages (resume, cases, notebook, plus five project detail pages under `projects/`)
+- Single-page portfolio with subpages (resume, cases, notebook, plus six project detail pages under `projects/`)
 - Refined + Editorial hybrid aesthetic — Fraunces italic display serif, JetBrains Mono eyebrows/metadata, Inter prose
 - Dark theme accent `#00e5a0` / light theme accent `#006e4a`
 - Self-hosted Inter + JetBrains Mono + Fraunces (`assets/fonts/`)
