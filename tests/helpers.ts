@@ -72,3 +72,27 @@ export async function freezeAnimations(page: Page): Promise<void> {
     }`,
   });
 }
+
+/**
+ * Force every `loading="lazy"` image to load and decode. Full-page screenshots
+ * are captured without scrolling, so a lazy image far below the fold would
+ * otherwise be missing or half-loaded depending on the browser's lazy-load
+ * distance. Keeps images lazy in production (they stay out of the LCP path)
+ * while keeping full-page baselines deterministic.
+ */
+export async function loadLazyImages(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    const images = Array.from(document.images);
+    for (const img of images) img.loading = "eager";
+    await Promise.all(
+      images.map((img) =>
+        img.complete
+          ? img.decode().catch(() => undefined)
+          : new Promise<void>((resolve) => {
+              img.addEventListener("load", () => resolve(), { once: true });
+              img.addEventListener("error", () => resolve(), { once: true });
+            }),
+      ),
+    );
+  });
+}

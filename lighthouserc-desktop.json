@@ -6,7 +6,12 @@
       "settings": {
         "formFactor": "desktop",
         "throttling": {
-          "cpuSlowdownMultiplier": 1
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1,
+          "requestLatencyMs": 0,
+          "downloadThroughputKbps": 0,
+          "uploadThroughputKbps": 0
         },
         "screenEmulation": {
           "mobile": false,
