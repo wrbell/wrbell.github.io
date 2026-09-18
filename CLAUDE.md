@@ -80,7 +80,15 @@ npx playwright test tests/console-errors.spec.ts
 Verify light mode at 768px and 1280px — contrast issues and element overlap often only appear in light mode. WCAG AA requires 4.5:1 for normal text — pay particular attention to `.tag`, `.card .lane`, `.card .meta`, and `.btn.primary`.
 
 ### 5. Visual regression tests
-`tests/visual.spec.ts` baselines are stale post v2026.5 redesign. Regenerate on a Linux runner (GitHub Actions or Docker) once the spec is rewritten against the new selectors: `npx playwright test tests/visual.spec.ts --update-snapshots`, then commit the new `-linux.png` baselines.
+`tests/visual.spec.ts` baselines are Linux renders (`*-linux.png`), so they cannot be regenerated on macOS or Windows, and the spec fails locally off Linux — delete any `*-darwin.png` it writes. Any change to `index.html` layout changes the four `index-full-*` baselines; a new page needs two new `<label>-hero-dark-*` baselines. To regenerate, push the branch, then:
+
+```bash
+gh workflow run update-snapshots.yml --ref <branch>
+gh run watch                      # then, with the run id:
+gh run download <run-id> -n visual-snapshots -D /tmp/snaps
+```
+
+Copy only the PNGs that differ into `tests/visual.spec.ts-snapshots/` and commit them. The workflow (`.github/workflows/update-snapshots.yml`) uses the same browser install as the Playwright job in `ci.yml`. Keep animated content out of the hero viewport — it is what gets snapshotted.
 
 ## Deployment
 

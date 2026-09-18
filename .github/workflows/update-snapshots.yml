@@ -7,10 +7,6 @@ name: Update visual snapshots
 # changed PNGs to the branch.
 on:
   workflow_dispatch:
-  # TEMPORARY: lets the workflow run before it exists on main. Remove before merge.
-  push:
-    branches: [feat/me4301-cfd]
-    paths: [".github/workflows/update-snapshots.yml"]
 
 permissions:
   contents: read
