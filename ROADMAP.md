@@ -1,34 +1,15 @@
 # Roadmap — wrbell.github.io
 
-## Winter 2026 — End of Semester (April)
+## Fall 2026 — Before graduation (December)
 
 ### Content (user provides, Claude assists)
-- [ ] Replace all lorem ipsum — About section, Experience ×8, Research ×3, Supply Chain ×4, Extracurricular ×4
-- [ ] Replace `[TAG]` placeholders with real technology tags
-- [ ] Write About section in own voice — SpaceX/Tesla arc, ME+CS dual degree, what drives you
-- [ ] Experience bullets: action verb + technical scope + measurable result (respect NDAs)
-- [ ] Differentiate the 3 Pannier Lab entries — show progression, distinct contributions
-- [ ] Add CS coursework to Education (algorithms, data structures, AI, etc.)
-
-### Assets (user provides)
-- [ ] Headshot photo → `assets/headshot.jpg` (uncomment `<img>` tag, remove placeholder)
-- [ ] Resume PDF → `assets/willem-bell-resume.pdf`
-- [ ] Presentation PDFs → `assets/colorado-state-rams.pdf`, `kozy-shack.pdf`, `3m-fulfillment.pdf`, `quantum-frontiers.pdf` (or remove dead links)
-- [ ] og:image (1200×630) for social sharing → `assets/og-image.png`
-
-### Features (Claude can build)
-- [ ] Lightweight analytics (Plausible snippet — one script tag, free tier)
-- [ ] `og:image` + `twitter:image` meta tags (once asset exists)
-- [ ] Enrich `description` meta tag with keywords (robotics, controls, FEA, Python, ML)
-- [ ] Repo description + topics via `gh` CLI
-- [ ] Skills proficiency grouping ("daily driver" vs "familiar")
-
-### Bugs (Claude can fix)
-- [ ] Fix hamburger menu on iPhone/mobile — breaks layout and interaction on open
-
-### Testing (Claude can build)
-- [ ] Edition-gated content test (`?edition=fall` shows/hides cards)
-- [ ] Resume modal mobile test (<768px direct navigation)
+- [ ] Starlink (Bastrop, May–Aug 2026) bullets — ledger, timeline, and `resume.html` have title + dates only
+- [ ] Regenerate `assets/willem-bell-resume.pdf` with the Starlink role
+- [ ] Regenerate `assets/og-image.png` — still says "Currently SpaceX Starfactory" / "Available · May 2027", and the URL overlaps the Currently value
+- [ ] Senior Design (ME 4671) card update once past proposal stage
+- [ ] Confirm stark-translate dates (card/resume say 2024–present, timeline card says 2026)
+- [ ] Real diagrams for project-page placeholders (fast-fem, stark-translate, cobot axis, ME 440)
+- [ ] First notebook entries (`notebook.html` is unlinked until then)
 
 ---
 
@@ -93,6 +74,9 @@
 ---
 
 ## Completed
+- [x] About section in own voice; plain-language copy pass (Sep 2026)
+- [x] Fall 2026 content live (Senior Design, CFD, current courses) — `?edition=fall` gate retired in the v2026.5 redesign
+- [x] Resume PDF, headshot, og:image, supply chain case pages
 - [x] Custom 404 page (`404.html`)
 - [x] `robots.txt` + `sitemap.xml`
 - [x] Expandable project details on flagship projects

@@ -12,16 +12,17 @@ The site is built as `index.html` (single-page) plus a small set of subpages. Al
 
 Single-view layout (no view toggle) with four anchored sections plus a contact footer:
 - **Hero** — giant "Willem Bell." Fraunces wordmark, vitals sidebar (Currently / Graduating / Based / Stack today), Email/Resume/GitHub/LinkedIn CTAs
-- **#about** — dossier sidebar + three prose paragraphs (currently Lorem, pending real copy)
+- **#about** — dossier sidebar + three prose paragraphs + "Recently" feed
 - **#work** — asymmetric 6-column work grid (`span-6` flagship + `span-4` second + `span-2/3` smaller); each card links to a project subpage in `projects/`
 - **#ledger** — labeled "Experience" — ledger-style rows with `<time datetime>` ISO ranges
+- **#timeline** — horizontal scrolling career timeline, color-coded by lane
 - **#stack** — three proficiency tiers (Daily driver / Familiar / Learning) with color-coded domain pills + filled-dot proficiency indicator
-- **#contact** — site footer with email + social + footer nav (resume / cases / notebook)
+- **#contact** — site footer with email + social + footer nav (resume / resume PDF / cases / work)
 
 Subpages:
 - `resume.html` — print-optimized single-page resume (Cmd+P / "Print / Save PDF")
 - `cases.html` — 2×2 supply chain case competition shell
-- `notebook.html` — dated short-form post feed shell
+- `notebook.html` — dated short-form post feed shell; intentionally unlinked from nav and sitemap until it has entries
 - `projects/case-study.css` — shared "engineering log" template stylesheet
 - `projects/{stark-translate,fast-fem,w26-cobot-axis,me440-vibrations,me379-fluids-lab,me4301-cfd}.html` — six flagship project detail pages (all use `case-study.css`)
 

@@ -19,7 +19,7 @@ Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.gi
 - `cases.html` shell for four supply chain case competitions (PDFs land in `assets/cases/` later)
 - `notebook.html` shell for dated short-form posts
 - `robots.txt` + `sitemap.xml` (including all subpages)
-- Open Graph + Twitter card meta tags (image at `assets/og-card.png` once produced)
+- Open Graph + Twitter card meta tags (image at `assets/og-image.png`)
 - Accessibility: skip-to-content link, focus-visible outlines, `prefers-reduced-motion`, semantic `<time>` + `role="img"` on placeholders
 - Scroll-triggered fade-in (IntersectionObserver, tightened to 200ms)
 - JSON-LD `Person` schema
@@ -30,14 +30,12 @@ Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.gi
 See [ROADMAP.md](ROADMAP.md) for the full categorized backlog. Highlights:
 
 ### Content (high priority)
-- [ ] Replace About lorem with three real paragraphs
 - [ ] Differentiate the three Pannier Lab ledger entries
-- [ ] Real `willem-bell-resume.pdf` at a stable URL
 - [ ] Real headshot (replaces removed viewfinder placeholder if/when re-added)
 - [ ] Real screenshots / hardware photos for each project card and detail page
-- [ ] `assets/og-card.png` (1200×630)
+- [ ] Refresh `assets/og-image.png` (1200×630) — content is stale
 - [ ] Four case competition PDFs into `assets/cases/`
-- [ ] Real notebook entries (or remove the sample entry when ready)
+- [ ] Real notebook entries (page is unlinked until then)
 
 ### Features
 - [ ] Lightweight analytics (Plausible snippet)
