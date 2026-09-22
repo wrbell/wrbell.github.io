@@ -1,5 +1,7 @@
 # Release Plan: v2026.27 — Public Launch
 
+> **Historical (Sep 2026).** Launch shipped. The `?edition=fall` gate referenced below was removed in the v2026.5 redesign; Fall 2026 content and the summer 2026 internship (SpaceX Starlink, Bastrop TX) are live. Current backlog lives in [ROADMAP.md](ROADMAP.md).
+
 **Target:** Week of June 29, 2026 (ISO week 27)
 **Goal:** Ship a portfolio that makes hiring managers reach for the "schedule interview" button within 30 seconds of landing.
 
@@ -46,7 +48,7 @@ Each of the 12 experience entries needs 2–3 sentences following: **action verb
 | Pannier Lab (Jul 2021–May 2023) | P1 | Foundation work — what did you build? |
 | SI Assistant Supervisor (2022–2023) | P2 | Brief is fine — leadership angle. |
 | SI Leader (Jun 2020–Sep 2023) | P2 | Brief — STEM education angle. |
-| TBD Summer 2026 | Skip | Edition-gated, fill when confirmed. |
+| SpaceX Starlink (May–Aug 2026) | Done | Shipped Sep 2026 — title + dates; bullets pending. |
 
 **Deliverable:** Real text in all 12 entries. No Lorem anywhere in the Experience section.
 
@@ -55,7 +57,7 @@ Each of the 12 experience entries needs 2–3 sentences following: **action verb
 6 entries still have `[TAG]` placeholder tags:
 - Colorado State Rams competition (4 tags)
 - Quantum Frontiers competition (4 tags)
-- Design for Manufacturing project (edition-gated, can defer)
+- Design for Manufacturing project (dropped in v2026.5 redesign)
 
 **Deliverable:** All visible tags are real technology/skill names.
 
@@ -273,7 +275,7 @@ The site is ready for public launch when ALL of these are true:
 | Gate | Criteria |
 |---|---|
 | Zero Lorem | `grep -ri "lorem" index.html` returns nothing |
-| Zero placeholder tags | `grep "\[TAG\]" index.html` returns nothing (excluding edition-gated) |
+| Zero placeholder tags | `grep "\[TAG\]" index.html` returns nothing |
 | Resume downloadable | `assets/willem-bell-resume.pdf` exists and opens correctly |
 | Headshot visible | Hero section renders headshot on desktop |
 | OG image works | Sharing URL on LinkedIn shows branded preview |
@@ -309,7 +311,6 @@ These are good ideas from the ROADMAP that don't block launch:
 - RSS feed
 - Cross-section tag filtering (clicking "Python" highlights all sections)
 - Testimonials / recommendations
-- Fall 2026 edition content (Senior Design, Design for Manufacturing, CFD, Summer 2026 internship)
 - Timeline semantic structure refactor (`div` → `ol`)
 - Print stylesheet URL truncation fix
 - Company logos on experience cards
