@@ -7,7 +7,6 @@
 - [ ] Regenerate `assets/willem-bell-resume.pdf` with the Starlink role
 - [ ] Regenerate `assets/og-image.png` — still says "Currently SpaceX Starfactory" / "Available · May 2027", and the URL overlaps the Currently value
 - [ ] Senior Design (ME 4671) card update once past proposal stage
-- [ ] Confirm stark-translate dates (card/resume say 2024–present, timeline card says 2026)
 - [ ] Real diagrams for project-page placeholders (fast-fem, stark-translate, cobot axis, ME 440)
 - [ ] First notebook entries (`notebook.html` is unlinked until then)
 
