@@ -33,7 +33,7 @@ See [ROADMAP.md](ROADMAP.md) for the full categorized backlog. Highlights:
 - [ ] Differentiate the three Pannier Lab ledger entries
 - [ ] Real headshot (replaces removed viewfinder placeholder if/when re-added)
 - [ ] Real screenshots / hardware photos for each project card and detail page
-- [ ] Refresh `assets/og-image.png` (1200×630) — content is stale
+- [x] `assets/og-image.png` (1200×630) — regenerate with `node scripts/og-image.mjs`
 - [ ] Four case competition PDFs into `assets/cases/`
 - [ ] Real notebook entries (page is unlinked until then)
 

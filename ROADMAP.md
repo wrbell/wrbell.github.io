@@ -5,7 +5,6 @@
 ### Content (user provides, Claude assists)
 - [ ] Starlink (Bastrop, May–Aug 2026) bullets — ledger, timeline, and `resume.html` have title + dates only
 - [ ] Regenerate `assets/willem-bell-resume.pdf` with the Starlink role
-- [ ] Regenerate `assets/og-image.png` — still says "Currently SpaceX Starfactory" / "Available · May 2027", and the URL overlaps the Currently value
 - [ ] Senior Design (ME 4671) card update once past proposal stage
 - [ ] Real diagrams for project-page placeholders (fast-fem, stark-translate, cobot axis, ME 440)
 - [ ] First notebook entries (`notebook.html` is unlinked until then)
