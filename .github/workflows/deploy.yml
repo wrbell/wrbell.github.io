@@ -31,6 +31,16 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # This job uploads the repository root. upload-pages-artifact@v3
+      # omits only .git and .github. GitHub Pages does not run Jekyll
+      # on this artifact, so a _config.yml exclude has no effect.
+      # Dot paths are public today (.gitignore returns 200). Remove the
+      # new agent files so they are not site pages.
+      - name: Omit agent files from the Pages artifact
+        run: |
+          rm -rf .agents .claude
+          rm -f AGENTS.md
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
