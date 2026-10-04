@@ -2,6 +2,13 @@
 
 Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.github.io/)
 
+Status (2026-10-04): live from `main`; CI passes there (run 37139478652:
+1202 passed, 418 skipped by design, 0 failed). Stale specs: none.
+
+Course: none.
+
+Agent file: [AGENTS.md](AGENTS.md) holds the rules for AI coding agents.
+
 ## Current Features
 
 - Single-page portfolio with subpages (resume, cases, notebook, plus six project detail pages under `projects/`)
@@ -51,5 +58,28 @@ No build step required.
 
 ```bash
 npx serve .              # local server at http://localhost:3000
-npx playwright test      # tests stale post v2026.5 redesign — being rewritten
+npm test                 # Playwright suite, 10 browser projects
 ```
+
+## Recreate
+
+| Command | What it does | Limit |
+| --- | --- | --- |
+| `npm run build` | Minifies the pages into `dist/` for the size budget | The deploy uploads the source pages, not `dist/` |
+| `node scripts/og-image.mjs` | Renders `assets/og-image.png` and `assets/og-card.png` | Needs the Playwright Chromium browser |
+| `npm test` | Runs the Playwright suite | Visual baselines match only on Linux |
+| `bash tools/check_resume_hash.sh` | Compares the hosted resume PDF with `tools/resume-approved.sha256` | Does not build the PDF; the source build is TBD (Willem decides) |
+
+## Deliverables
+
+| File | SHA-256 | Submitted |
+| --- | --- | --- |
+| `assets/willem-bell-resume.pdf` | `5df00664f16677d0ffebafef1b898588e2a9dd72971acc5c5549d71204e1ae70` | TBD (in git since `c233dc2`, 2026-04-17) |
+
+The site itself deploys from `main`; each deploy is a GitHub Actions run.
+
+## License
+
+No `LICENSE` file is in this repository.
+
+`SPDX-License-Identifier: TBD (Willem decides)`

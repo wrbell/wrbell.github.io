@@ -157,3 +157,9 @@ jobs:
             echo "::error::Minified index.html exceeds 90 KB ($SIZE bytes)"
             exit 1
           fi
+
+      # Non-blocking (D28 is open): compare the hosted resume PDF with
+      # the approved hash in tools/resume-approved.sha256.
+      - name: Check resume PDF hash
+        continue-on-error: true
+        run: bash tools/check_resume_hash.sh

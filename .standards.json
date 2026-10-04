@@ -1,0 +1,178 @@
+{
+  "standards_sha": "0fe6a29de0f22af075ba51fafff9e03d1238d54d",
+  "pin": "1d07cb8750a73f3007b348c377e9cf7cd778d39c",
+  "date": "2026-10-04",
+  "tier": "code",
+  "org_owned": true,
+  "domains": [
+    "shell",
+    "markdown",
+    "typescript",
+    "docs",
+    "agentic",
+    "git",
+    "security"
+  ],
+  "files": [
+    {
+      "path": ".editorconfig",
+      "sha256": "85bccbd23a9070becfe1dc0dbb9ad7305fb2bb98f92f54cb9856d7d6eca4ebfe",
+      "source": "enforcement/editorconfig/.editorconfig"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "sha256": "66816e9bd307ca78e1b5027d0671e04a961cbd580af1df2413ab7fbbdbb36a42",
+      "source": "enforcement/dependabot/dependabot.yml"
+    },
+    {
+      "path": "enforcement/commitlint/check_branch_name.sh",
+      "sha256": "cc7ceb5981f8d863f5ea43df956e9ddcb3c342b78eb720bd7b58543e897ba91d",
+      "source": "enforcement/commitlint/check_branch_name.sh"
+    },
+    {
+      "path": "enforcement/commitlint/commitlint.config.js",
+      "sha256": "def05e8d8ed107ee17127ccaae6c95a05ea89b0507bdca5a3d13689b6092637b",
+      "source": "enforcement/commitlint/commitlint.config.js"
+    },
+    {
+      "path": "enforcement/commitlint/package.json",
+      "sha256": "4ec2e5703cff6e0e39c419a63914e8b2508e9aa162b80cdcb04feef4b6634f56",
+      "source": "enforcement/commitlint/package.json"
+    },
+    {
+      "path": "enforcement/cspell/README.md",
+      "sha256": "01aab010681f057980a033364e27d35aacba618cf7a4dcedf18d3941240f149e",
+      "source": "enforcement/cspell/README.md"
+    },
+    {
+      "path": "enforcement/cspell/cspell.json",
+      "sha256": "d414b809e8694b59f50eac858b7382e42a421320c8438b8334f487557d6f6d0b",
+      "source": "enforcement/cspell/cspell.json"
+    },
+    {
+      "path": "enforcement/cspell/words/engineering.txt",
+      "sha256": "f2ce70edb4d1c3ffbf88705d08d95f3e381b65034ca1d51ef095fd3ccced3372",
+      "source": "enforcement/cspell/words/engineering.txt"
+    },
+    {
+      "path": "enforcement/dependabot/check_dependabot.py",
+      "sha256": "e7f5deabd426a261e7ea54a6af66a5973c282ed30f6470b43ce78d2994939629",
+      "source": "enforcement/dependabot/check_dependabot.py"
+    },
+    {
+      "path": "enforcement/dependabot/dependabot.yml",
+      "sha256": "66816e9bd307ca78e1b5027d0671e04a961cbd580af1df2413ab7fbbdbb36a42",
+      "source": "enforcement/dependabot/dependabot.yml"
+    },
+    {
+      "path": "enforcement/docs/README.md",
+      "sha256": "beb84b719ffa92abfe4ff14aed3e579de66a0f0a8384ed9c5eeaedbfd6a3be86",
+      "source": "enforcement/docs/README.md"
+    },
+    {
+      "path": "enforcement/docs/adr.markdownlint-cli2.jsonc",
+      "sha256": "301108548fbc39531c41795fce9d3874ede97127e48bfbde3a1e7aaf46aafa06",
+      "source": "enforcement/docs/adr.markdownlint-cli2.jsonc"
+    },
+    {
+      "path": "enforcement/docs/readme.markdownlint-cli2.jsonc",
+      "sha256": "c511782c5783f23aff430ff9c710975794ea41a3695945d4af1c2ac18481b93e",
+      "source": "enforcement/docs/readme.markdownlint-cli2.jsonc"
+    },
+    {
+      "path": "enforcement/gitleaks/.gitleaks.toml",
+      "sha256": "5afa11b3081818072c0046005ba7a7f04c6bf59405c7cf86403b8815e2a541ef",
+      "source": "enforcement/gitleaks/.gitleaks.toml"
+    },
+    {
+      "path": "enforcement/gitleaks/check_allow_comments.py",
+      "sha256": "c9cec8e3e082d4291b07752f3fed9fcadcd97d8836b93d59637023458524f468",
+      "source": "enforcement/gitleaks/check_allow_comments.py"
+    },
+    {
+      "path": "enforcement/gitleaks/check_workflows.py",
+      "sha256": "0670e22dcdccf2921cd71406830ff9eac9514fea69aec283e272debb7d624d11",
+      "source": "enforcement/gitleaks/check_workflows.py"
+    },
+    {
+      "path": "enforcement/markdownlint/.markdownlint-cli2.yaml",
+      "sha256": "b43d5a93152be893b1fab471c2c9d83698fff2d8850a16976a1e30c39f4b64a5",
+      "source": "enforcement/markdownlint/.markdownlint-cli2.yaml"
+    },
+    {
+      "path": "enforcement/shellcheck/.shellcheckrc",
+      "sha256": "c64a101ed2993ac3b85ecfe7bbef2c8191b79b5543091d714475ac94fe0e58cc",
+      "source": "enforcement/shellcheck/.shellcheckrc"
+    },
+    {
+      "path": "enforcement/typescript/.gitignore",
+      "sha256": "4d56952b0fb13bf8f9b6c13a6d4c34a075bac3af447636a1df4335d7576e2f97",
+      "source": "enforcement/typescript/.gitignore"
+    },
+    {
+      "path": "enforcement/typescript/.prettierrc.json",
+      "sha256": "ee08eafb70d51b338abcd3bee438ba3cbb57147c6b66ba3d818d84f9e7069dd5",
+      "source": "enforcement/typescript/.prettierrc.json"
+    },
+    {
+      "path": "enforcement/typescript/Directory.Build.props",
+      "sha256": "93b089e1fcc5db98d740aeb1e4cab8727761e4b4929053dbca43ca8d6a806a9e",
+      "source": "enforcement/typescript/Directory.Build.props"
+    },
+    {
+      "path": "enforcement/typescript/README.md",
+      "sha256": "d67065d18dc78de24bd94a73d02b5aa554d7bc0ba806f39339129210176fae11",
+      "source": "enforcement/typescript/README.md"
+    },
+    {
+      "path": "enforcement/typescript/dotnet.editorconfig",
+      "sha256": "f499dc0558b570e6e4c01aa3273b882827129d28eda2a37802090e3b30ce6f99",
+      "source": "enforcement/typescript/dotnet.editorconfig"
+    },
+    {
+      "path": "enforcement/typescript/eslint.config.mjs",
+      "sha256": "77bfa2b932a2203787188fbb2c030ef4361974bc271f343c3df40d9259fd6fd9",
+      "source": "enforcement/typescript/eslint.config.mjs"
+    },
+    {
+      "path": "enforcement/typescript/package-lock.json",
+      "sha256": "251c90960949e6e29a9ccc20b3e9a336dfa7b520ac5af45965ee039712a9338c",
+      "source": "enforcement/typescript/package-lock.json"
+    },
+    {
+      "path": "enforcement/typescript/package.json",
+      "sha256": "bda4b81b985cf08c264d07500b131c0e32b873ebd8f9a1d0368aa22ff5dbbf97",
+      "source": "enforcement/typescript/package.json"
+    },
+    {
+      "path": "enforcement/typescript/tsconfig.base.json",
+      "sha256": "061b3e2bfe2a82d4f2711e5d4b823d5f484d8dd7917493758b7583555bae4164",
+      "source": "enforcement/typescript/tsconfig.base.json"
+    },
+    {
+      "path": "enforcement/yamllint/.yamllint.yml",
+      "sha256": "a80d2d71d65366bb3e3c1590d61328dc07ab345cd45e48950e18837b2889cfbb",
+      "source": "enforcement/yamllint/.yamllint.yml"
+    },
+    {
+      "path": "tools/agents_md_lint.py",
+      "sha256": "d0180a34a475a2cdb7e1ab3facb28c39233af1dbc879dff9872d72fe71cd2faa",
+      "source": "tools/agents_md_lint.py"
+    },
+    {
+      "path": "tools/check_docs.py",
+      "sha256": "d5b184f1d81ee03d99deabb9b2d0686636e09082abd5f9ce5c128ebfed324d1a",
+      "source": "tools/check_docs.py"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "sha256": "77d9e30687f3eb95d470a277389d32aa9d9e6f6a471114fe78da9ea7b90c2b35",
+      "source": "templates/pull_request_template.md"
+    }
+  ],
+  "generated": [
+    ".pre-commit-config.yaml",
+    ".github/workflows/standards.yml"
+  ],
+  "skipped": []
+}
