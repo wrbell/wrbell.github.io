@@ -35,11 +35,12 @@ jobs:
       # omits only .git and .github. GitHub Pages does not run Jekyll
       # on this artifact, so a _config.yml exclude has no effect.
       # Dot paths are public today (.gitignore returns 200). Remove the
-      # new agent files so they are not site pages.
+      # agent files and the collection-standards tooling and config so
+      # they are not site pages. No page or spec uses these paths.
       - name: Omit agent files from the Pages artifact
         run: |
-          rm -rf .agents .claude
-          rm -f AGENTS.md
+          rm -rf .agents .claude docs/agents enforcement tools
+          rm -f AGENTS.md CLAUDE.md .standards.json .pre-commit-config.yaml .editorconfig
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
