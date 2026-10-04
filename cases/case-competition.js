@@ -34,8 +34,8 @@
       tagline: 'E-commerce fulfillment network redesign for 3M US distribution.',
       datePublished: '2025-12-01',
       role: 'Network modeling',
-      repoUrl: 'https://github.com/wrbell/supply-chain-data-3m',
-      deckPdf: '../assets/cases/3m/3m-fulfillment-deck.pdf'
+      repoUrl: null,
+      deckPdf: null
     },
     {
       slug: 'quantum-frontiers',
