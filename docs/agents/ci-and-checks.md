@@ -3,9 +3,11 @@
 This file holds the CI and pre-push details that were in `CLAUDE.md` before
 the 2026-10-04 standards rollout. [AGENTS.md](../../AGENTS.md) links here.
 
-## Required checks (branch protection)
+## Checks on each pull request (ruleset `Protect main`)
 
-Six required status checks run on every pull request (`ci.yml`):
+Six checks run on every pull request (`ci.yml`). The `Protect main` ruleset
+requires three of them: HTML Validation, Lighthouse CI and Link Check.
+The six checks:
 
 - **HTML Validation**: validates the HTML markup. CSS errors are ignored,
   because the vnu.jar CSS grammar is out of date.

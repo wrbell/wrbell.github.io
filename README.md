@@ -1,6 +1,6 @@
 # wrbell.github.io
 
-Personal portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.github.io/)
+Portfolio site for Willem Bell — [wrbell.github.io](https://wrbell.github.io/)
 
 Status (2026-10-04): live from `main`; CI passes there (run 37139478652:
 1202 passed, 418 skipped by design, 0 failed). Stale specs: none.

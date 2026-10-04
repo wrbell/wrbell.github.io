@@ -53,6 +53,10 @@ Follow the config files. Do not paste a style guide into this file.
 Keep each page self-contained: its HTML, CSS and JS stay in the page file.
 Keep the fonts self-hosted in `assets/fonts/`.
 
+A vendored copy of the STE skill is in
+`.agents/skills/simplified-technical-english/` (added on GitHub in PR #68).
+Keep it. Do not copy the skill again.
+
 Collection standards live in the private repository `wrbell/standards`.
 When a standards file and this file disagree, this file wins.
 Say that in the pull request body.
@@ -79,8 +83,8 @@ case to pass a test. If a test is wrong, say so.
 
 ### CI and deployment
 
-Six required checks run on every pull request (`ci.yml`): HTML Validation,
-Lighthouse CI, Link Check, Playwright, Security Audit and Size Budget.
+Six checks run on every pull request (`ci.yml`). The `Protect main` ruleset
+requires three of them: HTML Validation, Lighthouse CI and Link Check.
 Details: [docs/agents/ci-and-checks.md](docs/agents/ci-and-checks.md).
 `standards.yml` runs the collection standards jobs.
 
@@ -115,9 +119,12 @@ Run unattended mode only in a sandbox.
 
 `npm audit --audit-level=high` must pass (the Security Audit check).
 
-The site is public. `deploy.yml` uploads the repository root, so each
-tracked file outside `.git/` and `.github/` is served on the site. Do not
-commit a file that must not be public.
+The site is public. `deploy.yml` uploads the repository root. Before the
+upload, its omit step removes the agent and tooling paths: `.agents/`,
+`.claude/`, `docs/agents/`, `enforcement/`, `tools/`, `AGENTS.md`,
+`CLAUDE.md`, `.standards.json`, `.pre-commit-config.yaml` and
+`.editorconfig`. Each other tracked file outside `.git/` and `.github/` is
+served on the site. Do not commit a file that must not be public.
 
 ## Clarity
 
