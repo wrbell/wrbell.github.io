@@ -24,12 +24,12 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: main
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       # This job uploads the repository root. upload-pages-artifact@v3
       # omits only .git and .github. GitHub Pages does not run Jekyll
@@ -43,10 +43,10 @@ jobs:
           rm -f AGENTS.md CLAUDE.md .standards.json .pre-commit-config.yaml .editorconfig
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: .
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
