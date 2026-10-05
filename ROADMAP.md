@@ -3,10 +3,13 @@
 ## Fall 2026 — Before graduation (December)
 
 ### Content (user provides, Claude assists)
-- [ ] Starlink (Bastrop, May–Aug 2026) bullets — ledger, timeline, and `resume.html` have title + dates only
+
+- [ ] Starlink (Bastrop, May–Aug 2026) bullets — ledger, timeline, and
+  `resume.html` have title + dates only
 - [ ] Regenerate `assets/willem-bell-resume.pdf` with the Starlink role
 - [ ] Senior Design (ME 4671) card update once past proposal stage
-- [ ] Real diagrams for project-page placeholders (fast-fem, stark-translate, cobot axis, ME 440)
+- [ ] Real diagrams for project-page placeholders (fast-fem, stark-translate,
+  cobot axis, ME 440)
 - [ ] First notebook entries (`notebook.html` is unlinked until then)
 
 ---
@@ -14,12 +17,16 @@
 ## Future (post-April)
 
 ### Content
+
 - [ ] Consider adding GPA / honors / dean's list to Education if strong
 - [ ] Brief "what I did" summaries for project cards missing them
 
 ### Features
-- [ ] Screenshot / diagram / GIF slots for flagship projects (ANSYS meshes, Whisper pipeline, cobot axis)
-- [ ] Cross-section tag filtering (clicking "Python" in Projects could also highlight Experience)
+
+- [ ] Screenshot / diagram / GIF slots for flagship projects (ANSYS meshes,
+  Whisper pipeline, cobot axis)
+- [ ] Cross-section tag filtering (clicking "Python" in Projects could also
+  highlight Experience)
 - [ ] Contact form (Formspree / EmailJS for static GH Pages)
 - [ ] Blog / technical writing section
 - [ ] Testimonials / recommendations
@@ -30,50 +37,69 @@
 - [ ] Skills section compact strip near top of page
 
 ### Design
+
 - [ ] Alternating section background tints for stronger visual separation
-- [ ] Headshot viewfinder brackets — styled placeholder graphic instead of "Your Photo" text
+- [ ] Headshot viewfinder brackets — styled placeholder graphic instead of "Your
+  Photo" text
 - [ ] WCAG AA contrast audit for all light mode text-on-background combinations
 - [ ] Profile photo optimization — `srcset`, lazy loading, WebP
 - [ ] Section ordering (Skills/Education higher?)
 - [ ] Skills section redesign (tag pills vs bullets)
 
 ### Accessibility
-- [ ] Chrono filter toolbar — arrow-key navigation between buttons per ARIA toolbar pattern
-- [ ] Color-only badge differentiation — add subtle icon or shape alongside color
-- [ ] Skip link could target more landmarks ("Skip to projects", "Skip to contact")
-- [ ] `contenteditable` guard on keyboard shortcut 't' (currently only guards INPUT/TEXTAREA)
-- [ ] Timeline semantic structure (`div` → `ol`) — screen readers would benefit, but high-risk refactor
+
+- [ ] Chrono filter toolbar — arrow-key navigation between buttons per ARIA
+  toolbar pattern
+- [ ] Color-only badge differentiation — add subtle icon or shape alongside
+  color
+- [ ] Skip link could target more landmarks ("Skip to projects", "Skip to
+  contact")
+- [ ] `contenteditable` guard on keyboard shortcut 't' (currently only guards
+  INPUT/TEXTAREA)
+- [ ] Timeline semantic structure (`div` → `ol`) — screen readers would benefit,
+  but high-risk refactor
 
 ### Testing
+
 - [ ] Mobile nav link click → section scroll + menu close
-- [ ] Visual regression tests (screenshot comparison, light/dark, desktop/mobile)
+- [ ] Visual regression tests (screenshot comparison, light/dark,
+  desktop/mobile)
 - [ ] Lighthouse CI mobile-specific config
-- [ ] Tag filtering on competition cards (competition lane has styling overrides)
+- [ ] Tag filtering on competition cards (competition lane has styling
+  overrides)
 
 ### Performance
+
 - [ ] `loading="lazy"` on images when project screenshots are added
 - [ ] `<link rel="preconnect">` for external domains if analytics/CDN added
-- [ ] Consider splitting CSS/JS into separate files when index.html grows past ~150KB
+- [ ] Consider splitting CSS/JS into separate files when index.html grows past
+  ~150KB
 - [ ] Responsive images (`srcset` + WebP/AVIF) for project screenshots
 - [ ] Bump font cache buster `?v=1` → `?v=2` when fonts are updated
 - [ ] Minify CSS/JS
 
 ### Code Quality
+
 - [ ] Standardize on `const`/`let` — mixed `var` and `const`/`let` in JS
-- [ ] CSS font-size scale system — sizes are hardcoded (`0.875rem`, `0.75rem`, etc.) across dozens of rules
+- [ ] CSS font-size scale system — sizes are hardcoded (`0.875rem`, `0.75rem`,
+  etc.) across dozens of rules
 - [ ] Organize JS into IIFE-scoped sections as it grows
 - [ ] Consider splitting into separate CSS/JS files with a simple build step
 
 ### Infra
-- [ ] Print stylesheet — `a[href^="http"]::after` URLs can get ugly for long GitHub URLs
+
+- [ ] Print stylesheet — `a[href^="http"]::after` URLs can get ugly for long
+  GitHub URLs
 - [ ] Company logos for experience cards (SpaceX, Tesla, DTE)
 - [ ] Project thumbnails/screenshots
 
 ---
 
 ## Completed
+
 - [x] About section in own voice; plain-language copy pass (Sep 2026)
-- [x] Fall 2026 content live (Senior Design, CFD, current courses) — `?edition=fall` gate retired in the v2026.5 redesign
+- [x] Fall 2026 content live (Senior Design, CFD, current courses) —
+  `?edition=fall` gate retired in the v2026.5 redesign
 - [x] Resume PDF, headshot, og:image, supply chain case pages
 - [x] Custom 404 page (`404.html`)
 - [x] `robots.txt` + `sitemap.xml`
@@ -88,7 +114,8 @@
 - [x] Footer CTA
 - [x] Print stylesheet improvements
 - [x] Side-index breathing room
-- [x] Timeline filter buttons (6: All, Experience, Project, Research, Supply Chain Cases, Coursework)
+- [x] Timeline filter buttons (6: All, Experience, Project, Research, Supply
+  Chain Cases, Coursework)
 - [x] Year markers sticky on scroll in timeline
 - [x] Hero social links as icon buttons
 - [x] Supply Chain Case metadata on all cards
@@ -96,10 +123,13 @@
 - [x] "Open to opportunities" badge — "Open to new grad roles"
 - [x] "UM-Dearborn" badge — replaced with graduation date ("BSE Dec 2026")
 - [x] Coursework group card (expand/collapse in chrono)
-- [x] Content duplication resolved — chrono compact overview with "View details" links
+- [x] Content duplication resolved — chrono compact overview with "View details"
+  links
 - [x] Consolidate Supply Chain Cases — own section, no duplication
-- [x] 8 nav items resolved (Research folded into Experience, replaced with Case Work)
-- [x] Complete coursework list in Education section (6 courses with catalog links)
+- [x] 8 nav items resolved (Research folded into Experience, replaced with Case
+  Work)
+- [x] Complete coursework list in Education section (6 courses with catalog
+  links)
 - [x] Favicon + apple-touch-icon (180×180)
 - [x] Touch targets ≥ 44px + safe area insets
 - [x] Heading hierarchy fix (chrono h4 → h3)
