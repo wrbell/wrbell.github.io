@@ -15,3 +15,46 @@ playwright-report/
 # WSL lhci spew: when @lhci/cli auto-detects a Windows Chrome, it scribbles
 # user-data-dirs whose names start with the literal Windows path "C:\Users\..."
 C:\\Users\\*
+
+# --- Collection template (standards/templates/gitignore, merged 2026-10-04)
+# Lines from TEMPLATE.gitignore that this file lacked. Existing rules above
+# are unchanged.
+
+# Local data
+.local/
+data/raw/
+*.sqlite
+*.sqlite3
+
+# Secrets: .env stays out; the documented example file stays in.
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+
+# PDFs: ignored by default; the PDFs the site serves are re-included by
+# exact path, after the *.pdf line.
+*.pdf
+!assets/willem-bell-resume.pdf
+
+# Tool output
+.build/qa/
+.chart-data-*/
+.revisions/
+out/*.html
+
+# Office temp
+~$*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+.ipynb_checkpoints/
