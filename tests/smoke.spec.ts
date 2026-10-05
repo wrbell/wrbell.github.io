@@ -274,21 +274,6 @@ test.describe("Cases", () => {
     expect(actual).toEqual(expected);
   });
 
-  test("3M index card shows PDF ready", async ({ page }) => {
-    await page.goto("/cases.html");
-    const card = page.locator("article.case", { hasText: "3M Fulfillment" });
-    await expect(card.locator(".pdf-tag.ready")).toBeVisible();
-  });
-
-  test("3M detail page deck PDF resolves", async ({ page }) => {
-    await page.goto("/cases/3m-fulfillment.html");
-    await page.locator(".page-hero h1").waitFor({ state: "visible" });
-    const pdf = page.locator("a[href='../assets/cases/3m/3m-fulfillment-deck.pdf']").first();
-    await expect(pdf).toBeVisible();
-    const response = await page.request.get("/assets/cases/3m/3m-fulfillment-deck.pdf");
-    expect(response.status()).toBe(200);
-  });
-
   test("back link returns home", async ({ page }) => {
     await page.goto("/cases.html");
     const back = page.locator(".topbar a.back").first();

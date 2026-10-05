@@ -38,9 +38,6 @@ secrets/
 # exact path, after the *.pdf line.
 *.pdf
 !assets/willem-bell-resume.pdf
-# Served by cases.html and cases/3m-fulfillment.html. Whose file it is:
-# TBD (Willem decides).
-!assets/cases/3m/3m-fulfillment-deck.pdf
 
 # Tool output
 .build/qa/
