@@ -38,6 +38,7 @@ secrets/
 # exact path, after the *.pdf line.
 *.pdf
 !assets/willem-bell-resume.pdf
+!assets/archive/willem-bell-resume-2021.pdf
 
 # Tool output
 .build/qa/
